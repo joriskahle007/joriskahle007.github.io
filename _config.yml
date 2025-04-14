@@ -3,7 +3,7 @@ baseurl: "/Type-on-Strap"
 url: "https://www.joriskahle.de"
 
 # THEME-SPECIFIC CONFIGURATION
-title: Joris Kahle                                   # site's title
+title: JK                                   # site's title
 description: "A website with Microsoft blog posts and pages"      # used by search engines
 avatar: assets/img/triangle.png                         # Empty for no avatar in navbar
 favicon: assets/favicon.ico                             # Icon displayed in the tab
@@ -13,8 +13,8 @@ header_text: <code>Joris Kahle</code>  # Change Blog header text
 header_feature_image: assets/img/header/triangular.jpeg
 header_feature_image_responsive: true
 footer_text: >
-  Powered by <a href="https://jekyllrb.com/">Jekyll</a> with <a href="https://github.com/sylhare/Type-on-Strap">Type on Strap</a>
-
+  Powered by Joris Kahle with GitHub
+  
 # Blog
 excerpt: true                                           # Or "truncate" (first 250 characters), "false" to disable
 post_navigation: true
