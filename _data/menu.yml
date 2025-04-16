@@ -1,10 +1,18 @@
 # To add links to the navigation bar.
+- type-on-strap:
+  title: "Test"
+  url: 
+  position: 3
 - example:
   title: Example
   url: https://example.com
-  hide: true
+  # hide: true
   position: 2
 - type-on-strap:
   title: "Blogbeiträge"
   url: 
   position: 1
+- type-on-strap:
+  title: "Test"
+  url: 
+  position: 3
