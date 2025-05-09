@@ -1,0 +1,40 @@
+/* TYPE_ON_STRAP Main style */
+
+// Reset all styles
+@use 'external/reset';
+
+/* Base */
+// All the options to customize your theme in one file
+@forward 'base/variables';
+@forward 'base/utility';
+
+// For general CSS in the theme
+@use 'base/global';
+@use 'base/highlight';
+
+/* Includes */
+// Linked with the html in the _includes folder
+@use 'includes/post_nav';
+@use 'includes/footer';
+@use 'includes/navbar';
+@use 'includes/share_buttons';
+@use 'includes/blog_nav';
+@use 'includes/gallery';
+@use 'includes/portfolio';
+@use 'includes/aligner';
+
+/* Posts */
+// Linked with the html in the _layouts folder
+@use 'layouts/posts';
+@use 'layouts/categories';
+@use 'layouts/blog';
+@use 'layouts/page';
+@use 'layouts/tags';
+@use 'layouts/search';
+
+/* External */
+// CSS from external sources
+@use 'external/font-awesome';
+@use 'external/pacifico';
+@use 'external/katex';
+@use 'external/source-sans-pro';

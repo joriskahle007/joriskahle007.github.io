@@ -1,0 +1,26 @@
+/*!
+ * KaTeX v0.16.11
+ * Plus added customizations for the theme
+ */
+
+@use "katex/katex";
+@use '../base/variables';
+
+.katex-display {
+  @media screen and (max-width: variables.$sm-break) {
+    overflow-x: auto;
+  }
+  & {
+    padding-bottom: 3px;
+    padding-top: 1px;
+    width: auto;
+    height: auto;
+  }
+}
+
+.math-display {
+  display: inline-block;
+  width: 100%;
+}
+
+
