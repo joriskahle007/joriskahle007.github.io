@@ -3,8 +3,6 @@ layout: post
 title: Color Post
 tags: [Test, Color]
 color: brown
-categories: Example
-
 ---
 
 # What a colorful post!
