@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Azure - CSP vs. Kreditkarte
-  Blogging with title 
 tags: [CSP, Azure, Incentives, Linzenzierung]
 ---
 
