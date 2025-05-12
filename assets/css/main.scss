@@ -3,6 +3,9 @@
 
 @import "type-on-strap";
 
-h2 {
-  color: red !important;
+// Nur im Dark Mode die h2-Farbe ändern
+@media (prefers-color-scheme: dark) {
+  h2 {
+    color: #00bfa6 !important; // z.B. Türkis – passe an nach Wunsch
+  }
 }
