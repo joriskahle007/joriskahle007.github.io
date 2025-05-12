@@ -6,9 +6,21 @@ feature-img: "assets/img/pexels/travel.jpeg"
 tags: [Page]
 ---
 
-Mein Name ist Joris Kahle, und ich bin ein erfahrener IT-Spezialist mit Schwerpunkt auf Microsoft Data & AI. Derzeit bin ich als Team-Lead für Hosting & Datacenter bei der ADN Distribution GmbH tätig, wo ich mittelständische und große Unternehmen bei der Umsetzung innovativer Cloud- und Datenlösungen unterstütze.
+Hey, ich bin Joris!
 
-Mit über zwei Jahrzehnten Erfahrung in der IT-Branche habe ich mich auf Themen wie Cloud Solution Provider (CSP), Hybrid-Cloud-Architekturen, Microsoft SPLA-Lizenzierung und Managed Services spezialisiert. Meine Karriere begann bei Microsoft Deutschland GmbH, wo ich als Business Licensing Berater tätig war. Im Laufe der Jahre habe ich verschiedene Positionen bei Unternehmen wie COMPAREX AG und Crayon Deutschland GmbH bekleidet, bevor ich 2019 zur ADN Distribution GmbH wechselte. 
+Ich bin IT-Spezialist mit über 20 Jahren Erfahrung in der Branche – und mein Herz schlägt besonders für Microsoft Data & AI. Meine Schwerpunkte liegen in Bereichen wie dem Service Provider License Agreement (SPLA), dem Cloud Solution Provider (CSP) Programm, Hybrid-Cloud-Architekturen und Managed Services.
 
-Ich bin stets bestrebt, mein Wissen zu erweitern und mich den Herausforderungen der sich ständig weiterentwickelnden IT-Landschaft zu stellen. Wenn Sie mehr über meine Arbeit erfahren oder sich vernetzen möchten, freue ich mich über Ihre Kontaktaufnahme.
+Seit mehr als sechs Jahren bin ich begeisterter Azure-Fan. In dieser Zeit habe ich mich besonders auf Themen wie Azure AI Foundry, GPT-Modellierung und moderne KI-Anwendungen spezialisiert – und teile mein Wissen gerne mit der deutschsprachigen Community.
+
+Ich lebe mit meiner Familie – drei Kindern inklusive – im wunderschönen Arnsberger Sauerland. In meiner Freizeit verbringe ich gerne Zeit mit Familie und Freunden. Technik begeistert mich aber nicht nur beruflich: Ich bin großer Fan von IoT, Retro-Computern sowie Virtual und Augmented Reality. Da probiere ich gerne Neues aus!
+
+Ich liebe es, ständig dazuzulernen und mich den Herausforderungen der sich rasant entwickelnden IT-Welt zu stellen. Wenn du mehr über mich erfahren oder dich vernetzen willst – schreib mir einfach. Ich freue mich über den Austausch!
+
+Worum geht’s in diesem Blog?
+
+Ich habe diesen Blog gestartet, um mein Wissen zu teilen – und um dir zu zeigen, wie einfach der Einstieg in die Azure-Welt heute sein kann. Ob KI-Dienste, GPT-Modelle oder praktische Tipps für die Umsetzung: Hier findest du Inhalte, die dir wirklich weiterhelfen.
+
+Demnächst wirst du mich übrigens auch hören können – in meinem eigenen Podcast! Außerdem bin ich auf verschiedenen Events unterwegs – sprich mich gerne an, wenn du mich triffst.
+
+Viel Spaß beim Lesen und Entdecken!
  
