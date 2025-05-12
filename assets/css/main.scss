@@ -2,15 +2,3 @@
 ---
 
 @import "type-on-strap";
-
-/* Standardfarbe für h2 im Light Mode */
-h2 {
-  color: black; /* Oder eine andere Farbe, die du für den Light Mode wünschst */
-}
-
-/* Dark Mode: h2-Farbe ändern */
-@media (prefers-color-scheme: dark) {
-  h2 {
-    color: #00bfa6 !important; /* Beispiel-Türkis im Dark Mode */
-  }
-}
