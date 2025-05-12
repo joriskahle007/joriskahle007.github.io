@@ -2,3 +2,10 @@
 ---
 
 @import "type-on-strap";
+
+// Eigene Anpassung: Farbe der h2-Überschriften im Dark Mode ändern
+@media (prefers-color-scheme: dark) {
+  h2 {
+    color: #00bfa6 !important; // z. B. Türkis – ändere nach Wunsch
+  }
+}
