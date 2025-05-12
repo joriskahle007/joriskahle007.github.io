@@ -13,9 +13,9 @@ str_previous_page: "Vorige"
 str_javascript_required_disqus: "Please enable JavaScript to view comments."
 str_no_result_found: "No result found"
 str_cookie_approve: "Akzeptieren"
-str_cookie_disclaimer: "Diese Website verwendet Cookies, um die Benutzererfahrung zu verbessern, Funktionen für soziale Medien bereitzustellen und unseren Datenverkehr zu analysieren. Sie können selbst entscheiden, welche Kategorien Sie zulassen möchten."
-str_months: [Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
-#str_months: [J, F, M, A, M, J, J, A, S, O, N, D]
+str_cookie_disclaimer: "Diese Website verwendet Cookies, um die Benutzererfahrung zu verbessern, Funktionen für soziale Medien bereitzustellen und unseren Datenverkehr zu analysieren."
+# str_months: [Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
+# str_months: [J, F, M, A, M, J, J, A, S, O, N, D]
 str_dark: 'Dark'
 str_light: 'Light'
 # str_date_format: '%B %-d, %Y'
