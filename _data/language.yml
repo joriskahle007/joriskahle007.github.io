@@ -19,7 +19,7 @@ str_cookie_disclaimer: "Diese Website verwendet Cookies, um die Benutzererfahrun
 str_dark: 'Dark'
 str_light: 'Light'
 # str_date_format: '%B %-d, %Y'
-str_date_format: '%d. %m %Y'
+str_date_format: '%d.%m.%Y'
 
 # Localization settings
 cusdis_lang: # de
