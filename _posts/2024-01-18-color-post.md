@@ -3,9 +3,8 @@ layout: post
 title: Color Post
 tags: [Test, Color]
 color: brown
-author: sylhare
 categories: Example
-excerpt_separator: <!--more-->
+
 ---
 
 # What a colorful post!
