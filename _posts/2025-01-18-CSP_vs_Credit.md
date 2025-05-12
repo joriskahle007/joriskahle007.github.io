@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Azure - CSP vs. Kreditkarte
-    Blogging with title 
 tags: [CSP, Azure, Incentives, Linzenzierung]
 ---
 
@@ -35,9 +34,7 @@ Im Vergleich zum Kreditkartenmodell profitieren Kunden im CSP-Modell von attrakt
 Der Bezug über CSP bietet Zugang zu technischem Support – nicht nur durch Microsoft, sondern auch durch den jeweiligen Distributionspartner. Dies beinhaltet:
 
 - Erstklassigen technischen 1st- und 2nd-Level-Support
-
 - Onboarding- und Migrationshilfe
-
 - Unterstützung bei Abrechnungsfragen, Lizenzoptimierung und Governance
 
 ## 3. Zugang zu Microsoft Programmen & Incentives
@@ -57,20 +54,18 @@ Der strategische Vorteil im CSP-Modell liegt auch in der Möglichkeit, eine Micr
 Über das CSP-Modell kann ein Unternehmen Teil eines starken Partnernetzwerks werden. Dies ermöglicht:
 
 - Neue Vertriebskanäle über das Microsoft-Partner-Ökosystem
-
 - Co-Selling-Möglichkeiten mit Microsoft
-
 - Sichtbarkeit im Microsoft Marketplace
 
 ## 6. Operative Unterstützung durch Distributoren
 Die Distribution als Bindeglied zwischen Microsoft und Partnern spielt eine zentrale Rolle:
 
 - Unterstützung bei Verträgen, Abrechnung, Compliance
-
 - Bereitstellung von Self-Service-Portalen zur Verwaltung von Lizenzen
-
 - Enablement-Angebote und Schulungen
-
+- Unterstützung bei der Auswahl der richtigen Region, VM-Size / Reservierungen von VM's
+- Beratung von Verfügbarkeiten von GMT-Modellen / TPM's / PTU's
+- Kosteneingrenzung durch Azure Landing-Zones
 - Unterstützung bei der Projektentwicklung und -finanzierung
 
 ## 3. Fazit: CSP ist der strategisch bessere Weg zu Azure
