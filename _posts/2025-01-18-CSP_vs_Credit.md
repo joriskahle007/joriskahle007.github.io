@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Azure - CSP vs. Kreditkarte
-color: red
 tags: [CSP, Azure, Incentives, Linzenzierung]
 ---
 
