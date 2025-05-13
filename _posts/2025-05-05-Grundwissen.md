@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Grundwissen: GPT, Token, PTUs & Prompts – was Du verstehen solltest, bevor Du loslegst
+title: Grundwissen - GPT, Token, PTUs & Prompts – was Du verstehen solltest, bevor Du loslegst
 tags: [AI, Voraussetzungen]
 ---
 
@@ -104,7 +104,7 @@ Wird er Not zu 80% mit einer Vi!!!!!!!!!!!!!!!!!!!!!!!
 | Token-Kontingent im Lizenzpaket	| Nicht direkt |
 | Verbrauchsmessung pro API-Call	| Das läuft über Token-Anzahl, nicht PTUs |
 
-## Fazit: PTU = Durchsatz, nicht Tokens
+## 🧠 Fazit: PTU = Durchsatz, nicht Tokens
 **PTUs sind keine Maßeinheit für Tokenmengen**, sondern stehen für garantierte Leistungsfähigkeit (Throughput) Deiner Azure OpenAI Deployments.
 
 **Fazit: Was solltest Du Dir merken?**
