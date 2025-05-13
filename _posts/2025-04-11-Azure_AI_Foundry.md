@@ -46,6 +46,6 @@ Microsoft bietet mittlerweile mehrere Tools für KI – jedes hat seinen Platz. 
 - **Azure Machine Learning Studio** ist Deine Wahl, wenn Du Machine Learning klassisch betreiben willst – z. B. Regression, Klassifikation, Time Series.
 - Und **Azure AI Foundry** ist Deine Plattform, wenn Du eigene generative KI-Anwendungen entwickeln und auf professionellem Niveau betreiben willst.
 
-## Fazit
+### Fazit
 Wenn Du generative KI nicht nur nutzen, sondern **selbst gestalten und verantwortungsvoll einsetzen** willst, dann ist **Azure AI Foundry** ein starkes Werkzeug. Es bietet Dir alles, was Du brauchst – von der Datenaufbereitung über das Modellmanagement bis hin zur sicheren Produktivsetzung.
 Natürlich ist der Einstieg technischer als bei Low-Code-Lösungen – aber dafür bekommst Du maximale Flexibilität, Skalierbarkeit und Kontrolle. Gerade wenn Du im Unternehmen KI-Lösungen entwickeln willst, die wirklich Mehrwert bringen, ist Foundry eine hervorragende Basis.
