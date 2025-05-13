@@ -15,7 +15,7 @@ Hier kommt Dein Mini-Crashkurs.
 - Sprache versteht und erzeugt (Text, Code, E-Mails, Zusammenfassungen etc.)
 - mit sog. *Prompts* gesteuert wird – also Texteingaben, mit denen Du dem Modell sagst, was es tun soll
 
-Modelle wie *GPT-4*, *GPT-3.5*, oder *GPT-4 Turbo* sind Varianten dieses Prinzips – jede Version ist leistungsfähiger, schneller oder günstiger.
+Modelle wie **GPT-4**, **GPT-3.5**, oder **GPT-4 Turbo** sind Varianten dieses Prinzips – jede Version ist leistungsfähiger, schneller oder günstiger.
 
 ## Was ist ein Prompt?
 Ein **Prompt** ist einfach gesagt **Dein Befehl an das Modell.**
