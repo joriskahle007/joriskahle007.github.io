@@ -111,8 +111,8 @@ Dabei:
 
 ## 💡 Praktischer Einsatz:
 | Zeitraum |	Strategie |	Warum? |
-| Montag – Freitag, 8–18 Uhr |	PTUs aktiv nutzen	| Planbare Auslastung, garantierter Durchsatz |
-| Nachts / Wochenende	| Pay-as-you-go	| Geringe Last, kein Bedarf an garantierter Performance |
+| Montag bis Freitag, 8–18 Uhr |	PTUs aktiv nutzen	| Planbare Auslastung, garantierter Durchsatz |
+| Nachts & Wochenende	| Pay-as-you-go	| Geringe Last, kein Bedarf an garantierter Performance |
 | Bei Kampagnen oder Launches	| Zusätzliche PTUs kurzfristig bereitstellen |	Skalierbar und stabil |
 | Bei unsicherem Traffic |	Kombination aus beidem |	Flexibilität + Kostenoptimierung |
 
@@ -121,9 +121,10 @@ Dabei:
 - **Pay-as-you-go ist flexibel**, aber unter Umständen gedrosselt, wenn die Kapazität in Deiner Region begrenzt ist.
 - **Azure Monitoring & Alerts** helfen Dir, zu erkennen, wann welche Route überlastet ist – damit Du ggf. nachsteuern kannst.
 
+
 **🎯 Fazit: Was solltest Du Dir merken?**
 - Tokenverbrauch = Input + Output, und Token ≠ Wort!
-- -PTUs sichern Durchsatz, nicht Tokens an sich
+- PTUs sichern Durchsatz, nicht Tokens an sich
 - TPM & RPM sind Limitierungen, die durch PTUs beeinflusst werden
 - Jedes Modell hat eigene Grenzen & Kosten – GPT-4 ≠ GPT-3.5
 - Du bezahlst pro verbrauchtem Token, nicht pro Prompt.
