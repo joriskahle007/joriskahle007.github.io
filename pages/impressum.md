@@ -2,7 +2,7 @@
 layout: page
 title: Impressum
 permalink: /impressum/
-feature-img: "assets/img/pexels/impress.jpeg"
+feature-img: "assets/img/pexels/impress.jpg"
 tags: [Kontakt, Impressum]
 ---
 
