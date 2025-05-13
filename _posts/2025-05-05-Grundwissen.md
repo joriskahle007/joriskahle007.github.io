@@ -9,6 +9,7 @@ Bevor Du Dich in Azure AI Foundry, Azure OpenAI oder generell in generative KI s
 Hier kommt Dein Mini-Crashkurs.
 
 
+
 #### Was ist GPT überhaupt?
 **GPT** steht für **Generative Pre-trained Transformer**. Es ist ein Sprachmodell, das:
 
@@ -19,7 +20,8 @@ Hier kommt Dein Mini-Crashkurs.
 Modelle wie **GPT-4**, **GPT-3.5**, oder **GPT-4 Turbo** sind Varianten dieses Prinzips – jede Version ist leistungsfähiger, schneller oder günstiger.
 
 
-##### Was ist ein Prompt?
+
+#### Was ist ein Prompt?
 Ein **Prompt** ist einfach gesagt **Dein Befehl an das Modell.**
 
 Beispiele für Prompts:
@@ -28,6 +30,7 @@ Beispiele für Prompts:
 - „Welche Risiken birgt generative KI in der Medizin?“
 
 Je besser Dein Prompt, desto präziser die Antwort – das nennt man auch **Prompt Engineering.**
+
 
 
 #### Was sind Tokens und warum sind sie wichtig?
@@ -61,6 +64,7 @@ Du zahlst pro **1.000 Tokens**, abhängig vom Modell:
 Die **Preise können sich ändern**, darum lohnt sich ein Blick auf <a https://azure.microsoft.com/de-de/pricing/details/cognitive-services/openai-service/>Microsofts Preisseite für Azure OpenAI</a>.
 
 
+
 #### Was bedeutet Tokens per Minute (TPM)?
 In Azure hast Du zusätzlich **Rate Limits:**
 
@@ -76,6 +80,7 @@ Wenn Du z. B. 240.000 TPM hast, kannst Du:
 Diese Limits skalieren je nach deinem **Nutzungskontingent**, und Du kannst bei Microsoft **erhöhte Quoten beantragen**, wenn Du mehr brauchst.
 
 
+
 #### Was ist eine Provisioned Throughput Unit (PTU)?
 Eine **PTU** ist eine **Abrechnungseinheit in Azure OpenAI**, die Dir eine bestimmte Menge an Rechenkapazität für GPT-Modelle zusichert – ähnlich wie bei einer reservierten Bandbreite.
 
@@ -83,6 +88,7 @@ Eine **PTU** ist eine **Abrechnungseinheit in Azure OpenAI**, die Dir eine besti
 - Wie viele **Token pro Minute (TPM)** Du verarbeiten kannst
 - Welche **Modelle** (GPT-3.5, GPT-4, GPT-4 Turbo etc.) Du wie performant ansprechen kannst
 - Wie hoch **verfügbar** Deine Ressourcen sind
+
 
 
 #### Was bekommst Du pro PTU?
@@ -95,6 +101,7 @@ Microsoft gibt typischerweise an:
 Diese PTUs gelten **pro Region und Deployment**, also z. B. „West Europe – GPT-4 Turbo – 2 PTUs“.
 
 
+
 #### Warum gibt es PTUs überhaupt?
 Microsoft bietet mit PTUs:
 
@@ -103,9 +110,11 @@ Microsoft bietet mit PTUs:
 - **Kostenkontrolle & Reservierungen** – PTUs können im Vorfeld gebucht oder bereitgestellt werden
 
 
+
 #### Kombination von PTU & Pay-as-you-go – das Beste aus zwei Welten
 Azure OpenAI erlaubt Dir, **Provisioned Throughput (PTU)** und **Pay-as-you-go** nebeneinander zu nutzen, um Kosten und Performance dynamisch zu balancieren.
 Gerade bei Lastspitzen kann der Weg über PTU sich auszahlen.
+
 
 
 #### Wie funktioniert das?
@@ -120,6 +129,7 @@ Dabei:
 - sobald diese an ihr **Limit stoßen**, springt das **Shared Throughput Modell (pay-as-you-go)** ein – falls verfügbar und konfiguriert
 
 
+
 #### Praktischer Einsatz:
 
 | Zeitraum | Strategie | Warum? |
@@ -128,13 +138,15 @@ Dabei:
 | Bei Kampagnen oder Launches | Zusätzliche PTUs kurzfristig bereitstellen | Skalierbar und stabil |
 | Bei unsicherem Traffic | Kombination aus beidem |	Flexibilität + Kostenoptimierung |
 
-## Fazit: PTU = Durchsatz, nicht Tokens
+
+
+#### Fazit: PTU = Durchsatz, nicht Tokens
 - **PTUs sind exklusiv**, Du bekommst garantierten Durchsatz – aber zahlst auch, wenn Du sie nicht nutzt.
 - **Pay-as-you-go ist flexibel**, aber unter Umständen gedrosselt, wenn die Kapazität in Deiner Region begrenzt ist.
 - **Azure Monitoring & Alerts** helfen Dir, zu erkennen, wann welche Route überlastet ist – damit Du ggf. nachsteuern kannst.
 
 
-**Fazit: Was solltest Du Dir merken?**
+#### Fazit: Was solltest Du Dir merken?**
 - Tokenverbrauch = Input + Output, und Token ≠ Wort!
 - PTUs sichern Durchsatz, nicht Tokens an sich
 - TPM & RPM sind Limitierungen, die durch PTUs beeinflusst werden
@@ -144,5 +156,8 @@ Dabei:
 - „PTUs“ sind eine Art Token-Paket – aber (noch) nicht überall relevant.
 - Ein gutes Kostenverständnis hilft Dir, nicht böse überrascht zu werden – und effizient zu skalieren.
 
+
 **Wenn Du planbare Kernzeiten hast, nutze PTUs für Performance und Kontrolle – und ergänze sie mit Pay-as-you-go für spontane oder niedrigpriorisierte Nutzung.
 Das spart Geld, ohne auf Zuverlässigkeit zu verzichten.**
+
+
