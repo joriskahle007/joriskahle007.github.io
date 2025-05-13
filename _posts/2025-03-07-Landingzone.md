@@ -1,7 +1,6 @@
 ---
 layout: post
 title: Azure - Landingzone
-date: 06.02.2025
 tags: [CSP, Azure, Incentives, Linzenzierung]
 ---
 
