@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Erfolgreich durchstarten mit KI in Azure: Die 5 wichtigsten Voraussetzungen für Ihr Projekt
+title: Erfolgreich durchstarten mit KI in Azure - Die 5 wichtigsten Voraussetzungen für Ihr Projekt
 tags: [AI, Voraussetzungen]
 ---
 
