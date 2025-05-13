@@ -1,10 +1,9 @@
 ---
 layout: post
 title: Erfolgreich durchstarten mit KI in Azure: Die 5 wichtigsten Voraussetzungen für Ihr Projekt
-feature-img: "assets/img/feature-img/desk-messy.jpeg"
-thumbnail: "assets/img/thumbnails/feature-img/desk-messy.jpeg"
-tags: [Test, Color]
+tags: [AI, Voraussetzungen]
 ---
+
 Künstliche Intelligenz (KI) hat das Potenzial, Geschäftsprozesse zu revolutionieren, Innovationen zu beschleunigen und neue Geschäftsmöglichkeiten zu erschließen. Microsoft Azure bietet eine leistungsstarke Plattform, um KI-Lösungen zu entwickeln, zu implementieren und zu skalieren. Doch bevor ein Unternehmen ein KI-Projekt in Azure startet, gilt es, einige grundlegende Voraussetzungen zu erfüllen. In diesem Blogbeitrag stellen wir Ihnen die fünf wichtigsten Aspekte vor, die über den Erfolg Ihres KI-Vorhabens entscheiden können.
 
 ## 1. Vorbereitung auf die KI durch einen ganzheitlichen Technologieansatz
