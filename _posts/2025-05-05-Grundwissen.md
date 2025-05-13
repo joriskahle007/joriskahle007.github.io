@@ -8,7 +8,7 @@ Bevor Du Dich in Azure AI Foundry, Azure OpenAI oder generell in generative KI s
 
 Hier kommt Dein Mini-Crashkurs.
 
-## 📌 Was ist GPT überhaupt?
+## Was ist GPT überhaupt?
 **GPT** steht für **Generative Pre-trained Transformer**. Es ist ein Sprachmodell, das:
 
 - mit riesigen Mengen an Text vortrainiert wurde
@@ -17,7 +17,7 @@ Hier kommt Dein Mini-Crashkurs.
 
 Modelle wie **GPT-4**, **GPT-3.5**, oder **GPT-4 Turbo** sind Varianten dieses Prinzips – jede Version ist leistungsfähiger, schneller oder günstiger.
 
-## 🧾 Was ist ein Prompt?
+## Was ist ein Prompt?
 Ein **Prompt** ist einfach gesagt **Dein Befehl an das Modell.**
 
 Beispiele für Prompts:
@@ -27,7 +27,7 @@ Beispiele für Prompts:
 
 Je besser Dein Prompt, desto präziser die Antwort – das nennt man auch **Prompt Engineering.**
 
-## 💳 Was sind Tokens und warum sind sie wichtig?
+## Was sind Tokens und warum sind sie wichtig?
 Ein **Token** ist ein Teil eines Wortes – nicht immer ein ganzes Wort!
 Token ist aber nicht gleich Toiken
 
@@ -44,10 +44,10 @@ Beispiel:
 - GPT erzeugt eine Antwort mit 300 Tokens.
 - Abgerechnet werden also 400 Tokens.
 
-## 🧩 Wie funktioniert die Abrechnung in Azure OpenAI?
+## Wie funktioniert die Abrechnung in Azure OpenAI?
 Wenn Du GPT über **Azure OpenAI** nutzt (auch über Foundry eingebunden), hast Du diese Abrechnungsgrundlagen:
 
-## 🔢 Kosten nach Modell und Tokens
+## Kosten nach Modell und Tokens
 Du zahlst pro **1.000 Tokens**, abhängig vom Modell:
 
 | Modell |	Prompt (Input) |	Completion (Output) |	Beispiel |
@@ -56,7 +56,7 @@ Du zahlst pro **1.000 Tokens**, abhängig vom Modell:
 
 Die **Preise können sich ändern**, darum lohnt sich ein Blick auf <a https://azure.microsoft.com/de-de/pricing/details/cognitive-services/openai-service/>Microsofts Preisseite für Azure OpenAI</a>.
 
-## ⏱️ Was bedeutet Tokens per Minute (TPM)?
+## Was bedeutet Tokens per Minute (TPM)?
 In Azure hast Du zusätzlich **Rate Limits:**
 
 - **Tokens per Minute (TPM)**: Wie viele Tokens Du pro Minute senden darfst.
@@ -70,7 +70,7 @@ Wenn Du z. B. 240.000 TPM hast, kannst Du:
 
 Diese Limits skalieren je nach deinem **Nutzungskontingent**, und Du kannst bei Microsoft **erhöhte Quoten beantragen**, wenn Du mehr brauchst.
 
-## 📦 Was ist eine Provisioned Throughput Unit (PTU)?
+## Was ist eine Provisioned Throughput Unit (PTU)?
 Eine **PTU** ist eine **Abrechnungseinheit in Azure OpenAI**, die Dir eine bestimmte Menge an Rechenkapazität für GPT-Modelle zusichert – ähnlich wie bei einer reservierten Bandbreite.
 
 **Eine PTU bestimmt:**
@@ -78,7 +78,7 @@ Eine **PTU** ist eine **Abrechnungseinheit in Azure OpenAI**, die Dir eine besti
 - Welche **Modelle** (GPT-3.5, GPT-4, GPT-4 Turbo etc.) Du wie performant ansprechen kannst
 - Wie hoch **verfügbar** Deine Ressourcen sind
 
-## 🧮 Was bekommst Du pro PTU?
+## Was bekommst Du pro PTU?
 Microsoft gibt typischerweise an:
 
 - z. B. **1 PTU GPT-4 Turbo** = ~20 Requests/Minute mit je 8.000 Tokens (konkrete Werte können variieren)
@@ -87,18 +87,18 @@ Microsoft gibt typischerweise an:
 
 Diese PTUs gelten **pro Region und Deployment**, also z. B. „West Europe – GPT-4 Turbo – 2 PTUs“.
 
-## 💡 Warum gibt es PTUs überhaupt?
+## Warum gibt es PTUs überhaupt?
 Microsoft bietet mit PTUs:
 
 - **Planbare Leistung** – Du bekommst zugesicherte Kapazität, unabhängig von Auslastung
 - **Verlässliche API-Nutzung** – wichtig für produktive Anwendungen
 - **Kostenkontrolle & Reservierungen** – PTUs können im Vorfeld gebucht oder bereitgestellt werden
 
-## ⚖️ Kombination von PTU & Pay-as-you-go – das Beste aus zwei Welten
+## Kombination von PTU & Pay-as-you-go – das Beste aus zwei Welten
 Azure OpenAI erlaubt Dir, **Provisioned Throughput (PTU)** und **Pay-as-you-go** nebeneinander zu nutzen, um Kosten und Performance dynamisch zu balancieren.
 Gerade bei Lastspitzen kann der Weg über PTU sich auszahlen.
 
-## 🧩 Wie funktioniert das?
+## Wie funktioniert das?
 Du kannst:
 
 - **PTUs reservieren** für feste oder planbare Nutzung (z. B. werktags 9–17 Uhr, hohe Last)
@@ -109,7 +109,7 @@ Dabei:
 - werden Anfragen **zuerst über Provisioned Deployments** (mit PTUs) geleitet
 - sobald diese an ihr **Limit stoßen**, springt das **Shared Throughput Modell (pay-as-you-go)** ein – falls verfügbar und konfiguriert
 
-## 💡 Praktischer Einsatz:
+## Praktischer Einsatz:
 
 | Zeitraum | Strategie | Warum? |
 | Montag bis Freitag, 8–18 Uhr | PTUs aktiv nutzen | Planbare Auslastung, garantierter Durchsatz |
@@ -117,13 +117,13 @@ Dabei:
 | Bei Kampagnen oder Launches | Zusätzliche PTUs kurzfristig bereitstellen | Skalierbar und stabil |
 | Bei unsicherem Traffic | Kombination aus beidem |	Flexibilität + Kostenoptimierung |
 
-## ⚠️ Fazit: PTU = Durchsatz, nicht Tokens
+## Fazit: PTU = Durchsatz, nicht Tokens
 - **PTUs sind exklusiv**, Du bekommst garantierten Durchsatz – aber zahlst auch, wenn Du sie nicht nutzt.
 - **Pay-as-you-go ist flexibel**, aber unter Umständen gedrosselt, wenn die Kapazität in Deiner Region begrenzt ist.
 - **Azure Monitoring & Alerts** helfen Dir, zu erkennen, wann welche Route überlastet ist – damit Du ggf. nachsteuern kannst.
 
 
-**🎯 Fazit: Was solltest Du Dir merken?**
+**Fazit: Was solltest Du Dir merken?**
 - Tokenverbrauch = Input + Output, und Token ≠ Wort!
 - PTUs sichern Durchsatz, nicht Tokens an sich
 - TPM & RPM sind Limitierungen, die durch PTUs beeinflusst werden
