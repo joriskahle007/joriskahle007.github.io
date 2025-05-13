@@ -18,9 +18,11 @@ Ich liebe es, ständig dazuzulernen und mich den Herausforderungen der sich rasa
 
 Worum geht’s in diesem Blog?
 
-Ich habe diesen Blog gestartet, um mein Wissen zu teilen – und um dir zu zeigen, wie einfach der Einstieg in die Azure-Welt heute sein kann. Ob KI-Dienste, GPT-Modelle oder praktische Tipps für die Umsetzung: Hier findest du Inhalte, die dir wirklich weiterhelfen.
+Ich habe diesen Blog gestartet, um mein Wissen zu teilen – und um dir zu zeigen, wie einfach der Einstieg in die AI Welt, spezielle in Azure heute sein kann. Ob KI-Dienste, GPT-Modelle oder praktische Tipps für die Umsetzung: Hier findest du Inhalte, die dir wirklich weiterhelfen.
 
 Demnächst wirst du mich übrigens auch hören können – in meinem eigenen Podcast! Außerdem bin ich auf verschiedenen Events unterwegs – sprich mich gerne an, wenn du mich triffst.
+
+Mein  LinkedIn Profil kannst du weiter unten über en Link finden. Ich würde mich über eine Kontaktnafrage freuen.
 
 Viel Spaß beim Lesen und Entdecken!
  
