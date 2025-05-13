@@ -6,7 +6,7 @@ tags: [AI, Voraussetzungen]
 
 Bevor Du Dich in Azure AI Foundry, Azure OpenAI oder generell in generative KI stürzt, ist es hilfreich, wenn Du ein paar grundlegende Begriffe verstehst. Viele davon begegnen Dir ständig – z. B. in der Kostenberechnung oder beim Umgang mit Modellen wie GPT-4.
 
-Hier kommt Dein Mini-Crashkurs. 👇
+Hier kommt Dein Mini-Crashkurs.
 
 ## Was ist GPT überhaupt?
 **GPT** steht für **Generative Pre-trained Transformer**. Es ist ein Sprachmodell, das:
@@ -100,14 +100,14 @@ Wird er Not zu 80% mit einer Vi!!!!!!!!!!!!!!!!!!!!!!!
 
 ## Was PTU NICHT ist:
 | Falsch verstandene Bedeutung	| Richtig |
-| „Prompt Token Unit“	| ❌ Gibt es nicht |
-| Token-Kontingent im Lizenzpaket	| ❌ Nicht direkt |
-| Verbrauchsmessung pro API-Call	| ❌ Das läuft über Token-Anzahl, nicht PTUs |
+| „Prompt Token Unit“	| Gibt es nicht |
+| Token-Kontingent im Lizenzpaket	| Nicht direkt |
+| Verbrauchsmessung pro API-Call	| Das läuft über Token-Anzahl, nicht PTUs |
 
-## 🧠 Fazit: PTU = Durchsatz, nicht Tokens
+## Fazit: PTU = Durchsatz, nicht Tokens
 **PTUs sind keine Maßeinheit für Tokenmengen**, sondern stehen für garantierte Leistungsfähigkeit (Throughput) Deiner Azure OpenAI Deployments.
 
-**✅ Fazit: Was solltest Du Dir merken?**
+**Fazit: Was solltest Du Dir merken?**
 - Du bezahlst pro verbrauchtem Token, nicht pro Prompt.
 - Es gibt Limits pro Minute (Tokens/Anfragen) – die kannst Du aber skalieren.
 - „PTUs“ sind eine Art Token-Paket – aber (noch) nicht überall relevant.
