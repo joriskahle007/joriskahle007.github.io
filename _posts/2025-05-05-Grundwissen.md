@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Grundwissen: GPT, Token, PTUs & Prompts – was Du verstehen solltest, bevor Du loslegst
+title: Grundwissen: GPT, Token, PTUs und Prompts – was Du verstehen solltest, bevor Du loslegst
 tags: [AI, Voraussetzungen]
 ---
 
