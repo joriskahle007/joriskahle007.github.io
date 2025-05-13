@@ -110,7 +110,7 @@ Dabei:
 - sobald diese an ihr **Limit stoßen**, springt das **Shared Throughput Modell (pay-as-you-go)** ein – falls verfügbar und konfiguriert
 
 ## 💡 Praktischer Einsatz:
-| Zeitraum |	Strategie	Warum? |
+| Zeitraum |	Strategie |	Warum? |
 | Montag – Freitag, 8–18 Uhr |	PTUs aktiv nutzen	| Planbare Auslastung, garantierter Durchsatz |
 | Nachts / Wochenende	| Pay-as-you-go	| Geringe Last, kein Bedarf an garantierter Performance |
 | Bei Kampagnen oder Launches	| Zusätzliche PTUs kurzfristig bereitstellen |	Skalierbar und stabil |
