@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Azure - Landingzone
-feature-img: assets/img/feature-img/enterprise-scale-architecture.png
+feature-img: assets/img/feature-img/enterprise-scale-architecture.jpg
 tags: [CSP, Azure, Incentives, Linzenzierung]
 ---
 
