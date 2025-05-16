@@ -9,7 +9,8 @@ avatar: assets/img/triangle.png                         # Empty for no avatar in
 favicon: assets/favicon.ico                             # Icon displayed in the tab
 
 # Header and footer text
-header_text: Von Daten zu Taten – mit Azure AI  # Change Blog header text
+# header_text: Von Daten zu Taten – mit Azure AI  # Change Blog header text
+header_text: Empowering You to Build with AI
 header_feature_image: assets/img/header/triangular.jpeg
 header_feature_image_responsive: true
 footer_text: >
