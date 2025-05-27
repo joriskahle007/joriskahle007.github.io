@@ -23,6 +23,8 @@ Ein Modellrouter nimmt dir diese Entscheidung ab – und das in Echtzeit!
 ## Wie funktioniert der Modellrouter in Azure AI Foundry?
 Azure AI Foundry ist eine Plattform von Microsoft, mit der du KI-Lösungen einfach bauen, trainieren und betreiben kannst. Der Modellrouter ist dort eine Funktion, die deine Anfragen an das passende Modell weiterleitet.
 
+<img src="/assets/img/modelrouter.jpg" alt="Azure AI Foundry - Modelrouter" />
+
 # Das passiert im Hintergrund:
 | **Schritt** | **Was passiert?** |
 | 1. Anfrage eingehen | Der Modellrouter bekommt deine Eingabe. |
