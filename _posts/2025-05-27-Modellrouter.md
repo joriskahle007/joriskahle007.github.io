@@ -26,12 +26,12 @@ Azure AI Foundry ist eine Plattform von Microsoft, mit der du KI-Lösungen einfa
 <img src="/assets/img/modelrouter.jpg" alt="Azure AI Foundry - Modelrouter" />
 
 # Das passiert im Hintergrund:
-| **Schritt** | **Was passiert?** |
-| 1. Anfrage eingehen | Der Modellrouter bekommt deine Eingabe. |
-| 2. Analyse | Er schaut sich die Anfrage an (z.B. Text, Bild). |
-| 3. Auswahl | Er entscheidet, welches Modell am besten passt. |
-| 4. Weiterleitung | Die Anfrage wird an das ausgewählte Modell geschickt. |
-| 5. Ergebnis zurück | Du bekommst das Ergebnis vom Modell zurück. |
+|  **Schritt**  |  **Was passiert?**  |
+|  1. Anfrage eingehen  |  Der Modellrouter bekommt deine Eingabe.  |
+|  2. Analyse  |  Er schaut sich die Anfrage an (z.B. Text, Bild).  |
+|  3. Auswahl  |  Er entscheidet, welches Modell am besten passt.  |
+|  4. Weiterleitung  |  Die Anfrage wird an das ausgewählte Modell geschickt.  |
+|  5. Ergebnis zurück  |  Du bekommst das Ergebnis vom Modell zurück.  |
 
 ## Ein einfaches Beispiel
 Stell dir vor, du hast zwei Modelle:
@@ -42,11 +42,11 @@ Stell dir vor, du hast zwei Modelle:
 Du sendest eine Kundenanfrage mit einem Foto und einem Text. Der Modellrouter checkt: Bild ist dabei → schicke an Modell B. Nur Text? Dann Modell A.
 
 ## Vorteile für dich auf einen Blick
-| **Vorteil** | **Was bedeutet das für dich?** |
-| Automatische Steuerung | Du musst nicht mehr manuell auswählen. |
-| Bessere Ergebnisse | Immer das beste Modell für die Aufgabe nutzen. |
-| Skalierbarkeit | Bei wachsendem Bedarf bleiben deine Systeme effizient. |
-| Kostenersparnis | Ressourcen optimal einsetzen und Geld sparen. |
+|  **Vorteil**  |  **Was bedeutet das für dich?**  |
+|  Automatische Steuerung  |  Du musst nicht mehr manuell auswählen.  |
+|  Bessere Ergebnisse  |  Immer das beste Modell für die Aufgabe nutzen.  |
+|  Skalierbarkeit  |  Bei wachsendem Bedarf bleiben deine Systeme effizient.  |
+|  Kostenersparnis  |  Ressourcen optimal einsetzen und Geld sparen.  |
 
 **Fazit: Modellrouter macht KI-Nutzung smarter**
 Du siehst, ein Modellrouter in Azure AI Foundry nimmt dir viel Arbeit ab und sorgt dafür, dass deine KI-Lösungen effizienter und treffsicherer werden. Egal ob du mehrere Modelle gleichzeitig nutzt oder unterschiedliche Aufgaben bewältigen willst – der Modellrouter ist dein smarter Helfer.
