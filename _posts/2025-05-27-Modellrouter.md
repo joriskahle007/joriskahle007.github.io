@@ -27,7 +27,7 @@ Azure AI Foundry ist eine Plattform von Microsoft, mit der du KI-Lösungen einfa
 
 # Das passiert im Hintergrund:
 
-| Schritt | Was passiert? |
+| **Schritt** | **Was passiert?** |
 | 1. Anfrage eingehen | Der Modellrouter bekommt deine Eingabe. |
 | 2. Analyse | Er schaut sich die Anfrage an (z.B. Text, Bild). |
 | 3. Auswahl | Er entscheidet, welches Modell am besten passt. |
