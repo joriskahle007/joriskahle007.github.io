@@ -37,7 +37,7 @@ Azure AI Foundry ist eine Plattform von Microsoft, mit der du KI-Lösungen einfa
 ## Ein einfaches Beispiel
 Stell dir vor, du hast zwei Modelle:
 
-**Modell A :** Super in Textanalyse
+**Modell A :** Super in Textanalyse<br>
 **Modell B :** Spezialist für Bilderkennung
 
 Du sendest eine Kundenanfrage mit einem Foto und einem Text. Der Modellrouter checkt: Bild ist dabei → schicke an Modell B. Nur Text? Dann Modell A.
