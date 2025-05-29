@@ -3,7 +3,7 @@ baseurl: ""
 url: "https://joriskahle007.github.io"
 
 # THEME-SPECIFIC CONFIGURATION
-title: The AIEnabler | Joris Kahle                              # site's title
+title: AIEnabler | Joris Kahle                              # site's title
 # description: "JK | Azure AI Services"      # used by search engines
 avatar: assets/img/triangle.png                         # Empty for no avatar in navbar
 favicon: assets/favicon.ico                             # Icon displayed in the tab
