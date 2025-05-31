@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Podcast
-<!-- permalink: /podcast/ -->
+permalink: /podcast/
 feature-img: "assets/img/pexels/about.jpg"
 tags: [Page]
 ---
