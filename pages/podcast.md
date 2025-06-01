@@ -3,7 +3,7 @@ layout: page
 title: Cloud Junkies
 permalink: /podcast/
 feature-img: "assets/img/pexels/junkies.jpg"
-tags: [Page]
+tags: [Podcast, Cloud Junkies]
 ---
 
 
