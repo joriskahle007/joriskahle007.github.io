@@ -1,15 +1,15 @@
 ---
 layout: page
-title: Mein Podcast ist live!
+title: Cloud Junkies
 permalink: /podcast/
-feature-img: "assets/img/pexels/about.jpg"
+feature-img: "assets/img/pexels/junkies.jpg"
 tags: [Page]
 ---
 
 
 # Cloud Junkies – Der Podcast für Data & AI mit Microsoft Azure
 
-🎧 Höre direkt hier auf Spotify rein:
+🎧 Höre direkt hier auf Spotify rein:<br>
 
 <iframe
   style="border-radius:12px"
@@ -21,9 +21,4 @@ tags: [Page]
   allow="autoplay; clipboard-write; encrypted-media; picture-in-picture">
 </iframe>
 
----
-
-## Weitere Plattformen:
-
-- [Podcast auf podcast.de](https://www.podcast.de/podcast/3596111/cloud-junkies-der-podcast-fuer-data-amp-ai-mit-microsoft-azure)  
-- [Amazon Music](https://music.amazon.de/podcasts/DEIN_LINK)  
+<br><br>
