@@ -24,7 +24,7 @@ Ob Techie oder Entscheider – hier bekommst du praxisnahe Impulse, echte Erfahr
   frameborder="0" 
   scrolling="no">
 </iframe>
-
+<br><br>
 <!-- Folge 2 -->
 <iframe 
   src="https://creators.spotify.com/pod/profile/joris760/embed/episodes/Folge-2---Azure-Bezug--Azure-Landingzone-e36ilkk/a-ac3eje1" 
@@ -34,26 +34,6 @@ Ob Techie oder Entscheider – hier bekommst du praxisnahe Impulse, echte Erfahr
   scrolling="no">
 </iframe>
 
-<iframe
-  style="border-radius:12px"
-  src="https://open.spotify.com/embed/show/0g2b7ul1iYiAtMIapPLWZb"
-  src="https://open.spotify.com/embed/show/0g2b7ul1iYiAtMIapPLWZb"
-  width="100%"
-  height="152"
-  frameborder="0"
-  allowfullscreen=""
-  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture">
-</iframe>
 
-<br><br>
-<iframe
-  style="border-radius:12px"
-    src="https://open.spotify.com/embed/episode/1VYwc5HJ8zsIBJ1wv7R8bk"
-  width="100%"
-  height="152"
-  frameborder="0"
-  allowfullscreen=""
-  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture">
-</iframe>
 
 <br><br>
