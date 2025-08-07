@@ -27,3 +27,14 @@ Ob Techie oder Entscheider – hier bekommst du praxisnahe Impulse, echte Erfahr
 </iframe>
 
 <br><br>
+<iframe
+  style="border-radius:12px"
+  src="https://open.spotify.com/episode/1VYwc5HJ8zsIBJ1wv7R8bk"
+  width="100%"
+  height="152"
+  frameborder="0"
+  allowfullscreen=""
+  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture">
+</iframe>
+
+<br><br>
