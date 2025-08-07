@@ -16,22 +16,30 @@ Ob Techie oder Entscheider – hier bekommst du praxisnahe Impulse, echte Erfahr
 
 🎧 Höre direkt hier auf Spotify rein:<br>
 
-<!-- Folge 1 -->
+<!-- 🎧 Folge 1: Wer wir sind und warum es Cloud Junkies gibt -->
+<h3>🎧 Folge 1: Wer wir sind und warum es Cloud Junkies gibt</h3>
 <iframe 
-  src="https://creators.spotify.com/pod/profile/joris760/embed/episodes/Folge-1--Wer-wir-sind-und-warum-es-Cloud-Junkies-gibt-e33ithq/a-abvom55" 
-  height="102px" 
+  style="border-radius:12px" 
+  src="https://open.spotify.com/embed/episode/1e7RWSNbvY19nTN4lIteXi?utm_source=generator" 
   width="100%" 
+  height="352" 
   frameborder="0" 
-  scrolling="no">
+  allowfullscreen="" 
+  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+  loading="lazy">
 </iframe>
-<br><br>
-<!-- Folge 2 -->
+
+<!-- 🎧 Folge 2: Azure Bezug & Azure Landingzone -->
+<h3>🎧 Folge 2: Azure Bezug & Azure Landingzone</h3>
 <iframe 
-  src="https://creators.spotify.com/pod/profile/joris760/embed/episodes/Folge-2---Azure-Bezug--Azure-Landingzone-e36ilkk/a-ac3eje1" 
-  height="102px" 
+  style="border-radius:12px" 
+  src="https://open.spotify.com/embed/episode/1VYwc5HJ8zsIBJ1wv7R8bk?utm_source=generator" 
   width="100%" 
+  height="352" 
   frameborder="0" 
-  scrolling="no">
+  allowfullscreen="" 
+  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+  loading="lazy">
 </iframe>
 
 
