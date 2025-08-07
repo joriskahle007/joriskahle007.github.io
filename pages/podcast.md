@@ -16,8 +16,27 @@ Ob Techie oder Entscheider – hier bekommst du praxisnahe Impulse, echte Erfahr
 
 🎧 Höre direkt hier auf Spotify rein:<br>
 
+<!-- Folge 1 -->
+<iframe 
+  src="https://creators.spotify.com/pod/profile/joris760/embed/episodes/Folge-1--Wer-wir-sind-und-warum-es-Cloud-Junkies-gibt-e33ithq/a-abvom55" 
+  height="102px" 
+  width="100%" 
+  frameborder="0" 
+  scrolling="no">
+</iframe>
+
+<!-- Folge 2 -->
+<iframe 
+  src="https://creators.spotify.com/pod/profile/joris760/embed/episodes/Folge-2---Azure-Bezug--Azure-Landingzone-e36ilkk/a-ac3eje1" 
+  height="102px" 
+  width="100%" 
+  frameborder="0" 
+  scrolling="no">
+</iframe>
+
 <iframe
   style="border-radius:12px"
+  src="https://open.spotify.com/embed/show/0g2b7ul1iYiAtMIapPLWZb"
   src="https://open.spotify.com/embed/show/0g2b7ul1iYiAtMIapPLWZb"
   width="100%"
   height="152"
