@@ -29,7 +29,7 @@ Ob Techie oder Entscheider – hier bekommst du praxisnahe Impulse, echte Erfahr
 <br><br>
 <iframe
   style="border-radius:12px"
-  src="https://open.spotify.com/embed/show//j4ERDD8KDVb)"
+  src="https://open.spotify.com/embed/show/j4ERDD8KDVb)"
   width="100%"
   height="152"
   frameborder="0"
