@@ -41,7 +41,7 @@ Damit du weißt, welches Modell für dich am besten passt, hier eine kurze Über
 **Whisper**: Transkribiert und übersetzt Audio zuverlässig. Ideal für Podcasts, Interviews oder Meetings.
 **Sora**: Für Videoinhalte gedacht. KI-gestützte Erstellung und Bearbeitung von Videos.
 
-##🧩 Welches Modell passt zu welchem Use Case?
+## 🧩 Welches Modell passt zu welchem Use Case?
 Damit du die Modelle direkt einordnen kannst, habe ich eine Übersicht erstellt, die zeigt, für welchen Anwendungsfall welches Modell besonders geeignet ist:
 
 | Anwendungsfall |	Empfohlenes Modell |	Vorteile |
@@ -56,7 +56,7 @@ Damit du die Modelle direkt einordnen kannst, habe ich eine Übersicht erstellt,
 
 **💡 Tipp: Wenn du mehrere Medien kombinieren willst, ist GPT-4o die flexibelste Lösung. Für kreative Projekte lohnt sich GPT-4.5, während GPT-5 für komplexe logische Aufgaben oder anspruchsvolle Multimediaprojekte optimal ist.**
 
-##💰 Kosten und Performance der Modelle
+## 💰 Kosten und Performance der Modelle
 
 Die Wahl des richtigen Modells hängt nicht nur von den Funktionen ab, sondern auch von den Kosten und der Performance. Hier eine Übersicht der aktuellen Preise und Leistungsdaten:
 
@@ -69,8 +69,8 @@ Die Wahl des richtigen Modells hängt nicht nur von den Funktionen ab, sondern a
 | GPT-5 Standard |	ca. $0.05 |	ca. 2.500 |	Neueste Generation, hohe Leistung |
 | GPT-5 Mini |	ca. $0.03 |	ca. 3.000 |	Schnell, ressourcenschonend |
 | GPT-5 Nano |	ca. $0.02 |	ca. 4.000 |	Sehr schnell, für einfache Aufgaben geeignet |
-| DALL·E |	ca. $0.10 | pro Bild |	-	|Bildgenerierung aus Text |
-| Whisper |	ca. $0.006 | pro Minute |	- |	Audio-Transkription und -übersetzung |
+| DALL·E |	ca. $0.10 pro Bild  |	-	|Bildgenerierung aus Text |
+| Whisper |	ca. $0.006 pro Minute  |	- |	Audio-Transkription und -übersetzung |
 | Sora |	Preis auf Anfrage |	- |	Videoinhalte erstellen und bearbeiten |
 
 💡 Tipp: Wenn du viele Anfragen gleichzeitig stellen möchtest, ist GPT-5 Nano oder Mini aufgrund ihrer hohen TPM-Werte besonders geeignet. Für kreative Aufgaben wie Storytelling oder Content Creation ist GPT-4.5 optimal, während für komplexe logische Aufgaben GPT-5 Standard die beste Wahl ist.
