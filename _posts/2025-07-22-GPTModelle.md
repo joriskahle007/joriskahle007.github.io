@@ -4,7 +4,7 @@ title: OpenAI GPT-Modelle 2025 - Welches Modell passt zu deinem Projekt?
 tags: [CSP, Azure, GPT, Azure AI Foundry, Modelle]
 ---
 
-Wenn du dich mit generativer KI beschäftigst, hast du bestimmt schon von den verschiedenen GPT-Modellen gehört. OpenAI bietet inzwischen eine ganze Reihe von Modellen an, jedes mit seinen eigenen Stärken, Besonderheiten und Anwendungsfällen. Es kann am Anfang etwas überwältigend wirken, den Überblick zu behalten, aber keine Sorge – ich erkläre dir alles Schritt für Schritt, damit du genau weißt, welches Modell für dich sinnvoll ist.
+Wenn du dich mit generativer KI beschäftigst, hast du bestimmt schon von den verschiedenen GPT-Modellen gehört. OpenAI bietet inzwischen eine ganze Reihe von Modellen an, jedes mit seinen eigenen Stärken, Besonderheiten und Anwendungsfällen. Es kann am Anfang etwas überwältigend wirken, den Überblick zu behalten, aber keine Sorge – ich erkläre dir alles Schritt für Schritt, damit du genau weißt, welches Modell für dich sinnvoll ist.<br>
 
 
 ## Regionale Verfügbarkeit der Modelle
@@ -27,21 +27,20 @@ Hier ein Überblick über die Verfügbarkeit:
 | Whisper (Audio) |	Ja (über Azure OpenAI) |	Ja (über Azure OpenAI) |
 | Sora (Video) |	Eingeschränkt verfügbar |	Eingeschränkt verfügbar |
 
-💡 Tipp: Sora ist aktuell nur eingeschränkt verfügbar. Wenn du also Videos einsetzen willst, solltest du vorher prüfen, ob das Modell in deiner Region freigeschaltet ist.
-
+💡 Tipp: Sora ist aktuell nur eingeschränkt verfügbar. Wenn du also Videos einsetzen willst, solltest du vorher prüfen, ob das Modell in deiner Region freigeschaltet ist.<br>
 
 ## 🧠 Unterschiede zwischen den GPT-Modellen
 
 Damit du weißt, welches Modell für dich am besten passt, hier eine kurze Übersicht:
-<li>**GPT-3.5** : Stabil, zuverlässig und günstig. Ideal für Chatbots, einfache Analysen oder Standard-Textaufgaben.</li>
-<li>**GPT-4**: Präziser, leistungsfähiger, besonders geeignet für komplexe Textaufgaben und Analysen.</li>
-<li>**GPT-4 Turbo**: Optimierte Version von GPT-4, schneller und kosteneffizienter, ideal für viele gleichzeitige Anfragen.</li>
-<li>**GPT-4o**: Multimodal, verarbeitet Text, Bild und Audio. Perfekt für interaktive Anwendungen.</li>
-<li>**GPT-4.5**: Speziell für kreative Aufgaben wie Storytelling oder Content-Erstellung optimiert.</li>
-<li>**GPT-5 Standard / Mini / Nano**: Neueste Generation, besonders leistungsfähig in Logik, Multimodalität und Anpassungsfähigkeit. Mini und Nano reagieren schneller und benötigen weniger Ressourcen.</li>
-<li>**DALL·E**: Generiert Bilder aus Text. Optimal für Design, Illustration oder visuelle Ideen.</li>
-<li>**Whisper**: Transkribiert und übersetzt Audio zuverlässig. Ideal für Podcasts, Interviews oder Meetings.</li>
-<li>**Sora**: Für Videoinhalte gedacht. KI-gestützte Erstellung und Bearbeitung von Videos.</li>
+**<li>GPT-3.5** : Stabil, zuverlässig und günstig. Ideal für Chatbots, einfache Analysen oder Standard-Textaufgaben.</li>
+**<li>GPT-4**: Präziser, leistungsfähiger, besonders geeignet für komplexe Textaufgaben und Analysen.</li>
+**<li>GPT-4 Turbo**: Optimierte Version von GPT-4, schneller und kosteneffizienter, ideal für viele gleichzeitige Anfragen.</li>
+**<li>GPT-4o**: Multimodal, verarbeitet Text, Bild und Audio. Perfekt für interaktive Anwendungen.</li>
+**<li>GPT-4.5**: Speziell für kreative Aufgaben wie Storytelling oder Content-Erstellung optimiert.</li>
+**<li>GPT-5 Standard / Mini / Nano**: Neueste Generation, besonders leistungsfähig in Logik, Multimodalität und Anpassungsfähigkeit. Mini und Nano reagieren schneller und benötigen weniger Ressourcen.</li>
+**<li>DALL·E**: Generiert Bilder aus Text. Optimal für Design, Illustration oder visuelle Ideen.</li>
+**<li>Whisper**: Transkribiert und übersetzt Audio zuverlässig. Ideal für Podcasts, Interviews oder Meetings.</li>
+**<li>Sora**: Für Videoinhalte gedacht. KI-gestützte Erstellung und Bearbeitung von Videos.</li><br>
 
 
 ## 🧩 Welches Modell passt zu welchem Use Case?
@@ -57,7 +56,7 @@ Damit du die Modelle direkt einordnen kannst, habe ich eine Übersicht erstellt,
 | Audio-Transkription und -übersetzung |	Whisper |	Präzise und schnelle Audioverarbeitung |
 | Videoinhalte erstellen und bearbeiten |	Sora |	KI-gestützte Videoproduktion |
 
-**💡 Tipp: Wenn du mehrere Medien kombinieren willst, ist GPT-4o die flexibelste Lösung. Für kreative Projekte lohnt sich GPT-4.5, während GPT-5 für komplexe logische Aufgaben oder anspruchsvolle Multimediaprojekte optimal ist.**
+**💡 Tipp: Wenn du mehrere Medien kombinieren willst, ist GPT-4o die flexibelste Lösung. Für kreative Projekte lohnt sich GPT-4.5, während GPT-5 für komplexe logische Aufgaben oder anspruchsvolle Multimediaprojekte optimal ist.**<br>
 
 ## 💰 Kosten und Performance der Modelle
 
@@ -76,7 +75,7 @@ Die Wahl des richtigen Modells hängt nicht nur von den Funktionen ab, sondern a
 | Whisper |	ca. $0.006 pro Minute  |	- |	Audio-Transkription und -übersetzung |
 | Sora |	Preis auf Anfrage |	- |	Videoinhalte erstellen und bearbeiten |
 
-💡 Tipp: Wenn du viele Anfragen gleichzeitig stellen möchtest, ist GPT-5 Nano oder Mini aufgrund ihrer hohen TPM-Werte besonders geeignet. Für kreative Aufgaben wie Storytelling oder Content Creation ist GPT-4.5 optimal, während für komplexe logische Aufgaben GPT-5 Standard die beste Wahl ist.
+💡 Tipp: Wenn du viele Anfragen gleichzeitig stellen möchtest, ist GPT-5 Nano oder Mini aufgrund ihrer hohen TPM-Werte besonders geeignet. Für kreative Aufgaben wie Storytelling oder Content Creation ist GPT-4.5 optimal, während für komplexe logische Aufgaben GPT-5 Standard die beste Wahl ist.<br>
 
 **✅ Fazit**
 
