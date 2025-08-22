@@ -56,10 +56,27 @@ Damit du die Modelle direkt einordnen kannst, habe ich eine Übersicht erstellt,
 
 **💡 Tipp: Wenn du mehrere Medien kombinieren willst, ist GPT-4o die flexibelste Lösung. Für kreative Projekte lohnt sich GPT-4.5, während GPT-5 für komplexe logische Aufgaben oder anspruchsvolle Multimediaprojekte optimal ist.**
 
+##💰 Kosten und Performance der Modelle
 
-✅ Fazit
+Die Wahl des richtigen Modells hängt nicht nur von den Funktionen ab, sondern auch von den Kosten und der Performance. Hier eine Übersicht der aktuellen Preise und Leistungsdaten:
+
+| Modell |	Kosten pro 1.000 Tokens |	Tokens pro Minute (TPM) |	Besonderheiten |
+| GPT-3.5 |	ca. $0.002 |	ca. 4.000	| Günstig, stabil, ideal für einfache Aufgaben |
+| GPT-4 |	ca. $0.03 |	ca. 1.000 |	Präzise, leistungsfähig, für komplexe Aufgaben geeignet |
+| GPT-4 Turbo |	ca. $0.015 |	ca. 2.000 |	Schnell, kosteneffizient, für viele Anfragen gleichzeitig |
+| GPT-4o |	ca. $0.025 |	ca. 1.500 |	Multimodal, verarbeitet Text, Bild und Audio |
+| GPT-4.5 |	ca. $0.075 |	ca. 800 |	Kreativ, für Storytelling und Content Creation optimiert |
+| GPT-5 Standard |	ca. $0.05 |	ca. 2.500 |	Neueste Generation, hohe Leistung |
+| GPT-5 Mini |	ca. $0.03 |	ca. 3.000 |	Schnell, ressourcenschonend |
+| GPT-5 Nano |	ca. $0.02 |	ca. 4.000 |	Sehr schnell, für einfache Aufgaben geeignet |
+| DALL·E |	ca. $0.10 | pro Bild |	-	|Bildgenerierung aus Text |
+| Whisper |	ca. $0.006 | pro Minute |	- |	Audio-Transkription und -übersetzung |
+| Sora |	Preis auf Anfrage |	- |	Videoinhalte erstellen und bearbeiten |
+
+💡 Tipp: Wenn du viele Anfragen gleichzeitig stellen möchtest, ist GPT-5 Nano oder Mini aufgrund ihrer hohen TPM-Werte besonders geeignet. Für kreative Aufgaben wie Storytelling oder Content Creation ist GPT-4.5 optimal, während für komplexe logische Aufgaben GPT-5 Standard die beste Wahl ist.
+
+**✅ Fazit**
 
 Die Wahl des richtigen Modells hängt stark von deinem Anwendungsfall ab. Für einfache Textaufgaben reicht oft GPT-3.5 aus. Für komplexere Texte oder multimodale Projekte sind GPT-4, GPT-4o oder GPT-5 die besseren Optionen. Für visuelle Inhalte nutze DALL·E, für Audio Whisper und für Video Sora – soweit verfügbar.
 
 Wenn du dein Projekt planst, überlege dir also zuerst, was du genau umsetzen willst, und prüfe die regionale Verfügbarkeit. So stellst du sicher, dass du das passende Modell einsetzt und die Stärken optimal nutzen kannst.
-
