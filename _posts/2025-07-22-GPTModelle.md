@@ -1,6 +1,6 @@
 ---
 layout: post
-title: OpenAI GPT-Modelle 2025: Welches Modell passt zu deinem Projekt?
+title: OpenAI GPT-Modelle 2025 - Welches Modell passt zu deinem Projekt?
 tags: [CSP, Azure, GPT, Azure AI Foundry, Modelle]
 ---
 
