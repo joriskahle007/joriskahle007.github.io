@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Azure OpenAI-Modelle 2025: Vollständiger Überblick – leicht verständlich
+title: Azure OpenAI GPT-Modelle - Vollständiger Überblick – leicht verständlich
 tags: [CSP, Azure, GPT, Azure AI Foundry, Modelle]
 ---
 
