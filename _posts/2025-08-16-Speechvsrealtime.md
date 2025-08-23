@@ -45,8 +45,8 @@ konversationelle Intelligenz (Dialog-Management, Kontextbeibehaltung, generative
 
 ## 5) Anpassbarkeit & Datenschutz / On-Prem Optionen
 
-<li>**Azure Speech** hat starke Anpassungsoptionen (Custom Speech, Custom Neural Voice) und bietet auch Connected Container / On-Prem-Optionen für streng regulierte Umgebungen. Wenn Datenhoheit wichtig ist, ist Speech Service oft die einfachere Route. </li>
-<li>**gpt-4o Realtime** läuft derzeit als Cloud-Service (Azure OpenAI). Bei sensiblen Daten musst du also Azure-Bedingungen beachten und ggf. zusätzliche Architektur (z. B. Vormaskierung, On-Prem Vorverarbeitung) einsetzen. Für vollständig Offline-Szenarien sind GPT-OSS / Open-Weight-Modelle eine Alternative, aber sie bringen andere technische Herausforderungen mit.</li><br><br>
+<li><b>Azure Speech</b> hat starke Anpassungsoptionen (Custom Speech, Custom Neural Voice) und bietet auch Connected Container / On-Prem-Optionen für streng regulierte Umgebungen. Wenn Datenhoheit wichtig ist, ist Speech Service oft die einfachere Route. </li>
+<li><b>gpt-4o Realtime</b> läuft derzeit als Cloud-Service (Azure OpenAI). Bei sensiblen Daten musst du also Azure-Bedingungen beachten und ggf. zusätzliche Architektur (z. B. Vormaskierung, On-Prem Vorverarbeitung) einsetzen. Für vollständig Offline-Szenarien sind GPT-OSS / Open-Weight-Modelle eine Alternative, aber sie bringen andere technische Herausforderungen mit.</li><br><br>
 
 ## 6) Skalierung, Limits und TPM/RPM
 
@@ -76,17 +76,17 @@ konversationelle Intelligenz (Dialog-Management, Kontextbeibehaltung, generative
 
 **Wähle gpt-4o Realtime Preview, wenn:**
 <li>Du einen <b>natürlichen, dialogischen Voice-Agent</b> bauen willst, bei dem die KI nicht nur transkribiert, sondern inhaltlich reagiert, Fragen stellt, kontextbewusst handelt und direkt Audio-Antworten liefert.</li>
-<li>Du Interruption/echten Back-and-forth-Dialog mit generativer Intelligenz brauchst (z. B. Smart Assistant, Live Translator + generative Post-Processing). </li>
+<li>Du Interruption/echten Back-and-forth-Dialog mit generativer Intelligenz brauchst (z. B. Smart Assistant, Live Translator + generative Post-Processing). </li><br>
 
 **Kombination (häufig empfohlen)**: Für viele Produktionsszenarien ist eine **Hybride Architektur** ideal: Speech Service (ASR & TTS) für bestmögliche Transkriptions-/Stimmenqualität und gpt-4o Realtime für das konversationelle Reasoning / Generative Layer — oder umgekehrt: GPT für Dialog, Speech Service als „Fallback“ / Custom ASR für kritische Transkriptionspfade.
 
 ## 10) Kurze Vergleichstabelle (kompakt)
-| Merkmal | Azure Speech Service | gpt-4o Realtime Preview |
-| Kernfunktion | ASR, TTS, Übersetzung, Speaker-Features. | Speech in → generative speech/text out, multimodale Dialoge. |
-| Beste Stärke | 	Anpassbare Transkription, Custom Voices, SDKs, On-Prem Optionen. |	Natürliche, interaktive Konversationen; End-to-end Generierung. |
-| Latenz/Realtime | Sehr geringe TTS/ASR-Latenzen, SDK-Optimierungen. |	Realtime-optimiert via WebRTC/WebSocket, 100K TPM / 1K RPM Preview-Limit pro Deployment. |
-| Anpassbarkeit | Hohe Anpassung (Custom Speech/Voice), Container. | Anpassung über prompt-engineering und system messages; weniger native voice-custom options. |
-| Abrechnung | Audio-Stunden / Zeichen / Commitment-Tiers. | Token-basierte Abrechnung / Realtime Preismodell (prüfe Azure OpenAI Pricing). |
+|  Merkmal  |  Azure Speech Service  |  gpt-4o Realtime Preview  |
+|  Kernfunktion  |  ASR, TTS, Übersetzung, Speaker-Features.  |  Speech in → generative speech/text out, multimodale Dialoge.  |
+|  Beste Stärke  |  Anpassbare Transkription, Custom Voices, SDKs, On-Prem Optionen.  |  Natürliche, interaktive Konversationen; End-to-end Generierung.  |
+|  Latenz/Realtime  |  Sehr geringe TTS/ASR-Latenzen, SDK-Optimierungen.  |  Realtime-optimiert via WebRTC/WebSocket, 100K TPM / 1K RPM Preview-Limit pro Deployment.  |
+|  Anpassbarkeit  |  Hohe Anpassung (Custom Speech/Voice), Container.  |  Anpassung über prompt-engineering und system messages; weniger native voice-custom options.  |
+|  Abrechnung  |  Audio-Stunden / Zeichen / Commitment-Tiers.  |  Token-basierte Abrechnung / Realtime Preismodell (prüfe Azure OpenAI Pricing).  |
 
 
 ## Fazit — in einem Satz
