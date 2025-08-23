@@ -82,8 +82,6 @@ konversationelle Intelligenz (Dialog-Management, Kontextbeibehaltung, generative
 
 ## 10) Kurze Vergleichstabelle (kompakt)
 
-| test | test | test |
-
 |  Merkmal  |  Azure Speech Service  |  gpt-4o Realtime Preview  |
 |  Kernfunktion  |  ASR, TTS, Übersetzung, Speaker-Features.  |  Speech in → generative speech/text out, multimodale Dialoge.  |
 |  Beste Stärke  |  Anpassbare Transkription, Custom Voices, SDKs, On-Prem Optionen.  |  Natürliche, interaktive Konversationen; End-to-end Generierung.  |
