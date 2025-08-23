@@ -22,60 +22,60 @@ konversationelle Intelligenz (Dialog-Management, Kontextbeibehaltung, generative
 ## 2) Funktionale Fähigkeiten — was kann jeder Dienst besonders gut?
 
 **Azure Speech Service (Stärken)**
-<li>Sehr robuste **ASR** (Speech-to-Text) mit Optionen zur Anpassung (Custom Speech, Domain-Specific Models).</li>
-<li>**Text-to-Speech** mit natürlichen, anpassbaren Stimmen (auch Neural/Custom Voices).</li>
-<li>**Speech Translation** (Realtime Übersetzung) und Speaker-Diarization (Wer spricht wann).</li>
+<li>Sehr robuste <b>ASR</b> (Speech-to-Text) mit Optionen zur Anpassung (Custom Speech, Domain-Specific Models).</li>
+<li><b>Text-to-Speech</b> mit natürlichen, anpassbaren Stimmen (auch Neural/Custom Voices).</li>
+<li><b>Speech Translation</b> (Realtime Übersetzung) und Speaker-Diarization (Wer spricht wann).</li>
 <li>SDKs für iOS/Android, C#/JavaScript, Edge/Container-Deployments — also viele Integrationsmöglichkeiten. </li><br>
 
 **gpt-4o Realtime Preview (Stärken)**
-<li>**End-to-end conversational AI**: speech in → intent understanding → generative reply → speech out — alles in einem Modell, sehr gut für interaktive Voice Agents, Live-Assistants und kontextreiche Dialoge.</li>
+<li><b>End-to-end conversational AI: speech in → intent understanding → generative reply → speech out — alles in einem Modell, sehr gut für interaktive Voice Agents, Live-Assistants und kontextreiche Dialoge.</li>
 <li>Unterstützt WebRTC / WebSocket für Low-Latency Streaming (echte Gesprächs-Experience).</li>
 <li>Kann mehr als reine Transkription: direkt Handlungen vorschlagen, kontextuelle Nachfragen stellen, Inhalte zusammenfassen oder dynamisch Tools ansteuern (falls integriert).</li><br>
 
 ## 3) Latenz & Streaming — wie "echt" ist Realtime?
 
-<li>**Speech Service** bietet low-latency ASR / TTS mit Optimierungen für „first byte latency“ und Best Practices, um Synthese und Empfang möglichst schnell zu machen — ideal, wenn du kristallklare Transkripte oder minimal verzögerte TTS brauchst. Die SDKs sind auf niedrige Latenz und Paket-Resilienz optimiert. </li>
-**<li>gpt-4o Realtime** ist explizit für niedrige Latenz bei dialogischem Sprachfluss ausgelegt: Audio wird gestreamt und das Modell sendet Audio-Antworten (oder Text) zurück — damit eignet es sich für natürliche Gespräche (Interruption, Back-and-forth). Die Realtime-API unterstützt WebRTC und WebSockets für genau diesen Anwendungsfall. </li>
+<li><b>Speech Service</b> bietet low-latency ASR / TTS mit Optimierungen für „first byte latency“ und Best Practices, um Synthese und Empfang möglichst schnell zu machen — ideal, wenn du kristallklare Transkripte oder minimal verzögerte TTS brauchst. Die SDKs sind auf niedrige Latenz und Paket-Resilienz optimiert. </li>
+<li><b>gpt-4o Realtime</b> ist explizit für niedrige Latenz bei dialogischem Sprachfluss ausgelegt: Audio wird gestreamt und das Modell sendet Audio-Antworten (oder Text) zurück — damit eignet es sich für natürliche Gespräche (Interruption, Back-and-forth). Die Realtime-API unterstützt WebRTC und WebSockets für genau diesen Anwendungsfall. </li><br>
 **Praxis**: Wenn Du ein System brauchst, das sehr schnell und zuverlässig transkribiert (z. B. Meetings, Compliance-Archivierung), ist Speech Service oft die robustere Wahl. Wenn Du dagegen eine natürliche sprechende KI-Person (Assistant) bauen willst, die kontextreich reagiert, ist gpt-4o realtime oft passender.
 
 ## 4) Qualität der Transkription vs. Generative Intelligenz
 
-**<li>Azure Speech** liefert in typischen Produktiv-Szenarien bessere, anpassbare Transkriptionsergebnisse (Custom Vocabulary, Domain-Adaptation). Für reine ASR-Workloads ist es meist genauer und fehlerärmer, vor allem in schwierigen akustischen Umgebungen oder bei Fachvokabular. 
-<li>gpt-4o Realtime kann zwar ebenfalls transkribieren (oder versteht Audio direkt), sein Vorteil liegt aber in der Generierungsseite: es interpretiert, paraphrasiert, beantwortet und schafft Kontext — nicht primär in ASR-Feinabstimmung. Für beste Transkriptionsqualität in hochkritischen Szenarien würdest du häufig beide kombinieren: Speech Service für die „ultra-saubere“ Transkription und GPT-4o für die konversationelle Verarbeitung/Antwort. (Tipp: Pipelines, die beide nutzen, sind gängig.)</li><br>
+<li><b>Azure Speech</b> liefert in typischen Produktiv-Szenarien bessere, anpassbare Transkriptionsergebnisse (Custom Vocabulary, Domain-Adaptation). Für reine ASR-Workloads ist es meist genauer und fehlerärmer, vor allem in schwierigen akustischen Umgebungen oder bei Fachvokabular. 
+<li><b>gpt-4o Realtime</b> kann zwar ebenfalls transkribieren (oder versteht Audio direkt), sein Vorteil liegt aber in der Generierungsseite: es interpretiert, paraphrasiert, beantwortet und schafft Kontext — nicht primär in ASR-Feinabstimmung. Für beste Transkriptionsqualität in hochkritischen Szenarien würdest du häufig beide kombinieren: Speech Service für die „ultra-saubere“ Transkription und GPT-4o für die konversationelle Verarbeitung/Antwort. (Tipp: Pipelines, die beide nutzen, sind gängig.)</li><br>
 
 ## 5) Anpassbarkeit & Datenschutz / On-Prem Optionen
 
 <li>**Azure Speech** hat starke Anpassungsoptionen (Custom Speech, Custom Neural Voice) und bietet auch Connected Container / On-Prem-Optionen für streng regulierte Umgebungen. Wenn Datenhoheit wichtig ist, ist Speech Service oft die einfachere Route. </li>
 <li>**gpt-4o Realtime** läuft derzeit als Cloud-Service (Azure OpenAI). Bei sensiblen Daten musst du also Azure-Bedingungen beachten und ggf. zusätzliche Architektur (z. B. Vormaskierung, On-Prem Vorverarbeitung) einsetzen. Für vollständig Offline-Szenarien sind GPT-OSS / Open-Weight-Modelle eine Alternative, aber sie bringen andere technische Herausforderungen mit.</li><br>
 
-##6) Skalierung, Limits und TPM/RPM
+## 6) Skalierung, Limits und TPM/RPM
 
-<li>Für **gpt-4o-realtime-preview** hat Microsoft während der Preview klare Raten-Limits genannt: **100.000 TPM (Tokens per Minute)** und **1.000 RPM (Requests per Minute)** pro Realtime-Deployment (Preview-Hinweis). Das ist relevant, wenn du viele parallele Gespräche mit generativer Ausgabe betreibst. 
-<li>**Speech Service** hat eigene Quotas/Throttling-Regeln (Sessions, concurrent requests, Latenzlimits). Für große Mengen Audio-Transkription nutzt du Commit-Tiers bzw. Commitment-Pläne (Hours/Monat) oder Container-Deployments. Schau in die Quotas & Limits, bevor du produktiv gehst — dort findest du die genauen numerischen Limits für dein Abonnement. </li><br>
+<li>Für <b>gpt-4o-realtime-preview</b> hat Microsoft während der Preview klare Raten-Limits genannt: <b>100.000 TPM (Tokens per Minute)</b> und <b>1.000 RPM (Requests per Minute)</b> pro Realtime-Deployment (Preview-Hinweis). Das ist relevant, wenn du viele parallele Gespräche mit generativer Ausgabe betreibst. 
+<li><b>Speech Service</b> hat eigene Quotas/Throttling-Regeln (Sessions, concurrent requests, Latenzlimits). Für große Mengen Audio-Transkription nutzt du Commit-Tiers bzw. Commitment-Pläne (Hours/Monat) oder Container-Deployments. Schau in die Quotas & Limits, bevor du produktiv gehst — dort findest du die genauen numerischen Limits für dein Abonnement. </li><br>
 
 **Konsequenz:** Wenn du hohe parallele Konversationen mit viel Tokenoutput planst (z. B. Tausende von gleichzeitigen Gesprächen mit langen generativen Antworten), musst du die Realtime-Limits berücksichtigen oder mit mehreren Deployments/Regionen arbeiten.<br>
 
 ## 7) Preismodelle — wie wird abgerechnet?
 
-<li>**Azure Speech Service** wird typischerweise nach **Audio-Stunden** (Speech-to-Text) oder **Zeichen** (TTS) / Commitment-Tiers abgerechnet; es gibt volumengebundene Tarife und Container/Enterprise-Optionen. Das heißt: du zahlst in der Regel pro transkribierter Stunde oder pro erzeugtem Audiotext-Volumen. </li>
-<li>**gpt-4o Realtime (Azure OpenAI)** wird überwiegend **per Token** bzw. nach einem spezifischen Realtime-Preismodell abgerechnet (Input/Output Tokens / ggf. Audio-Input-Preise). Da Realtime noch Preview-Status hat, sind Preisstrukturen unterschiedlich je nach Region/Datazone — prüfe die Azure OpenAI Pricing-Seite beim Produktivgang. </li>
+<li><b>Azure Speech Service</b> wird typischerweise nach <b>Audio-Stunden</b> (Speech-to-Text) oder <b>Zeichen</b> (TTS) / Commitment-Tiers abgerechnet; es gibt volumengebundene Tarife und Container/Enterprise-Optionen. Das heißt: du zahlst in der Regel pro transkribierter Stunde oder pro erzeugtem Audiotext-Volumen. </li>
+<li><b>gpt-4o Realtime (Azure OpenAI)</b> wird überwiegend <b>per Token</b> bzw. nach einem spezifischen Realtime-Preismodell abgerechnet (Input/Output Tokens / ggf. Audio-Input-Preise). Da Realtime noch Preview-Status hat, sind Preisstrukturen unterschiedlich je nach Region/Datazone — prüfe die Azure OpenAI Pricing-Seite beim Produktivgang. </li><br>
 
 **Praxis:** Für lange Aufzeichnungen (z. B. Meetings → Archiv) ist Speech Service oft kosteneffizienter; für dialogische, generative Antworten mit hohem Tokenoutput kann die Token-Abrechnung von Realtime-LLMs schnell kostenwirksam werden — hier lohnt sich ein Kosten-Proof-of-Concept.<br>
 
 ## 8) Entwickler-Experience & Integrationen
 
-<li>**Speech SDKs** sind ausgereift, bieten stabile Offline/Edge-Optionen, Device-Support und Tools für Anpassung (Pronunciation, Diarization). Gut dokumentierte SDKs für mobile Apps, Server-Integrationen und Container. </li>
-<li>**gpt-4o Realtime** nutzt **/realtime** Endpunkte mit WebRTC bzw. WebSocket. Es gibt Quickstarts, Beispiel-Repos (Azure Samples) und spezifische Realtime-Workflows (Streaming, session management). Für komplexe multi-turn Dialoge und Tool-Anbindung ist das Realtime-API sehr praktisch. </li><br>
+<li><b>Speech SDKs</b> sind ausgereift, bieten stabile Offline/Edge-Optionen, Device-Support und Tools für Anpassung (Pronunciation, Diarization). Gut dokumentierte SDKs für mobile Apps, Server-Integrationen und Container. </li>
+<li><b>gpt-4o Realtime</b> nutzt <b>/realtime</b> Endpunkte mit WebRTC bzw. WebSocket. Es gibt Quickstarts, Beispiel-Repos (Azure Samples) und spezifische Realtime-Workflows (Streaming, session management). Für komplexe multi-turn Dialoge und Tool-Anbindung ist das Realtime-API sehr praktisch. </li><br>
 
 ## 9) Wann solltest du welches wählen? (konkrete Entscheidungs-Hilfen)
 
 **Wähle Azure Speech Service, wenn:**
-<li>Du saubere, anpassbare **Transkriptionen** oder hochwertige **TTS-Stimmen** brauchst.</li>
+<li>Du saubere, anpassbare <b>Transkriptionen</b> oder hochwertige <b>TTS-Stimmen</b> brauchst.</li>
 <li>Du spezielle Speech-Features (Diarization, Speech Translation, Speaker Recognition, Custom Voice) einsetzen willst.</li>
 <li>Du On-Prem/Container-Optionen oder enge Datenschutzanforderungen hast. </li>
 
 **Wähle gpt-4o Realtime Preview, wenn:**
-<li>Du einen **natürlichen, dialogischen Voice-Agent** bauen willst, bei dem die KI nicht nur transkribiert, sondern inhaltlich reagiert, Fragen stellt, kontextbewusst handelt und direkt Audio-Antworten liefert.</li>
+<li>Du einen <b>natürlichen, dialogischen Voice-Agent</b> bauen willst, bei dem die KI nicht nur transkribiert, sondern inhaltlich reagiert, Fragen stellt, kontextbewusst handelt und direkt Audio-Antworten liefert.</li>
 <li>Du Interruption/echten Back-and-forth-Dialog mit generativer Intelligenz brauchst (z. B. Smart Assistant, Live Translator + generative Post-Processing). </li>
 
 **Kombination (häufig empfohlen)**: Für viele Produktionsszenarien ist eine **Hybride Architektur** ideal: Speech Service (ASR & TTS) für bestmögliche Transkriptions-/Stimmenqualität und gpt-4o Realtime für das konversationelle Reasoning / Generative Layer — oder umgekehrt: GPT für Dialog, Speech Service als „Fallback“ / Custom ASR für kritische Transkriptionspfade.
