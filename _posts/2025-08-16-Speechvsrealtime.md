@@ -28,7 +28,7 @@ konversationelle Intelligenz (Dialog-Management, Kontextbeibehaltung, generative
 <li>SDKs für iOS/Android, C#/JavaScript, Edge/Container-Deployments — also viele Integrationsmöglichkeiten. </li><br>
 
 **gpt-4o Realtime Preview (Stärken)**
-<li><b>End-to-end conversational AI: speech in → intent understanding → generative reply → speech out — alles in einem Modell, sehr gut für interaktive Voice Agents, Live-Assistants und kontextreiche Dialoge.</li>
+<li><b>End-to-end conversational AI</b>: speech in → intent understanding → generative reply → speech out — alles in einem Modell, sehr gut für interaktive Voice Agents, Live-Assistants und kontextreiche Dialoge.</li>
 <li>Unterstützt WebRTC / WebSocket für Low-Latency Streaming (echte Gesprächs-Experience).</li>
 <li>Kann mehr als reine Transkription: direkt Handlungen vorschlagen, kontextuelle Nachfragen stellen, Inhalte zusammenfassen oder dynamisch Tools ansteuern (falls integriert).</li><br>
 
