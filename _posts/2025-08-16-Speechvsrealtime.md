@@ -81,6 +81,9 @@ konversationelle Intelligenz (Dialog-Management, Kontextbeibehaltung, generative
 **Kombination (häufig empfohlen)**: Für viele Produktionsszenarien ist eine **Hybride Architektur** ideal: Speech Service (ASR & TTS) für bestmögliche Transkriptions-/Stimmenqualität und gpt-4o Realtime für das konversationelle Reasoning / Generative Layer — oder umgekehrt: GPT für Dialog, Speech Service als „Fallback“ / Custom ASR für kritische Transkriptionspfade.
 
 ## 10) Kurze Vergleichstabelle (kompakt)
+
+| test | test | test |
+
 |  Merkmal  |  Azure Speech Service  |  gpt-4o Realtime Preview  |
 |  Kernfunktion  |  ASR, TTS, Übersetzung, Speaker-Features.  |  Speech in → generative speech/text out, multimodale Dialoge.  |
 |  Beste Stärke  |  Anpassbare Transkription, Custom Voices, SDKs, On-Prem Optionen.  |  Natürliche, interaktive Konversationen; End-to-end Generierung.  |
