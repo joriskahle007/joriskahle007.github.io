@@ -36,11 +36,11 @@ konversationelle Intelligenz (Dialog-Management, Kontextbeibehaltung, generative
 
 <li><b>Speech Service</b> bietet low-latency ASR / TTS mit Optimierungen für „first byte latency“ und Best Practices, um Synthese und Empfang möglichst schnell zu machen — ideal, wenn du kristallklare Transkripte oder minimal verzögerte TTS brauchst. Die SDKs sind auf niedrige Latenz und Paket-Resilienz optimiert. </li>
 <li><b>gpt-4o Realtime</b> ist explizit für niedrige Latenz bei dialogischem Sprachfluss ausgelegt: Audio wird gestreamt und das Modell sendet Audio-Antworten (oder Text) zurück — damit eignet es sich für natürliche Gespräche (Interruption, Back-and-forth). Die Realtime-API unterstützt WebRTC und WebSockets für genau diesen Anwendungsfall. </li><br>
-**Praxis**: Wenn Du ein System brauchst, das sehr schnell und zuverlässig transkribiert (z. B. Meetings, Compliance-Archivierung), ist Speech Service oft die robustere Wahl. Wenn Du dagegen eine natürliche sprechende KI-Person (Assistant) bauen willst, die kontextreich reagiert, ist gpt-4o realtime oft passender.
+**Praxis**: Wenn Du ein System brauchst, das sehr schnell und zuverlässig transkribiert (z. B. Meetings, Compliance-Archivierung), ist Speech Service oft die robustere Wahl. Wenn Du dagegen eine natürliche sprechende KI-Person (Assistant) bauen willst, die kontextreich reagiert, ist gpt-4o realtime oft passender.<br>
 
 ## 4) Qualität der Transkription vs. Generative Intelligenz
 
-<li><b>Azure Speech</b> liefert in typischen Produktiv-Szenarien bessere, anpassbare Transkriptionsergebnisse (Custom Vocabulary, Domain-Adaptation). Für reine ASR-Workloads ist es meist genauer und fehlerärmer, vor allem in schwierigen akustischen Umgebungen oder bei Fachvokabular. 
+<li><b>Azure Speech</b> liefert in typischen Produktiv-Szenarien bessere, anpassbare Transkriptionsergebnisse (Custom Vocabulary, Domain-Adaptation). Für reine ASR-Workloads ist es meist genauer und fehlerärmer, vor allem in schwierigen akustischen Umgebungen oder bei Fachvokabular. </li>
 <li><b>gpt-4o Realtime</b> kann zwar ebenfalls transkribieren (oder versteht Audio direkt), sein Vorteil liegt aber in der Generierungsseite: es interpretiert, paraphrasiert, beantwortet und schafft Kontext — nicht primär in ASR-Feinabstimmung. Für beste Transkriptionsqualität in hochkritischen Szenarien würdest du häufig beide kombinieren: Speech Service für die „ultra-saubere“ Transkription und GPT-4o für die konversationelle Verarbeitung/Antwort. (Tipp: Pipelines, die beide nutzen, sind gängig.)</li><br>
 
 ## 5) Anpassbarkeit & Datenschutz / On-Prem Optionen
