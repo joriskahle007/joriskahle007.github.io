@@ -23,7 +23,7 @@ Azure AI Foundry bietet dir eine beeindruckende Bandbreite an Modellen. Hier die
 
 
 ## Regionale Verfügbarkeit der Modelle
-**<li>GPT-5 Modelle** (Standard, mini, nano, chat) sind aktuell in **East US 2** und **Sweden Central** verfügbar. Für GPT-5 ist eine Registrierung nötig, die kleineren Varianten hingegen nicht</li>
+<li>GPT-5 Modelle (Standard, mini, nano, chat) sind aktuell in **East US 2** und **Sweden Central** verfügbar. Für GPT-5 ist eine Registrierung nötig, die kleineren Varianten hingegen nicht</li>
 <li>Die älteren Modelle **(GPT-4, o-Serien, GPT-4o etc.)** sind breit über viele Regionen verfügbar – beispielweise auch in **Sweden Central, Germany West, East US, West US* und weiteren</li><br>
 
 💡 Tipp: Sora ist aktuell nur eingeschränkt verfügbar. Wenn du also Videos einsetzen willst, solltest du vorher prüfen, ob das Modell in deiner Region freigeschaltet ist.<br>
@@ -54,8 +54,8 @@ Der Azure Speech Service und gpt-4o Realtime Preview erfüllen unterschiedliche 
 ## Fazit
 
 Mit Azure AI Foundry erhältst du Zugang zu einer breiten Palette von Modellen – von klassischen Chatbots über Bild-/Audio-KI bis hin zu leistungsfähigen GPT-5-Varianten. Überlege dir einfach:
-**1.) Was ist dein Use Case?** (Text, Bild, Audio, Chat-Agent, Code etc.)
-**2.) Wie viel Leistung & Token-Kapazität brauchst du?**
-**3.) Wo wird das Modell gehostet?** (Regionale Verfügbarkeit checken)
-**4.) Welche TPM- und Kostenbedingungen sind akzeptabel?**
+<li>**1.) Was ist dein Use Case?** (Text, Bild, Audio, Chat-Agent, Code etc.)</li>
+<li>**2.) Wie viel Leistung & Token-Kapazität brauchst du?**</li>
+<li>**3.) Wo wird das Modell gehostet?** (Regionale Verfügbarkeit checken)</li>
+<li>**4.) Welche TPM- und Kostenbedingungen sind akzeptabel?**</li>
 Dann wählst du das Modell, das am besten passt – und nutzt es effizient, effizient und kostenbewusst.
