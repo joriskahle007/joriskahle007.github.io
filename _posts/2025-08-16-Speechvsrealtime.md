@@ -50,7 +50,7 @@ konversationelle Intelligenz (Dialog-Management, Kontextbeibehaltung, generative
 
 ## 6) Skalierung, Limits und TPM/RPM
 
-<li>Für <b>gpt-4o-realtime-preview</b> hat Microsoft während der Preview klare Raten-Limits genannt: <b>100.000 TPM (Tokens per Minute)</b> und <b>1.000 RPM (Requests per Minute)</b> pro Realtime-Deployment (Preview-Hinweis). Das ist relevant, wenn du viele parallele Gespräche mit generativer Ausgabe betreibst. 
+<li>Für <b>gpt-4o-realtime-preview</b> hat Microsoft während der Preview klare Raten-Limits genannt: <b>100.000 TPM (Tokens per Minute)</b> und <b>1.000 RPM (Requests per Minute)</b> pro Realtime-Deployment (Preview-Hinweis). Das ist relevant, wenn du viele parallele Gespräche mit generativer Ausgabe betreibst. </li>
 <li><b>Speech Service</b> hat eigene Quotas/Throttling-Regeln (Sessions, concurrent requests, Latenzlimits). Für große Mengen Audio-Transkription nutzt du Commit-Tiers bzw. Commitment-Pläne (Hours/Monat) oder Container-Deployments. Schau in die Quotas & Limits, bevor du produktiv gehst — dort findest du die genauen numerischen Limits für dein Abonnement. </li><br>
 
 **Konsequenz:** Wenn du hohe parallele Konversationen mit viel Tokenoutput planst (z. B. Tausende von gleichzeitigen Gesprächen mit langen generativen Antworten), musst du die Realtime-Limits berücksichtigen oder mit mehreren Deployments/Regionen arbeiten.<br>
