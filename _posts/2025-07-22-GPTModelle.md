@@ -23,8 +23,8 @@ Azure AI Foundry bietet dir eine beeindruckende Bandbreite an Modellen. Hier die
 
 
 ## Regionale Verfügbarkeit der Modelle
-<li>**GPT-5 Modelle** (Standard, mini, nano, chat) sind aktuell in **East US 2** und **Sweden Central** verfügbar. Für GPT-5 ist eine Registrierung nötig, die kleineren Varianten hingegen nicht</li>
-<li>Die älteren Modelle (**GPT-4, o-Serien, GPT-4o etc.**) sind breit über viele Regionen verfügbar – beispielweise auch in **Sweden Central, Germany West, East US, West US* und weiteren</li>
+**<li>GPT-5 Modelle** (Standard, mini, nano, chat) sind aktuell in **East US 2** und **Sweden Central** verfügbar. Für GPT-5 ist eine Registrierung nötig, die kleineren Varianten hingegen nicht</li>
+<li>Die älteren Modelle **(GPT-4, o-Serien, GPT-4o etc.)** sind breit über viele Regionen verfügbar – beispielweise auch in **Sweden Central, Germany West, East US, West US* und weiteren</li><br>
 
 💡 Tipp: Sora ist aktuell nur eingeschränkt verfügbar. Wenn du also Videos einsetzen willst, solltest du vorher prüfen, ob das Modell in deiner Region freigeschaltet ist.<br>
 
