@@ -47,7 +47,7 @@ Die große Stärke der Azure OpenAI Plattform liegt darin, dass du dir genau das
 
 ## Azure Speech Service vs. gpt-4o Realtime Preview
 Der Azure Speech Service und gpt-4o Realtime Preview erfüllen unterschiedliche Rollen: Speech Service ist ein spezialisierter Sprachdienst für präzise Transkription (ASR), natürlich klingende Text-to-Speech-Stimmen, Übersetzungen und Speaker-Features wie Diarisierung. Er eignet sich vor allem, wenn es um saubere Transkripte, Anpassungen mit Fachvokabular, Custom Voices oder sogar On-Prem-Deployments mit strengen Datenschutzanforderungen geht und wird nach Audio-Stunden oder erzeugten Zeichen abgerechnet. gpt-4o Realtime hingegen ist ein multimodales Sprachmodell, das Audio direkt versteht und in Echtzeit generative Antworten als Text oder Sprache zurückgibt – also perfekt für interaktive Dialog-Systeme, Assistenten oder Voice Agents, bei denen es auf natürliche Konversationen ankommt. Technisch setzt es auf WebRTC/WebSockets für niedrige Latenz, hat in der Preview bestimmte Limits (z. B. ca. 100.000 Tokens pro Minute und 1.000 Requests pro Minute) und wird tokenbasiert abgerechnet. Während Speech Service für höchste Transkriptionsqualität und anpassbare Stimmen die bessere Wahl ist, punktet gpt-4o Realtime bei kontextreichen Gesprächen und generativer Intelligenz. In vielen Szenarien ergänzt sich beides: Speech Service liefert die robuste Sprachbasis, gpt-4o Realtime sorgt für die intelligente, konversationsfähige Ebene.<br><br>
-Zu diesem Thema werden ich einen eigenes Blogbeitrag verfassen. Sei bespannt, welche Insides ich hier für dich hier habe.
+<b>Zu diesem Thema werden ich einen eigenen Blogbeitrag verfassen. Sei bespannt, welche Insides ich hier für dich hier habe.</b>
 
 ## Fazit
 
@@ -55,5 +55,5 @@ Mit Azure AI Foundry erhältst du Zugang zu einer breiten Palette von Modellen �
 <li><b>1.) Was ist dein Use Case?</b> (Text, Bild, Audio, Chat-Agent, Code etc.)</li>
 <li><b>2.) Wie viel Leistung & Token-Kapazität brauchst du?</b></li>
 <li><b>3.) Wo wird das Modell gehostet?</b> (Regionale Verfügbarkeit checken)</li>
-<li><b>4.) Welche TPM- und Kostenbedingungen sind akzeptabel?</b></li>
+<li><b>4.) Welche TPM- und Kostenbedingungen sind akzeptabel?</b></li><br>
 Dann wählst du das Modell, das am besten passt – und nutzt es effizient, effizient und kostenbewusst.
