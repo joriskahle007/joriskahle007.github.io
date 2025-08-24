@@ -14,7 +14,7 @@ Die gesamte Infrastruktur – GPUs, Skalierung, Updates, Verfügbarkeit – lieg
 
 <li>Du rufst das Modell über einen Endpunkt auf.</li>
 <li>Du zahlst nach Nutzungseinheiten (z. B. Tokens).</li>
-<li>Du musst keine VM starten, keine GPU auswählen und auch kein Autoscaling konfigurieren.</li>
+<li>Du musst keine VM starten, keine GPU auswählen und auch kein Autoscaling konfigurieren.</li><br>
 
 Deine Verantwortung verschiebt sich dadurch: Statt dich mit Hardware oder Compute zu beschäftigen, achtest du eher auf Themen wie Kostenkontrolle, Rate Limits, Zugriffssicherheit, Daten- und Prompt-Management sowie Governance.
 
