@@ -12,7 +12,7 @@ Die gesamte Infrastruktur – GPUs, Skalierung, Updates, Verfügbarkeit – lieg
 
 <li>Du rufst das Modell über einen Endpunkt auf.</li>
 <li>Du zahlst nach Nutzungseinheiten (z. B. Tokens).</li>
-<li>Du musst keine VM starten, keine GPU auswählen und auch kein Autoscaling konfigurieren.</li>
+<li>Du musst keine VM starten, keine GPU auswählen und auch kein Autoscaling konfigurieren.</li><br>
 
 Deine Verantwortung verschiebt sich dadurch: Statt dich mit Hardware oder Compute zu beschäftigen, achtest du eher auf Themen wie Kostenkontrolle, Rate Limits, Zugriffssicherheit, Daten- und Prompt-Management sowie Governance.
 
@@ -39,7 +39,7 @@ Die große Stärke der Azure OpenAI Plattform liegt darin, dass du dir genau das
 
 ## Regionale Verfügbarkeit der Modelle
 <li><b>GPT-5 Modelle</b> (Standard, mini, nano, chat) sind aktuell in <b>East US 2</b> und <b>Sweden Central</b> verfügbar. Für GPT-5 ist eine Registrierung nötig, die kleineren Varianten hingegen nicht</li><br>
-<li>Die älteren Modelle <b>(GPT-4, o-Serien, GPT-4o etc.)</b> sind breit über viele Regionen verfügbar – beispielweise auch in **Sweden Central, Germany West, East US, West US* und weiteren</li>
+<li>Die älteren Modelle <b>(GPT-4, o-Serien, GPT-4o etc.)</b> sind breit über viele Regionen verfügbar – beispielweise auch in **Sweden Central, Germany West, East US, West US* und weiteren</li><br>
 
 💡 Tipp: Sora ist aktuell nur eingeschränkt verfügbar. Wenn du also Videos einsetzen willst, solltest du vorher prüfen, ob das Modell in deiner Region freigeschaltet ist.<br><br>
 
