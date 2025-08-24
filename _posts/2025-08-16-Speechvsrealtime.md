@@ -72,7 +72,7 @@ konversationelle Intelligenz (Dialog-Management, Kontextbeibehaltung, generative
 **Wähle Azure Speech Service, wenn:**
 <li>Du saubere, anpassbare <b>Transkriptionen</b> oder hochwertige <b>TTS-Stimmen</b> brauchst.</li>
 <li>Du spezielle Speech-Features (Diarization, Speech Translation, Speaker Recognition, Custom Voice) einsetzen willst.</li>
-<li>Du On-Prem/Container-Optionen oder enge Datenschutzanforderungen hast. </li><br><br>
+<li>Du On-Prem/Container-Optionen oder enge Datenschutzanforderungen hast. </li><br>
 
 **Wähle gpt-4o Realtime Preview, wenn:**
 <li>Du einen <b>natürlichen, dialogischen Voice-Agent</b> bauen willst, bei dem die KI nicht nur transkribiert, sondern inhaltlich reagiert, Fragen stellt, kontextbewusst handelt und direkt Audio-Antworten liefert.</li>
