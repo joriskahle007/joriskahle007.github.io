@@ -6,27 +6,7 @@ tags: [CSP, Azure, GPT, Azure AI Foundry, Modelle]
 
 Es gibt inzwischen so viele KI-Modelle über Azure OpenAI – da den Überblick zu behalten, kann ganz schön herausfordernd sein. Aber keine Sorge, ich erkläre dir in diesem Beitrag alles Schritt für Schritt, verständlich und anschaulich. Von GPT-3.5 über o-Serien, GPT-4-Reihe bis hin zu GPT-5, Audio- und Bildmodellen – und sogar dem Modellrouter. Außerdem zeige ich dir, welche Modelle für welche Use Cases am besten geeignet sind.!<br>
 
-## Die Modellauswahl im Überblick
-
-Azure AI Foundry bietet dir eine beeindruckende Bandbreite an Modellen. Hier die wichtigsten:
-
-| Modellgruppe / Name |	Kurzbeschreibung |
-| GPT-3.5 |	Fortschritt gegenüber GPT-3: besseres Sprach- und Codeverständnis |
-| GPT-4 |	Nächste Generation, präziser, leistungsfähiger |
-| GPT-4o / GPT-4o-Mini / GPT-4 Turbo |	Multimodal (Text & Bild), Turbo-Version für höhere Geschwindigkeit |
-| o-Series (o1, o3, o-mini) |	Speziell für logisches Denken & Problemlösung, größere Input-Fenster |
-| codex-mini |	Sprachmodell mehr mit Fokus auf Code, Ableitung aus o4-Mini |
-| model-router |	Automatischer Auswahlmechanismus für das optimale Modell je Prompt |
-| computer-use-preview |	Experimentelles Modell für toolgestützte Antworten |
-| Embeddings, Image generation, Audio-Modelle |	Für Vektor-Einbettung, Bild & Audio, z. B. Speech-to-Text, TTS |
-| GPT-5 Serie (gpt-5, mini, nano, chat) |	Neueste Generation mit logischem Denken, Multimodalität, Tool-Unterstützung – mit enormen Tokenfenstern |
-
-
-## Regionale Verfügbarkeit der Modelle
-<li><b>GPT-5 Modelle</b> (Standard, mini, nano, chat) sind aktuell in <b>East US 2</b> und <b>Sweden Central</b> verfügbar. Für GPT-5 ist eine Registrierung nötig, die kleineren Varianten hingegen nicht</li>
-<li>Die älteren Modelle <b>(GPT-4, o-Serien, GPT-4o etc.)</b> sind breit über viele Regionen verfügbar – beispielweise auch in **Sweden Central, Germany West, East US, West US* und weiteren</li><br>
-
-💡 Tipp: Sora ist aktuell nur eingeschränkt verfügbar. Wenn du also Videos einsetzen willst, solltest du vorher prüfen, ob das Modell in deiner Region freigeschaltet ist.<br>
+Wenn du in Azure AI Foundry KI-Modelle ausrollen möchtest, gibt es ein paar Dinge, auf die ich persönlich besonders achten würde. Zuerst solltest du dir klar machen, dass der Erfolg deines Deployments stark davon abhängt, wie gut du dein Modell und seine Anforderungen kennst – also nicht nur die Architektur und Größe, sondern auch Themen wie benötigte Rechenressourcen, Latenzanforderungen und Skalierbarkeit. In Azure AI Foundry ist es wichtig, von Anfang an sauber zwischen Experimentierumgebung und Produktionsumgebung zu trennen. So vermeidest du, dass Testmodelle unbemerkt produktiv genutzt werden oder unnötig Kosten verursachen. Ein weiterer Punkt ist Sicherheit: Denke an Zugriffskontrolle, rollenbasierte Berechtigungen und auch an Themen wie Datenverschlüsselung, gerade wenn sensible Daten im Spiel sind. Aus Erfahrung lohnt es sich auch, frühzeitig Monitoring und Logging einzurichten – nicht erst, wenn es Probleme gibt. So kannst du nachvollziehen, wie dein Modell performt, wie es sich über Zeit verändert und ob du nachtrainieren musst. Schließlich spielt Kostenkontrolle eine große Rolle: Azure macht es einfach, Ressourcen hochzufahren, aber man sollte regelmäßig prüfen, ob sie wirklich benötigt werden oder ob eine schlankere Konfiguration reicht. Kurz gesagt: Plane Deployment, Sicherheit, Monitoring und Kostenmanagement von Anfang an mit ein – dann fühlt sich der Schritt vom Prototyp zum stabilen Modell deutlich entspannter an.<br><br>
 
 ## Welches Modell für welchen Use Case?
 
@@ -45,11 +25,17 @@ Die große Stärke der Azure OpenAI Plattform liegt darin, dass du dir genau das
 | Chat-Agent mit Kontextmanagement  |	GPT-5 chat | Wenn du längere Gespräche führst, in denen der Kontext nicht verloren gehen darf, spielt dieses Modell seine Stärke aus. Ideal für Support-Chatbots oder persönliche Assistenten. |
 | Lokale Nutzung / Offline |	gpt-oss-20B / 120B (Open-Weight) |	Für alle, die ihre Daten nicht in die Cloud geben können oder wollen: Die Open-Weight-Modelle laufen lokal und bieten dir maximale Kontrolle – mit dem Nachteil, dass du selbst die Infrastruktur stemmen musst. |<br>
 
-
 💡 Tipp: Wenn du viele Anfragen gleichzeitig stellen möchtest, ist GPT-5 Nano oder Mini aufgrund ihrer hohen TPM-Werte besonders geeignet. Für kreative Aufgaben wie Storytelling oder Content Creation ist GPT-4.5 optimal, während für komplexe logische Aufgaben GPT-5 Standard die beste Wahl ist.<br><br>
+
+## Regionale Verfügbarkeit der Modelle
+<li><b>GPT-5 Modelle</b> (Standard, mini, nano, chat) sind aktuell in <b>East US 2</b> und <b>Sweden Central</b> verfügbar. Für GPT-5 ist eine Registrierung nötig, die kleineren Varianten hingegen nicht</li>
+<li>Die älteren Modelle <b>(GPT-4, o-Serien, GPT-4o etc.)</b> sind breit über viele Regionen verfügbar – beispielweise auch in **Sweden Central, Germany West, East US, West US* und weiteren</li><br>
+
+💡 Tipp: Sora ist aktuell nur eingeschränkt verfügbar. Wenn du also Videos einsetzen willst, solltest du vorher prüfen, ob das Modell in deiner Region freigeschaltet ist.<br>
 
 ## Azure Speech Service vs. gpt-4o Realtime Preview
 Der Azure Speech Service und gpt-4o Realtime Preview erfüllen unterschiedliche Rollen: Speech Service ist ein spezialisierter Sprachdienst für präzise Transkription (ASR), natürlich klingende Text-to-Speech-Stimmen, Übersetzungen und Speaker-Features wie Diarisierung. Er eignet sich vor allem, wenn es um saubere Transkripte, Anpassungen mit Fachvokabular, Custom Voices oder sogar On-Prem-Deployments mit strengen Datenschutzanforderungen geht und wird nach Audio-Stunden oder erzeugten Zeichen abgerechnet. gpt-4o Realtime hingegen ist ein multimodales Sprachmodell, das Audio direkt versteht und in Echtzeit generative Antworten als Text oder Sprache zurückgibt – also perfekt für interaktive Dialog-Systeme, Assistenten oder Voice Agents, bei denen es auf natürliche Konversationen ankommt. Technisch setzt es auf WebRTC/WebSockets für niedrige Latenz, hat in der Preview bestimmte Limits (z. B. ca. 100.000 Tokens pro Minute und 1.000 Requests pro Minute) und wird tokenbasiert abgerechnet. Während Speech Service für höchste Transkriptionsqualität und anpassbare Stimmen die bessere Wahl ist, punktet gpt-4o Realtime bei kontextreichen Gesprächen und generativer Intelligenz. In vielen Szenarien ergänzt sich beides: Speech Service liefert die robuste Sprachbasis, gpt-4o Realtime sorgt für die intelligente, konversationsfähige Ebene.<br><br>
+Zu diesem Thema werden ich einen eigenes Blogbeitrag verfassen. Sei bespannt, welche Insides ich hier für dich hier habe.
 
 ## Fazit
 
