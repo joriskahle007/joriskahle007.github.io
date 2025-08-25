@@ -37,6 +37,41 @@ Die große Stärke der Azure OpenAI Plattform liegt darin, dass du dir genau das
 
 💡 Tipp: Wenn du viele Anfragen gleichzeitig stellen möchtest, ist GPT-5 Nano oder Mini aufgrund ihrer hohen TPM-Werte besonders geeignet. Für kreative Aufgaben wie Storytelling oder Content Creation ist GPT-4.5 optimal, während für komplexe logische Aufgaben GPT-5 Standard die beste Wahl ist.<br><br>
 
+## Token-Kapazität und Abrechnungsmodelle: TPM & PTU
+
+Neben der Wahl des passenden Modells ist auch die Art der Bereitstellung entscheidend.
+<li>TPM (Tokens per Minute): Standard-Limitierung im Pay-as-you-go-Modell. Sie legt fest, wie viele Tokens pro Minute verarbeitet werden dürfen. Gut geeignet für Prototypen oder kleinere Workloads.</li>
+<li>PTU (Provisioned Throughput Unit): Reservierte Kapazität mit garantierten Durchsatzwerten. PTUs stellen sicher, dass die Latenz auch bei hoher Auslastung stabil bleibt. Besonders interessant für produktive Szenarien oder wenn Lastspitzen vorhersehbar sind.</li>
+
+| Merkmal |	TPM (Tokens per Minute) |	PTU (Provisioned Throughput Unit) |
+| Abrechnung |	Pay-as-you-go (pro Token) |	Fixpreis pro reservierter Einheit |
+| Kapazität |	Geteilt mit anderen Kunden |	Dediziert, garantiert |
+| Leistung |	variabel, abhängig von Auslastung |	stabile Latenz, vorhersagbar |
+| Empfohlen für |	Tests, Prototypen, geringe Last |	Produktion, hohe Auslastung, Business-kritisch |<br>
+
+## Erweiterte Empfehlungen: Modelle & Use-Cases PTU's vs. TPM's
+| Use Case |	Empfohlenes Modell |	Warum dieses Modell? |	Empfohlene Kapazität |
+| Kundensupport / Chatbot (24/7) |	gpt-5-chat oder gpt-4.1-mini |	Optimiert für Dialoge, kosteneffizient, gute Sprachqualität |	Start: PAYG mit TPM. Bei >50k Usern oder Peaks → PTU für Stabilität |
+| Dokumentenanalyse / Long Context Q&A |	gpt-4.1 oder gpt-5 |	Sehr lange Kontexte (bis 1 Mio Tokens), gutes Reasoning	| PTU empfohlen (lange Prompts verursachen hohes Token-Volumen, TPM könnte schnell limitieren) |
+| Code-Generierung & Dev-Assistenz |	o4-mini, Codex-mini, gpt-5-nano |	Kurze Latenz, gut im Code-Reasoning, günstig |	TPM reicht oft aus; PTU lohnt sich nur bei konstant hohen Builds/CI-Integrationen |
+| Wissens-Chatbot für Unternehmen	| Phi-4 oder gpt-5-chat	Phi-4: | sehr effizientes Reasoning, günstig; GPT-5 für Multimodalität |	TPM für Prototypen; PTU bei >10 gleichzeitigen Sessions im Unternehmenskontext |
+| Multimodale Szenarien (Bild+Text)	| gpt-4-turbo-vision, gpt-5 |	Kombination von Text & Bildern, auch für Content-Analyse |	TPM reicht für Tests; PTU sinnvoll bei z. B. automatisierter Bildpipeline |
+| High-Volume API (z. B. Suche, RAG) |	gpt-4.1-nano, o3 |	Sehr schnelle & günstige Antworten, ideal für Einbettung in RAG-Pipelines |	PTU empfohlen, da konstante, vorhersehbare Antwortzeit wichtig |
+| Forschung & volle Kontrolle |	gpt-oss-120b oder gpt-oss-20b	| Open-Weight, volle Kontrolle & Reproduzierbarkeit |	PTU fast immer sinnvoll – PAYG hat zu viele Limits für Forschung |
+| Copilot-ähnliche Integrationen |	gpt-5, gpt-4.5 preview |	Hohe Qualität, gute Integration in Tools & Workflows |	TPM für MVP; PTU bei produktivem Rollout mit hoher Nutzlast |<br><br>
+
+## Leitfaden: TPM oder PTU?
+
+**TPM (Tokens per Minute)**
+👉 Ideal für kleine bis mittlere Projekte, Pilotphasen, Proof-of-Concepts.
+👉 Flexibel, keine Bindung, du zahlst nur pro Token.
+
+**PTU (Provisioned Throughput Unit)**
+👉 Ideal bei planbarer Last (z. B. tägliche Verarbeitung von tausenden Dokumenten oder Millionen Chatnachrichten).
+👉 Garantierte Latenz, weniger Schwankungen, skalierbar.
+👉 Kosteneffizient ab einem bestimmten Nutzungsvolumen (Break-Even oft schon bei wenigen Mio Tokens pro Tag).<br><br>
+
+
 ## Regionale Verfügbarkeit der Modelle
 <li><b>GPT-5 Modelle</b> (Standard, mini, nano, chat) sind aktuell in <b>East US 2</b> und <b>Sweden Central</b> verfügbar. Für GPT-5 ist eine Registrierung nötig, die kleineren Varianten hingegen nicht</li><br>
 <li>Die älteren Modelle <b>(GPT-4, o-Serien, GPT-4o etc.)</b> sind breit über viele Regionen verfügbar – beispielweise auch in **Sweden Central, Germany West, East US, West US* und weiteren</li><br>
