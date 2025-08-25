@@ -13,8 +13,7 @@ Die gesamte Infrastruktur – GPUs, Skalierung, Updates, Verfügbarkeit – lieg
 <li>Du rufst das Modell über einen Endpunkt auf.</li>
 <li>Du zahlst nach Nutzungseinheiten (z. B. Tokens).</li>
 <li>Du musst keine VM starten, keine GPU auswählen und auch kein Autoscaling konfigurieren.</li><br>
-
-Deine Verantwortung verschiebt sich dadurch: Statt dich mit Hardware oder Compute zu beschäftigen, achtest du eher auf Themen wie Kostenkontrolle, Rate Limits, Zugriffssicherheit, Daten- und Prompt-Management sowie Governance.
+<li>Du achtest eher auf Themen wie Kostenkontrolle, Rate Limits, Zugriffssicherheit, Daten- und Prompt-Management sowie Governance.</li><br>
 
 👉 Nur wenn du eigene Modelle trainierst oder hostest, kommst du wieder in die Welt der Rechenressourcen zurück.<br><br>
 
@@ -50,6 +49,7 @@ Neben der Wahl des passenden Modells ist auch die Art der Bereitstellung entsche
 | Empfohlen für |	Tests, Prototypen, geringe Last |	Produktion, hohe Auslastung, Business-kritisch |<br>
 
 ## Erweiterte Empfehlungen: Modelle & Use-Cases PTU's vs. TPM's
+
 | Use Case |	Empfohlenes Modell |	Warum dieses Modell? |	Empfohlene Kapazität |
 | Kundensupport / Chatbot (24/7) |	gpt-5-chat oder gpt-4.1-mini |	Optimiert für Dialoge, kosteneffizient, gute Sprachqualität |	Start: PAYG mit TPM. Bei >50k Usern oder Peaks → PTU für Stabilität |
 | Dokumentenanalyse / Long Context Q&A |	gpt-4.1 oder gpt-5 |	Sehr lange Kontexte (bis 1 Mio Tokens), gutes Reasoning	| PTU empfohlen (lange Prompts verursachen hohes Token-Volumen, TPM könnte schnell limitieren) |
