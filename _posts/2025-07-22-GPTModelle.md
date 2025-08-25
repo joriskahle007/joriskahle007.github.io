@@ -12,7 +12,7 @@ Die gesamte Infrastruktur – GPUs, Skalierung, Updates, Verfügbarkeit – lieg
 
 <li>Du rufst das Modell über einen Endpunkt auf.</li>
 <li>Du zahlst nach Nutzungseinheiten (z. B. Tokens).</li>
-<li>Du musst keine VM starten, keine GPU auswählen und auch kein Autoscaling konfigurieren.</li><br>
+<li>Du musst keine VM starten, keine GPU auswählen und auch kein Autoscaling konfigurieren.</li>
 <li>Du achtest eher auf Themen wie Kostenkontrolle, Rate Limits, Zugriffssicherheit, Daten- und Prompt-Management sowie Governance.</li><br>
 
 👉 Nur wenn du eigene Modelle trainierst oder hostest, kommst du wieder in die Welt der Rechenressourcen zurück.<br><br>
@@ -39,7 +39,7 @@ Die große Stärke der Azure OpenAI Plattform liegt darin, dass du dir genau das
 ## Token-Kapazität und Abrechnungsmodelle: TPM & PTU
 
 Neben der Wahl des passenden Modells ist auch die Art der Bereitstellung entscheidend.
-<li>TPM (Tokens per Minute): Standard-Limitierung im Pay-as-you-go-Modell. Sie legt fest, wie viele Tokens pro Minute verarbeitet werden dürfen. Gut geeignet für Prototypen oder kleinere Workloads.</li>
+<li>TPM (Tokens per Minute): Standard-Limitierung im Pay-as-you-go-Modell. Sie legt fest, wie viele Tokens pro Minute verarbeitet werden dürfen. Gut geeignet für Prototypen oder kleinere Workloads.</li><br>
 <li>PTU (Provisioned Throughput Unit): Reservierte Kapazität mit garantierten Durchsatzwerten. PTUs stellen sicher, dass die Latenz auch bei hoher Auslastung stabil bleibt. Besonders interessant für produktive Szenarien oder wenn Lastspitzen vorhersehbar sind.</li>
 
 | Merkmal |	TPM (Tokens per Minute) |	PTU (Provisioned Throughput Unit) |
