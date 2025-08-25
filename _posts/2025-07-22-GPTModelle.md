@@ -33,7 +33,7 @@ Zusammengefasst lohnt sich auch ein Blick auf diese „exotischeren“ Modelle v
 
 Die große Stärke der Azure OpenAI Plattform liegt darin, dass du dir genau das Modell aussuchen kannst, das am besten zu deinem Projekt passt. Damit du nicht nur Tabellenwerte siehst, sondern auch verstehst, wofür sich die einzelnen Varianten lohnen, habe ich die wichtigsten Anwendungsfälle hier ausführlicher beschrieben:
 
-in der folgenden Übersicht, gehe ich jedoch nur noch auf die gängigsten GPT-Modelle ein.
+In der folgenden Übersicht, gehe ich jedoch nur noch auf die gängigsten GPT-Modelle in Azure ein.
 
 | Use Case |	Modellgruppe |	Beschreibung & Vorteile |
 | Standard-Textverarbeitung |	GPT-3.5, GPT-4 |	Ideal, wenn du klassische Chatbots, FAQ-Antworten oder Texterstellung brauchst. Diese Modelle sind zuverlässig, laufen stabil und sind im Vergleich zu den neuesten Generationen günstiger. |
