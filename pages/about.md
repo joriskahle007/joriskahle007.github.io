@@ -22,7 +22,7 @@ Ich habe diesen Blog gestartet, um mein Wissen zu teilen – und um dir zu zeige
 
 Demnächst wirst du mich übrigens auch hören können – in meinem eigenen Podcast! Außerdem bin ich auf verschiedenen Events unterwegs – sprich mich gerne an, wenn du mich triffst.
 
-Mein  LinkedIn Profil kannst du weiter unten über en Link finden. Ich würde mich über eine Kontaktnafrage freuen.
+Mein  LinkedIn Profil kannst du weiter unten über den Link finden. Ich würde mich über eine Kontaktnafrage freuen.
 
 Viel Spaß beim Lesen und Entdecken!
  
