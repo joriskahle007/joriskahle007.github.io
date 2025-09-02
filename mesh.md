@@ -1,9 +1,9 @@
 ---
 layout: post
 title: Github
-img: "assets/img/portfolio/github.png"
+img: "assets/img/portfolio/mesh.png"
 date: 20-10-2017
-tags: [Lorem]
+tags: [Mesh, Unity, Immersive Räume, 3D, Quest 3]
 ---
 
 ![image]({{ page.img | relative_url }})
