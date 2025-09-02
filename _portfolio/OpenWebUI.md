@@ -1,10 +1,10 @@
 ---
 layout: post
-title: Cake
-feature-img: "assets/img/portfolio/cake.png"
-img: "assets/img/portfolio/cake.png"
+title: OpenWebUI - LiteLLM - GPT
+feature-img: "assets/img/portfolio/open.png"
+img: "assets/img/portfolio/open.png"
 date: 27 September 2015
-tags: [Lorem, Ipsum]
+tags: [OpenWebUI, GPT-Modelle, Azure, Azure Open AI, LiteLLM]
 ---
 
 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, 
