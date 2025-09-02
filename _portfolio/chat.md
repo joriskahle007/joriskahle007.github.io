@@ -1,9 +1,9 @@
 ---
 layout: post
 title: Circus
-img: "assets/img/portfolio/circus.png"
+img: "assets/img/portfolio/chat.png"
 date: September 2014
-tags: [Ipsum]
+tags: [ChatBot, Azure Open AI, GPT 4o Realtime, RAG ,Fabric]
 ---
 
 ![image]({{ page.img | relative_url }})
