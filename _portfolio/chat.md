@@ -14,7 +14,7 @@ Ein Sonderfall ist allerdings das SPLA-Modell (Service Provider Licensing Agreem
 
 Genau hier setzte meine Idee an: Inspiriert durch ein Video von Pamela Fox im Microsoft Reactor wollte ich ausprobieren, ob sich die neuen Möglichkeiten von gpt-4o Realtime mit einer RAG-Lösung (Retrieval Augmented Generation) kombinieren lassen, um einen Sprach-basierten Lizenz-Bot zu entwickeln, der Service Providern direkt und zuverlässig helfen kann. Statt das Rad neu zu erfinden, griff ich dabei auf ein vorhandenes Repository zurück:👉 Azure-Samples/aisearch-openai-rag-audio.
 
-<img src="/assets/img/_portfolio/aisearchgithub.jpg" alt="Azure AI Search RAG Audio" />
+<img src="/assets/img/portfolio/aisearchgithub.jpg" alt="Azure AI Search RAG Audio" />
 
 Mit GitHub Codespaces habe ich die App per Script in meiner Azure Subscription deployed und gehofft, dass alles funktioniert. Als Datengrundlage legte ich zunächst einen Blob Storage an, lud die relevanten Lizenzdokumente hoch, passte das Frontend etwas an – und schon schien der Bot betriebsbereit. Dachte ich zumindest.
 
