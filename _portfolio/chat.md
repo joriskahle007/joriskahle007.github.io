@@ -1,4 +1,4 @@
----
+<img width="1329" height="623" alt="image" src="https://github.com/user-attachments/assets/136381d2-de93-4670-80fb-618947fa0ab3" />---
 layout: post
 title: Lizenz Sprach Bot - realisiert mit gpt4o Realtime + Fabric
 img: "assets/img/portfolio/chat.png"
@@ -16,13 +16,18 @@ Genau hier setzte meine Idee an: Inspiriert durch ein Video von Pamela Fox im Mi
 
 <img src="/assets/img/portfolio/aisearchgithub.jpg" alt="Azure AI Search RAG Audio" />
 
+
+## Das Architectur Diagramm sieht wie folgt aus:
+<img src="/assets/img/portfolio/architecturediagram.jpg" alt="RAG Voice BOT - Architecture Diagram" />
+
+
 Mit GitHub Codespaces habe ich die App per Script in meiner Azure Subscription deployed und gehofft, dass alles funktioniert. Als Datengrundlage legte ich zunächst einen Blob Storage an, lud die relevanten Lizenzdokumente hoch, passte das Frontend etwas an – und schon schien der Bot betriebsbereit. Dachte ich zumindest.
 
-Folgende Services werden vom Script deployed:<br>
+## Folgende Services werden vom Script deployed:
 
 <img src="/assets/img/portfolio/azureressource.jpg" alt="Azure AI Ressource" /><br>
 
-Automatisch wurde vom Systemauch in AI Foundry das GPT-4o Realtime Modell deployd. Die Restlichen Modelle habe ich zu Testzwecken manuell ausgerollt.
+## Automatisch wurde vom Systemauch in AI Foundry das GPT-4o Realtime Modell deployd. Die Restlichen Modelle habe ich zu Testzwecken manuell ausgerollt.
 
 <img src="/assets/img/portfolio/gptrealtime.jpg" alt="Azure AI Ressource" /><br>
 
@@ -32,19 +37,19 @@ Damit wurde mir eines klar: Die Qualität der Daten ist in solchen Szenarien abs
 
 Die nächste Herausforderung wartete jedoch schon: Statt den Blob Storage zu nutzen, wollte ich die Datenhaltung auf Microsoft Fabric umstellen. Nicht nur, weil Microsoft selbst massiv auf Fabric setzt, sondern auch, weil ich meine eigene Expertise in diesem Umfeld erweitern wollte. Also richtete ich mir einen Data Lake in Fabric ein, lud erneut die relevanten Dokumente hoch und passte die Konfiguration im Azure AI Search Service so an, dass nicht mehr der Blob Storage, sondern der Data Lake indexiert wurde. Mit ein paar zusätzlichen Rechtevergaben in Fabric war die Verknüpfung schnell hergestellt – und der Lizenzbot lief nun auf einer zukunftsweisenden Datenplattform.
 
-Im DataLake wurden die Daten für den Indexder bereitgestellt:<br>
+## Im DataLake wurden die Daten für den Indexder bereitgestellt:<br>
 
 <img src="/assets/img/portfolio/datalake.jpg" alt="Azure - Fabric - Connector" /><br>
 
 
 
-Der Connector zu Fabric wurde eingerichtet:<br>
+## Der Connector zu Fabric wurde eingerichtet:<br>
 
 <img src="/assets/img/portfolio/connector.jpg" alt="Azure - Fabric - Connector" /><br>
 
 
 
-Und fertig war die finale Lösung:
+## Und fertig war die finale Lösung:<br>
 Das Spannende dabei ist noch, dass das Modell die Quelle von den Antworten gleich mit angibt und man hier nachlesen kann. 
 
 <img src="/assets/img/portfolio/frontend.jpg" alt="GPT License Voice Audio Bot" /><br>
