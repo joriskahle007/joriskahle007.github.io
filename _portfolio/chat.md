@@ -36,11 +36,16 @@ Im DataLake wurden die Daten für den Indexder bereitgestellt:<br>
 
 <img src="/assets/img/portfolio/datalake.jpg" alt="Azure - Fabric - Connector" /><br>
 
+
+
 Der Connector zu Fabric wurde eingerichtet:<br>
 
 <img src="/assets/img/portfolio/connector.jpg" alt="Azure - Fabric - Connector" /><br>
 
+
+
 Und fertig war die finale Lösung:
+Das Spannende dabei ist noch, dass das Modell die Quelle von den Antworten gleich mit angibt und man hier nachlesen kann. 
 
 <img src="/assets/img/portfolio/frontend.jpg" alt="GPT License Voice Audio Bot" /><br>
 
