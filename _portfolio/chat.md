@@ -1,4 +1,4 @@
-<img width="1329" height="623" alt="image" src="https://github.com/user-attachments/assets/136381d2-de93-4670-80fb-618947fa0ab3" />---
+---
 layout: post
 title: Lizenz Sprach Bot - realisiert mit gpt4o Realtime + Fabric
 img: "assets/img/portfolio/chat.png"
