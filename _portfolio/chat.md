@@ -19,7 +19,12 @@ Genau hier setzte meine Idee an: Inspiriert durch ein Video von Pamela Fox im Mi
 Mit GitHub Codespaces habe ich die App per Script in meiner Azure Subscription deployed und gehofft, dass alles funktioniert. Als Datengrundlage legte ich zunächst einen Blob Storage an, lud die relevanten Lizenzdokumente hoch, passte das Frontend etwas an – und schon schien der Bot betriebsbereit. Dachte ich zumindest.
 
 Folgende Services werden vom Script deployed:<br>
+
 <img src="/assets/img/portfolio/azureressource.jpg" alt="Azure AI Ressource" /><br>
+
+Automatisch wurde vom Systemauch in AI Foundry das GPT-4o Realtime Modell deployd. Die Restlichen Modelle habe ich zu Testzwecken manuell ausgerollt.
+
+<img src="/assets/img/portfolio/gptrealtime.jpg" alt="Azure AI Ressource" /><br>
 
 Die Ernüchterung kam schnell: Die Antworten waren unpräzise, teilweise schlicht falsch. Denn im SPLA-Modell sind die Lizenzrechte klar in den sogenannten SPUR (Service Provider Use Rights) definiert, die Microsoft online bereitstellt. Ich hatte die Inhalte zwar in Word-Dateien kopiert und hochgeladen – inklusive offizieller Vertragsdokumente – aber das Modell fing trotzdem an zu halluzinieren und falsche Antworten als korrekt zu verkaufen.
 
@@ -28,10 +33,15 @@ Damit wurde mir eines klar: Die Qualität der Daten ist in solchen Szenarien abs
 Die nächste Herausforderung wartete jedoch schon: Statt den Blob Storage zu nutzen, wollte ich die Datenhaltung auf Microsoft Fabric umstellen. Nicht nur, weil Microsoft selbst massiv auf Fabric setzt, sondern auch, weil ich meine eigene Expertise in diesem Umfeld erweitern wollte. Also richtete ich mir einen Data Lake in Fabric ein, lud erneut die relevanten Dokumente hoch und passte die Konfiguration im Azure AI Search Service so an, dass nicht mehr der Blob Storage, sondern der Data Lake indexiert wurde. Mit ein paar zusätzlichen Rechtevergaben in Fabric war die Verknüpfung schnell hergestellt – und der Lizenzbot lief nun auf einer zukunftsweisenden Datenplattform.
 
 Im DataLake wurden die Daten für den Indexder bereitgestellt:<br>
+
 <img src="/assets/img/portfolio/datalake.jpg" alt="Azure - Fabric - Connector" /><br>
 
 Der Connector zu Fabric wurde eingerichtet:<br>
+
 <img src="/assets/img/portfolio/connector.jpg" alt="Azure - Fabric - Connector" /><br>
 
+Und fertig war die finale Lösung:
+
+<img src="/assets/img/portfolio/frontend.jpg" alt="GPT License Voice Audio Bot" /><br>
 
 
