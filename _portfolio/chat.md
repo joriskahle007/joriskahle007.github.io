@@ -25,9 +25,10 @@ Mit GitHub Codespaces habe ich die App per Script in meiner Azure Subscription d
 
 ## Folgende Services werden vom Script deployed:
 
-<img src="/assets/img/portfolio/azureressource.jpg" alt="Azure AI Ressource" /><br>
+<img src="/assets/img/portfolio/azureressource.jpg" alt="Azure AI Ressource" /><br><br>
 
-## Automatisch wurde vom Systemauch in AI Foundry das GPT-4o Realtime Modell deployd. Die Restlichen Modelle habe ich zu Testzwecken manuell ausgerollt.
+
+Automatisch wurde vom System auch in AI Foundry das GPT-4o Realtime Modell deployd. Die Restlichen Modelle habe ich zu Testzwecken im Nachgang manuell ausgerollt.
 
 <img src="/assets/img/portfolio/gptrealtime.jpg" alt="Azure AI Ressource" /><br>
 
@@ -35,17 +36,20 @@ Die Ernüchterung kam schnell: Die Antworten waren unpräzise, teilweise schlich
 
 Damit wurde mir eines klar: Die Qualität der Daten ist in solchen Szenarien absolut entscheidend. Also ging ich einen Schritt weiter. Statt nur die Originalunterlagen hochzuladen, begann ich, die Lizenzierungen selbst in meinen Worten niederzuschreiben – so, wie ich sie täglich am Telefon unseren SPLA-Partnern erkläre. Je präziser und detaillierter ich die Informationen formulierte, desto verlässlicher wurden auch die Antworten des Bots. Damit war der SPLA-Lizenzbot geboren und bereit für erste Tests.
 
-Die nächste Herausforderung wartete jedoch schon: Statt den Blob Storage zu nutzen, wollte ich die Datenhaltung auf Microsoft Fabric umstellen. Nicht nur, weil Microsoft selbst massiv auf Fabric setzt, sondern auch, weil ich meine eigene Expertise in diesem Umfeld erweitern wollte. Also richtete ich mir einen Data Lake in Fabric ein, lud erneut die relevanten Dokumente hoch und passte die Konfiguration im Azure AI Search Service so an, dass nicht mehr der Blob Storage, sondern der Data Lake indexiert wurde. Mit ein paar zusätzlichen Rechtevergaben in Fabric war die Verknüpfung schnell hergestellt – und der Lizenzbot lief nun auf einer zukunftsweisenden Datenplattform.
+Die nächste Herausforderung wartete jedoch schon: Statt den Blob Storage zu nutzen, wollte ich die Datenhaltung auf Microsoft Fabric umstellen. Nicht nur, weil Microsoft selbst massiv auf Fabric setzt, sondern auch, weil ich meine eigene Expertise in diesem Umfeld erweitern wollte. Also richtete ich mir einen Data Lake in Fabric ein, lud erneut die relevanten Dokumente hoch und passte die Konfiguration im Azure AI Search Service so an, dass nicht mehr der Blob Storage, sondern der Data Lake indexiert wurde. Mit ein paar zusätzlichen Rechtevergaben in Fabric war die Verknüpfung schnell hergestellt – und der Lizenzbot lief nun auf einer zukunftsweisenden Datenplattform.<br>
+
 
 ## Im DataLake wurden die Daten für den Indexder bereitgestellt:<br>
 
-<img src="/assets/img/portfolio/datalake.jpg" alt="Azure - Fabric - Connector" /><br>
+<img src="/assets/img/portfolio/datalake.jpg" alt="Azure - Fabric - Connector" /><br><br>
+
 
 
 
 ## Der Connector zu Fabric wurde eingerichtet:<br>
 
-<img src="/assets/img/portfolio/connector.jpg" alt="Azure - Fabric - Connector" /><br>
+<img src="/assets/img/portfolio/connector.jpg" alt="Azure - Fabric - Connector" /><br><br>
+
 
 
 
