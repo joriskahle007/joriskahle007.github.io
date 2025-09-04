@@ -85,6 +85,15 @@ Um ein Gefühl für die Kosten zu bekommen, lohnt ein Blick auf die einzelnen Ba
 
 In Summe lässt sich das Projekt mit unter **100 € pro Monat im Testbetrieb** realisieren, sofern die Nutzung moderat bleibt. Mit produktiver Auslastung (intensive Sprachdialoge, viele Anfragen an die AI Search, große Logmengen) können die Kosten aber schnell dreistellig werden, wobei der größte Kostenblock klar beim GPT-4o Realtime-Modell liegt.<br><br>
 
+**Wichtigste Funktionen vom neuen GPT4o Realtime Modell (Generally Available)**
+- **Neue, natürliche, ausdrucksstarke Stimmen**: Neue Sprachoptionen (Marin und Cedar), die der Sprachsynthese ein neues Maß an Natürlichkeit und Klarheit verleihen.
+- **Verbesserte Befehlsausführung**: Verbesserte Fähigkeiten, Befehle genauer und zuverlässiger auszuführen.
+- **Verbesserte Natürlichkeit der Stimme**: Lebensechtere und ausdrucksstärkere Sprachausgabe.
+- **Höhere Audioqualität**: Hervorragende Audioqualität für eine bessere Benutzererfahrung.
+- **Verbesserte Funktionsaufrufe**: Verbesserte Fähigkeit, von Entwicklern definierten benutzerdefinierten Code aufzurufen.
+- **Unterstützung für Bildeingaben**: Fügen Sie Bilder zum Kontext hinzu und besprechen Sie diese per Sprache – ganz ohne Video.<br><br>
+
+
 ## Fazit
 
 Das Projekt zeigt eindrucksvoll, welches Potenzial in der Verbindung von GPT-4o Realtime mit Azure AI Search und Microsoft Fabric steckt. Was bislang nur mit großem Aufwand in klassischen Service-Abteilungen möglich war, lässt sich nun durch einen intelligenten, Sprach-basierten Lizenzbot in Echtzeit bereitstellen. Die Vorteile liegen auf der Hand: Der Bot ist rund um die Uhr verfügbar, benötigt keine Pausen, wird niemals krank und reagiert stets zuverlässig sowie freundlich – selbst dann, wenn die Anfrage zum hundertsten Mal gestellt wird.
