@@ -12,7 +12,9 @@ Wer sich mit den Lizenzmodellen von Microsoft auseinandersetzt, merkt ziemlich s
 
 Ein Sonderfall ist allerdings das SPLA-Modell (Service Provider Licensing Agreement). Hier übernimmt nicht der Endkunde die Rolle des Lizenznehmers, sondern der Service Provider selbst – mit dem besonderen Recht, diese Lizenzen an Endkunden weiterzuvermieten. Gerade in diesem Bereich fehlt es inzwischen an Experten, die die Feinheiten wirklich durchdringen. Und doch stehen zahlreiche Service Provider vor genau diesen lizenzrechtlichen Herausforderungen, bei denen fundiertes Fachwissen unerlässlich ist.
 
-Genau hier setzte meine Idee an: Inspiriert durch ein Video von Pamela Fox im Microsoft Reactor wollte ich ausprobieren, ob sich die neuen Möglichkeiten von GPT-4o Realtime mit einer RAG-Lösung (Retrieval Augmented Generation) kombinieren lassen, um einen Sprach-basierten Lizenz-Bot zu entwickeln, der Service Providern direkt und zuverlässig helfen kann. Statt das Rad neu zu erfinden, griff ich dabei auf ein vorhandenes Repository zurück:👉 <a href="https://github.com/Azure-Samples/aisearch-openai-rag-audio" target="_blank" rel="noopener">github.com/Azure-Samples/aisearch-openai-rag-audio</a>.
+Genau hier setzte meine Idee an: Inspiriert durch ein Video von Pamela Fox im Microsoft Reactor wollte ich ausprobieren, ob sich die neuen Möglichkeiten von GPT-4o Realtime mit einer RAG-Lösung (Retrieval Augmented Generation) kombinieren lassen, um einen Sprach-basierten Lizenz-Bot zu entwickeln, der Service Providern direkt und zuverlässig helfen kann. <br>
+
+Statt das Rad neu zu erfinden, griff ich dabei auf ein vorhandenes Repository zurück:👉 <a href="https://github.com/Azure-Samples/aisearch-openai-rag-audio" target="_blank" rel="noopener">github.com/Azure-Samples/aisearch-openai-rag-audio</a>.
 
 <img src="/assets/img/portfolio/aisearchgithub.jpg" alt="Azure AI Search RAG Audio" />
 
@@ -63,14 +65,14 @@ Das Spannende dabei ist noch, dass das Modell die Quelle von den Antworten gleic
 
 Der Einsatz von GPT-4o Realtime bietet im Vergleich zu klassischen Speech-to-Text- und Text-to-Speech-Services von Azure entscheidende Vorteile. Während die herkömmlichen Dienste getrennt arbeiten und damit zwangsläufig eine gewisse Latenz verursachen, ist GPT-4o Realtime multimodal trainiert und verarbeitet Sprache, Text und Audio in einem einzigen Modell. Das Ergebnis sind deutlich schnellere Reaktionszeiten, flüssigere Dialoge und die Fähigkeit, sogar Tonalität oder Emotionen im Sprachfluss zu berücksichtigen. Allerdings ist dieser Komfort auch mit höheren Kosten verbunden und der Dienst ist aktuell nur in den USA und in Schweden verfügbar – daher musste ich in meiner Subscription auf die Region USA ausweichen.<br><br>
 
-##Kosten der eingesetzten Dienste
+## Kosten der eingesetzten Dienste
 
 Um ein Gefühl für die Kosten zu bekommen, lohnt ein Blick auf die einzelnen Bausteine der Lösung:
 
-- **Azure OpenAI (GPT-4o Realtime)**: Die Preise liegen bei rund **$44 pro Million Tokens** Input und **$88 pro Million Tokens Output**, mit deutlich günstigeren Raten bei gecachtem Input (ca. $2,75 pro Million Tokens). Ein Beispiel mit 1 Stunde Sprachdialog (etwa 360.000 Tokens) kommt schnell auf rund **$48 pro Nutzungseinheit**.
+- **Azure OpenAI (GPT-4o Realtime)**: Die Preise liegen bei rund **40 € pro Million Tokens** Input und **81 € pro Million Tokens Output**, mit deutlich günstigeren Raten bei gecachtem Input (ca. 2,50 € pro Million Tokens). Ein Beispiel mit 1 Stunde Sprachdialog (etwa 360.000 Tokens) kommt schnell auf rund **~45 € pro Nutzungseinheit**.
 
 - **Azure AI Search**: Die Abrechnung erfolgt pro Such-Einheit (Search Unit). Im kleineren Basic-Tier liegt man bei etwa **75 € pro Monat**, für produktive Szenarien mit mehr Leistung sind es schnell **200–250 € pro Monat**.
-
+ 
 - **Azure Container Apps**: Hier bezahlt man pro vCPU- und RAM-Sekunde. Durch die Möglichkeit, Instanzen auf null zu skalieren, bleiben die Kosten oft niedrig. In meinem Test lagen die Aufwände je nach Auslastung zwischen **5 € und 25 € im Monat**.
 
 - **Azure Container Registry**: Für die Standardnutzung fallen ca. **4–5 € pro Monat an**.
