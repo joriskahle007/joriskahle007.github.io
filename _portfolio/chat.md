@@ -83,7 +83,7 @@ Um ein Gefühl für die Kosten zu bekommen, lohnt ein Blick auf die einzelnen Ba
 
 - **Managed Identity**: Für die Identitätsverwaltung entstehen keine direkten Zusatzkosten.<br><br>
 
-In Summe lässt sich das Projekt mit unter **100 € pro Monat im Testbetrieb** realisieren, sofern die Nutzung moderat bleibt. Mit produktiver Auslastung (intensive Sprachdialoge, viele Anfragen an die AI Search, große Logmengen) können die Kosten aber schnell dreistellig werden, wobei der größte Kostenblock klar beim GPT-4o Realtime-Modell liegt.
+In Summe lässt sich das Projekt mit unter **100 € pro Monat im Testbetrieb** realisieren, sofern die Nutzung moderat bleibt. Mit produktiver Auslastung (intensive Sprachdialoge, viele Anfragen an die AI Search, große Logmengen) können die Kosten aber schnell dreistellig werden, wobei der größte Kostenblock klar beim GPT-4o Realtime-Modell liegt.<br><br>
 
 ## Fazit
 
@@ -93,5 +93,6 @@ Darüber hinaus liefert er in kürzester Zeit präzise und nachvollziehbare Antw
 
 Es handelt sich hierbei um eine absolut bahnbrechende Entwicklung, die über den konkreten Anwendungsfall SPLA-Lizenzierung weit hinausgeht. Ob im Kundenservice, im technischen Support oder in internen Wissensabteilungen – ein solcher Sprachbot lässt sich bei jedem Endkunden einsetzen und an die jeweiligen Inhalte anpassen. Der Mehrwert ist universell: schnelle Antworten, Verfügbarkeit rund um die Uhr und eine gleichbleibend hohe Qualität der Auskünfte.
 
-Damit öffnet diese Lösung die Tür in eine neue Ära des intelligenten Kunden- und Servicemanagements. Unternehmen, die frühzeitig auf solche Technologien setzen, können sich nicht nur von Wettbewerbern abheben, sondern auch nachhaltig ihre Kostenstruktur verbessern, die Kundenzufriedenheit steigern und die Qualität der internen Prozesse auf ein neues Level heben. Wenn Ihr FRagen habt, kommt gerne auf mich zu.
+Damit öffnet diese Lösung die Tür in eine neue Ära des intelligenten Kunden- und Servicemanagements. Unternehmen, die frühzeitig auf solche Technologien setzen, können sich nicht nur von Wettbewerbern abheben, sondern auch nachhaltig ihre Kostenstruktur verbessern, die Kundenzufriedenheit steigern und die Qualität der internen Prozesse auf ein neues Level heben. <br><br>
+Wenn Ihr Fragen habt, kommt gerne auf mich zu.
 
