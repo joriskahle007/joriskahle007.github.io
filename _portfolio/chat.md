@@ -69,7 +69,8 @@ Der Einsatz von GPT-4o Realtime bietet im Vergleich zu klassischen Speech-to-Tex
 
 Um ein Gefühl für die Kosten zu bekommen, lohnt ein Blick auf die einzelnen Bausteine der Lösung:
 
-- **Azure OpenAI (GPT-4o Realtime)**: Die Preise liegen bei rund **28 € pro Million Tokens** Input und **55 € pro Million Tokens Output**, mit deutlich günstigeren Raten bei gecachtem Input (ca. 0,35 € pro Million Tokens). Ein Beispiel mit 1 Stunde Sprachdialog (etwa 360.000 Tokens) kommt schnell auf rund **~13 € pro Nutzungseinheit**. Hier gilt eine Faustregel von 70% Inputtoken und 30% Outputtoken.
+- **Azure OpenAI (GPT-4o Realtime)**: Die Preise liegen bei rund **28 € pro Million Tokens** Input und **55 € pro Million Tokens Output**, mit deutlich günstigeren Raten bei gecachtem Input (ca. 0,35 € pro Million Tokens). Ein Beispiel mit 1 Stunde Sprachdialog (etwa 360.000 Tokens) kommt schnell auf rund **~13 € pro Nutzungseinheit**. Hier gilt eine Faustregel von **70 % Inputtoken und 30 % Outputtoken**.
+💡 Hinweis: Wenn ein Teil des Inputs gecacht ist, könnte man die Input-Kosten deutlich reduzieren, z. B. bei 50 % Cache auf Input läge man bei ca. ~11 € insgesamt!
 
 - **Azure AI Search**: Die Abrechnung erfolgt pro Such-Einheit (Search Unit). Im kleineren Basic-Tier liegt man bei etwa **75 € pro Monat**, für produktive Szenarien mit mehr Leistung sind es schnell **200–250 € pro Monat**.
  
@@ -85,13 +86,16 @@ Um ein Gefühl für die Kosten zu bekommen, lohnt ein Blick auf die einzelnen Ba
 
 In Summe lässt sich das Projekt mit unter **100 € pro Monat im Testbetrieb** realisieren, sofern die Nutzung moderat bleibt. Mit produktiver Auslastung (intensive Sprachdialoge, viele Anfragen an die AI Search, große Logmengen) können die Kosten aber schnell dreistellig werden, wobei der größte Kostenblock klar beim GPT-4o Realtime-Modell liegt.<br><br>
 
+
+
 **Wichtigste Funktionen vom neuen GPT4o Realtime Modell (Generally Available)**
 - **Neue, natürliche, ausdrucksstarke Stimmen**: Neue Sprachoptionen (Marin und Cedar), die der Sprachsynthese ein neues Maß an Natürlichkeit und Klarheit verleihen.
 - **Verbesserte Befehlsausführung**: Verbesserte Fähigkeiten, Befehle genauer und zuverlässiger auszuführen.
 - **Verbesserte Natürlichkeit der Stimme**: Lebensechtere und ausdrucksstärkere Sprachausgabe.
 - **Höhere Audioqualität**: Hervorragende Audioqualität für eine bessere Benutzererfahrung.
 - **Verbesserte Funktionsaufrufe**: Verbesserte Fähigkeit, von Entwicklern definierten benutzerdefinierten Code aufzurufen.
-- **Unterstützung für Bildeingaben**: Fügen Sie Bilder zum Kontext hinzu und besprechen Sie diese per Sprache – ganz ohne Video.<br><br>
+- **Unterstützung für Bildeingaben**: Fügen Sie Bilder zum Kontext hinzu und besprechen Sie diese per Sprache – ganz ohne Video.
+- **Kostenreduzierung**: Mit dem neuen gpt4o Realtime Modell reduziert man seine Kosten um ganze **20%**.<br><br>
 
 
 ## Fazit
