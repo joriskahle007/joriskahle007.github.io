@@ -69,7 +69,7 @@ Der Einsatz von GPT-4o Realtime bietet im Vergleich zu klassischen Speech-to-Tex
 
 Um ein Gefühl für die Kosten zu bekommen, lohnt ein Blick auf die einzelnen Bausteine der Lösung:
 
-- **Azure OpenAI (GPT-4o Realtime)**: Die Preise liegen bei rund **40 € pro Million Tokens** Input und **81 € pro Million Tokens Output**, mit deutlich günstigeren Raten bei gecachtem Input (ca. 2,50 € pro Million Tokens). Ein Beispiel mit 1 Stunde Sprachdialog (etwa 360.000 Tokens) kommt schnell auf rund **~45 € pro Nutzungseinheit**.
+- **Azure OpenAI (GPT-4o Realtime)**: Die Preise liegen bei rund **28 € pro Million Tokens** Input und **55 € pro Million Tokens Output**, mit deutlich günstigeren Raten bei gecachtem Input (ca. 0,35 € pro Million Tokens). Ein Beispiel mit 1 Stunde Sprachdialog (etwa 360.000 Tokens) kommt schnell auf rund **~13 € pro Nutzungseinheit**. Hier gilt eine Faustregel von 70% Inputtoken und 30% Outputtoken.
 
 - **Azure AI Search**: Die Abrechnung erfolgt pro Such-Einheit (Search Unit). Im kleineren Basic-Tier liegt man bei etwa **75 € pro Monat**, für produktive Szenarien mit mehr Leistung sind es schnell **200–250 € pro Monat**.
  
