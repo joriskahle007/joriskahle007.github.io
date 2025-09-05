@@ -9,6 +9,8 @@ durch die Decke. Genau in solchen Momenten zeigt sich, ob dein Setup robust genu
 kommt das Thema **Spillover Traffic Management** ins Spiel. Vor allem dann, wenn du Provisioned Throughput Units (PTUs) im Einsatz hast, 
 lohnt sich ein genauer Blick, denn Spillover kann dir richtig Arbeit und Kopfschmerzen ersparen.<br><br>
 
+<img src="/assets/img/spillover.jpg" alt="TPU - Spillover" /><br><br>
+
 ## Provisioned vs. Standard – was steckt wirklich dahinter?
 
 Um zu verstehen, warum Spillover so praktisch ist, lass uns kurz einen Schritt zurückgehen und die zwei Modelle anschauen, die es bei Azure OpenAI gibt.<br>
