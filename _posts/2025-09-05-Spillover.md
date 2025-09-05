@@ -59,7 +59,7 @@ Falls du dich jetzt fragst, was passiert, wenn du beide Methoden nutzt: Die glob
 
 Spillover ist kein Dauerbetrieb. Es springt nur dann an, wenn es wirklich gebraucht wird. Das heißt: Solange dein PTU freie Kapazität hat, 
 werden alle Anfragen dort abgearbeitet. Erst wenn deine PTU überlastet ist und Fehler wie 429 Too Many Requests entstehen würden, greift 
-das Spillover und schickt die Anfrage an die Standard-Bereitstellung.<br><br>
+das Spillover und schickt die Anfrage an die Standard-Bereitstellung.<br>
 
 Das bedeutet auch: Es kann minimal länger dauern, weil zuerst versucht wird, die Anfrage über dein PTU-Deployment zu verarbeiten, bevor 
 sie ins Standard-Deployment übergeht. Aber im Großen und Ganzen ist das ein sehr fairer Deal: Lieber eine kleine Verzögerung als ein harter Fehler.<br><br>
@@ -94,4 +94,4 @@ Du kannst deine Basisleistung perfekt planen und gleichzeitig entspannt Peaks ab
 
 Wenn du also mit Azure OpenAI ernsthaft arbeiten willst – egal ob in einem kleinen Projekt oder im großen Produktionsbetrieb – solltest du Spillover 
 unbedingt einplanen. Es macht dein Setup nicht nur zuverlässiger, sondern auch deutlich flexibler. Und am Ende ersparst du dir damit eine Menge Stress 
-und schaffst dir die Freiheit, dich auf die eigentlichen Inhalte deiner Anwendung zu konzentrieren.<br>
+und schaffst dir die Freiheit, dich auf die eigentlichen Inhalte deiner Anwendung zu konzentrieren.<br><br>
