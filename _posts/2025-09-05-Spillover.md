@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Spillover in Azure OpenAI: So rettet dich PTU + Standard vor Lastspitzen
+title: Spillover in Azure OpenAI: So rettet dich PTU & Standard vor Lastspitzen
 tags: [CSP, Azure, GPT, Spillover, PTU, Azure Open AI]
 ---
 
