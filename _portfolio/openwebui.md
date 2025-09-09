@@ -31,10 +31,10 @@ So einfach, wie erhofft, ließ sich OpenWebUI nicht direkt mit Azure OpenAI verb
 An diesem Punkt kam LiteLLM ins Spiel – ein leichtgewichtiger Proxy, der die Brücke zwischen OpenWebUI und Azure OpenAI schlagen kann. LiteLLM fungiert im Prinzip als Übersetzer: Es nimmt Anfragen aus OpenWebUI entgegen, wandelt sie in das passende Format für Azure OpenAI um und leitet die Antworten zurück.
 Das Ergebnis: OpenWebUI konnte plötzlich nahtlos mit den Modellen aus Azure arbeiten, ohne dass ich tief in die spezifische Azure-API einsteigen musste.<br>
 
+**API-Schnittstelle wurde eingebungen**:<br><br>
 <img src="/assets/img/portfolio/Litellmapi.jpg" alt="LiteLLM-API" /><br><br>
 
-## Architektur im Überblick
-
+**Architektur im Überblick**<br><br>
 <img src="/assets/img/portfolio/oepnwebuidia.png" alt="Architecture Diagram" />
 
 - Azure Burstmaschine → Basis-Infrastruktur für die Installation von OpenWebUI
