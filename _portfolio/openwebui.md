@@ -9,8 +9,6 @@ tags: [OpenWebUI, GPT-Modelle, Azure, Azure Open AI, LiteLLM]
 
 ## OpenWebUI + Azure OpenAI – eine flexible Alternative zu den Abo-Modellen
 
-<img src="/assets/img/portfolio/openwebuifrontend.jpg" alt="RAG Voice BOT - Architecture Diagram" />
-
 Wer schon einmal mit den Bezahlmodellen von OpenAI gearbeitet hat, kennt das Prinzip: Man bucht ein Abo, erhält Zugriff auf bestimmte GPT-Modelle und zahlt eine monatliche Pauschale. Für viele Szenarien ist das völlig ausreichend – gerade, wenn man nur ein einzelnes Projekt betreiben oder sich schnell einen Überblick verschaffen will.
 Doch was, wenn man mehr Flexibilität benötigt? Wenn man eigene Infrastruktur, eigene Integrationen oder einfach ein freieres Setup nutzen möchte? Genau dieser Gedanke war für mich der Ausgangspunkt für mein nächstes Projekt.
 
@@ -44,11 +42,11 @@ Das Ergebnis: OpenWebUI konnte plötzlich nahtlos mit den Modellen aus Azure arb
 - Azure OpenAI + AI Foundry → Bereitstellung der gewünschten GPT-Modelle
 - LiteLLM → Proxy, der die technische Brücke zwischen Frontend und Azure schlägt
 
-**Auswahl von GPT-modelle**:<br>
-<img src="/assets/img/portfolio/openwebuimodel.jpg" alt="Architecture Diagram" /><br><br>
-
 **Verbindung - OpenWebUI & LiteLLM**:<br>
 <img src="/assets/img/portfolio/openwebuicon.jpg" alt="Architecture Diagram" />
+
+**Auswahl von GPT-modelle**:<br>
+<img src="/assets/img/portfolio/openwebuimodel.jpg" alt="Architecture Diagram" /><br><br>
 
 ## Learnings & Vorteile
 Die Lösung hat mir eindrucksvoll gezeigt, wie flexibel sich moderne AI-Architekturen gestalten lassen:
@@ -77,5 +75,7 @@ Die Stärke einer selbst aufgesetzten Architektur liegt in der Flexibilität –
 
 ## Fazit
 Die aktuelle Lösung zeigt klar die Potenziale eines offenen, flexiblen Setups – aber ebenso auch die Schwächen. Solange Azure OpenAI keine Realtime- und Image-Modelle bereitstellt, bleibt ein Teil der Vision unerfüllt. Für viele klassische Text-Szenarien ist das Setup mehr als ausreichend. Wer jedoch auf Multimodalität und Bildgenerierung setzt, muss mit Umwegen leben oder auf die Weiterentwicklung des Azure-Portfolios warten.
+
+<img src="/assets/img/portfolio/openwebuifrontend.jpg" alt="RAG Voice BOT - Architecture Diagram" /><br><br>
 
 **Das Projekt zeigt für mich sehr deutlich**: Wer die nötige Infrastruktur und etwas technisches Know-how mitbringt, kann sich von starren Abo-Strukturen lösen und eigene, zukunftsfähige KI-Plattformen schaffen.<br><br>
