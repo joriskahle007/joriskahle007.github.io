@@ -88,7 +88,7 @@ In Summe lässt sich das Projekt mit unter **100 € pro Monat im Testbetrieb** 
 
 
 
-**Wichtigste Funktionen vom neuen GPT4o Realtime Modell (Generally Available)**
+**Wichtigste Funktionen vom neuen GPT4o Realtime Modell (General Available)**
 - **Neue, natürliche, ausdrucksstarke Stimmen**: Neue Sprachoptionen (Marin und Cedar), die der Sprachsynthese ein neues Maß an Natürlichkeit und Klarheit verleihen.
 - **Verbesserte Befehlsausführung**: Verbesserte Fähigkeiten, Befehle genauer und zuverlässiger auszuführen.
 - **Verbesserte Natürlichkeit der Stimme**: Lebensechtere und ausdrucksstärkere Sprachausgabe.
