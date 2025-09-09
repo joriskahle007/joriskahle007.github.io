@@ -44,10 +44,10 @@ Das Ergebnis: OpenWebUI konnte plötzlich nahtlos mit den Modellen aus Azure arb
 - Azure OpenAI + AI Foundry → Bereitstellung der gewünschten GPT-Modelle
 - LiteLLM → Proxy, der die technische Brücke zwischen Frontend und Azure schlägt
 
-**Auswahl von GPT-modelle**:
+**Auswahl von GPT-modelle**:<br>
 <img src="/assets/img/portfolio/openwebuimodel.jpg" alt="Architecture Diagram" /><br><br>
 
-**Verbindung - OpenWebUI & LiteLLM**:
+**Verbindung - OpenWebUI & LiteLLM**:<br>
 <img src="/assets/img/portfolio/openwebuicon.jpg" alt="Architecture Diagram" />
 
 ## Learnings & Vorteile
