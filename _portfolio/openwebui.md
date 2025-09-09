@@ -10,10 +10,15 @@ tags: [OpenWebUI, GPT-Modelle, Azure, Azure Open AI, LiteLLM]
 ## OpenWebUI + Azure OpenAI – eine flexible Alternative zu den Abo-Modellen
 
 Wer schon einmal mit den Bezahlmodellen von OpenAI gearbeitet hat, kennt das Prinzip: Man bucht ein Abo, erhält Zugriff auf bestimmte GPT-Modelle und zahlt eine monatliche Pauschale. Für viele Szenarien ist das völlig ausreichend – gerade, wenn man nur ein einzelnes Projekt betreiben oder sich schnell einen Überblick verschaffen will.
-Doch was, wenn man mehr Flexibilität benötigt? Wenn man eigene Infrastruktur, eigene Integrationen oder einfach ein freieres Setup nutzen möchte? Genau dieser Gedanke war für mich der Ausgangspunkt für mein nächstes Projekt.<br>
+Doch was, wenn man mehr Flexibilität benötigt? Wenn man eigene Infrastruktur, eigene Integrationen oder einfach ein freieres Setup nutzen möchte? Genau dieser Gedanke war für mich der Ausgangspunkt für mein nächstes Projekt.<br><br>
+
+<img src="/assets/img/portfolio/openwebuifrontend.jpg" alt="RAG Voice BOT - Architecture Diagram" /><br><br>
 
 ## Zielsetzung
-Ich wollte eine Alternative zu den klassischen OpenAI-ABOs schaffen – mit mehr Kontrolle über die Architektur, besserer Kostensteuerung und der Möglichkeit, unterschiedliche Modelle in einer eigenen Umgebung parallel bereitzustellen.<br>
+Ich wollte eine Alternative zu den klassischen OpenAI-ABOs schaffen – mit mehr Kontrolle über die Architektur, besserer Kostensteuerung und der Möglichkeit, unterschiedliche Modelle in einer eigenen Umgebung parallel bereitzustellen.<br><br>
+
+**Architektur im Überblick**<br><br>
+<img src="/assets/img/portfolio/oepnwebuidia.png" alt="Architecture Diagram" />
 
 ## Die Basis: Azure Burstmaschine & OpenWebUI
 Den Anfang machte eine sogenannte Burstmaschine in Azure. Diese Maschinen eignen sich besonders für Szenarien, in denen man phasenweise viel Rechenleistung benötigt, ohne dauerhaft hohe Kosten zu verursachen. Auf dieser Basis installierte ich OpenWebUI – eine schlanke, lokal laufende Oberfläche, die als Frontend für unterschiedliche Sprachmodelle genutzt werden kann. Damit hatte ich bereits eine zentrale Oberfläche, über die ich verschiedene Modelle im Browser ansprechen konnte.<br>
@@ -33,9 +38,6 @@ Das Ergebnis: OpenWebUI konnte plötzlich nahtlos mit den Modellen aus Azure arb
 
 **API-Schnittstelle wurde eingebungen**:<br><br>
 <img src="/assets/img/portfolio/Litellmapi.jpg" alt="LiteLLM-API" /><br><br>
-
-**Architektur im Überblick**<br><br>
-<img src="/assets/img/portfolio/oepnwebuidia.png" alt="Architecture Diagram" />
 
 - Azure Burstmaschine → Basis-Infrastruktur für die Installation von OpenWebUI
 - OpenWebUI → Frontend für die Interaktion mit den Modellen
@@ -67,9 +69,9 @@ Alle drei Modelle sind über **Azure OpenAI und Azure AI Foundry grundsätzlich 
 
 - **GPT-Realtime**: Diese Modelle verarbeiten Sprache, Text und Audio multimodal in Echtzeit. Sie ermöglichen flüssige Sprachdialoge ohne merkliche Verzögerung – ideal für Voice-Bots oder interaktive Assistenzsysteme. Da OpenWebUI die Realtime-Schnittstellen nicht unterstützt, bleibt dieser entscheidende Innovationsschritt in der Architektur ungenutzt.
  **GPT-Image**: Mit diesen Modellen lassen sich Bilder aus Textbeschreibungen generieren oder bestehende Bilder mit Text-Input verändern. Sie sind in Azure bereits verfügbar, können aber über OpenWebUI nicht direkt angesprochen werden. Für Szenarien, in denen Bildgenerierung in den Chatfluss integriert werden soll, bedeutet das eine deutliche Einschränkung.
-- **DALL·E**: Als eines der bekanntesten Text-zu-Bild-Modelle ist DALL·E inzwischen ebenfalls Teil von Azure OpenAI. Doch auch hier gilt: Ohne Unterstützung durch OpenWebUI bleibt die Nutzung auf externe APIs oder zusätzliche Proxy-Lösungen beschränkt.
+- **DALL·E**: Als eines der bekanntesten Text-zu-Bild-Modelle ist DALL·E inzwischen ebenfalls Teil von Azure OpenAI. Doch auch hier gilt: Ohne Unterstützung durch OpenWebUI bleibt die Nutzung auf externe APIs oder zusätzliche Proxy-Lösungen beschränkt.<br>
 
-** Warum ist das ein Nachteil?
+** Warum ist das ein Nachteil?**
 Die Stärke einer selbst aufgesetzten Architektur liegt in der Flexibilität – eigene Infrastruktur, eigene Kostenkontrolle, eigene Modelle. Wenn aber zentrale Features im Frontend nicht unterstützt werden, stößt man schnell an Grenzen:
 
 - Projekte, die bewusst auf Echtzeit-Dialoge oder Bildgenerierung setzen, lassen sich nicht 1:1 abbilden.
@@ -78,7 +80,5 @@ Die Stärke einer selbst aufgesetzten Architektur liegt in der Flexibilität –
 
 ## Fazit
 Die aktuelle Lösung zeigt klar die Potenziale eines offenen, flexiblen Setups – aber ebenso auch die Schwächen. Solange OpenWebUI keine native Unterstützung für GPT-Realtime, GPT-Image und DALL·E bietet, bleibt ein Teil der Vision unerfüllt. Für viele klassische Text-Szenarien ist das Setup mehr als ausreichend. Wer jedoch auf Multimodalität und Bildgenerierung setzt, muss mit Umwegen leben oder zusätzliche Komponenten in die Architektur integrieren.
-
-<img src="/assets/img/portfolio/openwebuifrontend.jpg" alt="RAG Voice BOT - Architecture Diagram" /><br><br>
 
 **Das Projekt zeigt für mich sehr deutlich**: Wer die nötige Infrastruktur und etwas technisches Know-how mitbringt, kann sich von starren Abo-Strukturen lösen und eigene, zukunftsfähige KI-Plattformen schaffen.<br><br>
