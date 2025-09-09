@@ -57,27 +57,27 @@ Die Lösung hat mir eindrucksvoll gezeigt, wie flexibel sich moderne AI-Architek
 - **Kostenkontrolle**: Statt fester Abos zahle ich nur für die tatsächlich genutzten Ressourcen in Azure.
 - **Flexibilität**: Ich kann genau die Modelle ausrollen, die ich für ein Projekt brauche – und diese jederzeit anpassen.
 - **Erweiterbarkeit**: Mit LiteLLM als Proxy kann ich weitere Systeme oder Integrationen anbinden, ohne die Architektur neu denken zu müssen.
-- **Unabhängigkeit**: Ich bin nicht auf die Plattform von OpenAI beschränkt, sondern kann mein eigenes Setup aufbauen.<br>
+- **Unabhängigkeit**: Ich bin nicht auf die Plattform von OpenAI beschränkt, sondern kann mein eigenes Setup aufbauen.<br><br>
 
-##  Grenzen der aktuellen Umsetzung – fehlende Bereitstellung von Realtime- und Image-Modellen
+## Grenzen der aktuellen Umsetzung – fehlende Unterstützung in OpenWebUI für Realtime- und Image-Modelle
 
-So spannend die Architektur mit Azure OpenAI, OpenWebUI und LiteLLM auch ist, ganz ohne Einschränkungen kommt sie aktuell nicht aus. Besonders deutlich zeigt sich das an zwei Punkten: **GPT-Realtime-Modelle** und **Image-Generierung mit DALL·E**.
+So spannend die Architektur mit Azure OpenAI, OpenWebUI und LiteLLM auch ist, ganz ohne Einschränkungen kommt sie aktuell nicht aus. Besonders deutlich zeigt sich das bei drei Modellfamilien: **GPT-Realtime, GPT-Image und DALL·E**.
 
-Beide Modelle sind momentan über Azure OpenAI **nicht direkt verfügbar** und lassen sich somit auch nicht nahtlos in die hier aufgebaute Umgebung integrieren.
+Alle drei Modelle sind über **Azure OpenAI und Azure AI Foundry grundsätzlich verfügbar**, lassen sich jedoch **nicht nahtlos in OpenWebUI nutzen**, da die Plattform diese speziellen Endpunkte derzeit nicht unterstützt.
 
-- **Realtime-Modelle** wie GPT-4o Realtime sind in der Lage, Sprache, Text und Audio multimodal und nahezu verzögerungsfrei zu verarbeiten. Sie eröffnen ganz neue Anwendungsfelder – von Voice-Bots bis hin zu interaktiven Assistenzsystemen. Allerdings lassen sich diese Modelle derzeit nicht über Azure bereitstellen. Damit fällt einer der größten Innovationsschritte weg, wenn man versucht, ein alternatives Setup außerhalb der klassischen OpenAI-Abos aufzubauen.
+- **GPT-Realtime**: Diese Modelle verarbeiten Sprache, Text und Audio multimodal in Echtzeit. Sie ermöglichen flüssige Sprachdialoge ohne merkliche Verzögerung – ideal für Voice-Bots oder interaktive Assistenzsysteme. Da OpenWebUI die Realtime-Schnittstellen nicht unterstützt, bleibt dieser entscheidende Innovationsschritt in der Architektur ungenutzt.
+ **GPT-Image**: Mit diesen Modellen lassen sich Bilder aus Textbeschreibungen generieren oder bestehende Bilder mit Text-Input verändern. Sie sind in Azure bereits verfügbar, können aber über OpenWebUI nicht direkt angesprochen werden. Für Szenarien, in denen Bildgenerierung in den Chatfluss integriert werden soll, bedeutet das eine deutliche Einschränkung.
+- **DALL·E**: Als eines der bekanntesten Text-zu-Bild-Modelle ist DALL·E inzwischen ebenfalls Teil von Azure OpenAI. Doch auch hier gilt: Ohne Unterstützung durch OpenWebUI bleibt die Nutzung auf externe APIs oder zusätzliche Proxy-Lösungen beschränkt.
 
-- **Image-Modelle** wie DALL·E, die aus Textbeschreibungen Bilder generieren, stehen ebenfalls nicht als Dienst in Azure OpenAI zur Verfügung. Für Anwendungsfälle, bei denen Texteingaben und visuelle Ausgaben Hand in Hand gehen sollen, bedeutet das eine klare Einschränkung. Zwar lassen sich externe APIs anbinden, doch das widerspricht dem Ziel einer einheitlichen, zentral in Azure betriebenen Lösung.<br>
-
-## Warum ist das ein Nachteil?
-Die Stärke einer selbst aufgesetzten Architektur liegt in der Flexibilität – eigene Infrastruktur, eigene Kostenkontrolle, eigene Modelle. Wenn aber bestimmte Schlüsselmodelle fehlen, stößt man schnell an Grenzen:
+** Warum ist das ein Nachteil?
+Die Stärke einer selbst aufgesetzten Architektur liegt in der Flexibilität – eigene Infrastruktur, eigene Kostenkontrolle, eigene Modelle. Wenn aber zentrale Features im Frontend nicht unterstützt werden, stößt man schnell an Grenzen:
 
 - Projekte, die bewusst auf Echtzeit-Dialoge oder Bildgenerierung setzen, lassen sich nicht 1:1 abbilden.
-- Entwickler:innen müssen zusätzliche Dienste einkaufen oder Workarounds bauen, was die Architektur verkompliziert.
-- Der Mehrwert einer zentralisierten Lösung in Azure wird teilweise konterkariert, wenn man am Ende doch externe Services anbinden muss.<br>
+- Entwickler:innen müssen zusätzliche Dienste oder Workarounds integrieren, was die Architektur verkompliziert.
+- Der Mehrwert einer zentralisierten, benutzerfreundlichen Oberfläche wird eingeschränkt, wenn man am Ende doch externe Services oder Proxys anbinden muss.
 
 ## Fazit
-Die aktuelle Lösung zeigt klar die Potenziale eines offenen, flexiblen Setups – aber ebenso auch die Schwächen. Solange Azure OpenAI keine Realtime- und Image-Modelle bereitstellt, bleibt ein Teil der Vision unerfüllt. Für viele klassische Text-Szenarien ist das Setup mehr als ausreichend. Wer jedoch auf Multimodalität und Bildgenerierung setzt, muss mit Umwegen leben oder auf die Weiterentwicklung des Azure-Portfolios warten.
+Die aktuelle Lösung zeigt klar die Potenziale eines offenen, flexiblen Setups – aber ebenso auch die Schwächen. Solange OpenWebUI keine native Unterstützung für GPT-Realtime, GPT-Image und DALL·E bietet, bleibt ein Teil der Vision unerfüllt. Für viele klassische Text-Szenarien ist das Setup mehr als ausreichend. Wer jedoch auf Multimodalität und Bildgenerierung setzt, muss mit Umwegen leben oder zusätzliche Komponenten in die Architektur integrieren.
 
 <img src="/assets/img/portfolio/openwebuifrontend.jpg" alt="RAG Voice BOT - Architecture Diagram" /><br><br>
 
