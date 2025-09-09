@@ -27,7 +27,7 @@ Den Anfang machte eine sogenannte Burstmaschine in Azure. Diese Maschinen eignen
 Parallel dazu habe ich in Azure den Azure OpenAI Service eingerichtet und in AI Foundry genau die Modelle bereitgestellt, die ich in meinem Projekt nutzen wollte. Damit stand mir die volle Leistungsfähigkeit der GPT-Modelle zur Verfügung – allerdings eben in meiner eigenen Azure-Subscription und nicht über ein Abo bei OpenAI direkt.<br>
 
 **Azure-Deployment - Burst-Maschine**:<br><br>
-<img src="/assets/img/portfolio/azureowngpt.jpg" alt="Azure Ressource" /><br><br>
+<img src="/assets/img/portfolio/azureowngptjpg.jpg" alt="Azure Ressource" /><br><br>
 
 **Azure Open AI - Azure AI Foundry**:<br><br>
 <img src="/assets/img/portfolio/foundry.jpg" alt="GPT-Modelle" /><br><br>
