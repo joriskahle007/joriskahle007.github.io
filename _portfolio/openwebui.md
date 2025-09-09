@@ -71,7 +71,7 @@ Alle drei Modelle sind über **Azure OpenAI und Azure AI Foundry grundsätzlich 
  **GPT-Image**: Mit diesen Modellen lassen sich Bilder aus Textbeschreibungen generieren oder bestehende Bilder mit Text-Input verändern. Sie sind in Azure bereits verfügbar, können aber über OpenWebUI nicht direkt angesprochen werden. Für Szenarien, in denen Bildgenerierung in den Chatfluss integriert werden soll, bedeutet das eine deutliche Einschränkung.
 - **DALL·E**: Als eines der bekanntesten Text-zu-Bild-Modelle ist DALL·E inzwischen ebenfalls Teil von Azure OpenAI. Doch auch hier gilt: Ohne Unterstützung durch OpenWebUI bleibt die Nutzung auf externe APIs oder zusätzliche Proxy-Lösungen beschränkt.<br>
 
-** Warum ist das ein Nachteil?**
+**Warum ist das ein Nachteil?**
 Die Stärke einer selbst aufgesetzten Architektur liegt in der Flexibilität – eigene Infrastruktur, eigene Kostenkontrolle, eigene Modelle. Wenn aber zentrale Features im Frontend nicht unterstützt werden, stößt man schnell an Grenzen:
 
 - Projekte, die bewusst auf Echtzeit-Dialoge oder Bildgenerierung setzen, lassen sich nicht 1:1 abbilden.
