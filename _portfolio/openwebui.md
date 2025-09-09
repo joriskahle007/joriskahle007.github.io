@@ -31,7 +31,7 @@ So einfach, wie erhofft, ließ sich OpenWebUI nicht direkt mit Azure OpenAI verb
 An diesem Punkt kam LiteLLM ins Spiel – ein leichtgewichtiger Proxy, der die Brücke zwischen OpenWebUI und Azure OpenAI schlagen kann. LiteLLM fungiert im Prinzip als Übersetzer: Es nimmt Anfragen aus OpenWebUI entgegen, wandelt sie in das passende Format für Azure OpenAI um und leitet die Antworten zurück.
 Das Ergebnis: OpenWebUI konnte plötzlich nahtlos mit den Modellen aus Azure arbeiten, ohne dass ich tief in die spezifische Azure-API einsteigen musste.
 
-<img src="/assets/img/portfolio/Litellmapi.jpg" alt="LiteLLM-API" />
+<img src="/assets/img/portfolio/Litellmapi.jpg" alt="LiteLLM-API" /><br><br>
 
 ## Architektur im Überblick
 
@@ -40,13 +40,13 @@ Das Ergebnis: OpenWebUI konnte plötzlich nahtlos mit den Modellen aus Azure arb
 - Azure Burstmaschine → Basis-Infrastruktur für die Installation von OpenWebUI
 - OpenWebUI → Frontend für die Interaktion mit den Modellen
 - Azure OpenAI + AI Foundry → Bereitstellung der gewünschten GPT-Modelle
-- LiteLLM → Proxy, der die technische Brücke zwischen Frontend und Azure schlägt
+- LiteLLM → Proxy, der die technische Brücke zwischen Frontend und Azure schlägt<br>
 
-**Verbindung - OpenWebUI & LiteLLM**:<br>
+**Verbindung - OpenWebUI & LiteLLM**:<br><br>
 <img src="/assets/img/portfolio/openwebuicon.jpg" alt="Architecture Diagram" />
 
-**Auswahl von GPT-modelle**:<br>
-<img src="/assets/img/portfolio/openwebuimodel.jpg" alt="Architecture Diagram" /><br><br>
+**Auswahl von GPT-modelle**:<br><br>
+<img src="/assets/img/portfolio/openwebuimodel.jpg" alt="Architecture Diagram" /><br><br><br>
 
 ## Learnings & Vorteile
 Die Lösung hat mir eindrucksvoll gezeigt, wie flexibel sich moderne AI-Architekturen gestalten lassen:
