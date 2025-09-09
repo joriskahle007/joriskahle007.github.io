@@ -37,7 +37,7 @@ Das Ergebnis: OpenWebUI konnte plötzlich nahtlos mit den Modellen aus Azure arb
 
 ## Architektur im Überblick
 
-<img src="/assets/img/portfolio/openwebuidia.png" alt="Architecture Diagram" />
+<img src="/assets/img/portfolio/oepnwebuidia.png" alt="Architecture Diagram" />
 
 - Azure Burstmaschine → Basis-Infrastruktur für die Installation von OpenWebUI
 - OpenWebUI → Frontend für die Interaktion mit den Modellen
@@ -45,7 +45,7 @@ Das Ergebnis: OpenWebUI konnte plötzlich nahtlos mit den Modellen aus Azure arb
 - LiteLLM → Proxy, der die technische Brücke zwischen Frontend und Azure schlägt
 
 **Auswahl von GPT-modelle**:
-<img src="/assets/img/portfolio/openwebuimodel.jpg" alt="Architecture Diagram" />
+<img src="/assets/img/portfolio/openwebuimodel.jpg" alt="Architecture Diagram" /><br><br>
 
 **Verbindung - OpenWebUI & LiteLLM**:
 <img src="/assets/img/portfolio/openwebuicon.jpg" alt="Architecture Diagram" />
