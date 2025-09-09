@@ -56,6 +56,9 @@ Die Lösung hat mir eindrucksvoll gezeigt, wie flexibel sich moderne AI-Architek
 - **Erweiterbarkeit**: Mit LiteLLM als Proxy kann ich weitere Systeme oder Integrationen anbinden, ohne die Architektur neu denken zu müssen.
 - **Unabhängigkeit**: Ich bin nicht auf die Plattform von OpenAI beschränkt, sondern kann mein eigenes Setup aufbauen.
 
+**Benutzerverwaltung:**<br><br>
+<img src="/assets/img/portfolio/useramin.jpg" alt="LiteLLM-API" /><br><br>
+
 ##  Grenzen der aktuellen Umsetzung – fehlende Bereitstellung von Realtime- und Image-Modellen
 
 So spannend die Architektur mit Azure OpenAI, OpenWebUI und LiteLLM auch ist, ganz ohne Einschränkungen kommt sie aktuell nicht aus. Besonders deutlich zeigt sich das an zwei Punkten: **GPT-Realtime-Modelle** und **Image-Generierung mit DALL·E**.
