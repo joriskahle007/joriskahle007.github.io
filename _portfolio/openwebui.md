@@ -84,17 +84,17 @@ Die Stärke einer selbst aufgesetzten Architektur liegt in der Flexibilität –
 - Entwickler:innen müssen zusätzliche Dienste oder Workarounds integrieren, was die Architektur verkompliziert.
 - Der Mehrwert einer zentralisierten, benutzerfreundlichen Oberfläche wird eingeschränkt, wenn man am Ende doch externe Services oder Proxys anbinden muss.
 
-==> ## Update zum Projekt!
+## Update zum Projekt!
 
 Mit der neuesten Version von OpenWebUi (v0.6.27) - (danke an **Benjamin Eha** für den Tipp) ist es nun möglich, GPT-Modelle direkt einzubinden – ganz ohne den Umweg über LiteLLM. Ich habe die neue Version installiert und die Modelle direkt integriert. Der Installationsprozess verlief reibungslos, und die Anbindung der Modelle funktioniert einwandfrei.
 
-<img src="/assets/img/portfolio/instalOpenWebUI.jpg" alt="Architecture Diagram" /><br><br><br>
+<img src="/assets/img/portfolio/InstallOpenWebUI.jpg" alt="Architecture Diagram" /><br><br><br>
 
 Durch diese Neuerung wird OpenWebUi noch leistungsfähiger und flexibler einsetzbar. Die direkte Integration erlaubt nicht nur eine einfachere Einrichtung, sondern auch eine schnellere Interaktion mit den Modellen, was insbesondere für prototypische Projekte und KI-Demos von großem Vorteil ist. Darüber hinaus eröffnet die Möglichkeit, GPT-Modelle ohne zusätzliche Zwischenschicht zu nutzen, neue Chancen für individuelle Anpassungen und Optimierungen in der Modellnutzung.
 
 <img src="/assets/img/portfolio/directcon.jpg" alt="Architecture Diagram" /><br><br><br>
 
-Mit dieser Version wird OpenWebUi für Entwickler und KI-Enthusiasten gleichermaßen noch attraktiver und praxisnaher.<br>
+**Mit dieser Version wird OpenWebUi für Entwickler und KI-Enthusiasten gleichermaßen noch attraktiver und praxisnaher.**<br>
 
 ## Fazit
 Die aktuelle Lösung zeigt klar die Potenziale eines offenen, flexiblen Setups – aber ebenso auch die Schwächen. Solange OpenWebUI keine native Unterstützung für GPT-Realtime, GPT-Image und DALL·E bietet, bleibt ein Teil der Vision unerfüllt. Für viele klassische Text-Szenarien ist das Setup mehr als ausreichend. Wer jedoch auf Multimodalität und Bildgenerierung setzt, muss mit Umwegen leben oder zusätzliche Komponenten in die Architektur integrieren.
