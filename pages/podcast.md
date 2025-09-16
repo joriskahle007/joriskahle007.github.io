@@ -16,6 +16,19 @@ Ob Techie oder Entscheider – hier bekommst du praxisnahe Impulse, echte Erfahr
 
 🎧 Höre direkt hier auf Spotify rein:<br>
 
+<!-- 🎧 Folge 4 -->
+<h3>🎧 Folge 4 : Erste Schritte mit Microsoft Fabric</h3>
+<iframe 
+  style="border-radius:12px" 
+  src="https://open.spotify.com/embed/episode/00G2Gas8Lh9gVmHRxOzCYc?utm_source=generator" 
+  width="100%" 
+  height="152" 
+  frameborder="0" 
+  allowfullscreen="" 
+  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+  loading="lazy">
+</iframe>
+
 <!-- 🎧 Folge 3 -->
 <h3>🎧 Folge 3 : GPT-Modelle auf Azure: Unterschiede, Regionen & Kostentipps</h3>
 <iframe 
