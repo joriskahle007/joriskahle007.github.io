@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Das Computer Use Tool – ein Durchbruch für die Automatisierung
-tags: [CSP, Azure, GPT, Computer Use Tool, Azure Open AI]
+tags: [CSP, Azure, GPT, Computer Use Tool, Azure Open AI, Azure AI Foundry]
 ---
 
 Stell dir vor, dein Computer ‒ dein Bildschirm, deine Maus, deine Tastatur ‒ könnte sprechen. Also: Nicht im Sinne eines sprechenden PC-Geists, aber fast so. Wenn du sagst: „Hey, überprüfe die neuesten Fehlermeldungen im Dashboard, öffne das Ticket-Tool, trag die Daten ein, und schicke den Bericht raus“ ‒ und das passiert alles automatisch. Ohne dass du manuell klickst, kopierst oder zwischen Apps wechselst. Genau das bringt Microsofts neues **Computer Use Tool (Preview)** im Azure AI Foundry Agent Service mit sich.
@@ -19,7 +19,7 @@ Eine ziemlich große Änderung: Statt ständiger Entwicklerarbeit, wenn irgendwa
 Damit das Ganze funktioniert, gibt's ein paar Voraussetzungen und Einschränkungen. Wichtig zu wissen:
 
 **- Regionen, in denen das Tool gerade läuft**: East US 2, Sweden Central und South India. Wenn du also z. B. in Europa bist und deine Subscription nicht in einer dieser Regionen liegt, musst du womöglich in eine unterstützte Region ausweichen. 
-**- Zugangsregel**: Es handelt sich um eine Preview („Vorschau“) – das heißt, man muss sich anmelden bzw. Zugriff beantragen. Microsoft prüft Anträge und entscheidet, ob Kunden berechtigt sind. 
+**- Zugangsregel**: Es handelt sich um eine Preview („Vorschau“) – das heißt, man muss sich anmelden bzw. Zugriff beantragen. Microsoft prüft Anträge und entscheidet, ob Kunden berechtigt sind. Das Formular hierzu finde ihc hier: https://customervoice.microsoft.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7en2Ais5pxKtso_Pz4b1_xUNUhSVEpaRDJaNkVBVFVIWFJCNDBHQ1Y4OSQlQCN0PWcu
 **- Technisch**: Du brauchst eine Azure AI Foundry Ressource mit Deployment des „computer-use-preview“ Modells. Man spricht mit der Responses API. Dein Code gibt Anweisungen, Screenshots kommen zurück, der Agent erkennt Statusänderungen und fährt fort. 
 
 ## Unterschiede zu klassischer Automation und Browser Scripts<br><br>
@@ -27,6 +27,21 @@ Damit das Ganze funktioniert, gibt's ein paar Voraussetzungen und Einschränkung
 Wenn man bisher Browser Automation Tools genutzt hat, war oft so: du sagst, „der Button im DOM heißt xyz“, du greifst direkt über HTML-Elemente zu. Aber sobald das Layout oder Klassen anders sind, funktioniert das nicht mehr.
 
 Das Computer Use Tool ist anders. Es arbeitet mit **Screenshots („Pixeldaten“) und visueller Rückmeldung**. Nicht nur mit DOM. Außerdem kannst du Aufgaben über mehrere Anwendungen hinweg laufen lassen, nicht nur innerhalb eines Browsers. Es ist also robuster gegen Veränderungen und flexibler. <br><br>
+
+## Ein Beispiel:
+
+Unser Bot soll uns folgende Frage beantworten: **Welche Azure-Region unterstützt das Computer Use Preview Modell im Azure OpenAI?**
+
+computeruse01.jpg
+
+Nach der Eingabe der Frage erstellt der Agent automatisch einen Screenshot und erkennt, dass er dafür den Browser nutzen muss. Im nächsten Schritt trägt er die Fragestellung selbstständig in das Suchfeld von Microsoft Bing ein und startet die Suche. Anschließend klickt er sich automatisiert durch die Ergebnisseite, öffnet die passende Quelle und navigiert dort gezielt weiter, bis er die gewünschte Information gefunden hat. Am Ende präsentiert er genau die Antwort, nach der wir ursprünglich gefragt hatten.
+
+computeruse02.jpg
+computeruse03.jpg
+computeruse04.jpg
+
+Jetzt könnte man natürlich einwenden: „Warum stelle ich die Frage nicht einfach direkt einem GPT-Modell und bekomme die Antwort sofort?“ – und ja, die Überlegung ist absolut berechtigt. Der Sinn des Beispiels liegt jedoch nicht in der Effizienz, sondern in der Demonstration: Es zeigt, welche Möglichkeiten durch diese neue Art der Automatisierung entstehen. Der Agent interagiert nicht nur mit Wissen, das er selbst schon hat, sondern kann eigenständig auf externe Systeme zugreifen, sich durch Webseiten bewegen und Informationen so beschaffen, wie es ein Mensch auch tun würde.<br><br>
+
 
 ## Preis & Kostenüberblick
 
