@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Das Computer Use Tool – ein Durchbruch für die Automatisierung
+title: Das Computer Use Tool – ein Durchbruch für die Automatisierung (Azure AI Foundry)
 tags: [CSP, Azure, GPT, Computer Use Tool, Azure Open AI, Azure AI Foundry]
 ---
 
@@ -18,11 +18,11 @@ Eine ziemlich große Änderung: Statt ständiger Entwicklerarbeit, wenn irgendwa
 
 Damit das Ganze funktioniert, gibt's ein paar Voraussetzungen und Einschränkungen. Wichtig zu wissen:
 
-**- Regionen, in denen das Tool gerade läuft**: East US 2, Sweden Central und South India. Wenn du also z. B. in Europa bist und deine Subscription nicht in einer dieser Regionen liegt, musst du womöglich in eine unterstützte Region ausweichen.<br>
-**- Zugangsregel**: Es handelt sich um eine Preview („Vorschau“) – das heißt, man muss sich anmelden bzw. Zugriff beantragen. Microsoft prüft Anträge und entscheidet, ob Kunden berechtigt sind. Das Formular hierzu finde ihc hier: <a href="[https://github.com/Azure-Samples/aisearch-openai-rag-audio](https://customervoice.microsoft.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7en2Ais5pxKtso_Pz4b1_xUNUhSVEpaRDJaNkVBVFVIWFJCNDBHQ1Y4OSQlQCN0PWcu)" target="_blank" rel="noopener">Zugriff auf das Azure OpenAI Service Computer Use Preview-Modell anfordern</a>.<br>
-**- Technisch**: Du brauchst eine Azure AI Foundry Ressource mit Deployment des „computer-use-preview“ Modells. Man spricht mit der Responses API. Dein Code gibt Anweisungen, Screenshots kommen zurück, der Agent erkennt Statusänderungen und fährt fort. 
+**- Regionen, in denen das Tool gerade läuft**: East US 2, Sweden Central und South India. Wenn du also z. B. in Europa bist und deine Subscription nicht in einer dieser Regionen liegt, musst du womöglich in eine unterstützte Region ausweichen.<br><br>
+**- Zugangsregel**: Es handelt sich um eine Preview („Vorschau“) – das heißt, man muss sich anmelden bzw. Zugriff beantragen. Microsoft prüft Anträge und entscheidet, ob Kunden berechtigt sind. Das Formular hierzu finde ihc hier: <a href="[https://github.com/Azure-Samples/aisearch-openai-rag-audio](https://customervoice.microsoft.com/Pages/ResponsePage.aspx?id=v4j5cvGGr0GRqy180BHbR7en2Ais5pxKtso_Pz4b1_xUNUhSVEpaRDJaNkVBVFVIWFJCNDBHQ1Y4OSQlQCN0PWcu)" target="_blank" rel="noopener">Zugriff auf das Azure OpenAI Service Computer Use Preview-Modell anfordern</a>.<br><br>
+**- Technisch**: Du brauchst eine Azure AI Foundry Ressource mit Deployment des „computer-use-preview“ Modells. Man spricht mit der Responses API. Dein Code gibt Anweisungen, Screenshots kommen zurück, der Agent erkennt Statusänderungen und fährt fort. <br><br>
 
-## Unterschiede zu klassischer Automation und Browser Scripts<br><br>
+## Unterschiede zu klassischer Automation und Browser Scripts
 
 Wenn man bisher Browser Automation Tools genutzt hat, war oft so: du sagst, „der Button im DOM heißt xyz“, du greifst direkt über HTML-Elemente zu. Aber sobald das Layout oder Klassen anders sind, funktioniert das nicht mehr.
 
@@ -36,8 +36,8 @@ Unser Bot soll uns folgende Frage beantworten: **Welche Azure-Region unterstütz
 
 Nach der Eingabe der Frage erstellt der Agent automatisch einen Screenshot und erkennt, dass er dafür den Browser nutzen muss. Im nächsten Schritt trägt er die Fragestellung selbstständig in das Suchfeld von Microsoft Bing ein und startet die Suche. Anschließend klickt er sich automatisiert durch die Ergebnisseite, öffnet die passende Quelle und navigiert dort gezielt weiter, bis er die gewünschte Information gefunden hat. Am Ende präsentiert er genau die Antwort, nach der wir ursprünglich gefragt hatten.
 
-<img src="/assets/img/computeruse02.jpg" alt="ComputerUse" /><br>
-<img src="/assets/img/computeruse03.jpg" alt="ComputerUse" /><br>
+<img src="/assets/img/computeruse02.jpg" alt="ComputerUse" /><br><br>
+<img src="/assets/img/computeruse03.jpg" alt="ComputerUse" /><br><br>
 <img src="/assets/img/computeruse04.jpg" alt="ComputerUse" /><br>
 
 Jetzt könnte man natürlich einwenden: „Warum stelle ich die Frage nicht einfach direkt einem GPT-Modell und bekomme die Antwort sofort?“ – und ja, die Überlegung ist absolut berechtigt. Der Sinn des Beispiels liegt jedoch nicht in der Effizienz, sondern in der Demonstration: Es zeigt, welche Möglichkeiten durch diese neue Art der Automatisierung entstehen. Der Agent interagiert nicht nur mit Wissen, das er selbst schon hat, sondern kann eigenständig auf externe Systeme zugreifen, sich durch Webseiten bewegen und Informationen so beschaffen, wie es ein Mensch auch tun würde.<br><br>
@@ -59,10 +59,10 @@ Ehrlich gesagt: Ich finde, das könnte wirklich ein Gamechanger sein. Nicht übe
 
 Der nette Teil: Der Agent ist nie müde, nie offline, vergisst nicht, freundlich zu sein. Er macht keinen Unterschied, wie oft du ihn nutzt, er bleibt genau so performant wie beim ersten Task. Das schafft nicht nur Effizienz, sondern auch Konsistenz: gleiche Qualität, weniger „na, heute mal weniger Konzentration“.
 
-Und: Service Abteilungen, Helpdesks, interne Wissenszentren – alle werden profitieren. Weil der Bot einfache Fragen sofort beantworten kann, Dokumentenrecherche automatisieren, Workflows starten und überwachen kann. Dadurch sparen Unternehmen langfristig nicht nur Personalkosten, sondern auch Zeit – und gewinnen Kapazitäten für kreative, strategische Arbeit.
+Und: Service Abteilungen, Helpdesks, interne Wissenszentren – alle werden profitieren. Weil der Bot einfache Fragen sofort beantworten kann, Dokumentenrecherche automatisieren, Workflows starten und überwachen kann. Dadurch sparen Unternehmen langfristig nicht nur Personalkosten, sondern auch Zeit – und gewinnen Kapazitäten für kreative, strategische Arbeit.<br><br>
 
 ## Fazit: Eine neue Ära der Automatisierung
 
 Das Computer Use Tool ist mehr als nur ein zusätzliches Feature. Es ist ein Meilenstein auf dem Weg zur KI, die nicht nur denkt, sondern auch handelt. Für viele Unternehmen bedeutet das, dass sie ihre Prozesse endlich durchgängig automatisieren können – auch dort, wo bisher technische Barrieren bestanden.
 
-Wer diese Technologie früh einsetzt, verschafft sich klare Vorteile: weniger Kosten, mehr Effizienz und zufriedenere Mitarbeiter. Man darf ohne Übertreibung sagen: Wir stehen hier am Beginn einer neuen Automatisierungsära, die die Arbeitswelt in den nächsten Jahren stark prägen wird.
+Wer diese Technologie früh einsetzt, verschafft sich klare Vorteile: weniger Kosten, mehr Effizienz und zufriedenere Mitarbeiter. Man darf ohne Übertreibung sagen: Wir stehen hier am Beginn einer neuen Automatisierungsära, die die Arbeitswelt in den nächsten Jahren stark prägen wird.<br><br>
