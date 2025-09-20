@@ -12,5 +12,6 @@
 - discord:
   title: "Discord"
   url: https://discord.gg/Ff3ZcNfE
+  target: _blank
   hide: false
   position: 4
