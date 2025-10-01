@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Lokale KI-Modelle in der Entwicklung: Meine Erfahrungen mit Foundry Local
+title: Lokale KI-Modelle in der Entwicklung - Meine Erfahrungen mit Foundry Local
 tags: [Azure, Azure Foundry, Foundry local, Phi]
 ---
 
