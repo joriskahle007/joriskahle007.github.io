@@ -52,6 +52,29 @@ auswählen, ob die Antworten vom Cloud-Modell oder eben von meiner lokalen Insta
 Was mir dabei aufgefallen ist: Kleine Modelle laufen wirklich gut, auch auf einem Rechner ohne High-End-GPU. Bei größeren Varianten merkt man dann schnell, ob die Hardware 
 mithalten kann. Das Schöne ist, dass Foundry automatisch eine passende Modellversion auswählt (CPU-, GPU- oder NPU-optimiert), sodass man nicht erst selbst herumprobieren muss.<br><br>
 
+## Welche Modelle kann ich aktuell mit Foundry Local nutzen?
+
+Foundry Local unterstützt eine Reihe von Modellen verschiedener Größen, Anbieter und Einsatzszenarien. Manche Modelle funktionieren gut auf "leichter" Hardware, andere brauchen starke GPUs oder NPUs.<br><br>
+
+Hier sind ein paar konkrete Beispiele.<br>
+**Foundry Local – Modellübersicht**
+
+|  Modell |	Anforderungen (Hardware) |	Einsatzmöglichkeiten / Besonderheiten |
+| Phi-3.5-Mini (Microsoft) |	Läuft auch auf CPU, flüssiger auf GPU oder NPU, ab ~8–16 GB RAM | Sehr effizientes Modell für Code-Completion, Chat, kleinere Reasoning-Aufgaben. Guter Allrounder mit wenig Ressourcenbedarf. |
+| Phi-3.5-Coder / Phi-Coder |	GPU/NPU empfohlen, 16 GB RAM sinnvoll |	Speziell für Programmieraufgaben optimiert (ähnlich Copilot-Usecases). |
+| Qwen2.5-0.5B / Qwen-Coder |	CPU möglich, schneller mit GPU/NPU; kleiner Speicherbedarf (~3–6 GB) |	Multilingual stark, gute Balance aus Text- und Coding-Skills. Beliebt, um schnelle, ressourcenschonende KI-Assistenz lokal zu haben. |
+| Qwen2.5-7B / 14B Varianten |	GPU oder NPU zwingend, für 7B mindestens 8 GB VRAM, für 14B ≥ 16 GB VRAM |	Größere Modelle für komplexere Texte, mehr Kontext, bessere Qualität bei Reasoning. |
+| DeepSeek-R1 (Distill, Qwen-basierte Varianten) |	Optimiert für NPU/GPU, läuft auf moderner Hardware ab 16 GB RAM |	Stark für Reasoning-Tasks, schlanker als große GPT-Modelle. Distill-Varianten sparen Ressourcen. |
+| Mistral-7B-Instruct |	GPU (≥ 8 GB VRAM) oder NPU empfohlen, 16 GB RAM |	Gutes Instruct-Modell, stark bei Dialog, Textaufgaben, Code. Vergleichbar mit LLaMA-2-Chat. |
+| GPT-OSS-20B |	Zwingend NVIDIA-GPU mit ≥ 16 GB VRAM, Foundry Local v0.6.87+ | Sehr großes Modell mit hoher Qualität, geeignet für komplexe Entwicklungsaufgaben. Nur auf leistungsstarker Hardware sinnvoll. |
+
+## Ein paar Gedanken dazu
+
+- **Wenn du klein anfangen willst**: Nimm Phi-Mini oder Qwen2.5-0.5B. Die laufen auch ohne High-End-Hardware und geben dir ein Gefühl, wie sich der Workflow mit lokalen Modellen anfühlt.
+- **Für ernsthafte Code-Assistenz**: Phi-Coder oder Qwen-Coder sind erste Wahl, je nach Hardware.
+- **Für „mehr KI-Power“ lokal**: Mistral-7B oder Qwen-7B/14B sind solide, aber nur sinnvoll mit dedizierter GPU oder NPU.
+- **Wenn du maximale Qualität lokal willst**: Dann führt kaum ein Weg an GPT-OSS-20B vorbei – aber die Hürde sind VRAM und Performance.<br><br>
+
 ## Mein Fazit
 
 Für mich ist Foundry Local vor allem eine Lösung für Situationen, in denen die Cloud eben nicht zur Verfügung steht. Ob das an Unternehmensrichtlinien liegt, an fehlender Verbindung 
