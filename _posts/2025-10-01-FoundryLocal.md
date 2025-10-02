@@ -56,7 +56,6 @@ mithalten kann. Das Schöne ist, dass Foundry automatisch eine passende Modellve
 
 Foundry Local unterstützt eine Reihe von Modellen verschiedener Größen, Anbieter und Einsatzszenarien. Manche Modelle funktionieren gut auf "leichter" Hardware, andere brauchen starke GPUs oder NPUs.<br><br>
 
-Hier sind ein paar konkrete Beispiele.<br>
 **Foundry Local – Modellübersicht**
 
 |  Modell |	Anforderungen (Hardware) |	Einsatzmöglichkeiten / Besonderheiten |
