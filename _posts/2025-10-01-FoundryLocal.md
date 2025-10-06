@@ -49,6 +49,21 @@ Die Installation ist ziemlich geradlinig: VS Code und GitHub Copilot habe ich oh
 installiere ich über winget (Windows) oder Brew (macOS). Danach kann ich ein Modell starten, zum Beispiel mit foundry model run qwen2.5-0.5b. Ab da lässt sich im Copilot-Chat 
 auswählen, ob die Antworten vom Cloud-Modell oder eben von meiner lokalen Instanz kommen sollen.<br>
 
+Step 1.)
+<img src="/assets/img/FoundryLocal01.jpg" alt="foundry Local" /><br>
+Installation des Foundry Local Dienstes.
+
+Step 2.)
+<img src="/assets/img/foundrymodellist.jpg" alt="foundry Local" /><br>
+
+Step 3.)
+<img src="/assets/img/foundryStart.jpg" alt="foundry Local" /><br>
+Der Foundry Local Dienste wird gestartet
+
+Step 4.)
+<img src="/assets/img/foundryphi4.jpg" alt="foundry Local" /><br>
+Wir starten das Modell: Phi4-mini und testen das Modell.<br><br>
+
 Was mir dabei aufgefallen ist: Kleine Modelle laufen wirklich gut, auch auf einem Rechner ohne High-End-GPU. Bei größeren Varianten merkt man dann schnell, ob die Hardware 
 mithalten kann. Das Schöne ist, dass Foundry automatisch eine passende Modellversion auswählt (CPU-, GPU- oder NPU-optimiert), sodass man nicht erst selbst herumprobieren muss.<br><br>
 
