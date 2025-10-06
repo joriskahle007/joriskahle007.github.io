@@ -39,7 +39,7 @@ Microsoft hat Foundry Local so gebaut, dass der Einstieg leichtfällt. Trotzdem 
 | Betriebssystem |	Windows 10/11 oder macOS |	Neueste Version, stabil mit GPU/NPU |
 | Software |	VS Code, GitHub Copilot, AI Toolkit, Foundry Local |	Modellvarianten (auch quantisiert), Logging/Versionierung |
 | Netzwerk |	Internet nur für Downloads nötig |	Danach auch komplett offline nutzbar |
-| Berechtigungen |	Adminrechte für Installation |	Saubere Rechteverwaltung, Backups |<br>
+| Berechtigungen |	Adminrechte für Installation |	Saubere Rechteverwaltung, Backups |
 
 **Damit ist klar**: Ein modernes Notebook oder Desktop schafft schon den Einstieg, aber wer mit großen Sprachmodellen arbeiten will, sollte eine dedizierte GPU haben – idealerweise mit viel VRAM.<br><br>
 
@@ -49,18 +49,19 @@ Die Installation ist ziemlich geradlinig: VS Code und GitHub Copilot habe ich oh
 installiere ich über winget (Windows) oder Brew (macOS). Danach kann ich ein Modell starten, zum Beispiel mit foundry model run qwen2.5-0.5b. Ab da lässt sich im Copilot-Chat 
 auswählen, ob die Antworten vom Cloud-Modell oder eben von meiner lokalen Instanz kommen sollen.<br>
 
-Step 1.)
+Step 1.)<br>
 <img src="/assets/img/FoundryLocal01.jpg" alt="foundry Local" /><br>
-Installation des Foundry Local Dienstes.
+Installation des Foundry Local Dienstes.<br><br>
 
-Step 2.)
-<img src="/assets/img/foundrymodellist.jpg" alt="foundry Local" /><br>
+Step 2.)<br>
+<img src="/assets/img/foundrymodellist.jpg" alt="foundry Local" /><br><br>
+Auflistung sämtlicher Modelle die Lokal auf meinerm Laptop ausgeführt werden könnten.
 
-Step 3.)
-<img src="/assets/img/foundryStart.jpg" alt="foundry Local" /><br>
-Der Foundry Local Dienste wird gestartet
+Step 3.)<br>
+<img src="/assets/img/foundryStart.jpg" alt="foundry Local" /><br><br>
+Der Foundry Local Dienste wird wie folgt gestartet
 
-Step 4.)
+Step 4.)<br>
 <img src="/assets/img/foundryphi4.jpg" alt="foundry Local" /><br>
 Wir starten das Modell: Phi4-mini und testen das Modell.<br><br>
 
