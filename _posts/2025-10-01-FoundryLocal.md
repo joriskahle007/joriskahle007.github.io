@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Lokale KI-Modelle in der Entwicklung - Foundry Local machts möglich
-tags: [Azure, Azure Foundry, Foundry local, Phi]
+tags: [Azure, Azure Foundry, Foundry local, Phi, Qwen]
 ---
 
 Es gibt Situationen, da ist die Cloud keine Option. Nicht, weil ich ihr misstraue oder Angst um meine Daten hätte – im Gegenteil, viele meiner Projekte laufen ganz 
@@ -54,12 +54,12 @@ Step 1.)<br>
 Installation des Foundry Local Dienstes.<br><br>
 
 Step 2.)<br>
-<img src="/assets/img/foundrymodellist.jpg" alt="foundry Local" /><br><br>
-Auflistung sämtlicher Modelle die Lokal auf meinerm Laptop ausgeführt werden könnten.
+<img src="/assets/img/foundrymodellist.jpg" alt="foundry Local" /><br>
+Auflistung sämtlicher Modelle die Lokal auf meinerm Laptop ausgeführt werden könnten.<br><br>
 
 Step 3.)<br>
-<img src="/assets/img/foundryStart.jpg" alt="foundry Local" /><br><br>
-Der Foundry Local Dienste wird wie folgt gestartet
+<img src="/assets/img/foundryStart.jpg" alt="foundry Local" /><br>
+Der Foundry Local Dienste wird wie folgt gestartet<br><br>
 
 Step 4.)<br>
 <img src="/assets/img/foundryphi4.jpg" alt="foundry Local" /><br>
