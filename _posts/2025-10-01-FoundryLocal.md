@@ -50,19 +50,19 @@ installiere ich über winget (Windows) oder Brew (macOS). Danach kann ich ein Mo
 auswählen, ob die Antworten vom Cloud-Modell oder eben von meiner lokalen Instanz kommen sollen.<br>
 
 Step 1.)<br>
-<img src="/assets/img/FoundryLocal01.jpg" alt="foundry Local" /><br>
+<img src="/assets/img/FoundryLocal01.jpg" alt="foundry Local" align="left"/><br>
 Installation des Foundry Local Dienstes.<br><br>
 
 Step 2.)<br>
-<img src="/assets/img/foundrymodellist.jpg" alt="foundry Local" /><br>
+<img src="/assets/img/foundrymodellist.jpg" alt="foundry Local" align="left"/><br>
 Auflistung sämtlicher Modelle die Lokal auf meinerm Laptop ausgeführt werden könnten.<br><br>
 
 Step 3.)<br>
-<img src="/assets/img/foundryStart.jpg" alt="foundry Local" /><br>
+<img src="/assets/img/foundryStart.jpg" alt="foundry Local" align="left"/><br>
 Der Foundry Local Dienste wird wie folgt gestartet<br><br>
 
 Step 4.)<br>
-<img src="/assets/img/foundryphi4.jpg" alt="foundry Local" /><br>
+<img src="/assets/img/foundryphi4.jpg" alt="foundry Local" align="left"/><br>
 Wir starten das Modell: Phi4-mini und testen das Modell.<br><br>
 
 Was mir dabei aufgefallen ist: Kleine Modelle laufen wirklich gut, auch auf einem Rechner ohne High-End-GPU. Bei größeren Varianten merkt man dann schnell, ob die Hardware 
