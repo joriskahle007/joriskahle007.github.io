@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Lokale KI-Modelle in der Entwicklung - Foundry Local machts möglich
-tags: [Azure, Azure Foundry, Foundry local, Phi, Qwen]
+tags: [Azure, Azure Foundry, Foundry local, Phi, Qwen, GPT-OSS, DeepSeek, Mistral]
 ---
 
 Es gibt Situationen, da ist die Cloud keine Option. Nicht, weil ich ihr misstraue oder Angst um meine Daten hätte – im Gegenteil, viele meiner Projekte laufen ganz 
@@ -49,19 +49,19 @@ Die Installation ist ziemlich geradlinig: VS Code und GitHub Copilot habe ich oh
 installiere ich über winget (Windows) oder Brew (macOS). Danach kann ich ein Modell starten, zum Beispiel mit foundry model run qwen2.5-0.5b. Ab da lässt sich im Copilot-Chat 
 auswählen, ob die Antworten vom Cloud-Modell oder eben von meiner lokalen Instanz kommen sollen.<br>
 
-Step 1.)<br>
+Step 1.)
 <img src="/assets/img/FoundryLocal01.jpg" alt="foundry Local" align="left"/><br>
 Installation des Foundry Local Dienstes.<br><br>
 
-Step 2.)<br>
+Step 2.)
 <img src="/assets/img/foundrymodellist.jpg" alt="foundry Local" align="left"/><br>
 Auflistung sämtlicher Modelle die Lokal auf meinerm Laptop ausgeführt werden könnten.<br><br>
 
-Step 3.)<br>
+Step 3.)
 <img src="/assets/img/foundryStart.jpg" alt="foundry Local" align="left"/><br>
 Der Foundry Local Dienste wird wie folgt gestartet<br><br>
 
-Step 4.)<br>
+Step 4.)
 <img src="/assets/img/foundryphi4.jpg" alt="foundry Local" align="left"/><br>
 Wir starten das Modell: Phi4-mini und testen das Modell.<br><br>
 
