@@ -16,6 +16,32 @@ Ob Techie oder Entscheider – hier bekommst du praxisnahe Impulse, echte Erfahr
 
 🎧 Höre direkt hier auf Spotify rein:<br>
 
+<!-- 🎧 Folge 6: Folge 6 – FabCon Insights: Die neuesten Highlights aus der Microsoft Fabric Welt -->
+<h3>🎧 Folge 6 : Folge 6 – FabCon Insights: Die neuesten Highlights aus der Microsoft Fabric Welt</h3>
+<iframe 
+  style="border-radius:12px" 
+  src="https://open.spotify.com/embed/episode/3vuAojUxKnNzsFKhFq2KI9?utm_source=generator" 
+  width="100%" 
+  height="152" 
+  frameborder="0" 
+  allowfullscreen="" 
+  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+  loading="lazy">
+</iframe>
+
+<!-- 🎧 Folge 5: UseCase – GPT-4o-Realtime -->
+<h3>🎧 Folge 5 : UseCase – GPT-4o-Realtime</h3>
+<iframe 
+  style="border-radius:12px" 
+  src="https://open.spotify.com/embed/episode/53y3UgUIbCiHf8fEqQWQKq?utm_source=generator" 
+  width="100%" 
+  height="152" 
+  frameborder="0" 
+  allowfullscreen="" 
+  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+  loading="lazy">
+</iframe>
+
 <!-- 🎧 Folge 4 -->
 <h3>🎧 Folge 4 : Erste Schritte mit Microsoft Fabric</h3>
 <iframe 
