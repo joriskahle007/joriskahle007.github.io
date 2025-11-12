@@ -50,7 +50,11 @@ Playground - GPT-4o Realtime
 In diesem Playground können wir einen System-Prompt vergeben und eine der 10 vorgegebenen Stimmen auswählen. .<br><br>
 
 Playground - Live Voice API
-<img src="/assets/img/livevoiceplay.jpg" alt="Live Voice API - Playground" align="left"/><br>
+<div style="width:100vw; margin-left:calc(50% - 50vw);">
+  <img src="/assets/img/livevoiceplay.jpg"
+       alt="GPT-4o Realtime - Playground"
+       style="width:100%; height:auto; display:block; margin:0 auto;" />
+</div>
 Im Speech Playground können wir noch einiges mehr einstellen. Angefangen vom vordefinierte Templates, System-Prompt, unzählige Stimmen, Avatare und noch vieles mehr.<br><br>
 
 ## Wann welches Modell sinnvoll ist
