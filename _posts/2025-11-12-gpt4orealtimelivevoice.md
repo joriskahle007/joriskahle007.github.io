@@ -42,9 +42,11 @@ Technisch ändert sich dadurch die Pipeline nicht: Audio wird weiterhin in Echtz
 ## Azure AI Foundry Playground
 
 Playground - GPT-4o Realtime
-<img src="/assets/img/gptrealtimeplay.jpg"
-     alt="GPT-4o Realtime - Playground"
-     style="width:100vw !important; max-width:100vw !important; height:auto !important; display:block; margin:0 auto;" />
+<div style="width:100vw; margin-left:calc(50% - 50vw);">
+  <img src="/assets/img/gptrealtimeplay.jpg"
+       alt="GPT-4o Realtime - Playground"
+       style="width:100%; height:auto; display:block; margin:0 auto;" />
+</div>
 In diesem Playground können wir einen System-Prompt vergeben und eine der 10 vorgegebenen Stimmen auswählen. .<br><br>
 
 Playground - Live Voice API
