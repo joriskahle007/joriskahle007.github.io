@@ -39,6 +39,17 @@ Technisch ändert sich dadurch die Pipeline nicht: Audio wird weiterhin in Echtz
 | Anzahl an Stimmen  |  10  |  600  | 600  |
 | Use Cases |	Chatbots, interaktive Assistenten, Erfahrungen aus SPLA-Lizenz SprachBot |	Voicebots, Live-Übersetzungen, Audio-Interaktion |	Branchen- oder unternehmensspezifische Voicebots, Spezialfälle, markenspezifische Audio |
 
+## Azure AI Foundry Playground
+
+Playground - GPT-4o Realtime
+<img src="/assets/img/gptrealtimeplay.jpg" alt="GPT-4o Realtime - Playground" align="left"/><br>
+Installation des Foundry Local Dienstes.<br><br>
+
+Playground - Live Voice API
+<img src="/assets/img/livevoiceplay.jpg" alt="Live Voice API - Playground" align="left"/><br>
+Installation des Foundry Local Dienstes.<br><br>
+<br><br>
+
 ## Wann welches Modell sinnvoll ist
 
 Wenn ich es vereinfacht zusammenfasse: GPT‑4o Realtime glänzt dort, wo es um **komplexe Dialoge, Multi-Turn-Kontext und flexible Antworten** geht. Du sprichst mit dem Modell, es versteht, denkt mit und antwortet intelligent. Voice Live API ist die Wahl, wenn es vor allem auf **niedrige Latenz bei direkter Audio-Reaktion** ankommt – perfekt für Voicebots oder Live-Übersetzungen. Mit der BYOM-Option kannst du die Voice Live API sogar noch stärker anpassen, indem du eigene Modelle nutzt, die dein Fachvokabular oder spezielle Anwendungsfälle abbilden.
