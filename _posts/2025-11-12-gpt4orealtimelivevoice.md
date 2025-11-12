@@ -29,14 +29,16 @@ Technisch ändert sich dadurch die Pipeline nicht: Audio wird weiterhin in Echtz
 
 ## Technische Übersicht: GPT‑4o Realtime vs. Voice Live API (+BYOM)
 
-| Merkmal |	GPT‑4o Realtime |	Voice Live API |	Voice Live API + BYOM (Preview) |
+| **Merkmal** |	**GPT‑4o Realtime** |	**Voice Live API** |	**Voice Live API + BYOM (Preview)** |
 | Input |	Gesprochene Sprache, intern Tokenisierung |	Live-Audio-Stream |	Live-Audio-Stream |
 | Output |	Text oder Audio | Audio (Text-to-Speech) |	Audio (Text-to-Speech) |
 | Kontext |	Multi-Turn im Modell möglich |	Einzelne Sessions, Kontext extern nötig |	Einzelne Sessions, Kontext extern nötig |
 | Latenz |	Sehr niedrig (~<500ms) |	Extrem niedrig, optimiert für Live-Audio |	Extrem niedrig, identisch zur Standard Voice Live API |
 | Integration |	WebSocket / REST |	WebRTC / Streaming |	WebRTC / Streaming |
 | Intelligenz / Modell |	GPT‑4o Realtime, kontextbewusst |	Microsoft Standardmodell |	Eigenes Modell (BYOM), frei trainierbar |
-| Use Cases |	Chatbots, interaktive Assistenten, Erfahrungen aus SPLA-Lizenz SprachBot |	Voicebots, Live-Übersetzungen, Audio-Interaktion |	Branchen- oder unternehmensspezifische Voicebots, Spezialfälle, markenspezifische Audio |<br><br>
+| Anzahl an Stimmen  |  10  |  600+  | 600+  |
+| Use Cases |	Chatbots, interaktive Assistenten, Erfahrungen aus SPLA-Lizenz SprachBot |	Voicebots, Live-Übersetzungen, Audio-Interaktion |	Branchen- oder unternehmensspezifische Voicebots, Spezialfälle, markenspezifische Audio |
+<br><br>
 
 ## Wann welches Modell sinnvoll ist
 
