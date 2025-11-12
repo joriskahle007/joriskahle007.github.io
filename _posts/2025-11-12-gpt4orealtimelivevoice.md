@@ -36,19 +36,20 @@ Technisch ändert sich dadurch die Pipeline nicht: Audio wird weiterhin in Echtz
 | Latenz |	Sehr niedrig (~<500ms) |	Extrem niedrig, optimiert für Live-Audio |	Extrem niedrig, identisch zur Standard Voice Live API |
 | Integration |	WebSocket / REST |	WebRTC / Streaming |	WebRTC / Streaming |
 | Intelligenz / Modell |	GPT‑4o Realtime, kontextbewusst |	Microsoft Standardmodell |	Eigenes Modell (BYOM), frei trainierbar |
-| Anzahl an Stimmen  |  10  |  600  | 600  |
+| Anzahl an Stimmen  |  10  |  600+  | 600+  |
 | Use Cases |	Chatbots, interaktive Assistenten, Erfahrungen aus SPLA-Lizenz SprachBot |	Voicebots, Live-Übersetzungen, Audio-Interaktion |	Branchen- oder unternehmensspezifische Voicebots, Spezialfälle, markenspezifische Audio |
 
 ## Azure AI Foundry Playground
 
 Playground - GPT-4o Realtime
-<img src="/assets/img/gptrealtimeplay.jpg" alt="GPT-4o Realtime - Playground" style="width:100% !important; max-width:100% !important; height:auto;" align="left"/><br>
-Installation des Foundry Local Dienstes.<br><br>
+<img src="/assets/img/gptrealtimeplay.jpg"
+     alt="GPT-4o Realtime - Playground"
+     style="width:100vw !important; max-width:100vw !important; height:auto !important; display:block; margin:0 auto;" />
+In diesem Playground können wir einen System-Prompt vergeben und eine der 10 vorgegebenen Stimmen auswählen. .<br><br>
 
 Playground - Live Voice API
 <img src="/assets/img/livevoiceplay.jpg" alt="Live Voice API - Playground" align="left"/><br>
-Installation des Foundry Local Dienstes.<br><br>
-<br><br>
+Im Speech Playground können wir noch einiges mehr einstellen. Angefangen vom vordefinierte Templates, System-Prompt, unzählige Stimmen, Avatare und noch vieles mehr.<br><br>
 
 ## Wann welches Modell sinnvoll ist
 
