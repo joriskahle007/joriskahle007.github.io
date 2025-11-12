@@ -1,0 +1,17 @@
+// custom.scss
+// sorgt dafür, dass ausgewählte Bilder volle Breite nutzen
+
+img.fullwidth {
+  display: block !important;
+  width: 100% !important;
+  max-width: none !important;
+  height: auto !important;
+  float: none !important;
+  margin: 0 auto !important;
+}
+
+// Optional: für sehr große Screenshots Container etwas breiter
+.post-content,
+.entry-content {
+  max-width: 1100px !important;
+}
