@@ -42,7 +42,7 @@ Technisch ändert sich dadurch die Pipeline nicht: Audio wird weiterhin in Echtz
 ## Azure AI Foundry Playground
 
 Playground - GPT-4o Realtime
-<img src="/assets/img/gptrealtimeplay.jpg" alt="GPT-4o Realtime - Playground" height="100%" width="100%" align="left"/><br>
+<img src="/assets/img/gptrealtimeplay.jpg" alt="GPT-4o Realtime - Playground" style="width:100% !important; max-width:100% !important; height:auto;" align="left"/><br>
 Installation des Foundry Local Dienstes.<br><br>
 
 Playground - Live Voice API
