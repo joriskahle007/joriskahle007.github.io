@@ -36,9 +36,8 @@ Technisch ändert sich dadurch die Pipeline nicht: Audio wird weiterhin in Echtz
 | Latenz |	Sehr niedrig (~<500ms) |	Extrem niedrig, optimiert für Live-Audio |	Extrem niedrig, identisch zur Standard Voice Live API |
 | Integration |	WebSocket / REST |	WebRTC / Streaming |	WebRTC / Streaming |
 | Intelligenz / Modell |	GPT‑4o Realtime, kontextbewusst |	Microsoft Standardmodell |	Eigenes Modell (BYOM), frei trainierbar |
-| Anzahl an Stimmen  |  10  |  600+  | 600+  |
+| Anzahl an Stimmen  |  10  |  600  | 600  |
 | Use Cases |	Chatbots, interaktive Assistenten, Erfahrungen aus SPLA-Lizenz SprachBot |	Voicebots, Live-Übersetzungen, Audio-Interaktion |	Branchen- oder unternehmensspezifische Voicebots, Spezialfälle, markenspezifische Audio |
-<br><br>
 
 ## Wann welches Modell sinnvoll ist
 
