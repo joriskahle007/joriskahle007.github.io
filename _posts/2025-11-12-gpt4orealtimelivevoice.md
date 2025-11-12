@@ -29,7 +29,7 @@ Technisch ändert sich dadurch die Pipeline nicht: Audio wird weiterhin in Echtz
 
 ## Technische Übersicht: GPT‑4o Realtime vs. Voice Live API (+BYOM)
 
-| Merkmal |	GPT‑4o Realtime |	Voice Live API |	Voice Live API + BYOM (Preview) |
+| **Merkmal** |	**GPT‑4o Realtime** |	**Voice Live API** |	**Voice Live API + BYOM (Preview)** |
 | Input |	Gesprochene Sprache, intern Tokenisierung |	Live-Audio-Stream |	Live-Audio-Stream |
 | Output |	Text oder Audio | Audio (Text-to-Speech) |	Audio (Text-to-Speech) |
 | Kontext |	Multi-Turn im Modell möglich |	Einzelne Sessions, Kontext extern nötig |	Einzelne Sessions, Kontext extern nötig |
