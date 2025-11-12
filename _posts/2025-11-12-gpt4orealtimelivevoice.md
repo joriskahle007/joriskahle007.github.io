@@ -25,12 +25,13 @@ Voice Live API funktioniert ebenfalls mit Audio, aber der Ansatz ist ein anderer
 
 Ein spannendes Feature, das Microsoft jetzt anbietet, ist die **Bring Your Own Model (BYOM) Preview**. Damit kannst du ein eigenes Modell in der Voice Live API nutzen, statt auf das Standardmodell von Microsoft zu setzen. Das eröffnet einige Möglichkeiten: Du kannst ein Modell auf dein eigenes Fachvokabular trainieren, es in einem bestimmten Sprachstil ausgeben lassen oder spezielle Aufgaben übernehmen lassen, die das Standardmodell nicht optimal abdeckt.
 
-Technisch ändert sich dadurch die Pipeline nicht: Audio wird weiterhin in Echtzeit gestreamt und zurückgegeben, die Latenz bleibt extrem niedrig. Aber die „Intelligenz“ kommt jetzt aus deinem eigenen Modell. Das bedeutet: Du hast viel mehr Kontrolle über die Antworten, musst aber auch den Kontext selbst verwalten, wenn du längere Dialoge führen möchtest. Im Vergleich dazu bleibt GPT‑4o Realtime das komplette End-to-End-Modell: Audio wird erkannt, der Multi-Turn-Kontext verwaltet, die Antwort generiert – alles innerhalb des Modells.<br><br>
+Technisch ändert sich dadurch die Pipeline nicht: Audio wird weiterhin in Echtzeit gestreamt und zurückgegeben, die Latenz bleibt extrem niedrig. Aber die „Intelligenz“ kommt jetzt aus deinem eigenen Modell. Das bedeutet: Du hast viel mehr Kontrolle über die Antworten, musst aber auch den Kontext selbst verwalten, wenn du längere Dialoge führen möchtest. Im Vergleich dazu bleibt GPT‑4o Realtime das komplette End-to-End-Modell: Audio wird erkannt, der Multi-Turn-Kontext verwaltet, die Antwort generiert – alles innerhalb des Modells. Aber auch hier kannst du natürlch deine Daten dem modell mitgeben in Form einer RAG-Lösung.<br><br>
 
 ## Technische Übersicht: GPT‑4o Realtime vs. Voice Live API (+BYOM)
+
 | Merkmal |	GPT‑4o Realtime |	Voice Live API |	Voice Live API + BYOM (Preview) |
-| Input |	Gesprochene Sprache, intern Tokenisierung |	Live-Audio-Stream	Live-Audio-Stream |
-| Output |	Text oder Audio	Audio (Text-to-Speech) |	Audio (Text-to-Speech) |
+| Input |	Gesprochene Sprache, intern Tokenisierung |	Live-Audio-Stream |	Live-Audio-Stream |
+| Output |	Text oder Audio | Audio (Text-to-Speech) |	Audio (Text-to-Speech) |
 | Kontext |	Multi-Turn im Modell möglich |	Einzelne Sessions, Kontext extern nötig |	Einzelne Sessions, Kontext extern nötig |
 | Latenz |	Sehr niedrig (~<500ms) |	Extrem niedrig, optimiert für Live-Audio |	Extrem niedrig, identisch zur Standard Voice Live API |
 | Integration |	WebSocket / REST |	WebRTC / Streaming |	WebRTC / Streaming |
@@ -47,4 +48,4 @@ In Projekten wie meinem SPLA-Lizenz SprachBot zeigt sich besonders die Stärke v
 
 Kurz gesagt: GPT‑4o Realtime, Voice Live API und Voice Live API mit BYOM sind alle Echtzeit-KI-Lösungen, aber sie setzen unterschiedliche Prioritäten. GPT‑4o Realtime liefert ein komplettes End-to-End-Erlebnis, bei dem Multi-Turn-Dialoge automatisch verwaltet werden. Voice Live API liefert extrem schnelle Audio-Antworten, Kontext muss man selbst managen. Mit BYOM kann man diesen Dienst um eigene Modelle erweitern und so die Antworten noch gezielter steuern.
 
-Meine Erfahrungen mit GPT‑4o Realtime haben gezeigt, wie mächtig das Modell im Dialog ist. Wer die Voice Live API ausprobiert, wird merken, dass hier der Fokus auf schneller, flüssiger Audio-Reaktion liegt – und die BYOM-Option öffnet die Tür zu individuellen, spezialisierten Lösungen, die man sonst nur schwer umsetzen könnte.
+Meine Erfahrungen mit GPT‑4o Realtime haben gezeigt, wie mächtig das Modell im Dialog ist. Wer die Voice Live API ausprobiert, wird merken, dass hier der Fokus auf schneller, flüssiger Audio-Reaktion liegt – und die BYOM-Option öffnet die Tür zu individuellen, spezialisierten Lösungen, die man sonst nur schwer umsetzen könnte.<br><br>
