@@ -55,7 +55,7 @@ Playground - Live Voice API
        alt="GPT-4o Realtime - Playground"
        style="width:100%; height:auto; display:block; margin:0 auto;" />
 </div>
-Im Speech Playground können wir noch einiges mehr einstellen. Angefangen vom vordefinierte Templates, System-Prompt, unzählige Stimmen, Avatare und noch vieles mehr.<br><br>
+Im Speech Playground können wir noch einiges mehr einstellen. Angefangen von vordefinierten Templates, System-Prompt, unzählige Stimmen, Avatare und noch vieles mehr.<br><br>
 
 ## Wann welches Modell sinnvoll ist
 
