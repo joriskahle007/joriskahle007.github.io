@@ -16,6 +16,19 @@ Ob Techie oder Entscheider – hier bekommst du praxisnahe Impulse, echte Erfahr
 
 🎧 Höre direkt hier auf Spotify rein:<br>
 
+<!-- 🎧 Folge 7: Folge 7 – Folge 7 – Foundry Localt -->
+<h3>🎧 Folge 7 : Folge 7 – Folge 7 – Foundry Local</h3>
+<iframe 
+  style="border-radius:12px" 
+  src="https://open.spotify.com/embed/episode/3i5ZZq8Yg4ZbYQRy1AR1hJ?utm_source=generator"
+  width="100%" 
+  height="152" 
+  frameborder="0" 
+  allowfullscreen="" 
+  allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+  loading="lazy">
+</iframe>
+
 <!-- 🎧 Folge 6: Folge 6 – FabCon Insights: Die neuesten Highlights aus der Microsoft Fabric Welt -->
 <h3>🎧 Folge 6 : Folge 6 – FabCon Insights: Die neuesten Highlights aus der Microsoft Fabric Welt</h3>
 <iframe 
