@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#1a1a2e">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Bayerischer Voice Assistant</title>
+    <link rel="manifest" href="data:application/json;base64,eyJuYW1lIjoiQmF5ZXJpc2NoZXIgVm9pY2UgQXNzaXN0YW50IiwidGhlbWVfY29sb3IiOiIjMWExYTJlIiwiYmFja2dyb3VuZF9jb2xvciI6IiMxYTFhMmUiLCJkaXNwbGF5Ijoic3RhbmRhbG9uZSIsImlkZW50aXR5IjoiW3siZGVmYXVsdCI6dHJ1ZSwic3JjIjoiZGF0YTppbWFnZS9zdmcreG1sLCUzQ3N2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHZpZXdCb3g9JzAgMCA1MTIgNTEyJyUzRSUzQ3RleHQgeT0nNTAlMjUnIGZvbnQtc2l6ZT0nMzAwJyUzRSVGMCU5RiU4RSU5OSUzQy90ZXh0JTNFJTNDJTNFC3ZnJTNFIn1dfQ==">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            animation: fadeIn 0.5s;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #00d2ff, #3a7bd5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 25px;
+            font-size: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #888;
+            transition: all 0.3s;
+        }
+
+        .status-dot.active {
+            background: #4ade80;
+            box-shadow: 0 0 15px #4ade80;
+            animation: pulse 2s infinite;
+        }
+
+        .status-dot.listening {
+            background: #3b82f6;
+            box-shadow: 0 0 15px #3b82f6;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.7; transform: scale(1.2); }
+        }
+
+        .mic-button {
+            width: 150px;
+            height: 150px;
+            margin: 40px auto;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            font-size: 60px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 10px 40px rgba(102, 126, 234, 0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .mic-button:active {
+            transform: scale(0.95);
+        }
+
+        .mic-button.active {
+            background: linear-gradient(135deg, #4ade80 0%, #16a34a 100%);
+            box-shadow: 0 10px 40px rgba(74, 222, 128, 0.6);
+            animation: breathe 2s infinite;
+        }
+
+        .mic-button.listening {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            box-shadow: 0 10px 40px rgba(59, 130, 246, 0.6);
+            animation: breathe 1s infinite;
+        }
+
+        @keyframes breathe {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .visualizer {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            margin: 20px 0;
+        }
+
+        .bar {
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(180deg, #667eea, #764ba2);
+            border-radius: 2px;
+            transition: height 0.1s;
+        }
+
+        .conversation {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        .message {
+            margin-bottom: 15px;
+            padding: 12px 16px;
+            border-radius: 15px;
+            max-width: 80%;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            margin-left: auto;
+            text-align: right;
+        }
+
+        .message.assistant {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .wake-words {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+            font-size: 14px;
+        }
+
+        .wake-words strong {
+            color: #4ade80;
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            background: rgba(255,255,255,0.1);
+            color: white;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .btn:active {
+            transform: scale(0.95);
+        }
+
+        .config {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .modal.show {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #1a1a2e;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
+            color: white;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 24px;
+            }
+            .mic-button {
+                width: 120px;
+                height: 120px;
+                font-size: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="config" onclick="openConfig()">⚙️</div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🎙️ Bayerischer Voice Assistant</h1>
+            <div class="status">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">Inaktiv</span>
+            </div>
+        </div>
+
+        <div class="wake-words">
+            <strong>Aktivierung:</strong> "Hey Bayern", "Servus", "Grüß Gott"<br>
+            <strong>Deaktivierung:</strong> "Bis dann", "Tschüss", "Schlaf weiter"
+        </div>
+
+        <button class="mic-button" id="micButton" onclick="toggleMic()">
+            🎤
+        </button>
+
+        <div class="visualizer" id="visualizer">
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+            <div class="bar"></div>
+        </div>
+
+        <div class="conversation" id="conversation">
+            <div class="message assistant">
+                👋 Hallo! Sag ein Wake Word um mich zu aktivieren.
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="clearConversation()">🗑️ Löschen</button>
+            <button class="btn" onclick="exportConversation()">💾 Export</button>
+        </div>
+    </div>
+
+    <div class="modal" id="configModal">
+        <div class="modal-content">
+            <h2 style="margin-bottom: 20px;">⚙️ Konfiguration</h2>
+            <div class="input-group">
+                <label>Azure API Key</label>
+                <input type="password" id="apiKey" placeholder="Ihr API Key">
+            </div>
+            <div class="input-group">
+                <label>Azure Host</label>
+                <input type="text" id="apiHost" placeholder="xyz.cognitiveservices.azure.com">
+            </div>
+            <div class="input-group">
+                <label>Deployment Name</label>
+                <input type="text" id="deployment" placeholder="gpt-realtimeAgent">
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 30px;">
+                <button class="btn" style="flex: 1;" onclick="saveConfig()">💾 Speichern</button>
+                <button class="btn" style="flex: 1;" onclick="closeConfig()">❌ Abbrechen</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Konfiguration
+        let config = {
+            apiKey: localStorage.getItem('apiKey') || '',
+            apiHost: localStorage.getItem('apiHost') || 'joris-mhxc7059-centralus.cognitiveservices.azure.com',
+            deployment: localStorage.getItem('deployment') || 'gpt-realtimeAgent'
+        };
+
+        let ws = null;
+        let isActive = false;
+        let isListening = false;
+        let audioContext = null;
+        let mediaStream = null;
+        let conversation = [];
+
+        const wakeWords = ['hey bayern', 'servus', 'grüß gott'];
+        const sleepCommands = ['bis dann', 'tschüss', 'schlaf weiter'];
+
+        // UI Elemente
+        const statusDot = document.getElementById('statusDot');
+        const statusText = document.getElementById('statusText');
+        const micButton = document.getElementById('micButton');
+        const conversationDiv = document.getElementById('conversation');
+        const visualizerBars = document.querySelectorAll('.bar');
+
+        // Konfiguration Modal
+        function openConfig() {
+            document.getElementById('apiKey').value = config.apiKey;
+            document.getElementById('apiHost').value = config.apiHost;
+            document.getElementById('deployment').value = config.deployment;
+            document.getElementById('configModal').classList.add('show');
+        }
+
+        function closeConfig() {
+            document.getElementById('configModal').classList.remove('show');
+        }
+
+        function saveConfig() {
+            config.apiKey = document.getElementById('apiKey').value;
+            config.apiHost = document.getElementById('apiHost').value;
+            config.deployment = document.getElementById('deployment').value;
+            
+            localStorage.setItem('apiKey', config.apiKey);
+            localStorage.setItem('apiHost', config.apiHost);
+            localStorage.setItem('deployment', config.deployment);
+            
+            closeConfig();
+            addMessage('system', '✅ Konfiguration gespeichert');
+        }
+
+        // Mikrofon Toggle
+        async function toggleMic() {
+            if (!config.apiKey) {
+                addMessage('system', '⚠️ Bitte API Key in den Einstellungen eintragen');
+                openConfig();
+                return;
+            }
+
+            if (!mediaStream) {
+                await startMicrophone();
+            } else {
+                stopMicrophone();
+            }
+        }
+
+        // Mikrofon starten
+        async function startMicrophone() {
+            try {
+                mediaStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                audioContext = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 24000 });
+                
+                connectWebSocket();
+                updateStatus('listening', 'Höre zu...');
+                micButton.classList.add('listening');
+                
+                addMessage('system', '🎤 Mikrofon aktiviert - Warte auf Wake Word');
+            } catch (error) {
+                addMessage('system', '❌ Mikrofon-Zugriff verweigert: ' + error.message);
+            }
+        }
+
+        // Mikrofon stoppen
+        function stopMicrophone() {
+            if (mediaStream) {
+                mediaStream.getTracks().forEach(track => track.stop());
+                mediaStream = null;
+            }
+            if (audioContext) {
+                audioContext.close();
+                audioContext = null;
+            }
+            if (ws) {
+                ws.close();
+                ws = null;
+            }
+            updateStatus('inactive', 'Inaktiv');
+            micButton.classList.remove('listening', 'active');
+            addMessage('system', '🔴 Mikrofon deaktiviert');
+        }
+
+        // WebSocket Verbindung
+        function connectWebSocket() {
+            const url = `wss://${config.apiHost}/openai/realtime?api-version=2024-10-01-preview&deployment=${config.deployment}`;
+            
+            ws = new WebSocket(url);
+            
+            ws.onopen = () => {
+                console.log('WebSocket verbunden');
+                
+                // Session konfigurieren
+                ws.send(JSON.stringify({
+                    type: 'session.update',
+                    session: {
+                        modalities: ['text', 'audio'],
+                        instructions: 'Du bist ein grantig-bayerischer Sprachassistent. Antworte kurz und mit bayerischem Dialekt.',
+                        voice: 'shimmer',
+                        input_audio_format: 'pcm16',
+                        output_audio_format: 'pcm16',
+                        turn_detection: {
+                            type: 'server_vad',
+                            threshold: 0.5,
+                            silence_duration_ms: 500
+                        }
+                    }
+                }));
+                
+                // Audio-Streaming starten
+                startAudioStreaming();
+            };
+
+            ws.onmessage = (event) => {
+                const data = JSON.parse(event.data);
+                handleServerEvent(data);
+            };
+
+            ws.onerror = (error) => {
+                console.error('WebSocket Fehler:', error);
+                addMessage('system', '❌ Verbindungsfehler - Prüfen Sie Ihre Konfiguration');
+            };
+
+            ws.onclose = () => {
+                console.log('WebSocket geschlossen');
+            };
+        }
+
+        // Audio Streaming
+        function startAudioStreaming() {
+            const source = audioContext.createMediaStreamSource(mediaStream);
+            const processor = audioContext.createScriptProcessor(4096, 1, 1);
+            
+            processor.onaudioprocess = (e) => {
+                if (!ws || ws.readyState !== WebSocket.OPEN) return;
+                
+                const inputData = e.inputBuffer.getChannelData(0);
+                const pcm16 = convertFloat32ToPCM16(inputData);
+                const base64 = arrayBufferToBase64(pcm16);
+                
+                ws.send(JSON.stringify({
+                    type: 'input_audio_buffer.append',
+                    audio: base64
+                }));
+                
+                // Visualisierung
+                animateVisualizer(inputData);
+            };
+            
+            source.connect(processor);
+            processor.connect(audioContext.destination);
+        }
+
+        // Server Events behandeln
+        function handleServerEvent(event) {
+            const type = event.type;
+            
+            if (type === 'conversation.item.input_audio_transcription.completed') {
+                const transcript = event.transcript;
+                checkWakeWord(transcript);
+                if (isActive) {
+                    addMessage('user', transcript);
+                }
+            } else if (type === 'response.audio_transcript.done') {
+                const text = event.transcript;
+                if (isActive && text) {
+                    addMessage('assistant', text);
+                }
+            } else if (type === 'response.audio.delta') {
+                // Audio-Wiedergabe (vereinfacht für Demo)
+                // In Produktion: Audio dekodieren und abspielen
+            }
+        }
+
+        // Wake Word Check
+        function checkWakeWord(text) {
+            const textLower = text.toLowerCase();
+            
+            for (const ww of wakeWords) {
+                if (textLower.includes(ww)) {
+                    if (!isActive) {
+                        isActive = true;
+                        updateStatus('active', 'Aktiv 🟢');
+                        micButton.classList.remove('listening');
+                        micButton.classList.add('active');
+                        addMessage('system', '✅ Bot aktiviert!');
+                    }
+                    return;
+                }
+            }
+            
+            for (const sc of sleepCommands) {
+                if (textLower.includes(sc)) {
+                    if (isActive) {
+                        isActive = false;
+                        updateStatus('listening', 'Höre zu...');
+                        micButton.classList.remove('active');
+                        micButton.classList.add('listening');
+                        addMessage('system', '💤 Bot deaktiviert');
+                    }
+                    return;
+                }
+            }
+        }
+
+        // UI Funktionen
+        function updateStatus(state, text) {
+            statusDot.className = `status-dot ${state}`;
+            statusText.textContent = text;
+        }
+
+        function addMessage(type, text) {
+            const msg = document.createElement('div');
+            msg.className = `message ${type}`;
+            msg.textContent = text;
+            conversationDiv.appendChild(msg);
+            conversationDiv.scrollTop = conversationDiv.scrollHeight;
+            
+            conversation.push({ type, text, timestamp: new Date().toISOString() });
+        }
+
+        function clearConversation() {
+            conversationDiv.innerHTML = '<div class="message assistant">👋 Konversation gelöscht</div>';
+            conversation = [];
+        }
+
+        function exportConversation() {
+            const data = JSON.stringify(conversation, null, 2);
+            const blob = new Blob([data], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `conversation_${Date.now()}.json`;
+            a.click();
+        }
+
+        function animateVisualizer(audioData) {
+            const rms = Math.sqrt(audioData.reduce((sum, val) => sum + val * val, 0) / audioData.length);
+            visualizerBars.forEach((bar, i) => {
+                const height = Math.max(20, Math.min(80, rms * 1000 + Math.random() * 20));
+                bar.style.height = `${height}px`;
+            });
+        }
+
+        // Audio Konvertierung
+        function convertFloat32ToPCM16(float32Array) {
+            const pcm16 = new Int16Array(float32Array.length);
+            for (let i = 0; i < float32Array.length; i++) {
+                const s = Math.max(-1, Math.min(1, float32Array[i]));
+                pcm16[i] = s < 0 ? s * 0x8000 : s * 0x7FFF;
+            }
+            return pcm16.buffer;
+        }
+
+        function arrayBufferToBase64(buffer) {
+            const bytes = new Uint8Array(buffer);
+            let binary = '';
+            for (let i = 0; i < bytes.length; i++) {
+                binary += String.fromCharCode(bytes[i]);
+            }
+            return btoa(binary);
+        }
+
+        // Prüfe ob Config vorhanden
+        window.onload = () => {
+            if (!config.apiKey) {
+                setTimeout(() => {
+                    addMessage('system', '⚠️ Bitte API Key in den Einstellungen (⚙️) eintragen');
+                }, 1000);
+            }
+        };
+    </script>
+</body>
+</html>
