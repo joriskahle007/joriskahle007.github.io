@@ -37,10 +37,10 @@ Easy, oder?
 ## Organigram: So läuft ein typischer Workflow in Foundry ab
 Damit ihr euch das Ganze noch besser vorstellen könnt, hier ein einfaches Organigram eines automatisierten Workflows. Ihr könnt das natürlich beliebig erweitern oder anpassen:
 
-<div style="width:50vw; margin-left:calc(50% - 50vw);">
+<div style="display:flex; justify-content:center; width:100%; margin:2rem 0;">
   <img src="/assets/img/workflows.png"
        alt="Workflows - Microsoft Foundry"
-       style="width:50%; height:auto; display:block; margin:0 auto;" />
+       style="width:70%; max-width:800px; height:auto;" />
 </div>
 Hier seht Ihr, wie der Workflow die jeweiligen Bereiche abarbeitet!<br><br>
 
