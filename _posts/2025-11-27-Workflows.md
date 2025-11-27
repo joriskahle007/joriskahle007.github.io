@@ -24,10 +24,10 @@ Mit Foundry könnt ihr das automatisieren! Der Workflow sieht dann so aus:
 Das spart nicht nur Zeit, sondern sorgt auch dafür, dass nichts mehr verloren geht.
 
 Workflow - Diagramm
-<div style="width:100vw; margin-left:calc(50% - 50vw);">
+<div style="width:50vw; margin-left:calc(50% - 50vw);">
   <img src="/assets/img/workflows.png"
        alt="Workflows - Microsoft Foundry"
-       style="width:100%; height:auto; display:block; margin:0 auto;" />
+       style="width:50%; height:auto; display:block; margin:0 auto;" />
 </div>
 Hier seht Ihr, wie der Workflow die jeweiligen Bereiche abarbeitet!<br><br>
 
