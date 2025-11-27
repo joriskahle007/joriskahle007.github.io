@@ -1,41 +1,42 @@
 ---
 layout: post
-title: Workflows im neuen Microsoft Foundry – Einfach, intuitiv und richtig praktisch!
+title: Workflows im neuen Microsoft Foundry – Der smarte Weg zu mehr Freiraum im Arbeitsalltag.
 tags: [Azure, Microsoft Foundry, Workflows, Agents, Orchestrierung]
 ---
 
-Heute nehme ich euch mal wieder mit auf eine kleine Reise durch die Welt der Automatisierung. Und zwar geht’s um das neue Microsoft Foundry – das Tool, das aktuell bei vielen Unternehmen für ordentlich Gesprächsstoff sorgt. Wenn ihr genauso genervt seid von ewigen Copy & Paste-Routinen und chaotischen Team-Absprachen wie ich, dann könnte Foundry wirklich euer neuer bester Freund werden.
+Hey Leute,
 
-## Was Microsoft Foundry eigentlich kann
-Stellt euch Microsoft Foundry wie einen riesigen Werkzeugkasten für digitale Arbeitsabläufe vor. Ihr könnt damit eigene Workflows bauen – und das ganz ohne Programmierkenntnisse! Alles läuft über eine schicke Drag & Drop-Oberfläche, mit der ihr eure Prozesse wie mit Bauklötzen einfach zusammensteckt.
+kennt ihr diese Tage, an denen gefühlt alles gleichzeitig passiert? Ihr wollt euch eigentlich gerade auf eine wichtige Präsentation konzentrieren, da poppt schon die nächste „DRINGEND!“-Mail in Outlook auf. Im Teams-Chat fragt die Kollegin, ob ihr das Protokoll vom letzten Meeting schon verteilt habt, und im SharePoint sucht ihr immer noch nach der aktuellen Datei, weil jeder sie scheinbar woanders abgelegt hat. Willkommen im digitalen Büroalltag – und, Hand aufs Herz, manchmal ist das einfach nur Stress pur.
 
-## Das Ziel: 
-Wiederkehrende Aufgaben automatisieren, Tools miteinander verknüpfen und eure Teamarbeit aufs nächste Level bringen. Und das alles cloudbasiert, sodass ihr von überall mitmischen könnt.
+Ich habe mir in den letzten Wochen Microsoft Foundry geschnappt und getestet, wie dieses Tool dabei helfen kann, dem täglichen Chaos Herr zu werden. Das Ergebnis: Mit den richtigen Workflows spart ihr euch nicht nur jede Menge Stress, sondern gewinnt auch tatsächlich wieder Zeit für die Dinge, die wirklich wichtig sind. Und das Beste: Ihr braucht dafür weder Programmierkenntnisse noch monatelange Schulungen. Alles läuft per Drag & Drop – wie ein digitaler Assistent, der euch den Rücken freihält.
 
-## Beispiel: Der „Dringende Mail zu Task“-Workflow
-Nehmen wir mal ein typisches Szenario: Ihr bekommt in Outlook eine E-Mail mit dem Betreff „Dringend“. Was passiert normal? Richtig, ihr lest sie, erstellt irgendwo einen Task in Teams, schreibt vielleicht noch eine Nachricht ins Projekt-Chat – und am Ende wisst ihr nicht mehr, wer was macht.
+## Alltagssituation 1: Die „DRINGEND“-Mail – vom Störfaktor zum Automatismus
+Wir kennen sie alle, diese E-Mails mit dem Betreff „DRINGEND“. Früher hat das bei mir immer eine kleine Kettenreaktion ausgelöst: Mail lesen, abwägen, ob ich mich selbst kümmere oder jemand aus dem Team, Task in Teams anlegen, Info in den Gruppenchat posten, Mail im SharePoint ablegen und hoffen, dass niemand (mich eingeschlossen) die Aufgabe vergisst. Mal ehrlich: Das ist jedes Mal ein kleiner Zeitfresser – und gerade, wenn viel los ist, kann so eine Aufgabe auch mal untergehen.
 
-Mit Foundry könnt ihr das automatisieren! Der Workflow sieht dann so aus:
+Mit Foundry läuft das Ganze jetzt komplett automatisiert ab. Sobald eine Mail mit „DRINGEND“ im Betreff eintrifft, springt der Workflow an. Im Hintergrund prüft Foundry sofort, ob der Absender zum Kreis unserer wichtigsten Kunden gehört. Ist das der Fall, wird automatisch ein Task in Teams erstellt – und zwar inklusive aller wichtigen Infos, wie Deadline, Link zur Originalmail und kurzer Beschreibung. Im passenden Teamkanal erscheint eine Nachricht: „Achtung, neuer DRINGEND-Task, bitte prüfen!“ Gleichzeitig wird die Mail direkt im richtigen SharePoint-Ordner archiviert. Und als Bonus bekommen alle relevanten Teammitglieder eine Benachrichtigung, ganz egal, ob sie gerade am Rechner, am Handy oder unterwegs sind.
 
-1. **Trigger**: Outlook erkennt eine neue Mail mit „Dringend“.
-2. **Aktion**: Ein To-Do wird automatisch in Teams erstellt, inklusive Deadline.
-3. **Aktion**: Das Projektteam bekommt eine Nachricht im entsprechenden Kanal.
-4. **Aktion**: Die Mail wird in SharePoint archiviert.
-Das spart nicht nur Zeit, sondern sorgt auch dafür, dass nichts mehr verloren geht.
+Das Ergebnis? Innerhalb von Sekunden ist alles geregelt: Die Aufgabe ist verteilt, die Info landet bei den richtigen Leuten und kein Handgriff geht mehr verloren. Ich muss mich nicht mehr darum kümmern, dass ich Aufgaben vergesse oder jemand im Team im Dunkeln tappt. Und ich kann mich wieder auf das Wesentliche konzentrieren.
 
-## Beispiel: Daten aus SharePoint in Excel
-Noch ein Klassiker: Jeden Freitag sollen Daten aus einer SharePoint-Liste in eine Excel-Tabelle exportiert werden – für die Wochenübersicht. Früher hieß das: Manuelles Kopieren, Formatieren, Fluchen.
+## Alltagssituation 2: Die automatisierte Wochenübersicht – nie mehr Datenchaos
+Jeden Freitag steht in vielen Teams die große Wochenübersicht an. Früher war das bei uns ein echter Zeitfresser: Listen aus SharePoint zusammenklicken, alles in eine Excel-Tabelle kopieren, formatieren, speichern und die Datei dann irgendwo im Team verteilen. Ich gebe zu: Nicht selten hat dabei ein Zahlendreher oder ein falscher Speicherort das Ganze noch komplizierter gemacht.
 
-Mit Foundry geht’s so:
+Jetzt übernimmt Foundry auch das für mich. Pünktlich um 14 Uhr am Freitag startet der Workflow automatisch. Er zieht sich die aktuellen Daten direkt aus SharePoint, schreibt sie in eine formatierte Excel-Tabelle, speichert die Datei im passenden Ordner und schickt dem Team eine Info: „Die neue Wochenübersicht ist da, schaut mal rein!“ Sollte später jemand nach den Zahlen fragen – kein Problem, alles ist sauber dokumentiert und jederzeit auffindbar. Kein nerviges Nachhaken mehr, kein Verzetteln in E-Mail-Anhängen.
 
-1. **Trigger**: Jeden Freitag, 14 Uhr.
-2. **Aktion**: Daten aus SharePoint abrufen.
-3. **Aktion**: In eine Excel-Datei schreiben und abspeichern.
-3. **Aktion**: Allen im Team eine Info schicken: „Die Wochenübersicht ist da!“<br><br>
-Easy, oder?
+## Weitere Beispiele, wie Foundry den Alltag erleichtert
+Die Möglichkeiten hören da natürlich nicht auf. Hier ein paar weitere Workflows, die ich – oder Kolleg:innen von mir – bereits erfolgreich nutzen:
 
-## Organigram: So läuft ein typischer Workflow in Foundry ab
-Damit ihr euch das Ganze noch besser vorstellen könnt, hier ein einfaches Organigram eines automatisierten Workflows. Ihr könnt das natürlich beliebig erweitern oder anpassen:
+- **Onboarding neuer Mitarbeiter**: Sobald jemand Neues startet, legt Foundry selbstständig für IT, HR und das neue Teammitglied die erforderlichen Tasks an, verschickt die Begrüßungsmail und beantragt automatisch die nötigen Zugänge.
+- **Projekt-Updates**: Am Ende jeder Woche wird eine Zusammenfassung aller offenen Aufgaben an die Projektleitung verschickt und der aktuelle Status im Teams-Channel gepostet – ganz ohne, dass jemand daran denken muss.
+- **Kundenanfragen**: Neue Webformulare landen direkt als Ticket im System, Vertrieb und Support werden automatisch informiert und die Anfrage landet sauber abgelegt im Archiv.
+- **Rechnungsfreigaben**: Eingehende Rechnungen werden automatisch geprüft, an die zuständigen Personen weitergeleitet und die Freigabe wird sauber dokumentiert.
+
+## Wie funktioniert das Ganze technisch?
+Das Schöne an den Workflows in Foundry ist die Logik dahinter – sie ist einfach und nachvollziehbar:
+
+- **Trigger**: Was löst den Workflow aus? Zum Beispiel eine neue Mail, ein bestimmtes Datum oder eine Aktion in SharePoint.
+- **Bedingung**: Wann soll der Workflow aktiv werden? Zum Beispiel nur, wenn der Betreff „DRINGEND“ enthält oder der Absender ein bestimmter Kontakt ist.
+- **Aktionen**: Was soll passieren? Task anlegen, Benachrichtigung senden, Datei speichern, etc.
+- **Benachrichtigung**: Wer soll informiert werden und wie?
 
 <div style="display:flex; justify-content:center; width:100%; margin:2rem 0;">
   <img src="/assets/img/workflows.png"
@@ -44,16 +45,10 @@ Damit ihr euch das Ganze noch besser vorstellen könnt, hier ein einfaches Organ
 </div>
 Hier seht Ihr, wie der Workflow die jeweiligen Bereiche abarbeitet!<br><br>
 
+Das alles könnt ihr per Drag & Drop zusammenstellen, anpassen und jederzeit optimieren – ohne technische Vorkenntnisse.
 
-Teamwork und Fehleranalyse – endlich entspannt arbeiten
-Was ich an Foundry besonders feiere: Nicht nur du allein bastelst an deinen Workflows, sondern das ganze Team kann mitmachen. Ihr könnt gemeinsam an Prozessen tüfteln, Feedback geben und direkt Änderungen sehen. Keine undurchsichtigen Prozesse mehr, sondern volle Transparenz!
-
-Und falls mal was nicht funktioniert? Foundry hat eine eingebaute Fehleranalyse. Die zeigt euch sofort, wo der Haken ist, und gibt Tipps zur Lösung. Das spart echt Nerven – glaubt mir!
-
-Fazit: Must-have für digitale Teams
-Microsoft Foundry bringt nicht nur Ordnung ins Workflow-Chaos, sondern macht Automatisierung endlich einfach und zugänglich. Egal, ob ihr als kleines Team arbeitet, im Großkonzern Prozesse optimiert oder einfach Routineaufgaben schlanker gestalten wollt – Foundry lohnt sich.
-
-Schaut’s euch an, experimentiert ein bisschen und lasst euch überraschen, wie viel Zeit ihr plötzlich für die wirklich wichtigen Dinge habt. Wenn ihr Fragen habt oder coole Workflow-Ideen teilen wollt, schreibt mir wie immer gern einen Kommentar!
+Mein Fazit## 
+Für mich ist Microsoft Foundry inzwischen aus dem Arbeitsalltag nicht mehr wegzudenken. Es spart Zeit, verhindert Fehler und bringt echte Ruhe ins Büroleben. Das Prinzip ist simpel, die Ergebnisse sind beeindruckend: Aufgaben werden erledigt, Informationen kommen an und die Routine läuft wie von selbst. Probiert’s aus – ich bin gespannt, welche Workflows euch am meisten helfen! Schreibt mir gern eure Erfahrungen und Fragen in die Kommentare.
 
 Bis zum nächsten Mal – und happy automating!
 Euer AIEnabler (Joris)
