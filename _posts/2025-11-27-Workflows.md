@@ -23,6 +23,14 @@ Mit Foundry könnt ihr das automatisieren! Der Workflow sieht dann so aus:
 4. **Aktion**: Die Mail wird in SharePoint archiviert.
 Das spart nicht nur Zeit, sondern sorgt auch dafür, dass nichts mehr verloren geht.
 
+Workflow - Diagramm
+<div style="width:100vw; margin-left:calc(50% - 50vw);">
+  <img src="/assets/img/workflows.png"
+       alt="Workflows - Microsoft Foundry"
+       style="width:100%; height:auto; display:block; margin:0 auto;" />
+</div>
+Hier seht Ihr, wie der Workflow die jeweiligen Bereiche abarbeitet!<br><br>
+
 ## Beispiel: Daten aus SharePoint in Excel
 Noch ein Klassiker: Jeden Freitag sollen Daten aus einer SharePoint-Liste in eine Excel-Tabelle exportiert werden – für die Wochenübersicht. Früher hieß das: Manuelles Kopieren, Formatieren, Fluchen.
 
