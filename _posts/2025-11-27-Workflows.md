@@ -24,10 +24,18 @@ Stell dir vor, du arbeitest in einer großen Firma. Täglich trudeln Dutzende E-
 
 Oder denk an den Support-Agenten. Immer wieder kommen Fragen von Kunden rein: „Wie kann ich mein Passwort ändern?“ oder „Wann kommt meine Bestellung?“ Normalerweise würdest du die E-Mails lesen, die Fragen sortieren und an deine Kollegen weitergeben. Der Support-Agent übernimmt das für dich. Er versteht, worum es in der Nachricht geht, ordnet sie dem richtigen Experten zu oder schickt – wenn’s ganz einfach ist – sogar gleich selbst eine Antwort raus.
 
-Und dann gibt’s noch den Onboarding-Agenten. Immer wenn jemand Neues im Unternehmen anfängt, erstellt er automatisch Benutzerkonten, schickt eine Begrüßungs-Mail und informiert die Kollegen. So fühlt sich jeder direkt willkommen – und niemand vergisst, den neuen Kollegen zu begrüßen.<br><br>
+Und dann gibt’s noch den Onboarding-Agenten. Immer wenn jemand Neues im Unternehmen anfängt, erstellt er automatisch Benutzerkonten, schickt eine Begrüßungs-Mail und informiert die Kollegen. So fühlt sich jeder direkt willkommen – und niemand vergisst, den neuen Kollegen zu begrüßen.
 
-## Ein Beispiel, das auch Kinder sofort verstehen
-Aber zurück zu den Kindern – oder zu deinem kindlichen Ich. Stell dir vor, du planst mit Freunden eine coole Geburtstagsparty. Das klingt erstmal nach viel Arbeit: Einladungen müssen raus, der Kuchen muss gebacken werden, Luftballons wollen aufgeblasen werden und irgendwer muss noch für Musik sorgen. Jetzt stell dir vor, du hast für jede Aufgabe einen Agenten:
+Das Onboarding eines neuen Mitarbeitenden könnte als Workflow wie folgt gestaltet werden:
+
+**Agent 1**: Ruft die Personalstammdaten ab.<br>
+**Agent 2**: Erstellt die IT-Zugänge.<br>
+**Agent 3**: Informiert das Team und den neuen Mitarbeitenden.<br>
+**Agent 4**: Versendet Willkommensunterlagen.<br><br>
+Alle Agenten arbeiten dabei Hand in Hand, der Prozess läuft automatisch und zuverlässig ab.<br><br>
+
+## Ein letzte Beispiel, das auch Kinder sofort verstehen
+Stell dir vor, du planst mit Freunden eine coole Geburtstagsparty. Das klingt erstmal nach viel Arbeit: Einladungen müssen raus, der Kuchen muss gebacken werden, Luftballons wollen aufgeblasen werden und irgendwer muss noch für Musik sorgen. Jetzt stell dir vor, du hast für jede Aufgabe einen Agenten:
 
 - Der **Einladungsagent** schreibt allen Freunden eine Nachricht.
 - Der **Backagent** kümmert sich um den Kuchen.
@@ -35,13 +43,13 @@ Aber zurück zu den Kindern – oder zu deinem kindlichen Ich. Stell dir vor, du
 - Der **DJ-Agent** legt schon mal die Playlist an.<br><br>
 Jeder weiß genau, was er zu tun hat, und gibt Bescheid, sobald er fertig ist. So läuft alles wie am Schnürchen. Am Ende ist die Party ein Hit – und du hattest kaum Stress!<br><br>
 
-
-
 ## Warum das alles genial ist
 Jetzt fragst du dich vielleicht: Warum soll ich mich überhaupt mit Workflows und Agenten beschäftigen – egal ob im Büro oder privat? Ganz einfach: Sie nehmen dir den nervigen Kram ab. Du musst dich nicht mehr um alles selbst kümmern, sondern kannst dich auf das konzentrieren, was dir Spaß macht oder wirklich wichtig ist. Die Agenten werden nie müde, haben immer gute Laune und vergessen nichts. Und ein guter Workflow sorgt dafür, dass alle Aufgaben zur richtigen Zeit am richtigen Ort landen.
 
 Noch besser: Wenn ein Agent mal nicht weiterweiß, springt der nächste ein. Und wenn sich was ändert (zum Beispiel die Party beginnt doch eine Stunde früher), passt sich der Workflow einfach an. So bleibt dein Alltag flexibel und trotzdem entspannt.<br><br>
 
+## Und wie fängt man damit an?
+Du musst kein Technikprofi sein, um Agenten und Workflows zu nutzen. Im Job gibt’s inzwischen viele Tools, mit denen du dir solche Abläufe zusammenklicken kannst – ganz ohne Programmieren. Und privat? Fang einfach mal gedanklich an: Überlege, welche Aufgaben du jeden Tag machst und wie du sie an eine „unsichtbare Helfertruppe“ abgeben würdest. Vielleicht entwickelst du ja deinen eigenen Workflow für den Morgen, damit du nie wieder das Pausenbrot vergisst oder zu spät zur Arbeit kommst.<br><br>
 
 ## Erste Schritte - Workflows definieren:
 
@@ -50,21 +58,8 @@ Noch besser: Wenn ein Agent mal nicht weiterweiß, springt der nächste ein. Und
 - Welche Prüfungen oder Freigaben sind notwendig?
 - Was passiert, wenn eine Ausnahme oder ein Fehler auftritt?<br><br>
 
-## Ein weiteres Beispiel für einen Workflow:
-Das Onboarding eines neuen Mitarbeitenden kann als Workflow gestaltet werden:
-
-**Agent 1**: Ruft die Personalstammdaten ab.<br>
-**Agent 2**: Erstellt die IT-Zugänge.<br>
-**Agent 3**: Informiert das Team und den neuen Mitarbeitenden.<br>
-**Agent 4**: Versendet Willkommensunterlagen.<br><br>
-Alle Agenten arbeiten dabei Hand in Hand, der Prozess läuft automatisch und zuverlässig ab.
-
 Warum ist die Orchestrierung von Agenten in Workflows so wichtig?
 Erst wenn Agenten orchestriert, also koordiniert und sinnvoll miteinander verknüpft werden, entfalten sie ihre volle Wirkung. Ein einzelner Agent ist nützlich, aber ein intelligenter Workflow, in dem mehrere Agenten zusammenarbeiten, macht aus einzelnen Aufgaben einen durchgehenden, effizienten Prozess.<br><br>
-
-## Und wie fängt man damit an?
-Du musst kein Technikprofi sein, um Agenten und Workflows zu nutzen. Im Job gibt’s inzwischen viele Tools, mit denen du dir solche Abläufe zusammenklicken kannst – ganz ohne Programmieren. Und privat? Fang einfach mal gedanklich an: Überlege, welche Aufgaben du jeden Tag machst und wie du sie an eine „unsichtbare Helfertruppe“ abgeben würdest. Vielleicht entwickelst du ja deinen eigenen Workflow für den Morgen, damit du nie wieder das Pausenbrot vergisst oder zu spät zur Arbeit kommst.<br><br>
-
 
 ## Wie funktioniert das Ganze technisch?
 Das Schöne an den Workflows in Foundry ist die Logik dahinter – sie ist einfach und nachvollziehbar:
