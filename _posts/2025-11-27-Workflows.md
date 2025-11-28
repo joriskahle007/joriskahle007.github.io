@@ -8,10 +8,10 @@ Kennst du das Gefühl, wenn du morgens aufwachst und schon an all die Aufgaben d
 
 Ich habe mir in den letzten Wochen den Bereich Workloads im Microsoft Foundry (ehemalig Azrue AI Foundry) geschnappt und getestet, wie dieses Tool dabei helfen kann, dem täglichen Chaos Herr zu werden. Das Ergebnis: Mit den richtigen Workflows spart ihr euch nicht nur jede Menge Stress, sondern gewinnt auch tatsächlich wieder Zeit für die Dinge, die wirklich wichtig sind. Und das Beste: Ihr braucht dafür weder Programmierkenntnisse noch monatelange Schulungen. Alles läuft per Drag & Drop – wie ein digitaler Assistent, der euch den Rücken freihält.<br><br>
 
-<div style="display:flex; justify-content:center; width:100%; margin:2rem 0;">
+<div style="display:flex; justify-content:center; width:100%;">
   <img src="/assets/img/workflows01.jpg"
        alt="Workflows - Microsoft Foundry"
-       style="width:100%; max-width:800px; height:auto;" />
+       style="width:100%; max-width:1200px; height:auto;" />
 </div>
 
 ## Stell dir vor: Eine Bande unsichtbarer Roboterhelfer
