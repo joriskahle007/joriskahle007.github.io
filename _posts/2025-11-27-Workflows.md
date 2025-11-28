@@ -32,7 +32,7 @@ Aber zurück zu den Kindern – oder zu deinem kindlichen Ich. Stell dir vor, du
 - Der **Einladungsagent** schreibt allen Freunden eine Nachricht.
 - Der **Backagent** kümmert sich um den Kuchen.
 - Der **Deko-Agent** pustet die Ballons auf und schmückt das Zimmer.
-- Der **DJ-Agent** legt schon mal die Playlist an.
+- Der **DJ-Agent** legt schon mal die Playlist an.<br><br>
 Jeder weiß genau, was er zu tun hat, und gibt Bescheid, sobald er fertig ist. So läuft alles wie am Schnürchen. Am Ende ist die Party ein Hit – und du hattest kaum Stress!<br><br>
 
 
@@ -56,7 +56,7 @@ Das Onboarding eines neuen Mitarbeitenden kann als Workflow gestaltet werden:
 **Agent 1**: Ruft die Personalstammdaten ab.<br>
 **Agent 2**: Erstellt die IT-Zugänge.<br>
 **Agent 3**: Informiert das Team und den neuen Mitarbeitenden.<br>
-**Agent 4**: Versendet Willkommensunterlagen.<br>
+**Agent 4**: Versendet Willkommensunterlagen.<br><br>
 Alle Agenten arbeiten dabei Hand in Hand, der Prozess läuft automatisch und zuverlässig ab.
 
 Warum ist die Orchestrierung von Agenten in Workflows so wichtig?
@@ -84,7 +84,7 @@ Hier seht Ihr, wie der Workflow die jeweiligen Bereiche abarbeitet!<br><br>
 ## Fazit
 Workflows und Agenten sind wie deine persönlichen Superhelden im Alltag. Sie nehmen dir den Stress, bringen Struktur ins Chaos und sorgen dafür, dass am Ende alles klappt – egal ob im Büro, zu Hause oder bei der nächsten Geburtstagsparty. Probier’s aus, sei mutig, gib Aufgaben ab und genieße die gewonnene Zeit!
 
-Und jetzt mal ehrlich: Welchen Agenten würdest du dir für deinen Alltag wünschen? Schreib’s in die Kommentare – gemeinsam bauen wir uns das Leben, das Spaß macht!
+Und jetzt mal ehrlich: Welchen Agenten würdest du dir für deinen Alltag wünschen? Schreibt mich gerne an – gemeinsam bauen wir uns das Leben, das Spaß macht!
 
 Bis zum nächsten Mal – und happy automating!<br>
 Euer AIEnabler (Joris)<br><br>
