@@ -4,16 +4,14 @@ title: Workflows im neuen Microsoft Foundry – Der smarte Weg zu mehr Freiraum 
 tags: [Azure, Microsoft Foundry, Workflows, Agents, Orchestrierung]
 ---
 
-Hey Leute,
+Kennt ihr diese Tage, an denen gefühlt alles gleichzeitig passiert? Ihr wollt euch eigentlich gerade auf eine wichtige Präsentation konzentrieren, da poppt schon die nächste „DRINGEND!“-Mail in Outlook auf. Im Teams-Chat fragt die Kollegin, ob ihr das Protokoll vom letzten Meeting schon verteilt habt, und im SharePoint sucht ihr immer noch nach der aktuellen Datei, weil jeder sie scheinbar woanders abgelegt hat. Willkommen im digitalen Büroalltag – und, Hand aufs Herz, manchmal ist das einfach nur Stress pur.
 
-kennt ihr diese Tage, an denen gefühlt alles gleichzeitig passiert? Ihr wollt euch eigentlich gerade auf eine wichtige Präsentation konzentrieren, da poppt schon die nächste „DRINGEND!“-Mail in Outlook auf. Im Teams-Chat fragt die Kollegin, ob ihr das Protokoll vom letzten Meeting schon verteilt habt, und im SharePoint sucht ihr immer noch nach der aktuellen Datei, weil jeder sie scheinbar woanders abgelegt hat. Willkommen im digitalen Büroalltag – und, Hand aufs Herz, manchmal ist das einfach nur Stress pur.
-
-Ich habe mir in den letzten Wochen den Bereich Workloads im Microsoft Foundry geschnappt und getestet, wie dieses Tool dabei helfen kann, dem täglichen Chaos Herr zu werden. Das Ergebnis: Mit den richtigen Workflows spart ihr euch nicht nur jede Menge Stress, sondern gewinnt auch tatsächlich wieder Zeit für die Dinge, die wirklich wichtig sind. Und das Beste: Ihr braucht dafür weder Programmierkenntnisse noch monatelange Schulungen. Alles läuft per Drag & Drop – wie ein digitaler Assistent, der euch den Rücken freihält.<br><br>
+Ich habe mir in den letzten Wochen den Bereich Workloads im Microsoft Foundry (ehemalig Azrue AI Foundry) geschnappt und getestet, wie dieses Tool dabei helfen kann, dem täglichen Chaos Herr zu werden. Das Ergebnis: Mit den richtigen Workflows spart ihr euch nicht nur jede Menge Stress, sondern gewinnt auch tatsächlich wieder Zeit für die Dinge, die wirklich wichtig sind. Und das Beste: Ihr braucht dafür weder Programmierkenntnisse noch monatelange Schulungen. Alles läuft per Drag & Drop – wie ein digitaler Assistent, der euch den Rücken freihält.<br><br>
 
 <div style="display:flex; justify-content:center; width:100%; margin:2rem 0;">
   <img src="/assets/img/workflows01.jpg"
        alt="Workflows - Microsoft Foundry"
-       style="width:70%; max-width:800px; height:auto;" />
+       style="width:100%; max-width:800px; height:auto;" />
 </div>
 
 ### Beispiele:
@@ -46,7 +44,7 @@ Das Schöne an den Workflows in Foundry ist die Logik dahinter – sie ist einfa
 - **Benachrichtigung**: Wer soll informiert werden und wie?
 
 <div style="display:flex; justify-content:center; width:100%; margin:2rem 0;">
-  <img src="/assets/img/workflows.png"
+  <img src="/assets/img/workflows-min.png"
        alt="Workflows - Microsoft Foundry"
        style="width:70%; max-width:800px; height:auto;" />
 </div>
