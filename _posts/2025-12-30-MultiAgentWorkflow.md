@@ -42,7 +42,7 @@ Jeder Agent übernimmt eine klar abgegrenzte Rolle im Analyseprozess. Kurz zusam
 6. Agent : Du bist ein Experte für technische Chart-Analyse mit Schwerpunkt auf Kerzenformationen und Chart-Mustern für Swing Trading.
 7. Agent : Du bist ein Swing-Trading-Spezialist, der auf Basis aller bisherigen Analysen das OPTIMALE Entry- und Exit-Timing für Swing Trades (3-20 Tage Haltedauer) bestimmt.
 
-Jeder Agent übernimmt eine klar abgegrenzte Rolle im Analyseprozess. Einer sammelt und bewertet fundamentale Kennzahlen, ein anderer analysiert aktuelle Marktereignisse, wieder ein anderer kümmert sich um Trend und Momentum oder technische Indikatoren. Ergänzt wird das Ganze durch makroökonomische Betrachtungen, Sentiment Analysen und einen konsolidierenden Agenten, der alle Ergebnisse zusammenführt und daraus Handlungsszenarien ableitet.
+Jeder dieser Agenten hat eine spezielle Aufgabe. Einer sammelt und bewertet fundamentale Kennzahlen, ein anderer analysiert aktuelle Marktereignisse, wieder ein anderer kümmert sich um Trend und Momentum oder technische Indikatoren. Ergänzt wird das Ganze durch makroökonomische Betrachtungen, Sentiment Analysen und einen konsolidierenden Agenten, der alle Ergebnisse zusammenführt und daraus Handlungsszenarien ableitet.
 
 Wichtig ist dabei, dass diese Agenten nicht isoliert arbeiten. Sie sind über einen Workflow miteinander verbunden und reichen ihre Ergebnisse weiter. Spätere Agenten bauen auf den Erkenntnissen der vorherigen auf, sodass am Ende keine lose Sammlung von Einzelmeinungen entsteht, sondern eine strukturierte Gesamteinschätzung.<br><br>
 
