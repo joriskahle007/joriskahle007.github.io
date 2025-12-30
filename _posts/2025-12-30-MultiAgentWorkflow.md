@@ -37,9 +37,9 @@ Das fühlt sich weniger nach einem monolithischen KI System an und mehr nach ein
 
 Jeder Agent übernimmt eine klar abgegrenzte Rolle im Analyseprozess. Kurz zusammengefasst sieht das aktuell so aus:
 
-1. Agent : Du bist ein Finanz-Sentiment-Analyst für die Frankfurter Börse (XETRA).
-2. Agent : Du bist ein technischer Analyst spezialisiert auf Swing Trading (3-20 Tage Haltedauer) für Aktien an der Frankfurter Börse (XETRA).
-3. Agent : Du bist ein Fundamental-Analyst für Aktien an der Frankfurter Börse (XETRA).
+1. Agent : Du bist ein Finanz-Sentiment-Analyst für die Börse.
+2. Agent : Du bist ein technischer Analyst spezialisiert auf Swing Trading (3-20 Tage Haltedauer) für Aktien.
+3. Agent : Du bist ein Fundamental-Analyst für Aktien.
 4. Agent : Du bist ein makroökonomischer Analyst mit Fokus auf die europäische Wirtschaft und die Eurozone.
 5. Agent : Du bist der finale Algorithmic Timing Expert, der alle Analysen zusammenführt und eine umsetzbare Handelsempfehlung erstellt.
 6. Agent : Du bist ein Experte für technische Chart-Analyse mit Schwerpunkt auf Kerzenformationen und Chart-Mustern für Swing Trading.
