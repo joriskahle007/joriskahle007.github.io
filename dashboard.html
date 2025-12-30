@@ -7,13 +7,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body { margin: 0; padding: 0; background: #111827; font-family: system-ui, -apple-system, sans-serif; }
+        .code-box { background: #1f2937; border: 1px solid #374151; border-radius: 8px; padding: 16px; font-family: 'Courier New', monospace; font-size: 13px; color: #10b981; overflow-x: auto; white-space: pre-wrap; }
+        .copy-btn { cursor: pointer; transition: all 0.2s; }
+        .copy-btn:hover { transform: scale(1.05); }
+        .pattern-box { position: relative; cursor: pointer; transition: all 0.3s; }
+        .pattern-box:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
     </style>
 </head>
 <body>
     <div id="app"></div>
     
     <script>
-        // Vanilla JavaScript Version - kein React nötig
         const candlestickData = {
             '1H': [
                 { date: '08:00', open: 413.5, high: 415.2, low: 413.0, close: 414.8, volume: 850000 },
@@ -53,8 +57,65 @@
             exit: { stop: 398.00, t1: 430.00, t2: 445.00 },
             scores: { sentiment: 80, technical: 70, fundamental: 65, makro: 55, timing: 68, pattern: 75 },
             levels: { resist: [420, 430], support: [408, 400] },
-            risk: { loss: 11, gain: 21, ratio: "1:2.5" }
+            risk: { loss: 11, gain: 21, ratio: "1:2.5" },
+            // TradingView Prognose-Parameter
+            prognose: {
+                beste: 5.2,
+                schlechteste: -2.1,
+                wahrscheinlichste: 3.4,
+                wahrscheinlichkeit: 68,
+                zeitraum: 3.0
+            },
+            // Kerzenmuster
+            patterns: [
+                { name: "Bullish Engulfing", index: 10, typ: "bullish", wahrscheinlichkeit: 72 },
+                { name: "Higher High", index: 8, typ: "bullish", wahrscheinlichkeit: 65 },
+                { name: "Higher Low", index: 6, typ: "bullish", wahrscheinlichkeit: 68 }
+            ]
         };
+
+        function generateTradingViewCode() {
+            const news = analysisData.scores.sentiment;
+            const beste = analysisData.prognose.beste;
+            const schlechteste = analysisData.prognose.schlechteste;
+            const wahrscheinlichste = analysisData.prognose.wahrscheinlichste;
+            const wahrscheinlichkeit = analysisData.prognose.wahrscheinlichkeit - 60; // Anpassung
+            const zeitraum = analysisData.prognose.zeitraum;
+            
+            return `// === DASHBOARD EXPORT ===
+// Generiert: ${new Date().toLocaleString('de-DE')}
+// Aktie: ${analysisData.aktie} | Kurs: ${analysisData.kurs} EUR
+
+// NEWS-SENTIMENT PARAMETER
+newsSentimentScore = input.int(${news}, "📰 News-Sentiment Score", minval=-100, maxval=100)
+newsAdjustmentBeste = input.float(${beste.toFixed(1)}, "News-Anpassung Beste Prognose (%)", minval=-50, maxval=50, step=0.5)
+newsAdjustmentWahrscheinlichste = input.float(${wahrscheinlichste.toFixed(1)}, "News-Anpassung Wahrscheinlichste (%)", minval=-50, maxval=50, step=0.5)
+newsAdjustmentSchlechteste = input.float(${schlechteste.toFixed(1)}, "News-Anpassung Schlechteste (%)", minval=-50, maxval=50, step=0.5)
+newsAdjustmentWahrscheinlichkeit = input.float(${wahrscheinlichkeit.toFixed(1)}, "News-Anpassung Wahrscheinlichkeit (%)", minval=-50, maxval=50, step=0.5)
+
+// PROGNOSE-PARAMETER
+prognoseStunden = input.float(${zeitraum.toFixed(1)}, "Prognose-Zeitraum (Stunden)", minval=0.5, maxval=24.0, step=0.5)
+
+// TRADING-PARAMETER
+risikoAbstand = input.float(${((analysisData.kurs - analysisData.exit.stop) / analysisData.kurs * 100).toFixed(1)}, "Stop-Loss Abstand (%)", minval=0.5, maxval=10.0)
+gewinnZiel = input.float(${((analysisData.exit.t1 - analysisData.kurs) / analysisData.kurs * 100).toFixed(1)}, "Take-Profit Ziel (%)", minval=1.0, maxval=20.0)
+
+// === ENDE DASHBOARD EXPORT ===`;
+        }
+
+        function copyToClipboard() {
+            const code = generateTradingViewCode();
+            navigator.clipboard.writeText(code).then(() => {
+                const btn = document.getElementById('copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✅ Kopiert!';
+                btn.classList.add('bg-green-600');
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('bg-green-600');
+                }, 2000);
+            });
+        }
 
         function renderCandles(data) {
             const max = Math.max(...data.map(d => d.high));
@@ -78,6 +139,16 @@
                 
                 svg += `<line x1="${x + w/2}" y1="${hy}" x2="${x + w/2}" y2="${ly}" stroke="${color}" stroke-width="1.5"/>`;
                 svg += `<rect x="${x}" y="${top}" width="${w}" height="${height}" fill="${color}"/>`;
+                
+                // Kerzenmuster markieren
+                analysisData.patterns.forEach(pattern => {
+                    if (data.length - i === pattern.index) {
+                        const patternColor = pattern.typ === 'bullish' ? '#fbbf24' : '#f87171';
+                        svg += `<circle cx="${x + w/2}" cy="${top - 15}" r="8" fill="${patternColor}" stroke="#fff" stroke-width="2"/>`;
+                        svg += `<text x="${x + w/2}" y="${top - 25}" fill="${patternColor}" font-size="10" text-anchor="middle" font-weight="bold">${pattern.name.substring(0, 2)}</text>`;
+                    }
+                });
+                
                 svg += `<text x="${x+20}" y="380" fill="#9ca3af" font-size="10">${e.date}</text>`;
             });
             
@@ -124,6 +195,65 @@
                             </div>
                         </div>
 
+                        <!-- TradingView Export Box -->
+                        <div class="bg-gradient-to-r from-blue-900 to-purple-900 rounded-lg p-6 mb-6 border-2 border-blue-500 shadow-2xl">
+                            <div class="flex justify-between items-center mb-4">
+                                <div>
+                                    <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M11 7h2v6h-2zm0 8h2v2h-2z"/></svg>
+                                        TradingView Script Export
+                                    </h2>
+                                    <p class="text-gray-300 text-sm mt-1">📊 Kopiere diesen Code und füge ihn in dein TradingView Script ein</p>
+                                </div>
+                                <button id="copy-btn" onclick="copyToClipboard()" class="copy-btn bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg flex items-center gap-2 shadow-lg">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                    Code kopieren
+                                </button>
+                            </div>
+                            <div class="code-box">
+${generateTradingViewCode()}
+                            </div>
+                        </div>
+
+                        <!-- Prognose-Werte -->
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="bg-green-900 bg-opacity-30 rounded-lg p-4 border-2 border-green-500">
+                                <div class="text-sm text-gray-400 mb-1">📈 Beste Prognose</div>
+                                <div class="text-3xl font-bold text-green-400">+${analysisData.prognose.beste}%</div>
+                                <div class="text-xs text-gray-500 mt-1">Ziel: ${(analysisData.kurs * (1 + analysisData.prognose.beste/100)).toFixed(2)} EUR</div>
+                            </div>
+                            <div class="bg-purple-900 bg-opacity-30 rounded-lg p-4 border-2 border-purple-500">
+                                <div class="text-sm text-gray-400 mb-1">🎯 Wahrscheinlichste</div>
+                                <div class="text-3xl font-bold text-purple-400">+${analysisData.prognose.wahrscheinlichste}%</div>
+                                <div class="text-xs text-gray-500 mt-1">${analysisData.prognose.wahrscheinlichkeit}% Wahrscheinlichkeit</div>
+                            </div>
+                            <div class="bg-red-900 bg-opacity-30 rounded-lg p-4 border-2 border-red-500">
+                                <div class="text-sm text-gray-400 mb-1">📉 Schlechteste Prognose</div>
+                                <div class="text-3xl font-bold text-red-400">${analysisData.prognose.schlechteste}%</div>
+                                <div class="text-xs text-gray-500 mt-1">Ziel: ${(analysisData.kurs * (1 + analysisData.prognose.schlechteste/100)).toFixed(2)} EUR</div>
+                            </div>
+                        </div>
+
+                        <!-- Kerzenmuster -->
+                        <div class="bg-gray-800 rounded-lg p-6 mb-6 border border-gray-700">
+                            <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                                <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                Erkannte Kerzenmuster
+                            </h3>
+                            <div class="grid grid-cols-3 gap-4">
+                                ${analysisData.patterns.map(pattern => `
+                                    <div class="pattern-box ${pattern.typ === 'bullish' ? 'bg-yellow-900 border-yellow-600' : 'bg-red-900 border-red-600'} bg-opacity-20 rounded-lg p-4 border-2">
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <span class="text-2xl">${pattern.typ === 'bullish' ? '🟡' : '🔴'}</span>
+                                            <div class="font-bold text-white">${pattern.name}</div>
+                                        </div>
+                                        <div class="text-sm text-gray-400">Position: -${pattern.index} Kerzen</div>
+                                        <div class="text-sm ${pattern.typ === 'bullish' ? 'text-green-400' : 'text-red-400'} font-bold mt-2">${pattern.wahrscheinlichkeit}% Erfolgsrate</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+
                         <!-- Empfehlung -->
                         <div class="bg-gray-800 rounded-lg p-6 mb-6 border-l-4 border-green-500">
                             <h2 class="text-2xl font-bold text-white mb-4">${analysisData.empfehlung.aktion}</h2>
@@ -138,13 +268,17 @@
                         <!-- Chart -->
                         <div class="bg-gray-800 rounded-lg p-6 mb-6 border border-gray-700">
                             <div class="flex justify-between mb-4">
-                                <h3 class="text-xl font-bold text-white">Candlestick Chart</h3>
+                                <h3 class="text-xl font-bold text-white">Candlestick Chart mit Mustern</h3>
                                 <div class="flex gap-2">
                                     <button onclick="changeTimeframe('1H')" class="px-4 py-2 rounded font-semibold ${currentTimeframe === '1H' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300'}">1H</button>
                                     <button onclick="changeTimeframe('1D')" class="px-4 py-2 rounded font-semibold ${currentTimeframe === '1D' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300'}">1D</button>
                                 </div>
                             </div>
                             <div class="bg-gray-900 p-4 rounded">
+                                <div class="mb-2 flex gap-4 text-xs">
+                                    <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-yellow-500"></span><span class="text-gray-400">Bullish Pattern</span></div>
+                                    <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-red-500"></span><span class="text-gray-400">Bearish Pattern</span></div>
+                                </div>
                                 <svg width="100%" height="400" viewBox="0 0 800 400">
                                     ${[0,1,2,3,4,5].map(i => `<line x1="0" y1="${i*70}" x2="800" y2="${i*70}" stroke="#374151" stroke-width="0.5" stroke-dasharray="2,2"/>`).join('')}
                                     ${renderCandles(currentData)}
@@ -246,22 +380,4 @@
                             </div>
                         </div>
 
-                        <div class="bg-gray-800 rounded p-4 text-center border border-gray-700">
-                            <p class="text-gray-400 text-sm">7-Agenten Swing Trading System | ⚠️ Keine Anlageberatung</p>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function changeTimeframe(tf) {
-            currentTimeframe = tf;
-            currentData = candlestickData[tf];
-            render();
-        }
-
-        // Initial render
-        render();
-    </script>
-</body>
-</html>
+                        <div class="bg-gray-800 rounded p
