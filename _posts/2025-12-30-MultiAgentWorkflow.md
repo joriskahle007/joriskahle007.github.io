@@ -12,16 +12,7 @@ Genau daraus ist dieses Projekt entstanden. Ein System, das Wertanlagen analysie
 
 ## Die Grundidee hinter dem Projekt
 
-Die Idee ist schnell erklärt. Ich möchte für eine bestimmte Aktie, ein Asset oder einen Marktbereich eine möglichst fundierte Einschätzung bekommen, die nicht nur auf einem einzelnen Indikator basiert.
-
-Stattdessen sollen verschiedene Blickwinkel zusammenkommen:
-
-- Fundamentale Kennzahlen
-- Aktuelle Marktereignisse
-- Trend und Momentum
-- Technische Signale
-- Makroökonomische Einflüsse
-- Stimmungsbilder aus dem Markt
+Die Idee ist schnell erklärt. Ich möchte für eine bestimmte Aktie, ein Asset oder einen Marktbereich eine möglichst fundierte Einschätzung bekommen, die nicht nur auf einem einzelnen Indikator basiert. Stattdessen sollen verschiedene Blickwinkel zusammenkommen, von fundamentalen Kennzahlen über aktuelle Marktereignisse bis hin zu Trends, technischer Analyse und Marktstimmung.
 
 All diese Informationen existieren bereits, aber eben verteilt über unzählige Quellen. Genau hier kommt Microsoft Foundry ins Spiel.<br><br>
 
@@ -51,11 +42,13 @@ Jeder Agent übernimmt eine klar abgegrenzte Rolle im Analyseprozess. Kurz zusam
 6. Agent : Du bist ein Experte für technische Chart-Analyse mit Schwerpunkt auf Kerzenformationen und Chart-Mustern für Swing Trading.
 7. Agent : Du bist ein Swing-Trading-Spezialist, der auf Basis aller bisherigen Analysen das OPTIMALE Entry- und Exit-Timing für Swing Trades (3-20 Tage Haltedauer) bestimmt.
 
-Diese Agenten arbeiten nicht isoliert. Sie sind über einen Workflow miteinander verbunden und reichen ihre Ergebnisse weiter. Das bedeutet, dass spätere Agenten bereits auf den Ergebnissen der vorherigen aufbauen können. Am Ende entsteht keine lose Sammlung von Meinungen, sondern eine konsolidierte Einschätzung.<br><br>
+Jeder Agent übernimmt eine klar abgegrenzte Rolle im Analyseprozess. Einer sammelt und bewertet fundamentale Kennzahlen, ein anderer analysiert aktuelle Marktereignisse, wieder ein anderer kümmert sich um Trend und Momentum oder technische Indikatoren. Ergänzt wird das Ganze durch makroökonomische Betrachtungen, Sentiment Analysen und einen konsolidierenden Agenten, der alle Ergebnisse zusammenführt und daraus Handlungsszenarien ableitet.
+
+Wichtig ist dabei, dass diese Agenten nicht isoliert arbeiten. Sie sind über einen Workflow miteinander verbunden und reichen ihre Ergebnisse weiter. Spätere Agenten bauen auf den Erkenntnissen der vorherigen auf, sodass am Ende keine lose Sammlung von Einzelmeinungen entsteht, sondern eine strukturierte Gesamteinschätzung.<br><br>
 
 ## Vom Agenten Ergebnis zum Dashboard
 
-Die Ergebnisse dieser Agenten fließen aktuell in ein zentrales Dashboard. Dieses Dashboard ist bewusst einfach gehalten und läuft über meine Webseite, die ich mit GitHub Pages bereitstelle.<br><br>
+Die Ergebnisse dieser Agenten fließen aktuell in ein zentrales Dashboard, das ich über meine Webseite bereitstelle und mit GitHub Pages hoste. Dort sehe ich für jedes analysierte Asset eine Zusammenfassung der wichtigsten Erkenntnisse, Wahrscheinlichkeiten für unterschiedliche Szenarien und erste Handlungsempfehlungen. Kaufen oder verkaufen wird dabei bewusst nicht als absolute Wahrheit dargestellt, sondern als Wahrscheinlichkeitsbetrachtung, die mir eine zusätzliche Entscheidungsgrundlage liefert.<br><br>
 
 <div style="display:flex; justify-content:center; width:100%;">
   <img src="/assets/img/dashboard.jpg"
@@ -63,9 +56,7 @@ Die Ergebnisse dieser Agenten fließen aktuell in ein zentrales Dashboard. Diese
        style="width:100%; max-width:1200px; height:auto;" />
 </div><br><br>
 
-Dort sehe ich für jedes analysierte Asset eine Zusammenfassung der wichtigsten Erkenntnisse, Wahrscheinlichkeiten für mögliche Szenarien und erste Handlungsempfehlungen. Kaufen, halten oder verkaufen wird dabei nicht als absolute Wahrheit dargestellt, sondern als Wahrscheinlichkeitsbetrachtung.
-
-Das Dashboard ist aktuell mein Kontrollzentrum. Hier prüfe ich, ob die Agenten sinnvoll arbeiten, ob die Ergebnisse plausibel sind und wo ich nachschärfen muss.<br><br>
+Dieses Dashboard ist momentan mein Kontrollzentrum. Hier überprüfe ich die Qualität der Analysen, erkenne schnell Auffälligkeiten und kann gezielt an einzelnen Agenten nachjustieren.<br><br>
 
 ## Warum der Chart am Ende entscheidend ist
 
@@ -75,7 +66,7 @@ Deshalb war relativ schnell klar, dass die Ergebnisse der KI nicht nur in einem 
 
 ## TradingView als Analyseplattform
 
-Für meine Chartanalysen nutze ich TradingView. Einerseits, weil es extrem verbreitet ist, andererseits, weil es eine solide kostenfreie Basis bietet. Für technische Analysen, eigene Indikatoren und Visualisierung ist TradingView hervorragend geeignet.
+Für meine Chartanalysen nutze ich TradingView, weil es weit verbreitet ist, eine solide kostenfreie Basis bietet und sich hervorragend für eigene Indikatoren eignet. Die Idee war also, die von den Agenten berechneten Signale und Wahrscheinlichkeiten direkt im TradingView Chart darzustellen, zum Beispiel als Marker, Zonen oder zusätzliche Indikatoren.
 
 <div style="display:flex; justify-content:center; width:100%;">
   <img src="/assets/img/TradingView.jpg"
@@ -83,45 +74,26 @@ Für meine Chartanalysen nutze ich TradingView. Einerseits, weil es extrem verbr
        style="width:100%; max-width:1200px; height:auto;" />
 </div><br><br>
 
-Die Idee war also simpel: Die von den Agenten berechneten Signale und Wahrscheinlichkeiten sollen direkt im TradingView Chart erscheinen. Idealerweise als visuelle Marker, Zonen oder Indikatoren, die mir auf einen Blick zeigen, wie die KI die aktuelle Situation einschätzt.<br><br>
+Die größte Herausforderung dabei ist allerdings, dass TradingView aktuell keine Möglichkeit bietet, externe API Endpunkte direkt anzubinden. Es gibt also keinen sauberen Weg, die Daten automatisiert aus meinem System in den Chart zu bringen. Aktuell bedeutet das, dass ich die relevanten Ergebnisse manuell aus dem Dashboard übernehme und in mein Pine Script einpflege. Das ist nicht perfekt, aber für einen ersten Prototyp absolut ausreichend und sogar hilfreich, weil ich jede Einschätzung bewusst noch einmal prüfe, bevor sie im Chart landet.<br><br>
 
-## Die größte Herausforderung im Projekt
+## Der nächste logische Schritt: Fabric, OneLake und Power BI
 
-Und genau hier bin ich an die erste echte Grenze gestoßen. TradingView bietet aktuell keine Möglichkeit, externe API Endpunkte direkt anzubinden. Es gibt also keinen sauberen Weg, die Daten automatisiert aus meinem Dashboard oder direkt aus Foundry in den Chart zu schieben.
+Der nächste große Schritt in diesem Projekt ist bereits klar definiert. Ich möchte die gesammelten Daten aus dem Multi Agent Framework künftig zentral in Microsoft Fabric ablegen. Konkret plane ich, die Ergebnisse der Agenten in OneLake zu speichern und damit eine einheitliche, persistente Datenbasis zu schaffen.
 
-Das bedeutet konkret: Die Daten, die ich im Chart sehen möchte, müssen aktuell noch manuell in mein TradingView Indikator Script eingebunden werden. Das ist alles andere als elegant, aber für einen ersten Prototyp absolut ausreichend.
+Von dort aus sollen die Daten nicht nur archiviert, sondern auch weiterverarbeitet und visualisiert werden. Power BI bietet sich hier als perfektes Werkzeug an, um zeitliche Entwicklungen, Korrelationen und Veränderungen der Einschätzungen sichtbar zu machen. So entsteht eine zusätzliche analytische Ebene, die über den einzelnen Chart hinausgeht und langfristige Muster erkennbar macht.
 
-Ich exportiere mir die relevanten Ergebnisse aus dem Dashboard und übertrage sie von Hand in das Pine Script meines eigenen Indikators. Dort werden sie dann visualisiert und im Chart dargestellt.<br><br>
+Fabric wird damit zum Rückgrat des Projekts, während Foundry die Analyse übernimmt und TradingView weiterhin der Ort bleibt, an dem konkrete Entscheidungen visuell geprüft werden.<br><br>
 
-## Warum sich der Aufwand trotzdem lohnt
+## Open Source statt Blackbox
 
-Auch wenn dieser manuelle Schritt erst einmal nach Rückschritt klingt, hat er einen großen Vorteil. Er zwingt mich dazu, die Ergebnisse der Agenten kritisch zu prüfen, bevor sie im Chart landen. Ich sehe sehr schnell, ob eine Einschätzung sinnvoll ist oder ob ein Agent nachjustiert werden muss.
+Ein weiterer wichtiger Punkt für mich ist Transparenz. Dieses Projekt soll keine geschlossene Spielerei bleiben. Ich plane daher, das komplette Projekt als Repository auf meiner GitHub Page zu veröffentlichen. Jeder soll sich anschauen können, wie die Agenten aufgebaut sind, wie der Workflow funktioniert und wie die Ergebnisse verarbeitet werden.
 
-Im Chart selbst entsteht dann eine spannende Kombination aus klassischer technischer Analyse und KI gestützter Entscheidungsunterstützung. Unterstützungszonen, Trendlinien und Indikatoren werden ergänzt durch Wahrscheinlichkeitsmarker, die auf den Analysen der Agenten basieren.
-
-Das fühlt sich nicht nach automatisiertem Trading an, sondern nach einem sehr gut informierten Co Piloten.<br><br>
-
-## Was ich aus dem Projekt bisher gelernt habe
-
-Ein paar Erkenntnisse haben sich relativ schnell herauskristallisiert:
-
-- Mehrere spezialisierte Agenten liefern deutlich bessere Ergebnisse als ein einzelner
-- Kontext und saubere Workflows sind entscheidend für konsistente Analysen
-- KI Ergebnisse sind am wertvollsten, wenn sie visuell und intuitiv dargestellt werden
-- Der Mensch bleibt der Entscheider, die KI liefert Perspektiven
-
-Gerade die Kombination aus Microsoft Foundry, Agenten Workflows und klassischer Chartanalyse hat für mich eine völlig neue Art geschaffen, Märkte zu betrachten.<br><br>
-
-## Wie es weitergeht
-
-Langfristig möchte ich den manuellen Schritt natürlich ablösen. Denkbar sind Zwischenlösungen über Datenfeeds, alternative Visualisierungslayer oder sogar eigene Chart Komponenten. Aktuell steht aber ganz klar die Qualität der Analysen im Fokus.
-
-Das System soll nicht schneller werden, sondern besser. Die Agenten sollen lernen, relevanter zu filtern, sauberer zu argumentieren und ihre Ergebnisse verständlicher aufzubereiten.<br><br>
+Mein Ziel ist es, dass jeder, der Lust hat, diese Lösung nachbauen, erweitern oder an die eigenen Bedürfnisse anpassen kann. Vielleicht entstehen daraus neue Ideen, andere Agenten oder völlig neue Anwendungsfälle. Genau dieser offene Austausch ist für mich einer der spannendsten Aspekte an solchen Projekten.<br><br>
 
 ## Fazit
 
-Dieses Projekt ist für mich ein perfektes Beispiel dafür, wie KI sinnvoll eingesetzt werden kann. Nicht als Blackbox, die Entscheidungen trifft, sondern als intelligentes Analystenteam, das mir hilft, bessere Entscheidungen zu treffen.
+Dieses Projekt ist für mich ein Paradebeispiel dafür, wie KI sinnvoll eingesetzt werden kann. Nicht als automatisierter Trader, der blind Entscheidungen trifft, sondern als intelligentes Analystenteam, das mir hilft, bessere und fundiertere Entscheidungen zu treffen.
 
-Microsoft Foundry liefert dafür die technologische Basis. TradingView bleibt der Ort, an dem ich Entscheidungen visuell prüfe. Und ich selbst bleibe derjenige, der am Ende auf Kaufen oder Verkaufen klickt.
+Microsoft Foundry liefert die Grundlage für skalierbare Agenten und saubere Workflows. Fabric und OneLake werden künftig für Struktur und Transparenz sorgen. Power BI macht Entwicklungen sichtbar. TradingView bleibt der Ort, an dem Theorie auf Praxis trifft. Und ich selbst bleibe derjenige, der Verantwortung übernimmt und am Ende entscheidet.
 
 Genau so fühlt sich für mich moderne, verantwortungsvolle KI Nutzung an.<br><br>
