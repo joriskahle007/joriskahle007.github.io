@@ -35,7 +35,13 @@ Das fühlt sich weniger nach einem monolithischen KI System an und mehr nach ein
 
 ## Die sieben Agenten und ihre Aufgaben
 
-Jeder Agent übernimmt eine klar abgegrenzte Rolle im Analyseprozess. Kurz zusammengefasst sieht das aktuell so aus:
+Jeder Agent übernimmt eine klar abgegrenzte Rolle im Analyseprozess. Kurz zusammengefasst sieht das aktuell so aus:<br><br>
+
+<div style="display:flex; justify-content:center; width:100%;">
+  <img src="/assets/img/MultiAgentWorkflow.jpg"
+       alt="Microsoft Foundry - Azure Content Understanding"
+       style="width:100%; max-width:1200px; height:auto;" />
+</div><br><br>
 
 1. Agent : Du bist ein Finanz-Sentiment-Analyst für die Börse.
 2. Agent : Du bist ein technischer Analyst spezialisiert auf Swing Trading (3-20 Tage Haltedauer) für Aktien.
@@ -49,7 +55,13 @@ Diese Agenten arbeiten nicht isoliert. Sie sind über einen Workflow miteinander
 
 ## Vom Agenten Ergebnis zum Dashboard
 
-Die Ergebnisse dieser Agenten fließen aktuell in ein zentrales Dashboard. Dieses Dashboard ist bewusst einfach gehalten und läuft über meine Webseite, die ich mit GitHub Pages bereitstelle.
+Die Ergebnisse dieser Agenten fließen aktuell in ein zentrales Dashboard. Dieses Dashboard ist bewusst einfach gehalten und läuft über meine Webseite, die ich mit GitHub Pages bereitstelle.<br><br>
+
+<div style="display:flex; justify-content:center; width:100%;">
+  <img src="/assets/img/dashboard.jpg"
+       alt="Microsoft Foundry - Azure Content Understanding"
+       style="width:100%; max-width:1200px; height:auto;" />
+</div><br><br>
 
 Dort sehe ich für jedes analysierte Asset eine Zusammenfassung der wichtigsten Erkenntnisse, Wahrscheinlichkeiten für mögliche Szenarien und erste Handlungsempfehlungen. Kaufen, halten oder verkaufen wird dabei nicht als absolute Wahrheit dargestellt, sondern als Wahrscheinlichkeitsbetrachtung.
 
@@ -64,6 +76,12 @@ Deshalb war relativ schnell klar, dass die Ergebnisse der KI nicht nur in einem 
 ## TradingView als Analyseplattform
 
 Für meine Chartanalysen nutze ich TradingView. Einerseits, weil es extrem verbreitet ist, andererseits, weil es eine solide kostenfreie Basis bietet. Für technische Analysen, eigene Indikatoren und Visualisierung ist TradingView hervorragend geeignet.
+
+<div style="display:flex; justify-content:center; width:100%;">
+  <img src="/assets/img/TradingView.jpg"
+       alt="Microsoft Foundry - Azure Content Understanding"
+       style="width:100%; max-width:1200px; height:auto;" />
+</div><br><br>
 
 Die Idee war also simpel: Die von den Agenten berechneten Signale und Wahrscheinlichkeiten sollen direkt im TradingView Chart erscheinen. Idealerweise als visuelle Marker, Zonen oder Indikatoren, die mir auf einen Blick zeigen, wie die KI die aktuelle Situation einschätzt.<br><br>
 
