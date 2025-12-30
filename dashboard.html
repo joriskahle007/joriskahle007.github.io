@@ -82,25 +82,32 @@
             const wahrscheinlichkeit = analysisData.prognose.wahrscheinlichkeit - 60; // Anpassung
             const zeitraum = analysisData.prognose.zeitraum;
             
-            return `// === DASHBOARD EXPORT ===
-// Generiert: ${new Date().toLocaleString('de-DE')}
-// Aktie: ${analysisData.aktie} | Kurs: ${analysisData.kurs} EUR
+            return `//@version=5
+indicator("Intelligente Pattern-Prognose mit Trading", overlay=true, max_bars_back=5000, max_lines_count=500, max_labels_count=500)
 
-// NEWS-SENTIMENT PARAMETER
-newsSentimentScore = input.int(${news}, "📰 News-Sentiment Score", minval=-100, maxval=100)
-newsAdjustmentBeste = input.float(${beste.toFixed(1)}, "News-Anpassung Beste Prognose (%)", minval=-50, maxval=50, step=0.5)
+// === DASHBOARD EXPORT - ${new Date().toLocaleString('de-DE')} ===
+// Aktie: ${analysisData.aktie} | Kurs: ${analysisData.kurs} EUR
+// Sentiment: ${news} | Beste: +${beste}% | Wahrscheinlichste: +${wahrscheinlichste}% | Schlechteste: ${schlechteste}%
+
+// === EINGABEPARAMETER ===
+prognoseStunden = input.float(${zeitraum.toFixed(1)}, "Prognose-Zeitraum (Stunden)", minval=0.5, maxval=24.0, step=0.5)
+patternLaenge = input.int(20, "Pattern-Länge für Matching", minval=10, maxval=50)
+suchTiefe = input.int(2000, "Historische Such-Tiefe (Balken)", minval=500, maxval=5000, tooltip="Bei 5min-Chart: 500≈17 Tage, 2000≈70 Tage, 5000≈174 Tage")
+anzahlBestenMatches = input.int(20, "Anzahl bester Pattern-Matches", minval=10, maxval=50)
+
+// === NEWS-SENTIMENT PARAMETER (NEU!) ===
+newsSentimentScore = input.int(${news}, "📰 News-Sentiment Score", minval=-100, maxval=100, tooltip="Von Azure AI Agent: -100 (sehr bearish) bis +100 (sehr bullish)")
+newsAdjustmentBeste = input.float(${beste.toFixed(1)}, "News-Anpassung Beste Prognose (%)", minval=-50, maxval=50, step=0.5, tooltip="Empfehlung vom Agent")
 newsAdjustmentWahrscheinlichste = input.float(${wahrscheinlichste.toFixed(1)}, "News-Anpassung Wahrscheinlichste (%)", minval=-50, maxval=50, step=0.5)
 newsAdjustmentSchlechteste = input.float(${schlechteste.toFixed(1)}, "News-Anpassung Schlechteste (%)", minval=-50, maxval=50, step=0.5)
 newsAdjustmentWahrscheinlichkeit = input.float(${wahrscheinlichkeit.toFixed(1)}, "News-Anpassung Wahrscheinlichkeit (%)", minval=-50, maxval=50, step=0.5)
+useNewsAdjustment = input.bool(true, "✅ News-Sentiment aktivieren", tooltip="Schaltet die News-Anpassungen ein/aus")
 
-// PROGNOSE-PARAMETER
-prognoseStunden = input.float(${zeitraum.toFixed(1)}, "Prognose-Zeitraum (Stunden)", minval=0.5, maxval=24.0, step=0.5)
-
-// TRADING-PARAMETER
 risikoAbstand = input.float(${((analysisData.kurs - analysisData.exit.stop) / analysisData.kurs * 100).toFixed(1)}, "Stop-Loss Abstand (%)", minval=0.5, maxval=10.0)
 gewinnZiel = input.float(${((analysisData.exit.t1 - analysisData.kurs) / analysisData.kurs * 100).toFixed(1)}, "Take-Profit Ziel (%)", minval=1.0, maxval=20.0)
 
-// === ENDE DASHBOARD EXPORT ===`;
+// === REST DES SCRIPTS BLEIBT UNVERÄNDERT ===
+// Kopiere ab hier den Rest deines Original-Scripts (ab Zeile 21)`;
         }
 
         function copyToClipboard() {
