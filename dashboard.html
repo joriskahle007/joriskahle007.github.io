@@ -1,288 +1,495 @@
-//@version=5
-indicator("Swing Trading Pro - Pattern & Zonen", overlay=true, max_bars_back=5000, max_lines_count=500, max_labels_count=500)
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Swing Trading Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { margin: 0; padding: 0; background: #111827; font-family: system-ui, -apple-system, sans-serif; }
+        .code-box { background: #1f2937; border: 1px solid #374151; border-radius: 8px; padding: 16px; font-family: 'Courier New', monospace; font-size: 13px; color: #10b981; overflow-x: auto; white-space: pre-wrap; }
+        .copy-btn { cursor: pointer; transition: all 0.2s; }
+        .copy-btn:hover { transform: scale(1.05); }
+        .pattern-box { position: relative; cursor: pointer; transition: all 0.3s; }
+        .pattern-box:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    
+    <script>
+        const candlestickData = {
+            '1H': [
+                { date: '08:00', open: 413.5, high: 415.2, low: 413.0, close: 414.8, volume: 850000 },
+                { date: '09:00', open: 414.8, high: 416.0, low: 414.2, close: 415.5, volume: 920000 },
+                { date: '10:00', open: 415.5, high: 416.8, low: 415.0, close: 415.2, volume: 780000 },
+                { date: '11:00', open: 415.2, high: 416.5, low: 414.5, close: 414.9, volume: 810000 },
+                { date: '12:00', open: 414.9, high: 415.8, low: 414.0, close: 414.5, volume: 690000 },
+                { date: '13:00', open: 414.5, high: 415.5, low: 413.8, close: 414.2, volume: 750000 },
+                { date: '14:00', open: 414.2, high: 415.0, low: 413.5, close: 414.0, volume: 820000 },
+                { date: '15:00', open: 414.0, high: 415.2, low: 413.8, close: 414.91, volume: 950000 },
+            ],
+            '1D': [
+                { date: '15.12', open: 393, high: 398, low: 391, close: 395, volume: 11500000 },
+                { date: '16.12', open: 395, high: 402, low: 394, close: 398.5, volume: 12200000 },
+                { date: '17.12', open: 398.5, high: 405, low: 397, close: 402, volume: 13100000 },
+                { date: '18.12', open: 402, high: 408, low: 401, close: 405.5, volume: 12800000 },
+                { date: '19.12', open: 405.5, high: 410, low: 404, close: 408, volume: 13500000 },
+                { date: '20.12', open: 408, high: 413, low: 407, close: 410.5, volume: 14200000 },
+                { date: '21.12', open: 410.5, high: 415, low: 409, close: 413, volume: 12900000 },
+                { date: '22.12', open: 413, high: 418, low: 412, close: 415, volume: 13400000 },
+                { date: '23.12', open: 415, high: 422, low: 414, close: 418.5, volume: 15800000 },
+                { date: '24.12', open: 418.5, high: 423, low: 417, close: 420, volume: 14100000 },
+                { date: '25.12', open: 420, high: 421, low: 415, close: 417, volume: 10500000 },
+                { date: '26.12', open: 417, high: 418, low: 413, close: 414.91, volume: 12500000 },
+                { date: '27.12', open: 414.91, high: 416, low: 413, close: 414.91, volume: 11800000 },
+            ]
+        };
+
+        let currentTimeframe = '1D';
+        let currentData = candlestickData['1D'];
+
+        const analysisData = {
+            aktie: "Microsoft",
+            kurs: 414.91,
+            empfehlung: { aktion: "KAUFEN bei Pullback", typ: "PULLBACK", qualitaet: "A", score: 82 },
+            entry: { status: "WARTEN", best: "408-411 EUR", preis: 409.00, methode: "Limit", rr: "1:2.5" },
+            exit: { stop: 398.00, t1: 430.00, t2: 445.00 },
+            scores: { sentiment: 80, technical: 70, fundamental: 65, makro: 55, timing: 68, pattern: 75 },
+            levels: { resist: [420, 430], support: [408, 400] },
+            risk: { loss: 11, gain: 21, ratio: "1:2.5" },
+            // TradingView Prognose-Parameter
+            prognose: {
+                beste: 5.2,
+                schlechteste: -2.1,
+                wahrscheinlichste: 3.4,
+                wahrscheinlichkeit: 68,
+                zeitraum: 3.0
+            },
+            // Kerzenmuster
+            patterns: [
+                { name: "Bullish Engulfing", index: 10, typ: "bullish", wahrscheinlichkeit: 72 },
+                { name: "Higher High", index: 8, typ: "bullish", wahrscheinlichkeit: 65 },
+                { name: "Higher Low", index: 6, typ: "bullish", wahrscheinlichkeit: 68 }
+            ]
+        };
+
+        function generateTradingViewCode() {
+            const news = analysisData.scores.sentiment;
+            const beste = analysisData.prognose.beste;
+            const schlechteste = analysisData.prognose.schlechteste;
+            const wahrscheinlichste = analysisData.prognose.wahrscheinlichste;
+            const wahrscheinlichkeit = analysisData.prognose.wahrscheinlichkeit - 60; // Anpassung
+            const zeitraum = analysisData.prognose.zeitraum;
+            
+            return `//@version=5
+indicator("Intelligente Pattern-Prognose mit Trading", overlay=true, max_bars_back=5000, max_lines_count=500, max_labels_count=500)
+
+// === DASHBOARD EXPORT - ${new Date().toLocaleString('de-DE')} ===
+// Aktie: ${analysisData.aktie} | Kurs: ${analysisData.kurs} EUR
+// Sentiment: ${news} | Beste: +${beste}% | Wahrscheinlichste: +${wahrscheinlichste}% | Schlechteste: ${schlechteste}%
 
 // === EINGABEPARAMETER ===
-prognoseStunden = input.float(3.0, "Prognose-Zeitraum (Stunden)", minval=0.5, maxval=24.0, step=0.5)
+prognoseStunden = input.float(${zeitraum.toFixed(1)}, "Prognose-Zeitraum (Stunden)", minval=0.5, maxval=24.0, step=0.5)
 patternLaenge = input.int(20, "Pattern-Länge für Matching", minval=10, maxval=50)
-suchTiefe = input.int(2000, "Historische Such-Tiefe (Balken)", minval=500, maxval=5000)
+suchTiefe = input.int(2000, "Historische Such-Tiefe (Balken)", minval=500, maxval=5000, tooltip="Bei 5min-Chart: 500≈17 Tage, 2000≈70 Tage, 5000≈174 Tage")
 anzahlBestenMatches = input.int(20, "Anzahl bester Pattern-Matches", minval=10, maxval=50)
 
-// === NEWS-SENTIMENT PARAMETER ===
-newsSentimentScore = input.int(80, "📰 News-Sentiment Score", minval=-100, maxval=100)
-newsAdjustmentBeste = input.float(5.2, "News-Anpassung Beste Prognose (%)", minval=-50, maxval=50, step=0.5)
-newsAdjustmentWahrscheinlichste = input.float(3.4, "News-Anpassung Wahrscheinlichste (%)", minval=-50, maxval=50, step=0.5)
-newsAdjustmentSchlechteste = input.float(-2.1, "News-Anpassung Schlechteste (%)", minval=-50, maxval=50, step=0.5)
-newsAdjustmentWahrscheinlichkeit = input.float(8.0, "News-Anpassung Wahrscheinlichkeit (%)", minval=-50, maxval=50, step=0.5)
-useNewsAdjustment = input.bool(true, "✅ News-Sentiment aktivieren")
+// === NEWS-SENTIMENT PARAMETER (NEU!) ===
+newsSentimentScore = input.int(${news}, "📰 News-Sentiment Score", minval=-100, maxval=100, tooltip="Von Azure AI Agent: -100 (sehr bearish) bis +100 (sehr bullish)")
+newsAdjustmentBeste = input.float(${beste.toFixed(1)}, "News-Anpassung Beste Prognose (%)", minval=-50, maxval=50, step=0.5, tooltip="Empfehlung vom Agent")
+newsAdjustmentWahrscheinlichste = input.float(${wahrscheinlichste.toFixed(1)}, "News-Anpassung Wahrscheinlichste (%)", minval=-50, maxval=50, step=0.5)
+newsAdjustmentSchlechteste = input.float(${schlechteste.toFixed(1)}, "News-Anpassung Schlechteste (%)", minval=-50, maxval=50, step=0.5)
+newsAdjustmentWahrscheinlichkeit = input.float(${wahrscheinlichkeit.toFixed(1)}, "News-Anpassung Wahrscheinlichkeit (%)", minval=-50, maxval=50, step=0.5)
+useNewsAdjustment = input.bool(true, "✅ News-Sentiment aktivieren", tooltip="Schaltet die News-Anpassungen ein/aus")
 
-// === SWING TRADING PARAMETER ===
-swingMinBars = input.int(10, "Min. Balken zwischen Signalen", minval=5, maxval=50, tooltip="Verhindert zu häufige Signale")
-risikoAbstand = input.float(4.1, "Stop-Loss Abstand (%)", minval=0.5, maxval=10.0)
-gewinnZiel1 = input.float(3.8, "Take-Profit 1 (%)", minval=1.0, maxval=20.0)
-gewinnZiel2 = input.float(8.0, "Take-Profit 2 (%)", minval=5.0, maxval=30.0)
-showZones = input.bool(true, "📊 Zonen anzeigen", tooltip="Zeigt TP/SL Zonen grafisch")
+risikoAbstand = input.float(${((analysisData.kurs - analysisData.exit.stop) / analysisData.kurs * 100).toFixed(1)}, "Stop-Loss Abstand (%)", minval=0.5, maxval=10.0)
+gewinnZiel = input.float(${((analysisData.exit.t1 - analysisData.kurs) / analysisData.kurs * 100).toFixed(1)}, "Take-Profit Ziel (%)", minval=1.0, maxval=20.0)
 
-// === KERZENMUSTER ERKENNUNG ===
-showPatterns = input.bool(true, "🕯️ Kerzenmuster anzeigen")
+// === REST DES SCRIPTS BLEIBT UNVERÄNDERT ===
+// Kopiere ab hier den Rest deines Original-Scripts (ab Zeile 21)`;
+        }
 
-// === BASIS-INDIKATOREN ===
-sma20 = ta.sma(close, 20)
-sma50 = ta.sma(close, 50)
-sma200 = ta.sma(close, 200)
-rsi = ta.rsi(close, 14)
-[macdLine, signalLine, macdHist] = ta.macd(close, 12, 26, 9)
-[diPlus, diMinus, adx] = ta.dmi(14, 14)
-atr = ta.atr(14)
-volume_sma = ta.sma(volume, 20)
+        function copyToClipboard() {
+            const text = `News-Sentiment Score: ${analysisData.scores.sentiment}
+News-Anpassung Beste: ${analysisData.prognose.beste.toFixed(1)}
+News-Anpassung Wahrscheinlichste: ${analysisData.prognose.wahrscheinlichste.toFixed(1)}
+News-Anpassung Schlechteste: ${analysisData.prognose.schlechteste.toFixed(1)}
+Prognose-Zeitraum: ${analysisData.prognose.zeitraum.toFixed(1)}
+Stop-Loss Abstand: ${((analysisData.kurs - analysisData.exit.stop) / analysisData.kurs * 100).toFixed(1)}
+Take-Profit Ziel: ${((analysisData.exit.t1 - analysisData.kurs) / analysisData.kurs * 100).toFixed(1)}`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                const btn = document.getElementById('copy-btn');
+                const originalText = btn.innerHTML;
+                btn.innerHTML = '✅ Kopiert!';
+                btn.classList.add('bg-green-600');
+                setTimeout(() => {
+                    btn.innerHTML = originalText;
+                    btn.classList.remove('bg-green-600');
+                }, 2000);
+            });
+        }
 
-// Trend-Stärke
-trend = (close > sma20 ? 1 : -1) + (macdLine > signalLine ? 1 : -1) + (rsi > 50 ? 1 : -1)
-trendStaerke = trend / 3
+        function renderCandles(data) {
+            const max = Math.max(...data.map(d => d.high));
+            const min = Math.min(...data.map(d => d.low));
+            const range = max - min;
+            const h = 350;
+            const w = 800 / data.length - 10;
+            
+            let svg = '';
+            data.forEach((e, i) => {
+                const green = e.close > e.open;
+                const color = green ? '#22c55e' : '#ef4444';
+                const x = (i * 800) / data.length + 5;
+                const scale = (p) => h - ((p - min) / range) * h;
+                const hy = scale(e.high);
+                const ly = scale(e.low);
+                const oy = scale(e.open);
+                const cy = scale(e.close);
+                const top = Math.min(oy, cy);
+                const height = Math.max(Math.abs(oy - cy), 1);
+                
+                svg += `<line x1="${x + w/2}" y1="${hy}" x2="${x + w/2}" y2="${ly}" stroke="${color}" stroke-width="1.5"/>`;
+                svg += `<rect x="${x}" y="${top}" width="${w}" height="${height}" fill="${color}"/>`;
+                
+                // Kerzenmuster markieren
+                analysisData.patterns.forEach(pattern => {
+                    if (data.length - i === pattern.index) {
+                        const patternColor = pattern.typ === 'bullish' ? '#fbbf24' : '#f87171';
+                        svg += `<circle cx="${x + w/2}" cy="${top - 15}" r="8" fill="${patternColor}" stroke="#fff" stroke-width="2"/>`;
+                        svg += `<text x="${x + w/2}" y="${top - 25}" fill="${patternColor}" font-size="10" text-anchor="middle" font-weight="bold">${pattern.name.substring(0, 2)}</text>`;
+                    }
+                });
+                
+                svg += `<text x="${x+20}" y="380" fill="#9ca3af" font-size="10">${e.date}</text>`;
+            });
+            
+            return svg;
+        }
 
-// === KERZENMUSTER FUNKTIONEN ===
+        function renderVolume(data) {
+            const max = Math.max(...data.map(d => d.volume));
+            let bars = '';
+            data.forEach((e, i) => {
+                const green = e.close > e.open;
+                const color = green ? '#22c55e80' : '#ef444480';
+                const height = (e.volume / max) * 100;
+                const x = (i / data.length) * 100;
+                const width = (1 / data.length) * 90;
+                bars += `<rect x="${x}%" y="${100-height}%" width="${width}%" height="${height}%" fill="${color}" rx="2"/>`;
+            });
+            return bars;
+        }
 
-// Bullish Engulfing
-bullishEngulfing = close[1] < open[1] and close > open and 
-                   open <= close[1] and close >= open[1] and
-                   close - open > open[1] - close[1]
+        function getScoreColor(s) {
+            return s >= 70 ? 'text-green-400' : s >= 50 ? 'text-yellow-400' : 'text-red-400';
+        }
 
-// Bearish Engulfing
-bearishEngulfing = close[1] > open[1] and close < open and 
-                   open >= close[1] and close <= open[1] and
-                   open - close > close[1] - open[1]
+        function getScoreBg(s) {
+            return s >= 70 ? 'bg-gray-800 border-green-500' : s >= 50 ? 'bg-gray-800 border-yellow-500' : 'bg-gray-800 border-red-500';
+        }
 
-// Hammer (Bullish)
-bodySize = math.abs(close - open)
-upperWick = high - math.max(close, open)
-lowerWick = math.min(close, open) - low
-hammer = lowerWick > bodySize * 2 and upperWick < bodySize and close > open and low == ta.lowest(low, 5)
+        function render() {
+            document.getElementById('app').innerHTML = `
+                <div class="min-h-screen bg-gray-900 p-6">
+                    <div class="max-w-7xl mx-auto">
+                        <!-- Header -->
+                        <div class="bg-gray-800 rounded-lg shadow-2xl p-6 mb-6 border border-gray-700">
+                            <div class="flex justify-between">
+                                <div>
+                                    <h1 class="text-3xl font-bold text-white mb-2">${analysisData.aktie} <span class="text-blue-400">Swing Trading</span></h1>
+                                    <p class="text-gray-400">Kurs: <span class="text-white font-bold">${analysisData.kurs} EUR</span></p>
+                                </div>
+                                <div class="text-right">
+                                    <div class="text-4xl font-bold text-green-400">${analysisData.empfehlung.score}</div>
+                                    <div class="text-sm text-gray-400">Confidence</div>
+                                </div>
+                            </div>
+                        </div>
 
-// Shooting Star (Bearish)
-shootingStar = upperWick > bodySize * 2 and lowerWick < bodySize and close < open and high == ta.highest(high, 5)
+                        <!-- TradingView Export Box -->
+                        <div class="bg-gradient-to-r from-blue-900 to-purple-900 rounded-lg p-6 mb-6 border-2 border-blue-500 shadow-2xl">
+                            <div class="flex justify-between items-center mb-4">
+                                <div>
+                                    <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M11 7h2v6h-2zm0 8h2v2h-2z"/></svg>
+                                        TradingView Werte-Änderungen
+                                    </h2>
+                                    <p class="text-gray-300 text-sm mt-1">⚙️ Ändere diese Werte in den TradingView Script-Einstellungen</p>
+                                </div>
+                                <button id="copy-btn" onclick="copyToClipboard()" class="copy-btn bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg flex items-center gap-2 shadow-lg">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                                    Liste kopieren
+                                </button>
+                            </div>
+                            
+                            <!-- Schritt-für-Schritt Anleitung -->
+                            <div class="bg-yellow-900 bg-opacity-30 border-l-4 border-yellow-500 p-4 rounded mb-4">
+                                <div class="font-bold text-yellow-400 mb-2">📋 Anleitung:</div>
+                                <ol class="text-gray-300 text-sm space-y-1">
+                                    <li>1. Klicke auf dein Script im TradingView Chart</li>
+                                    <li>2. Klicke auf das ⚙️ Zahnrad-Symbol</li>
+                                    <li>3. Ändere die Werte wie unten aufgelistet</li>
+                                    <li>4. Klicke auf "OK"</li>
+                                </ol>
+                            </div>
 
-// Doji
-doji = bodySize < (high - low) * 0.1 and bodySize > 0
+                            <!-- Werte-Tabelle -->
+                            <div class="bg-gray-800 rounded-lg overflow-hidden">
+                                <table class="w-full text-sm">
+                                    <thead class="bg-gray-700">
+                                        <tr>
+                                            <th class="text-left p-3 text-gray-300">Parameter</th>
+                                            <th class="text-center p-3 text-red-400">Alt</th>
+                                            <th class="text-center p-3 text-white">→</th>
+                                            <th class="text-center p-3 text-green-400">Neu</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-gray-700">
+                                        <tr class="hover:bg-gray-750">
+                                            <td class="p-3 text-gray-300">📰 News-Sentiment Score</td>
+                                            <td class="p-3 text-center text-red-300 line-through">54</td>
+                                            <td class="p-3 text-center">→</td>
+                                            <td class="p-3 text-center text-green-400 font-bold">${analysisData.scores.sentiment}</td>
+                                        </tr>
+                                        <tr class="hover:bg-gray-750">
+                                            <td class="p-3 text-gray-300">News-Anpassung Beste (%)</td>
+                                            <td class="p-3 text-center text-red-300 line-through">5</td>
+                                            <td class="p-3 text-center">→</td>
+                                            <td class="p-3 text-center text-green-400 font-bold">${analysisData.prognose.beste.toFixed(1)}</td>
+                                        </tr>
+                                        <tr class="hover:bg-gray-750">
+                                            <td class="p-3 text-gray-300">News-Anpassung Wahrscheinlichste (%)</td>
+                                            <td class="p-3 text-center text-red-300 line-through">3</td>
+                                            <td class="p-3 text-center">→</td>
+                                            <td class="p-3 text-center text-green-400 font-bold">${analysisData.prognose.wahrscheinlichste.toFixed(1)}</td>
+                                        </tr>
+                                        <tr class="hover:bg-gray-750">
+                                            <td class="p-3 text-gray-300">News-Anpassung Schlechteste (%)</td>
+                                            <td class="p-3 text-center text-red-300 line-through">-2</td>
+                                            <td class="p-3 text-center">→</td>
+                                            <td class="p-3 text-center text-green-400 font-bold">${analysisData.prognose.schlechteste.toFixed(1)}</td>
+                                        </tr>
+                                        <tr class="hover:bg-gray-750">
+                                            <td class="p-3 text-gray-300">Prognose-Zeitraum (Stunden)</td>
+                                            <td class="p-3 text-center text-red-300 line-through">3</td>
+                                            <td class="p-3 text-center">→</td>
+                                            <td class="p-3 text-center text-green-400 font-bold">${analysisData.prognose.zeitraum.toFixed(1)}</td>
+                                        </tr>
+                                        <tr class="hover:bg-gray-750">
+                                            <td class="p-3 text-gray-300">Stop-Loss Abstand (%)</td>
+                                            <td class="p-3 text-center text-red-300 line-through">2</td>
+                                            <td class="p-3 text-center">→</td>
+                                            <td class="p-3 text-center text-green-400 font-bold">${((analysisData.kurs - analysisData.exit.stop) / analysisData.kurs * 100).toFixed(1)}</td>
+                                        </tr>
+                                        <tr class="hover:bg-gray-750">
+                                            <td class="p-3 text-gray-300">Take-Profit Ziel (%)</td>
+                                            <td class="p-3 text-center text-red-300 line-through">4</td>
+                                            <td class="p-3 text-center">→</td>
+                                            <td class="p-3 text-center text-green-400 font-bold">${((analysisData.exit.t1 - analysisData.kurs) / analysisData.kurs * 100).toFixed(1)}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Kopier-Liste -->
+                            <div class="mt-4">
+                                <div class="text-xs text-gray-400 mb-2">Kopierbare Liste für schnelles Eintragen:</div>
+                                <div class="code-box text-xs">
+News-Sentiment Score: ${analysisData.scores.sentiment}
+News-Anpassung Beste: ${analysisData.prognose.beste.toFixed(1)}
+News-Anpassung Wahrscheinlichste: ${analysisData.prognose.wahrscheinlichste.toFixed(1)}
+News-Anpassung Schlechteste: ${analysisData.prognose.schlechteste.toFixed(1)}
+Prognose-Zeitraum: ${analysisData.prognose.zeitraum.toFixed(1)}
+Stop-Loss Abstand: ${((analysisData.kurs - analysisData.exit.stop) / analysisData.kurs * 100).toFixed(1)}
+Take-Profit Ziel: ${((analysisData.exit.t1 - analysisData.kurs) / analysisData.kurs * 100).toFixed(1)}
+                                </div>
+                            </div>
+                        </div>
 
-// Morning Star (3-Kerzen Bullish)
-morningStar = close[2] < open[2] and 
-              math.abs(close[1] - open[1]) < bodySize[2] * 0.3 and
-              close > open and close > (open[2] + close[2]) / 2
+                        <!-- Prognose-Werte -->
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="bg-green-900 bg-opacity-30 rounded-lg p-4 border-2 border-green-500">
+                                <div class="text-sm text-gray-400 mb-1">📈 Beste Prognose</div>
+                                <div class="text-3xl font-bold text-green-400">+${analysisData.prognose.beste}%</div>
+                                <div class="text-xs text-gray-500 mt-1">Ziel: ${(analysisData.kurs * (1 + analysisData.prognose.beste/100)).toFixed(2)} EUR</div>
+                            </div>
+                            <div class="bg-purple-900 bg-opacity-30 rounded-lg p-4 border-2 border-purple-500">
+                                <div class="text-sm text-gray-400 mb-1">🎯 Wahrscheinlichste</div>
+                                <div class="text-3xl font-bold text-purple-400">+${analysisData.prognose.wahrscheinlichste}%</div>
+                                <div class="text-xs text-gray-500 mt-1">${analysisData.prognose.wahrscheinlichkeit}% Wahrscheinlichkeit</div>
+                            </div>
+                            <div class="bg-red-900 bg-opacity-30 rounded-lg p-4 border-2 border-red-500">
+                                <div class="text-sm text-gray-400 mb-1">📉 Schlechteste Prognose</div>
+                                <div class="text-3xl font-bold text-red-400">${analysisData.prognose.schlechteste}%</div>
+                                <div class="text-xs text-gray-500 mt-1">Ziel: ${(analysisData.kurs * (1 + analysisData.prognose.schlechteste/100)).toFixed(2)} EUR</div>
+                            </div>
+                        </div>
 
-// Evening Star (3-Kerzen Bearish)
-eveningStar = close[2] > open[2] and 
-              math.abs(close[1] - open[1]) < bodySize[2] * 0.3 and
-              close < open and close < (open[2] + close[2]) / 2
+                        <!-- Kerzenmuster -->
+                        <div class="bg-gray-800 rounded-lg p-6 mb-6 border border-gray-700">
+                            <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
+                                <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+                                Erkannte Kerzenmuster
+                            </h3>
+                            <div class="grid grid-cols-3 gap-4">
+                                ${analysisData.patterns.map(pattern => `
+                                    <div class="pattern-box ${pattern.typ === 'bullish' ? 'bg-yellow-900 border-yellow-600' : 'bg-red-900 border-red-600'} bg-opacity-20 rounded-lg p-4 border-2">
+                                        <div class="flex items-center gap-2 mb-2">
+                                            <span class="text-2xl">${pattern.typ === 'bullish' ? '🟡' : '🔴'}</span>
+                                            <div class="font-bold text-white">${pattern.name}</div>
+                                        </div>
+                                        <div class="text-sm text-gray-400">Position: -${pattern.index} Kerzen</div>
+                                        <div class="text-sm ${pattern.typ === 'bullish' ? 'text-green-400' : 'text-red-400'} font-bold mt-2">${pattern.wahrscheinlichkeit}% Erfolgsrate</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
 
-// Higher High / Higher Low (Uptrend)
-higherHigh = high > high[1] and high[1] > high[2] and low > low[1]
-higherLow = low > low[1] and low[1] > low[2] and high > high[1]
+                        <!-- Empfehlung -->
+                        <div class="bg-gray-800 rounded-lg p-6 mb-6 border-l-4 border-green-500">
+                            <h2 class="text-2xl font-bold text-white mb-4">${analysisData.empfehlung.aktion}</h2>
+                            <div class="grid grid-cols-4 gap-4">
+                                <div><div class="text-sm text-gray-400">Setup</div><div class="font-bold text-white">${analysisData.empfehlung.typ}</div></div>
+                                <div><div class="text-sm text-gray-400">Qualität</div><div class="font-bold text-green-400 text-xl">${analysisData.empfehlung.qualitaet}</div></div>
+                                <div><div class="text-sm text-gray-400">Entry</div><div class="font-bold text-white">${analysisData.entry.preis}€</div></div>
+                                <div><div class="text-sm text-gray-400">R:R</div><div class="font-bold text-blue-400">${analysisData.entry.rr}</div></div>
+                            </div>
+                        </div>
 
-// Lower High / Lower Low (Downtrend)
-lowerHigh = high < high[1] and high[1] < high[2] and low < low[1]
-lowerLow = low < low[1] and low[1] < low[2] and high < high[1]
+                        <!-- Chart -->
+                        <div class="bg-gray-800 rounded-lg p-6 mb-6 border border-gray-700">
+                            <div class="flex justify-between mb-4">
+                                <h3 class="text-xl font-bold text-white">Candlestick Chart mit Mustern</h3>
+                                <div class="flex gap-2">
+                                    <button onclick="changeTimeframe('1H')" class="px-4 py-2 rounded font-semibold ${currentTimeframe === '1H' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300'}">1H</button>
+                                    <button onclick="changeTimeframe('1D')" class="px-4 py-2 rounded font-semibold ${currentTimeframe === '1D' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300'}">1D</button>
+                                </div>
+                            </div>
+                            <div class="bg-gray-900 p-4 rounded">
+                                <div class="mb-2 flex gap-4 text-xs">
+                                    <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-yellow-500"></span><span class="text-gray-400">Bullish Pattern</span></div>
+                                    <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-red-500"></span><span class="text-gray-400">Bearish Pattern</span></div>
+                                </div>
+                                <svg width="100%" height="400" viewBox="0 0 800 400">
+                                    ${[0,1,2,3,4,5].map(i => `<line x1="0" y1="${i*70}" x2="800" y2="${i*70}" stroke="#374151" stroke-width="0.5" stroke-dasharray="2,2"/>`).join('')}
+                                    ${renderCandles(currentData)}
+                                </svg>
+                            </div>
+                            <div class="mt-4">
+                                <h4 class="text-sm font-semibold text-gray-400 mb-2">Volumen</h4>
+                                <svg width="100%" height="120" viewBox="0 0 100 100" preserveAspectRatio="none">
+                                    ${renderVolume(currentData)}
+                                </svg>
+                            </div>
+                        </div>
 
-// === PATTERN VISUALISIERUNG ===
-if showPatterns
-    // Bullish Patterns
-    if bullishEngulfing
-        label.new(bar_index, low, "BE", style=label.style_label_up, color=color.new(color.green, 20), textcolor=color.white, size=size.small, tooltip="Bullish Engulfing")
-    
-    if hammer
-        label.new(bar_index, low, "H", style=label.style_label_up, color=color.new(color.lime, 30), textcolor=color.black, size=size.small, tooltip="Hammer")
-    
-    if morningStar
-        label.new(bar_index, low, "MS", style=label.style_label_up, color=color.new(color.green, 10), textcolor=color.white, size=size.normal, tooltip="Morning Star")
-    
-    if higherHigh
-        label.new(bar_index, high, "HH", style=label.style_label_down, color=color.new(color.yellow, 30), textcolor=color.black, size=size.tiny, tooltip="Higher High")
-    
-    if higherLow
-        label.new(bar_index, low, "HL", style=label.style_label_up, color=color.new(color.yellow, 30), textcolor=color.black, size=size.tiny, tooltip="Higher Low")
-    
-    // Bearish Patterns
-    if bearishEngulfing
-        label.new(bar_index, high, "BE", style=label.style_label_down, color=color.new(color.red, 20), textcolor=color.white, size=size.small, tooltip="Bearish Engulfing")
-    
-    if shootingStar
-        label.new(bar_index, high, "SS", style=label.style_label_down, color=color.new(color.orange, 30), textcolor=color.white, size=size.small, tooltip="Shooting Star")
-    
-    if eveningStar
-        label.new(bar_index, high, "ES", style=label.style_label_down, color=color.new(color.red, 10), textcolor=color.white, size=size.normal, tooltip="Evening Star")
-    
-    if lowerHigh
-        label.new(bar_index, high, "LH", style=label.style_label_down, color=color.new(color.orange, 30), textcolor=color.black, size=size.tiny, tooltip="Lower High")
-    
-    if lowerLow
-        label.new(bar_index, low, "LL", style=label.style_label_up, color=color.new(color.orange, 30), textcolor=color.black, size=size.tiny, tooltip="Lower Low")
-    
-    // Neutral
-    if doji
-        label.new(bar_index, high, "D", style=label.style_label_down, color=color.new(color.gray, 50), textcolor=color.white, size=size.tiny, tooltip="Doji")
+                        <!-- Scores -->
+                        <div class="grid grid-cols-6 gap-4 mb-6">
+                            ${Object.entries(analysisData.scores).map(([k, v]) => `
+                                <div class="${getScoreBg(v)} rounded p-4 border-l-4">
+                                    <div class="text-xs uppercase text-gray-400 mb-1">${k}</div>
+                                    <div class="text-3xl font-bold ${getScoreColor(v)}">${v}</div>
+                                </div>
+                            `).join('')}
+                        </div>
 
-// === SWING TRADING SIGNALE (VERBESSERT) ===
-var int barsSinceLastSignal = 0
-barsSinceLastSignal := barsSinceLastSignal + 1
+                        <!-- Entry & Exit -->
+                        <div class="grid grid-cols-2 gap-6 mb-6">
+                            <div class="bg-gray-800 rounded p-4 text-center border border-gray-700">
+                            <p class="text-gray-400 text-sm">7-Agenten Swing Trading System | ⚠️ Keine Anlageberatung</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
 
-// Stärkere Bedingungen für Swing Trading
-strongUptrend = close > sma20 and sma20 > sma50 and close > sma50
-strongDowntrend = close < sma20 and sma20 < sma50 and close < sma50
+        function changeTimeframe(tf) {
+            currentTimeframe = tf;
+            currentData = candlestickData[tf];
+            render();
+        }
 
-// LONG Signal (nur bei starken Bedingungen)
-longCondition = strongUptrend and 
-                rsi > 45 and rsi < 65 and 
-                macdHist > 0 and macdHist > macdHist[1] and
-                volume > volume_sma * 1.1 and
-                adx > 25 and
-                (bullishEngulfing or hammer or morningStar or (higherHigh and higherLow)) and
-                barsSinceLastSignal >= swingMinBars
+        // Initial render
+        render();
+    </script>
+</body>
+</html>-6 border border-gray-700">
+                                <h3 class="text-xl font-bold text-white mb-4">Entry</h3>
+                                <div class="bg-yellow-900 bg-opacity-30 border-l-4 border-yellow-500 p-4 rounded mb-4">
+                                    <div class="font-bold text-yellow-400">Status: ${analysisData.entry.status}</div>
+                                    <div class="text-sm text-gray-400">Best: ${analysisData.entry.best}</div>
+                                </div>
+                                <div class="bg-green-900 bg-opacity-30 p-4 rounded border border-green-700">
+                                    <div class="text-sm text-gray-300">Preis: <span class="font-bold text-green-400">${analysisData.entry.preis} EUR</span></div>
+                                    <div class="text-sm text-gray-300">Methode: <span class="font-bold text-white">${analysisData.entry.methode}</span></div>
+                                </div>
+                            </div>
 
-// SHORT Signal (nur bei starken Bedingungen)
-shortCondition = strongDowntrend and 
-                 rsi < 55 and rsi > 35 and 
-                 macdHist < 0 and macdHist < macdHist[1] and
-                 volume > volume_sma * 1.1 and
-                 adx > 25 and
-                 (bearishEngulfing or shootingStar or eveningStar or (lowerHigh and lowerLow)) and
-                 barsSinceLastSignal >= swingMinBars
+                            <div class="bg-gray-800 rounded p-6 border border-gray-700">
+                                <h3 class="text-xl font-bold text-white mb-4">Exit</h3>
+                                <div class="bg-red-900 bg-opacity-30 border-l-4 border-red-500 p-3 rounded mb-4">
+                                    <div class="text-sm text-gray-400">Stop Loss</div>
+                                    <div class="text-2xl font-bold text-red-400">${analysisData.exit.stop} EUR</div>
+                                </div>
+                                <div class="space-y-2">
+                                    <div class="bg-gray-700 p-3 rounded border border-gray-600">
+                                        <div class="flex justify-between">
+                                            <span class="font-bold text-white">${analysisData.exit.t1} EUR</span>
+                                            <span class="text-green-400">T1 (50%)</span>
+                                        </div>
+                                    </div>
+                                    <div class="bg-gray-700 p-3 rounded border border-gray-600">
+                                        <div class="flex justify-between">
+                                            <span class="font-bold text-white">${analysisData.exit.t2} EUR</span>
+                                            <span class="text-green-400">T2 (30%)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-longSignal = longCondition and not longCondition[1]
-shortSignal = shortCondition and not shortCondition[1]
+                        <!-- Levels & Risk -->
+                        <div class="grid grid-cols-2 gap-6 mb-6">
+                            <div class="bg-gray-800 rounded p-6 border border-gray-700">
+                                <h3 class="text-xl font-bold text-white mb-4">Levels</h3>
+                                <div class="mb-4">
+                                    <div class="text-gray-300 mb-2">Widerstände</div>
+                                    ${analysisData.levels.resist.map(r => `
+                                        <div class="bg-red-900 bg-opacity-20 p-2 rounded mb-2 border border-red-800">
+                                            <span class="font-bold text-white">${r} EUR</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                                <div>
+                                    <div class="text-gray-300 mb-2">Unterstützung</div>
+                                    ${analysisData.levels.support.map(s => `
+                                        <div class="bg-green-900 bg-opacity-20 p-2 rounded mb-2 border border-green-800">
+                                            <span class="font-bold text-white">${s} EUR</span>
+                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
 
-if longSignal or shortSignal
-    barsSinceLastSignal := 0
+                            <div class="bg-gray-800 rounded p-6 border border-gray-700">
+                                <h3 class="text-xl font-bold text-white mb-4">Risiko</h3>
+                                <div class="grid grid-cols-2 gap-4 mb-4">
+                                    <div class="bg-red-900 bg-opacity-20 p-4 rounded text-center border border-red-800">
+                                        <div class="text-sm text-gray-400">Risiko</div>
+                                        <div class="text-2xl font-bold text-red-400">${analysisData.risk.loss}€</div>
+                                    </div>
+                                    <div class="bg-green-900 bg-opacity-20 p-4 rounded text-center border border-green-800">
+                                        <div class="text-sm text-gray-400">Ertrag</div>
+                                        <div class="text-2xl font-bold text-green-400">${analysisData.risk.gain}€</div>
+                                    </div>
+                                </div>
+                                <div class="bg-blue-900 bg-opacity-30 p-4 rounded text-center border border-blue-700">
+                                    <div class="text-sm text-gray-400">R:R Ratio</div>
+                                    <div class="text-3xl font-bold text-blue-400">${analysisData.risk.ratio}</div>
+                                </div>
+                            </div>
+                        </div>
 
-// Exit Bedingungen (weniger aggressiv)
-longExit = (close < sma20 or rsi > 80 or macdLine < signalLine) and longCondition[1]
-shortExit = (close > sma20 or rsi < 20 or macdLine > signalLine) and shortCondition[1]
-
-// === SIGNAL VISUALISIERUNG ===
-plotshape(longSignal, "LONG Entry", shape.triangleup, location.belowbar, color.new(color.green, 0), size=size.large, text="LONG\nBUY")
-plotshape(shortSignal, "SHORT Entry", shape.triangledown, location.abovebar, color.new(color.red, 0), size=size.large, text="SHORT\nSELL")
-plotshape(longExit, "LONG Exit", shape.circle, location.abovebar, color.new(color.green, 70), size=size.small, text="Exit")
-plotshape(shortExit, "SHORT Exit", shape.circle, location.belowbar, color.new(color.red, 70), size=size.small, text="Exit")
-
-// === ZONEN FÜR TP/SL ===
-var box longTPBox1 = na
-var box longTPBox2 = na
-var box longSLBox = na
-var box shortTPBox1 = na
-var box shortTPBox2 = na
-var box shortSLBox = na
-
-var line longEntryLine = na
-var line shortEntryLine = na
-
-if showZones
-    // LONG Zonen
-    if longSignal
-        // Alte Boxen löschen
-        if not na(longTPBox1)
-            box.delete(longTPBox1)
-            box.delete(longTPBox2)
-            box.delete(longSLBox)
-            line.delete(longEntryLine)
-        
-        entryPrice = close
-        tp1 = entryPrice * (1 + gewinnZiel1/100)
-        tp2 = entryPrice * (1 + gewinnZiel2/100)
-        sl = entryPrice * (1 - risikoAbstand/100)
-        
-        // Entry Line
-        longEntryLine := line.new(bar_index, entryPrice, bar_index + 50, entryPrice, color=color.new(color.blue, 0), width=2, style=line.style_dashed)
-        
-        // TP Zonen (grün)
-        longTPBox1 := box.new(bar_index, entryPrice, bar_index + 50, tp1, 
-                              border_color=color.new(color.green, 50), 
-                              bgcolor=color.new(color.green, 90),
-                              text="TP1: " + str.tostring(gewinnZiel1, "#.#") + "%",
-                              text_color=color.green,
-                              text_size=size.small)
-        
-        longTPBox2 := box.new(bar_index, tp1, bar_index + 50, tp2, 
-                              border_color=color.new(color.green, 30), 
-                              bgcolor=color.new(color.green, 95),
-                              text="TP2: " + str.tostring(gewinnZiel2, "#.#") + "%",
-                              text_color=color.green,
-                              text_size=size.small)
-        
-        // SL Zone (rot)
-        longSLBox := box.new(bar_index, entryPrice, bar_index + 50, sl, 
-                             border_color=color.new(color.red, 50), 
-                             bgcolor=color.new(color.red, 90),
-                             text="SL: -" + str.tostring(risikoAbstand, "#.#") + "%",
-                             text_color=color.red,
-                             text_size=size.small)
-    
-    // SHORT Zonen
-    if shortSignal
-        // Alte Boxen löschen
-        if not na(shortTPBox1)
-            box.delete(shortTPBox1)
-            box.delete(shortTPBox2)
-            box.delete(shortSLBox)
-            line.delete(shortEntryLine)
-        
-        entryPrice = close
-        tp1 = entryPrice * (1 - gewinnZiel1/100)
-        tp2 = entryPrice * (1 - gewinnZiel2/100)
-        sl = entryPrice * (1 + risikoAbstand/100)
-        
-        // Entry Line
-        shortEntryLine := line.new(bar_index, entryPrice, bar_index + 50, entryPrice, color=color.new(color.blue, 0), width=2, style=line.style_dashed)
-        
-        // TP Zonen (grün)
-        shortTPBox1 := box.new(bar_index, entryPrice, bar_index + 50, tp1, 
-                               border_color=color.new(color.green, 50), 
-                               bgcolor=color.new(color.green, 90),
-                               text="TP1: " + str.tostring(gewinnZiel1, "#.#") + "%",
-                               text_color=color.green,
-                               text_size=size.small)
-        
-        shortTPBox2 := box.new(bar_index, tp1, bar_index + 50, tp2, 
-                               border_color=color.new(color.green, 30), 
-                               bgcolor=color.new(color.green, 95),
-                               text="TP2: " + str.tostring(gewinnZiel2, "#.#") + "%",
-                               text_color=color.green,
-                               text_size=size.small)
-        
-        // SL Zone (rot)
-        shortSLBox := box.new(bar_index, entryPrice, bar_index + 50, sl, 
-                              border_color=color.new(color.red, 50), 
-                              bgcolor=color.new(color.red, 90),
-                              text="SL: -" + str.tostring(risikoAbstand, "#.#") + "%",
-                              text_color=color.red,
-                              text_size=size.small)
-    
-    // Zonen erweitern
-    if not na(longTPBox1) and not longExit
-        box.set_right(longTPBox1, bar_index + 50)
-        box.set_right(longTPBox2, bar_index + 50)
-        box.set_right(longSLBox, bar_index + 50)
-        line.set_x2(longEntryLine, bar_index + 50)
-    
-    if not na(shortTPBox1) and not shortExit
-        box.set_right(shortTPBox1, bar_index + 50)
-        box.set_right(shortTPBox2, bar_index + 50)
-        box.set_right(shortSLBox, bar_index + 50)
-        line.set_x2(shortEntryLine, bar_index + 50)
-    
-    // Zonen löschen bei Exit
-    if longExit and not na(longTPBox1)
-        box.delete(longTPBox1)
-        box.delete(longTPBox2)
-        box.delete(longSLBox)
-        line.delete(longEntryLine)
-    
-    if shortExit and not na(shortTPBox1)
-        box.delete(shortTPBox1)
-        box.delete(shortTPBox2)
-        box.delete(shortSLBox)
-        line.delete(shortEntryLine)
-
-// === TRENDLINIEN ===
-plot(sma20, "SMA 20", color=color.new(color.blue, 30), linewidth=2)
-plot(sma50, "SMA 50", color=color.new(color.orange, 30), linewidth=2)
-plot(sma200, "SMA 200", color=color.new(color.purple, 50), linewidth=1)
-
-// === PROGNOSELINIEN (Original-Code bleibt bestehen) ===
-// [Hier würde der Rest deines Original-Pattern-Matching-Codes folgen]
+                        <div class="bg-gray-800 rounded p
