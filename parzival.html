@@ -3,52 +3,75 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GPT Realtime Demo</title>
+  <title>GPT Realtime Sprachinteraktion</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 2rem; background-color: #f5f5f5; }
-    #chat { max-width: 600px; margin: auto; }
-    textarea { width: 100%; height: 100px; padding: 10px; font-size: 16px; }
-    button { padding: 10px 20px; font-size: 16px; margin-top: 10px; cursor: pointer; }
-    #response { margin-top: 20px; padding: 10px; background-color: #fff; border-radius: 8px; min-height: 50px; }
+    #chat { max-width: 600px; margin: auto; text-align: center; }
+    button { padding: 10px 20px; font-size: 16px; cursor: pointer; margin-top: 10px; }
+    #response { margin-top: 20px; padding: 10px; background-color: #fff; border-radius: 8px; min-height: 50px; white-space: pre-wrap; }
   </style>
 </head>
 <body>
   <div id="chat">
-    <h2>GPT Realtime Test</h2>
-    <textarea id="prompt" placeholder="Gib hier deinen Prompt ein..."></textarea>
-    <button onclick="sendPrompt()">Senden</button>
+    <h2>GPT Realtime Sprachinteraktion</h2>
+    <button id="startRecording">Aufnahme starten</button>
     <div id="response"></div>
   </div>
 
   <script>
-    const endpoint = "https://daytrading-resource.cognitiveservices.azure.com";
     const apiKey = "Eis5WxkoPVJ4lteBhreUvGaaWMKtreMkDHeP1oY8R39VRYHbkeTIJQQJ99BLACfhMk5XJ3w3AAAAACOGSCaz";
+    const endpoint = "https://daytrading-resource.cognitiveservices.azure.com";
+    const deploymentName = "gpt-realtime";
 
-    async function sendPrompt() {
-      const prompt = document.getElementById("prompt").value;
-      const responseDiv = document.getElementById("response");
-      responseDiv.innerHTML = "GPT wird geladen...";
+    const responseDiv = document.getElementById("response");
+    const startRecordingButton = document.getElementById("startRecording");
 
-      try {
-        const res = await fetch(`${endpoint}/openai/deployments/gpt-realtime/chat/completions?api-version=2023-03-15-preview`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "api-key": apiKey
-          },
-          body: JSON.stringify({
-            messages: [{ role: "user", content: prompt }],
-            max_tokens: 300
-          })
-        });
+    let recognition = null;
+    let synth = window.speechSynthesis;
 
-        const data = await res.json();
-        const message = data.choices?.[0]?.message?.content || "Keine Antwort erhalten";
-        responseDiv.innerHTML = message;
-      } catch (error) {
-        responseDiv.innerHTML = "Fehler: " + error.message;
+    startRecordingButton.addEventListener("click", () => {
+      if (!recognition) {
+        // Spracheingabe aktivieren
+        recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'de-DE';
+        recognition.interimResults = false;
+        recognition.onresult = async (event) => {
+          const spokenText = event.results[0][0].transcript;
+          responseDiv.innerHTML = `Du hast gesagt: "${spokenText}"\nGPT antwortet...`;
+
+          // Anfrage an GPT senden
+          const response = await fetch(`${endpoint}/openai/deployments/${deploymentName}/chat/completions?api-version=2023-03-15-preview`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "api-key": apiKey
+            },
+            body: JSON.stringify({
+              messages: [{ role: "user", content: spokenText }],
+              max_tokens: 300
+            })
+          });
+
+          const data = await response.json();
+          const gptMessage = data.choices?.[0]?.message?.content || "Keine Antwort erhalten";
+          responseDiv.innerHTML = `Du hast gesagt: "${spokenText}"\nGPT sagt: "${gptMessage}"`;
+
+          // Sprachsynthese: GPT-Antwort vorlesen
+          const utterance = new SpeechSynthesisUtterance(gptMessage);
+          synth.speak(utterance);
+        };
+
+        recognition.start();
+        startRecordingButton.textContent = "Aufnahme stoppen";
+        recognition.onend = () => {
+          recognition = null;
+          startRecordingButton.textContent = "Aufnahme starten";
+        };
+
+      } else {
+        recognition.stop();
       }
-    }
+    });
   </script>
 </body>
 </html>
