@@ -233,82 +233,248 @@
 
                 // Pine Script generieren
                 const pineScript = `//@version=5
-indicator("🎯 ${stock} Trading Signals", overlay=true, max_labels_count=50)
+indicator("🤖 ${stock} Multi-Agent ADVANCED", overlay=true, max_boxes_count=100, max_lines_count=100, max_labels_count=100)
 
-// Multi-Agent Score: ${score}/100 | Setup: ${setup}
+// ══════════════════════════════════════════════════════════
+// EINSTELLUNGEN
+// ══════════════════════════════════════════════════════════
+showMultiAgentScore = input.bool(true, "Multi-Agent Score Dashboard", group="🎯 Anzeige")
+showSetupQuality = input.bool(true, "Setup Quality Indicator", group="🎯 Anzeige")
+showPatternAlerts = input.bool(true, "Pattern Alert System", group="🎯 Anzeige")
+showEntryExitZones = input.bool(true, "Entry/Exit Zones", group="🎯 Anzeige")
+showRiskReward = input.bool(true, "Risk/Reward Visualisierung", group="🎯 Anzeige")
+showTimeframeAlignment = input.bool(true, "Timeframe Alignment", group="🎯 Anzeige")
+showVolumeConfirmation = input.bool(true, "Volume Confirmation", group="🎯 Anzeige")
+showTrendLines = input.bool(true, "Trendlinien zeichnen", group="🎯 Anzeige")
+showBreakouts = input.bool(true, "Breakout Signale", group="🎯 Anzeige")
+showPrognose = input.bool(true, "Prognose anzeigen", group="🔮 Prognose")
+prognoseTage = input.int(10, "Prognose Tage", minval=3, maxval=30, group="🔮 Prognose")
 
-showEntrySignals = input.bool(true, "🟢 Kaufsignale", group="Anzeige")
-showExitSignals = input.bool(true, "🔴 Verkaufssignale", group="Anzeige")
-showStopLoss = input.bool(true, "⛔ Stop Loss", group="Anzeige")
-showTakeProfit = input.bool(true, "🎯 Take Profit", group="Anzeige")
+// ══════════════════════════════════════════════════════════
+// MULTI-AGENTEN DATEN
+// ══════════════════════════════════════════════════════════
 
-// Trading Parameter
-entryLow = input.float(${entryLow.toFixed(2)}, "Entry Low", group="Entry")
-entryHigh = input.float(${entryHigh.toFixed(2)}, "Entry High", group="Entry")
-stopLoss = input.float(${stopLoss.toFixed(2)}, "Stop Loss", group="Risk")
-tp1 = input.float(${tp1.toFixed(2)}, "TP1", group="Targets")
-tp2 = input.float(${tp2.toFixed(2)}, "TP2", group="Targets")
-support1 = input.float(${support1.toFixed(2)}, "Support", group="Levels")
-resistance1 = input.float(${resistance1.toFixed(2)}, "Resistance", group="Levels")
+// 1️⃣ SENTIMENT
+sentimentScore = input.float(${(data.sentimentScore / 100).toFixed(2)}, "Sentiment Score", minval=0, maxval=1, step=0.1, group="🎯 Sentiment")
+analystKursziel = input.float(${tp2.toFixed(2)}, "Analyst Kursziel", group="🎯 Sentiment")
 
-// Indikatoren
+// 2️⃣ TECHNICAL
+expectedSMA20 = input.float(${data.sma20.toFixed(2)}, "SMA20", group="📊 Technical")
+expectedSMA50 = input.float(${data.sma50.toFixed(2)}, "SMA50", group="📊 Technical")
+expectedSMA200 = input.float(${data.sma200.toFixed(2)}, "SMA200", group="📊 Technical")
+expectedRSI = input.float(${data.rsi.toFixed(0)}, "RSI", minval=0, maxval=100, group="📊 Technical")
+expectedADX = input.float(32, "ADX", minval=0, maxval=100, group="📊 Technical")
+expectedATR = input.float(8.50, "ATR", group="📊 Technical")
+
+// Fibonacci
+analyzedFibHigh = input.float(${(price * 1.05).toFixed(2)}, "Fib High", group="📊 Technical")
+analyzedFibLow = input.float(${(price * 0.95).toFixed(2)}, "Fib Low", group="📊 Technical")
+
+// Support/Resistance
+analyzedR1 = input.float(${resistance1.toFixed(2)}, "🔴 R1", group="📊 Technical")
+analyzedR2 = input.float(${(resistance1 * 1.025).toFixed(2)}, "🔴 R2", group="📊 Technical")
+analyzedS1 = input.float(${support1.toFixed(2)}, "🟢 S1", group="📊 Technical")
+analyzedS2 = input.float(${(support1 * 0.98).toFixed(2)}, "🟢 S2", group="📊 Technical")
+analyzedS3 = input.float(${stopLoss.toFixed(2)}, "🟢 S3", group="📊 Technical")
+
+// Entry/Exit
+analyzedEntryLow = input.float(${entryLow.toFixed(2)}, "💚 Entry Low", group="📊 Technical")
+analyzedEntryHigh = input.float(${entryHigh.toFixed(2)}, "💚 Entry High", group="📊 Technical")
+analyzedStopLoss = input.float(${stopLoss.toFixed(2)}, "⛔ Stop Loss", group="📊 Technical")
+
+// 3️⃣ FUNDAMENTAL
+fairValue = input.float(${tp1.toFixed(2)}, "Fairer Wert", group="💼 Fundamental")
+kgv = input.float(${data.kgv.toFixed(1)}, "KGV", group="💼 Fundamental")
+ebitdaMarge = input.float(${data.ebitdaMarge.toFixed(1)}, "EBITDA Marge %", group="💼 Fundamental")
+roe = input.float(${data.roe.toFixed(1)}, "ROE %", group="💼 Fundamental")
+
+// 4️⃣ TIMING
+timingScore = input.float(${score}, "Timing Score", minval=0, maxval=100, group="⏰ Timing")
+setupQualityInput = input.string("${setup}", "Setup Qualität", options=["A++", "A+", "A", "B+", "B", "C"], group="⏰ Timing")
+konfidenz = input.float(${data.konfidenz}, "Konfidenz %", minval=0, maxval=100, group="⏰ Timing")
+kurszielRealistisch = input.float(${tp2.toFixed(2)}, "Kursziel", group="⏰ Timing")
+risikoRenditeRatio = input.float(${data.risikoRendite.toFixed(1)}, "Risk:Reward", group="⏰ Timing")
+
+// ══════════════════════════════════════════════════════════
+// BERECHNUNGEN
+// ══════════════════════════════════════════════════════════
 sma20 = ta.sma(close, 20)
 sma50 = ta.sma(close, 50)
+sma200 = ta.sma(close, 200)
 rsi = ta.rsi(close, 14)
+[macdLine, signalLine, _] = ta.macd(close, 12, 26, 9)
 atr = ta.atr(14)
 
-inEntryZone = close >= entryLow and close <= entryHigh
-avgEntry = (entryLow + entryHigh) / 2
+// Fibonacci
+fibRange = analyzedFibHigh - analyzedFibLow
+fib236 = analyzedFibHigh - (fibRange * 0.236)
+fib382 = analyzedFibHigh - (fibRange * 0.382)
+fib50 = analyzedFibHigh - (fibRange * 0.5)
+fib618 = analyzedFibHigh - (fibRange * 0.618)
 
-bullishTrend = close > sma20 and sma20 > sma50
-buySignal = inEntryZone and bullishTrend and not inEntryZone[1]
+// Entry Zone
+inEntryZone = close >= analyzedEntryLow and close <= analyzedEntryHigh
+avgEntry = (analyzedEntryLow + analyzedEntryHigh) / 2
 
-// Visualisierung
-plot(sma20, "SMA 20", color.new(color.yellow, 60), 1)
-plot(sma50, "SMA 50", color.new(color.orange, 60), 1)
+// Risk/Reward
+potentialGain = ((kurszielRealistisch - avgEntry) / avgEntry) * 100
+potentialLoss = ((avgEntry - analyzedStopLoss) / avgEntry) * 100
+actualRR = potentialLoss > 0 ? potentialGain / potentialLoss : 0
 
-if barstate.islast and showTakeProfit
-    line.new(bar_index - 50, tp1, bar_index + 20, tp1, color=color.new(color.lime, 30), width=2)
-    label.new(bar_index + 22, tp1, "🎯 TP1: " + str.tostring(tp1), style=label.style_label_left, color=color.new(color.lime, 30), textcolor=color.white)
+// ══════════════════════════════════════════════════════════
+// CANDLESTICK PATTERNS
+// ══════════════════════════════════════════════════════════
+body = math.abs(close - open)
+upperWick = high - math.max(close, open)
+lowerWick = math.min(close, open) - low
+prevBody = math.abs(close[1] - open[1])
+bodyRange = high - low
+
+// BULLISH PATTERNS
+bullEngulfing = close > open and close[1] < open[1] and close > open[1] and open < close[1] and body > prevBody * 1.2
+hammer = body > 0 and lowerWick > body * 2 and upperWick < body * 0.3 and close > open
+morningStar = close[2] < open[2] and math.abs(close[1] - open[1]) < body * 0.3 and close > open and close > (open[2] + close[2]) / 2
+threeWhiteSoldiers = close > open and close[1] > open[1] and close[2] > open[2] and close > close[1] and close[1] > close[2]
+
+// BEARISH PATTERNS
+bearEngulfing = close < open and close[1] > open[1] and close < open[1] and open > close[1] and body > prevBody * 1.2
+shootingStar = body > 0 and upperWick > body * 2 and lowerWick < body * 0.3 and close < open
+eveningStar = close[2] > open[2] and math.abs(close[1] - open[1]) < body * 0.3 and close < open and close < (open[2] + close[2]) / 2
+threeBlackCrows = close < open and close[1] < open[1] and close[2] < open[2] and close < close[1] and close[1] < close[2]
+
+// NEUTRAL
+insideBar = high < high[1] and low > low[1]
+doji = body < (bodyRange * 0.1)
+
+// ══════════════════════════════════════════════════════════
+// MULTI-AGENT SCORE
+// ══════════════════════════════════════════════════════════
+sentimentScoreCalc = sentimentScore * 100
+technicalScoreCalc = (expectedRSI > 50 ? 70 : 30) + (expectedADX > 25 ? 20 : 0)
+fundamentalScoreCalc = (kgv < 40 ? 70 : 50) + (roe > 30 ? 20 : 0)
+gesamtScore = (technicalScoreCalc * 0.4) + (fundamentalScoreCalc * 0.3) + (sentimentScoreCalc * 0.3)
+
+empfehlung = gesamtScore >= 70 ? "KAUFEN" : gesamtScore >= 50 ? "HALTEN" : "VERKAUFEN"
+empfehlungColor = gesamtScore >= 70 ? color.lime : gesamtScore >= 50 ? color.yellow : color.red
+
+// ══════════════════════════════════════════════════════════
+// VISUALISIERUNGEN
+// ══════════════════════════════════════════════════════════
+
+// MAs plotten
+plot(sma20, "SMA 20", color.yellow, 2)
+plot(sma50, "SMA 50", color.orange, 3)
+plot(sma200, "SMA 200", color.red, 3)
+
+// Support/Resistance
+plot(analyzedR1, "R1", color.red, 4)
+plot(analyzedS1, "S1", color.green, 4)
+
+// Entry Zone Box
+if barstate.islast and showEntryExitZones
+    box.new(bar_index - 100, analyzedEntryLow, bar_index + 30, analyzedEntryHigh, 
+         border_color=color.lime, bgcolor=color.new(color.lime, 90), border_width=3,
+         text="💚 ENTRY ZONE\\n" + str.tostring(analyzedEntryLow, "#.##") + " - " + str.tostring(analyzedEntryHigh, "#.##"),
+         text_color=color.lime, text_size=size.normal, text_halign=text.align_center)
+
+// Risk/Reward Visualisierung
+if barstate.islast and showRiskReward and inEntryZone
+    startBar = bar_index + 35
+    endBar = bar_index + 80
     
-    line.new(bar_index - 50, tp2, bar_index + 20, tp2, color=color.new(color.lime, 50), width=1)
-    label.new(bar_index + 22, tp2, "🚀 TP2: " + str.tostring(tp2), style=label.style_label_left, color=color.new(color.lime, 50), textcolor=color.white)
-
-if barstate.islast and showStopLoss
-    line.new(bar_index - 50, stopLoss, bar_index + 20, stopLoss, color=color.new(color.red, 20), width=3)
-    label.new(bar_index + 22, stopLoss, "⛔ SL: " + str.tostring(stopLoss), style=label.style_label_left, color=color.new(color.red, 20), textcolor=color.white)
-
-if barstate.islast and showEntrySignals
-    box.new(bar_index - 30, entryLow, bar_index + 15, entryHigh, border_color=color.new(color.lime, 40), bgcolor=color.new(color.lime, 93), border_width=2)
-
-if buySignal and showEntrySignals
-    label.new(bar_index, low - atr * 0.5, "🟢 KAUFEN\\n" + str.tostring(close), style=label.style_label_up, color=color.new(color.lime, 0), textcolor=color.black, size=size.large)
-
-if ta.crossover(close, tp1) and showExitSignals
-    label.new(bar_index, high + atr * 0.5, "🎯 TP1\\n" + str.tostring(close), style=label.style_label_down, color=color.new(color.lime, 0), textcolor=color.black, size=size.large)
-
-if ta.crossunder(close, stopLoss)
-    label.new(bar_index, low - atr * 0.5, "⛔ STOP\\n" + str.tostring(close), style=label.style_label_up, color=color.new(color.red, 0), textcolor=color.white, size=size.huge)
-
-// Dashboard
-var table dashboard = table.new(position.top_left, 2, 6, bgcolor=color.new(color.black, 5))
-
-if barstate.islast
-    table.cell(dashboard, 0, 0, "🤖 ${stock}", bgcolor=color.new(color.lime, 60), text_color=color.white)
-    table.merge_cells(dashboard, 0, 0, 1, 0)
+    box.new(startBar, kurszielRealistisch, endBar, avgEntry,
+         border_color=color.lime, bgcolor=color.new(color.lime, 85), border_width=4,
+         text="🎯 GEWINN\\n+" + str.tostring(potentialGain, "#.#") + "%",
+         text_color=color.green, text_size=size.large)
     
-    table.cell(dashboard, 0, 1, "Entry:", text_color=color.white)
-    table.cell(dashboard, 1, 1, str.tostring(avgEntry), text_color=color.yellow)
+    box.new(startBar, avgEntry, endBar, analyzedStopLoss,
+         border_color=color.red, bgcolor=color.new(color.red, 85), border_width=4,
+         text="⛔ RISIKO\\n-" + str.tostring(potentialLoss, "#.#") + "%",
+         text_color=color.red, text_size=size.large)
     
-    table.cell(dashboard, 0, 2, "Stop Loss:", text_color=color.white)
-    table.cell(dashboard, 1, 2, str.tostring(stopLoss), text_color=color.red)
-    
-    table.cell(dashboard, 0, 3, "TP1:", text_color=color.white)
-    table.cell(dashboard, 1, 3, str.tostring(tp1), text_color=color.lime)
+    label.new(startBar - 5, (kurszielRealistisch + analyzedStopLoss) / 2, 
+         "⚖️ R:R\\n1:" + str.tostring(actualRR, "#.#"),
+         style=label.style_label_right, color=color.lime, 
+         textcolor=color.white, size=size.huge)
 
-alertcondition(buySignal, "KAUFEN", "Entry Zone erreicht!")
-alertcondition(ta.crossover(close, tp1), "TP1", "Take Profit 1!")
-alertcondition(ta.crossunder(close, stopLoss), "STOP LOSS", "Stop Loss Hit!")`;
+// CANDLESTICK PATTERN LABELS
+if showPatternAlerts
+    if bullEngulfing
+        label.new(bar_index, low - atr * 0.4, "🟢BE", 
+             style=label.style_label_up, color=color.new(color.green, 20), 
+             textcolor=color.white, size=size.tiny, 
+             tooltip="Bullish Engulfing!")
+    
+    if hammer
+        label.new(bar_index, low - atr * 0.4, "🔨", 
+             style=label.style_label_up, color=color.new(color.green, 20), 
+             textcolor=color.white, size=size.tiny,
+             tooltip="Hammer")
+    
+    if bearEngulfing
+        label.new(bar_index, high + atr * 0.4, "🔴BE", 
+             style=label.style_label_down, color=color.new(color.red, 20), 
+             textcolor=color.white, size=size.tiny,
+             tooltip="Bearish Engulfing!")
+    
+    if shootingStar
+        label.new(bar_index, high + atr * 0.4, "💫", 
+             style=label.style_label_down, color=color.new(color.red, 20), 
+             textcolor=color.white, size=size.tiny,
+             tooltip="Shooting Star!")
+    
+    if insideBar
+        label.new(bar_index, high + atr * 0.15, "📦", 
+             style=label.style_label_down, color=color.new(color.yellow, 40), 
+             textcolor=color.black, size=size.tiny,
+             tooltip="Inside Bar")
+
+// Breakout Signale
+if showBreakouts
+    if ta.crossover(close, analyzedR1)
+        label.new(bar_index, low - atr * 0.5, "🚀 R1 BREAKOUT", 
+             style=label.style_label_up, color=color.lime, 
+             textcolor=color.black, size=size.large)
+    
+    if ta.crossunder(close, analyzedS1)
+        label.new(bar_index, high + atr * 0.5, "🚨 S1 BREAKDOWN", 
+             style=label.style_label_down, color=color.red, 
+             textcolor=color.white, size=size.large)
+
+// ══════════════════════════════════════════════════════════
+// DASHBOARDS
+// ══════════════════════════════════════════════════════════
+
+// Multi-Agent Score Dashboard
+var table scoreTable = table.new(position.top_left, 2, 6, bgcolor=color.new(color.black, 10), border_width=3)
+if barstate.islast and showMultiAgentScore
+    table.cell(scoreTable, 0, 0, "🤖 MULTI-AGENT", bgcolor=color.new(empfehlungColor, 30), text_color=color.white, text_size=size.large)
+    table.merge_cells(scoreTable, 0, 0, 1, 0)
+    
+    table.cell(scoreTable, 0, 1, "GESAMT", text_color=color.white)
+    table.cell(scoreTable, 1, 1, str.tostring(math.round(gesamtScore)) + "/100  " + empfehlung, 
+         bgcolor=color.new(empfehlungColor, 50), text_color=color.white, text_size=size.large)
+    
+    table.cell(scoreTable, 0, 2, "📈 Technical", text_color=color.white)
+    table.cell(scoreTable, 1, 2, str.tostring(math.round(technicalScoreCalc)), 
+         text_color=technicalScoreCalc >= 60 ? color.lime : color.orange)
+    
+    table.cell(scoreTable, 0, 3, "💼 Fundamental", text_color=color.white)
+    table.cell(scoreTable, 1, 3, str.tostring(math.round(fundamentalScoreCalc)), 
+         text_color=fundamentalScoreCalc >= 60 ? color.lime : color.orange)
+    
+    table.cell(scoreTable, 0, 4, "🎯 Sentiment", text_color=color.white)
+    table.cell(scoreTable, 1, 4, str.tostring(math.round(sentimentScoreCalc)), 
+         text_color=sentimentScoreCalc >= 60 ? color.lime : color.orange)
+    
+    table.cell(scoreTable, 0, 5, "🎖️ Setup", text_color=color.white)
+    table.cell(scoreTable, 1, 5, setupQualityInput, 
+         bgcolor=color.new(color.lime, 50), text_color=color.white)
+
+// Alerts
+alertcondition(bullEngulfing and inEntryZone, "🟢 KAUFSIGNAL", "Bullish Engulfing in Entry Zone!")
+alertcondition(shootingStar and close >= analyzedR1, "🔴 EXIT", "Shooting Star bei Resistance!")
+alertcondition(inEntryZone, "💚 ENTRY ZONE", "Kurs in Entry-Zone!")`;
 
                 document.getElementById('pineScriptOutput').textContent = pineScript;
                 showStatus('✅ Pine Script erfolgreich generiert!', 'success');
