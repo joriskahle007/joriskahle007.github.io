@@ -212,7 +212,13 @@
                 const stock = data.aktie || 'Unknown';
                 const price = data.aktueller_kurs_eur || 414.91;
                 const score = data.gesamtbewertung?.gewichteter_score || data.score || 70;
-                const setup = data.setup_qualitaet || data.setup_rating_final?.rating || 'A';
+                
+                // Setup Quality bereinigen - nur A++, A+, A, B+, B, C erlaubt
+                let rawSetup = data.setup_qualitaet || data.setup_rating_final?.rating || 'A';
+                const setupMatch = rawSetup.match(/(A\+\+|A\+|A|B\+|B|C)/i);
+                const setup = setupMatch ? setupMatch[0].toUpperCase() : 'A';
+                
+                console.log('Setup bereinigt:', rawSetup, '→', setup);
                 const entryLow = data.trading_empfehlung?.einstiegsstrategie?.akzeptabler_einstiegsbereich_eur?.von || 
                                  data.entry_analyse?.entry_szenarien?.[1]?.entry_preis_eur || price * 0.98;
                 const entryHigh = data.trading_empfehlung?.einstiegsstrategie?.akzeptabler_einstiegsbereich_eur?.bis || 
