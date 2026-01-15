@@ -3,493 +3,1116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Swing Trading Dashboard</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Multi-Agent Trading Dashboard</title>
     <style>
-        body { margin: 0; padding: 0; background: #111827; font-family: system-ui, -apple-system, sans-serif; }
-        .code-box { background: #1f2937; border: 1px solid #374151; border-radius: 8px; padding: 16px; font-family: 'Courier New', monospace; font-size: 13px; color: #10b981; overflow-x: auto; white-space: pre-wrap; }
-        .copy-btn { cursor: pointer; transition: all 0.2s; }
-        .copy-btn:hover { transform: scale(1.05); }
-        .pattern-box { position: relative; cursor: pointer; transition: all 0.3s; }
-        .pattern-box:hover { transform: translateY(-2px); box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 255, 136, 0.3);
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #aaa;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        @media (max-width: 968px) {
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #00ff88;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h2::before {
+            content: '🤖';
+            font-size: 1.8rem;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 400px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            resize: vertical;
+            transition: all 0.3s;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: #00ff88;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
+        }
+
+        .output-section {
+            grid-column: 1 / -1;
+        }
+
+        .output-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid #00ff88;
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 500px;
+            max-height: 600px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .output-box::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .output-box::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+        }
+
+        .output-box::-webkit-scrollbar-thumb {
+            background: #00ff88;
+            border-radius: 10px;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn-generate {
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            color: #000;
+        }
+
+        .btn-generate:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 255, 136, 0.4);
+        }
+
+        .btn-copy {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: #fff;
+        }
+
+        .btn-copy:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-clear {
+            background: linear-gradient(45deg, #f093fb, #f5576c);
+            color: #fff;
+        }
+
+        .btn-clear:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(245, 87, 108, 0.4);
+        }
+
+        .status {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
+
+        .status.success {
+            background: rgba(0, 255, 136, 0.2);
+            border: 1px solid #00ff88;
+            color: #00ff88;
+            display: block;
+        }
+
+        .status.error {
+            background: rgba(255, 87, 108, 0.2);
+            border: 1px solid #f5576c;
+            color: #f5576c;
+            display: block;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #00ff88;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #00ff88;
+        }
+
+        .info-box {
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-box p {
+            margin: 5px 0;
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .highlight {
+            color: #00d4ff;
+            font-weight: bold;
+        }
+
+        .analysis-section {
+            display: none;
+            margin-top: 30px;
+        }
+
+        .analysis-section.active {
+            display: block;
+        }
+
+        .chart-container {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            height: 400px;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .metric-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            border-left: 4px solid #00ff88;
+            transition: transform 0.3s;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .metric-title {
+            font-size: 0.85rem;
+            color: #aaa;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #00ff88;
+            margin-bottom: 5px;
+        }
+
+        .metric-subtitle {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .score-bars {
+            margin-top: 20px;
+        }
+
+        .score-bar {
+            margin-bottom: 15px;
+        }
+
+        .score-bar-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+
+        .score-bar-fill {
+            height: 25px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .score-bar-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88, #00d4ff);
+            transition: width 1s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: #000;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        .recommendation-box {
+            background: linear-gradient(135deg, rgba(0, 255, 136, 0.2), rgba(0, 212, 255, 0.2));
+            border: 2px solid #00ff88;
+            border-radius: 15px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .recommendation-box h3 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            color: #00ff88;
+        }
+
+        .recommendation-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .summary-box {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 4px solid #00d4ff;
+        }
+
+        .summary-box h4 {
+            color: #00d4ff;
+            margin-bottom: 10px;
+        }
+
+        .summary-box p {
+            line-height: 1.8;
+            color: #ccc;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            margin: 5px;
+        }
+
+        .badge.buy {
+            background: rgba(0, 255, 136, 0.2);
+            color: #00ff88;
+            border: 1px solid #00ff88;
+        }
+
+        .badge.hold {
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+            border: 1px solid #ffc107;
+        }
+
+        .badge.sell {
+            background: rgba(255, 87, 108, 0.2);
+            color: #f5576c;
+            border: 1px solid #f5576c;
+        }
     </style>
 </head>
 <body>
-    <div id="app"></div>
-    
-    <script>
-        const candlestickData = {
-            '1H': [
-                { date: '08:00', open: 413.5, high: 415.2, low: 413.0, close: 414.8, volume: 850000 },
-                { date: '09:00', open: 414.8, high: 416.0, low: 414.2, close: 415.5, volume: 920000 },
-                { date: '10:00', open: 415.5, high: 416.8, low: 415.0, close: 415.2, volume: 780000 },
-                { date: '11:00', open: 415.2, high: 416.5, low: 414.5, close: 414.9, volume: 810000 },
-                { date: '12:00', open: 414.9, high: 415.8, low: 414.0, close: 414.5, volume: 690000 },
-                { date: '13:00', open: 414.5, high: 415.5, low: 413.8, close: 414.2, volume: 750000 },
-                { date: '14:00', open: 414.2, high: 415.0, low: 413.5, close: 414.0, volume: 820000 },
-                { date: '15:00', open: 414.0, high: 415.2, low: 413.8, close: 414.91, volume: 950000 },
-            ],
-            '1D': [
-                { date: '15.12', open: 393, high: 398, low: 391, close: 395, volume: 11500000 },
-                { date: '16.12', open: 395, high: 402, low: 394, close: 398.5, volume: 12200000 },
-                { date: '17.12', open: 398.5, high: 405, low: 397, close: 402, volume: 13100000 },
-                { date: '18.12', open: 402, high: 408, low: 401, close: 405.5, volume: 12800000 },
-                { date: '19.12', open: 405.5, high: 410, low: 404, close: 408, volume: 13500000 },
-                { date: '20.12', open: 408, high: 413, low: 407, close: 410.5, volume: 14200000 },
-                { date: '21.12', open: 410.5, high: 415, low: 409, close: 413, volume: 12900000 },
-                { date: '22.12', open: 413, high: 418, low: 412, close: 415, volume: 13400000 },
-                { date: '23.12', open: 415, high: 422, low: 414, close: 418.5, volume: 15800000 },
-                { date: '24.12', open: 418.5, high: 423, low: 417, close: 420, volume: 14100000 },
-                { date: '25.12', open: 420, high: 421, low: 415, close: 417, volume: 10500000 },
-                { date: '26.12', open: 417, high: 418, low: 413, close: 414.91, volume: 12500000 },
-                { date: '27.12', open: 414.91, high: 416, low: 413, close: 414.91, volume: 11800000 },
-            ]
-        };
+    <div class="container">
+        <h1>🤖 Multi-Agent Trading Dashboard</h1>
+        <p class="subtitle">KI-gestützte Aktienanalyse → Pine Script Generator</p>
 
-        let currentTimeframe = '1D';
-        let currentData = candlestickData['1D'];
+        <div class="grid">
+            <div class="card">
+                <h2>JSON Input</h2>
+                <div class="info-box">
+                    <p>📋 <span class="highlight">Anleitung:</span></p>
+                    <p>1. Kopiere die GESAMTE JSON-Ausgabe deines Workflows</p>
+                    <p>2. Füge sie unten ein</p>
+                    <p>3. Klicke auf "Pine Script Generieren"</p>
+                </div>
+                <textarea id="jsonInput" placeholder='Füge hier die komplette JSON-Ausgabe deines Multi-Agent Workflows ein...
 
-        const analysisData = {
-            aktie: "Microsoft",
-            kurs: 414.91,
-            empfehlung: { aktion: "KAUFEN bei Pullback", typ: "PULLBACK", qualitaet: "A", score: 82 },
-            entry: { status: "WARTEN", best: "408-411 EUR", preis: 409.00, methode: "Limit", rr: "1:2.5" },
-            exit: { stop: 398.00, t1: 430.00, t2: 445.00 },
-            scores: { sentiment: 80, technical: 70, fundamental: 65, makro: 55, timing: 68, pattern: 75 },
-            levels: { resist: [420, 430], support: [408, 400] },
-            risk: { loss: 11, gain: 21, ratio: "1:2.5" },
-            // TradingView Prognose-Parameter
-            prognose: {
-                beste: 5.2,
-                schlechteste: -2.1,
-                wahrscheinlichste: 3.4,
-                wahrscheinlichkeit: 68,
-                zeitraum: 3.0
-            },
-            // Kerzenmuster
-            patterns: [
-                { name: "Bullish Engulfing", index: 10, typ: "bullish", wahrscheinlichkeit: 72 },
-                { name: "Higher High", index: 8, typ: "bullish", wahrscheinlichkeit: 65 },
-                { name: "Higher Low", index: 6, typ: "bullish", wahrscheinlichkeit: 68 }
-            ]
-        };
+Beispiel:
+{
+  "agent": "Finanz-Sentiment-Analyst",
+  "aktie": "Microsoft",
+  "aktueller_kurs_eur": 413.90,
+  ...
+}'></textarea>
+            </div>
 
-        function generateTradingViewCode() {
-            const news = analysisData.scores.sentiment;
-            const beste = analysisData.prognose.beste;
-            const schlechteste = analysisData.prognose.schlechteste;
-            const wahrscheinlichste = analysisData.prognose.wahrscheinlichste;
-            const wahrscheinlichkeit = analysisData.prognose.wahrscheinlichkeit - 60; // Anpassung
-            const zeitraum = analysisData.prognose.zeitraum;
+            <div class="card">
+                <h2>Extrahierte Daten</h2>
+                <div class="stats-grid" id="statsGrid">
+                    <div class="stat-card">
+                        <div class="stat-label">Aktie</div>
+                        <div class="stat-value" id="statStock">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Aktueller Kurs</div>
+                        <div class="stat-value" id="statPrice">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Score</div>
+                        <div class="stat-value" id="statScore">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Setup</div>
+                        <div class="stat-value" id="statSetup">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Entry Zone</div>
+                        <div class="stat-value" id="statEntry">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Stop Loss</div>
+                        <div class="stat-value" id="statSL">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Take Profit 1</div>
+                        <div class="stat-value" id="statTP1">-</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Take Profit 2</div>
+                        <div class="stat-value" id="statTP2">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card output-section">
+            <h2>Generiertes Pine Script</h2>
+            <div class="output-box" id="pineScriptOutput">// Dein Pine Script erscheint hier nach dem Generieren...</div>
             
-            return `//@version=5
-indicator("Intelligente Pattern-Prognose mit Trading", overlay=true, max_bars_back=5000, max_lines_count=500, max_labels_count=500)
+            <div class="button-group">
+                <button class="btn-generate" onclick="generatePineScript()">
+                    ⚡ Pine Script Generieren
+                </button>
+                <button class="btn-copy" onclick="copyToClipboard()">
+                    📋 Script Kopieren
+                </button>
+                <button class="btn-clear" onclick="clearAll()">
+                    🗑️ Alles Löschen
+                </button>
+            </div>
 
-// === DASHBOARD EXPORT - ${new Date().toLocaleString('de-DE')} ===
-// Aktie: ${analysisData.aktie} | Kurs: ${analysisData.kurs} EUR
-// Sentiment: ${news} | Beste: +${beste}% | Wahrscheinlichste: +${wahrscheinlichste}% | Schlechteste: ${schlechteste}%
+            <div class="status" id="status"></div>
+        </div>
 
-// === EINGABEPARAMETER ===
-prognoseStunden = input.float(${zeitraum.toFixed(1)}, "Prognose-Zeitraum (Stunden)", minval=0.5, maxval=24.0, step=0.5)
-patternLaenge = input.int(20, "Pattern-Länge für Matching", minval=10, maxval=50)
-suchTiefe = input.int(2000, "Historische Such-Tiefe (Balken)", minval=500, maxval=5000, tooltip="Bei 5min-Chart: 500≈17 Tage, 2000≈70 Tage, 5000≈174 Tage")
-anzahlBestenMatches = input.int(20, "Anzahl bester Pattern-Matches", minval=10, maxval=50)
-
-// === NEWS-SENTIMENT PARAMETER (NEU!) ===
-newsSentimentScore = input.int(${news}, "📰 News-Sentiment Score", minval=-100, maxval=100, tooltip="Von Azure AI Agent: -100 (sehr bearish) bis +100 (sehr bullish)")
-newsAdjustmentBeste = input.float(${beste.toFixed(1)}, "News-Anpassung Beste Prognose (%)", minval=-50, maxval=50, step=0.5, tooltip="Empfehlung vom Agent")
-newsAdjustmentWahrscheinlichste = input.float(${wahrscheinlichste.toFixed(1)}, "News-Anpassung Wahrscheinlichste (%)", minval=-50, maxval=50, step=0.5)
-newsAdjustmentSchlechteste = input.float(${schlechteste.toFixed(1)}, "News-Anpassung Schlechteste (%)", minval=-50, maxval=50, step=0.5)
-newsAdjustmentWahrscheinlichkeit = input.float(${wahrscheinlichkeit.toFixed(1)}, "News-Anpassung Wahrscheinlichkeit (%)", minval=-50, maxval=50, step=0.5)
-useNewsAdjustment = input.bool(true, "✅ News-Sentiment aktivieren", tooltip="Schaltet die News-Anpassungen ein/aus")
-
-risikoAbstand = input.float(${((analysisData.kurs - analysisData.exit.stop) / analysisData.kurs * 100).toFixed(1)}, "Stop-Loss Abstand (%)", minval=0.5, maxval=10.0)
-gewinnZiel = input.float(${((analysisData.exit.t1 - analysisData.kurs) / analysisData.kurs * 100).toFixed(1)}, "Take-Profit Ziel (%)", minval=1.0, maxval=20.0)
-
-// === REST DES SCRIPTS BLEIBT UNVERÄNDERT ===
-// Kopiere ab hier den Rest deines Original-Scripts (ab Zeile 21)`;
-        }
-
-        function copyToClipboard() {
-            const text = `News-Sentiment Score: ${analysisData.scores.sentiment}
-News-Anpassung Beste: ${analysisData.prognose.beste.toFixed(1)}
-News-Anpassung Wahrscheinlichste: ${analysisData.prognose.wahrscheinlichste.toFixed(1)}
-News-Anpassung Schlechteste: ${analysisData.prognose.schlechteste.toFixed(1)}
-Prognose-Zeitraum: ${analysisData.prognose.zeitraum.toFixed(1)}
-Stop-Loss Abstand: ${((analysisData.kurs - analysisData.exit.stop) / analysisData.kurs * 100).toFixed(1)}
-Take-Profit Ziel: ${((analysisData.exit.t1 - analysisData.kurs) / analysisData.kurs * 100).toFixed(1)}`;
-            
-            navigator.clipboard.writeText(text).then(() => {
-                const btn = document.getElementById('copy-btn');
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '✅ Kopiert!';
-                btn.classList.add('bg-green-600');
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.classList.remove('bg-green-600');
-                }, 2000);
-            });
-        }
-
-        function renderCandles(data) {
-            const max = Math.max(...data.map(d => d.high));
-            const min = Math.min(...data.map(d => d.low));
-            const range = max - min;
-            const h = 350;
-            const w = 800 / data.length - 10;
-            
-            let svg = '';
-            data.forEach((e, i) => {
-                const green = e.close > e.open;
-                const color = green ? '#22c55e' : '#ef4444';
-                const x = (i * 800) / data.length + 5;
-                const scale = (p) => h - ((p - min) / range) * h;
-                const hy = scale(e.high);
-                const ly = scale(e.low);
-                const oy = scale(e.open);
-                const cy = scale(e.close);
-                const top = Math.min(oy, cy);
-                const height = Math.max(Math.abs(oy - cy), 1);
+        <!-- NEUE ANALYSE-SEKTION -->
+        <div class="analysis-section" id="analysisSection">
+            <div class="card">
+                <h2>📊 Detaillierte Aktienanalyse</h2>
                 
-                svg += `<line x1="${x + w/2}" y1="${hy}" x2="${x + w/2}" y2="${ly}" stroke="${color}" stroke-width="1.5"/>`;
-                svg += `<rect x="${x}" y="${top}" width="${w}" height="${height}" fill="${color}"/>`;
-                
-                // Kerzenmuster markieren
-                analysisData.patterns.forEach(pattern => {
-                    if (data.length - i === pattern.index) {
-                        const patternColor = pattern.typ === 'bullish' ? '#fbbf24' : '#f87171';
-                        svg += `<circle cx="${x + w/2}" cy="${top - 15}" r="8" fill="${patternColor}" stroke="#fff" stroke-width="2"/>`;
-                        svg += `<text x="${x + w/2}" y="${top - 25}" fill="${patternColor}" font-size="10" text-anchor="middle" font-weight="bold">${pattern.name.substring(0, 2)}</text>`;
-                    }
-                });
-                
-                svg += `<text x="${x+20}" y="380" fill="#9ca3af" font-size="10">${e.date}</text>`;
-            });
-            
-            return svg;
-        }
+                <!-- Chart -->
+                <div class="chart-container">
+                    <canvas id="priceChart"></canvas>
+                </div>
 
-        function renderVolume(data) {
-            const max = Math.max(...data.map(d => d.volume));
-            let bars = '';
-            data.forEach((e, i) => {
-                const green = e.close > e.open;
-                const color = green ? '#22c55e80' : '#ef444480';
-                const height = (e.volume / max) * 100;
-                const x = (i / data.length) * 100;
-                const width = (1 / data.length) * 90;
-                bars += `<rect x="${x}%" y="${100-height}%" width="${width}%" height="${height}%" fill="${color}" rx="2"/>`;
-            });
-            return bars;
-        }
+                <!-- Hauptmetriken -->
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-title">💰 Aktueller Kurs</div>
+                        <div class="metric-value" id="detailPrice">-</div>
+                        <div class="metric-subtitle" id="detailStock">-</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">🎯 Multi-Agent Score</div>
+                        <div class="metric-value" id="detailScore">-</div>
+                        <div class="metric-subtitle" id="detailSetup">-</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">📈 Erwarteter Gewinn</div>
+                        <div class="metric-value" id="detailGain">-</div>
+                        <div class="metric-subtitle">bis Take Profit 2</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">⚖️ Risk/Reward</div>
+                        <div class="metric-value" id="detailRR">-</div>
+                        <div class="metric-subtitle">Verhältnis</div>
+                    </div>
+                </div>
 
-        function getScoreColor(s) {
-            return s >= 70 ? 'text-green-400' : s >= 50 ? 'text-yellow-400' : 'text-red-400';
-        }
-
-        function getScoreBg(s) {
-            return s >= 70 ? 'bg-gray-800 border-green-500' : s >= 50 ? 'bg-gray-800 border-yellow-500' : 'bg-gray-800 border-red-500';
-        }
-
-        function render() {
-            document.getElementById('app').innerHTML = `
-                <div class="min-h-screen bg-gray-900 p-6">
-                    <div class="max-w-7xl mx-auto">
-                        <!-- Header -->
-                        <div class="bg-gray-800 rounded-lg shadow-2xl p-6 mb-6 border border-gray-700">
-                            <div class="flex justify-between">
-                                <div>
-                                    <h1 class="text-3xl font-bold text-white mb-2">${analysisData.aktie} <span class="text-blue-400">Swing Trading</span></h1>
-                                    <p class="text-gray-400">Kurs: <span class="text-white font-bold">${analysisData.kurs} EUR</span></p>
-                                </div>
-                                <div class="text-right">
-                                    <div class="text-4xl font-bold text-green-400">${analysisData.empfehlung.score}</div>
-                                    <div class="text-sm text-gray-400">Confidence</div>
-                                </div>
-                            </div>
+                <!-- Empfehlung -->
+                <div class="recommendation-box">
+                    <h3 id="recTitle">🎯 HANDELSEMPFEHLUNG</h3>
+                    <div class="recommendation-details">
+                        <div>
+                            <div class="metric-title">Aktion</div>
+                            <div class="metric-value" style="font-size: 1.5rem;" id="recAction">-</div>
                         </div>
-
-                        <!-- TradingView Export Box -->
-                        <div class="bg-gradient-to-r from-blue-900 to-purple-900 rounded-lg p-6 mb-6 border-2 border-blue-500 shadow-2xl">
-                            <div class="flex justify-between items-center mb-4">
-                                <div>
-                                    <h2 class="text-2xl font-bold text-white flex items-center gap-2">
-                                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2L2 7v10c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V7l-10-5zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M11 7h2v6h-2zm0 8h2v2h-2z"/></svg>
-                                        TradingView Werte-Änderungen
-                                    </h2>
-                                    <p class="text-gray-300 text-sm mt-1">⚙️ Ändere diese Werte in den TradingView Script-Einstellungen</p>
-                                </div>
-                                <button id="copy-btn" onclick="copyToClipboard()" class="copy-btn bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg flex items-center gap-2 shadow-lg">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
-                                    Liste kopieren
-                                </button>
-                            </div>
-                            
-                            <!-- Schritt-für-Schritt Anleitung -->
-                            <div class="bg-yellow-900 bg-opacity-30 border-l-4 border-yellow-500 p-4 rounded mb-4">
-                                <div class="font-bold text-yellow-400 mb-2">📋 Anleitung:</div>
-                                <ol class="text-gray-300 text-sm space-y-1">
-                                    <li>1. Klicke auf dein Script im TradingView Chart</li>
-                                    <li>2. Klicke auf das ⚙️ Zahnrad-Symbol</li>
-                                    <li>3. Ändere die Werte wie unten aufgelistet</li>
-                                    <li>4. Klicke auf "OK"</li>
-                                </ol>
-                            </div>
-
-                            <!-- Werte-Tabelle -->
-                            <div class="bg-gray-800 rounded-lg overflow-hidden">
-                                <table class="w-full text-sm">
-                                    <thead class="bg-gray-700">
-                                        <tr>
-                                            <th class="text-left p-3 text-gray-300">Parameter</th>
-                                            <th class="text-center p-3 text-red-400">Alt</th>
-                                            <th class="text-center p-3 text-white">→</th>
-                                            <th class="text-center p-3 text-green-400">Neu</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="divide-y divide-gray-700">
-                                        <tr class="hover:bg-gray-750">
-                                            <td class="p-3 text-gray-300">📰 News-Sentiment Score</td>
-                                            <td class="p-3 text-center text-red-300 line-through">54</td>
-                                            <td class="p-3 text-center">→</td>
-                                            <td class="p-3 text-center text-green-400 font-bold">${analysisData.scores.sentiment}</td>
-                                        </tr>
-                                        <tr class="hover:bg-gray-750">
-                                            <td class="p-3 text-gray-300">News-Anpassung Beste (%)</td>
-                                            <td class="p-3 text-center text-red-300 line-through">5</td>
-                                            <td class="p-3 text-center">→</td>
-                                            <td class="p-3 text-center text-green-400 font-bold">${analysisData.prognose.beste.toFixed(1)}</td>
-                                        </tr>
-                                        <tr class="hover:bg-gray-750">
-                                            <td class="p-3 text-gray-300">News-Anpassung Wahrscheinlichste (%)</td>
-                                            <td class="p-3 text-center text-red-300 line-through">3</td>
-                                            <td class="p-3 text-center">→</td>
-                                            <td class="p-3 text-center text-green-400 font-bold">${analysisData.prognose.wahrscheinlichste.toFixed(1)}</td>
-                                        </tr>
-                                        <tr class="hover:bg-gray-750">
-                                            <td class="p-3 text-gray-300">News-Anpassung Schlechteste (%)</td>
-                                            <td class="p-3 text-center text-red-300 line-through">-2</td>
-                                            <td class="p-3 text-center">→</td>
-                                            <td class="p-3 text-center text-green-400 font-bold">${analysisData.prognose.schlechteste.toFixed(1)}</td>
-                                        </tr>
-                                        <tr class="hover:bg-gray-750">
-                                            <td class="p-3 text-gray-300">Prognose-Zeitraum (Stunden)</td>
-                                            <td class="p-3 text-center text-red-300 line-through">3</td>
-                                            <td class="p-3 text-center">→</td>
-                                            <td class="p-3 text-center text-green-400 font-bold">${analysisData.prognose.zeitraum.toFixed(1)}</td>
-                                        </tr>
-                                        <tr class="hover:bg-gray-750">
-                                            <td class="p-3 text-gray-300">Stop-Loss Abstand (%)</td>
-                                            <td class="p-3 text-center text-red-300 line-through">2</td>
-                                            <td class="p-3 text-center">→</td>
-                                            <td class="p-3 text-center text-green-400 font-bold">${((analysisData.kurs - analysisData.exit.stop) / analysisData.kurs * 100).toFixed(1)}</td>
-                                        </tr>
-                                        <tr class="hover:bg-gray-750">
-                                            <td class="p-3 text-gray-300">Take-Profit Ziel (%)</td>
-                                            <td class="p-3 text-center text-red-300 line-through">4</td>
-                                            <td class="p-3 text-center">→</td>
-                                            <td class="p-3 text-center text-green-400 font-bold">${((analysisData.exit.t1 - analysisData.kurs) / analysisData.kurs * 100).toFixed(1)}</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            
-                            <!-- Kopier-Liste -->
-                            <div class="mt-4">
-                                <div class="text-xs text-gray-400 mb-2">Kopierbare Liste für schnelles Eintragen:</div>
-                                <div class="code-box text-xs">
-News-Sentiment Score: ${analysisData.scores.sentiment}
-News-Anpassung Beste: ${analysisData.prognose.beste.toFixed(1)}
-News-Anpassung Wahrscheinlichste: ${analysisData.prognose.wahrscheinlichste.toFixed(1)}
-News-Anpassung Schlechteste: ${analysisData.prognose.schlechteste.toFixed(1)}
-Prognose-Zeitraum: ${analysisData.prognose.zeitraum.toFixed(1)}
-Stop-Loss Abstand: ${((analysisData.kurs - analysisData.exit.stop) / analysisData.kurs * 100).toFixed(1)}
-Take-Profit Ziel: ${((analysisData.exit.t1 - analysisData.kurs) / analysisData.kurs * 100).toFixed(1)}
-                                </div>
-                            </div>
+                        <div>
+                            <div class="metric-title">Konfidenz</div>
+                            <div class="metric-value" style="font-size: 1.5rem;" id="recConfidence">-</div>
                         </div>
-
-                        <!-- Prognose-Werte -->
-                        <div class="grid grid-cols-3 gap-4 mb-6">
-                            <div class="bg-green-900 bg-opacity-30 rounded-lg p-4 border-2 border-green-500">
-                                <div class="text-sm text-gray-400 mb-1">📈 Beste Prognose</div>
-                                <div class="text-3xl font-bold text-green-400">+${analysisData.prognose.beste}%</div>
-                                <div class="text-xs text-gray-500 mt-1">Ziel: ${(analysisData.kurs * (1 + analysisData.prognose.beste/100)).toFixed(2)} EUR</div>
-                            </div>
-                            <div class="bg-purple-900 bg-opacity-30 rounded-lg p-4 border-2 border-purple-500">
-                                <div class="text-sm text-gray-400 mb-1">🎯 Wahrscheinlichste</div>
-                                <div class="text-3xl font-bold text-purple-400">+${analysisData.prognose.wahrscheinlichste}%</div>
-                                <div class="text-xs text-gray-500 mt-1">${analysisData.prognose.wahrscheinlichkeit}% Wahrscheinlichkeit</div>
-                            </div>
-                            <div class="bg-red-900 bg-opacity-30 rounded-lg p-4 border-2 border-red-500">
-                                <div class="text-sm text-gray-400 mb-1">📉 Schlechteste Prognose</div>
-                                <div class="text-3xl font-bold text-red-400">${analysisData.prognose.schlechteste}%</div>
-                                <div class="text-xs text-gray-500 mt-1">Ziel: ${(analysisData.kurs * (1 + analysisData.prognose.schlechteste/100)).toFixed(2)} EUR</div>
-                            </div>
-                        </div>
-
-                        <!-- Kerzenmuster -->
-                        <div class="bg-gray-800 rounded-lg p-6 mb-6 border border-gray-700">
-                            <h3 class="text-xl font-bold text-white mb-4 flex items-center gap-2">
-                                <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-                                Erkannte Kerzenmuster
-                            </h3>
-                            <div class="grid grid-cols-3 gap-4">
-                                ${analysisData.patterns.map(pattern => `
-                                    <div class="pattern-box ${pattern.typ === 'bullish' ? 'bg-yellow-900 border-yellow-600' : 'bg-red-900 border-red-600'} bg-opacity-20 rounded-lg p-4 border-2">
-                                        <div class="flex items-center gap-2 mb-2">
-                                            <span class="text-2xl">${pattern.typ === 'bullish' ? '🟡' : '🔴'}</span>
-                                            <div class="font-bold text-white">${pattern.name}</div>
-                                        </div>
-                                        <div class="text-sm text-gray-400">Position: -${pattern.index} Kerzen</div>
-                                        <div class="text-sm ${pattern.typ === 'bullish' ? 'text-green-400' : 'text-red-400'} font-bold mt-2">${pattern.wahrscheinlichkeit}% Erfolgsrate</div>
-                                    </div>
-                                `).join('')}
-                            </div>
-                        </div>
-
-                        <!-- Empfehlung -->
-                        <div class="bg-gray-800 rounded-lg p-6 mb-6 border-l-4 border-green-500">
-                            <h2 class="text-2xl font-bold text-white mb-4">${analysisData.empfehlung.aktion}</h2>
-                            <div class="grid grid-cols-4 gap-4">
-                                <div><div class="text-sm text-gray-400">Setup</div><div class="font-bold text-white">${analysisData.empfehlung.typ}</div></div>
-                                <div><div class="text-sm text-gray-400">Qualität</div><div class="font-bold text-green-400 text-xl">${analysisData.empfehlung.qualitaet}</div></div>
-                                <div><div class="text-sm text-gray-400">Entry</div><div class="font-bold text-white">${analysisData.entry.preis}€</div></div>
-                                <div><div class="text-sm text-gray-400">R:R</div><div class="font-bold text-blue-400">${analysisData.entry.rr}</div></div>
-                            </div>
-                        </div>
-
-                        <!-- Chart -->
-                        <div class="bg-gray-800 rounded-lg p-6 mb-6 border border-gray-700">
-                            <div class="flex justify-between mb-4">
-                                <h3 class="text-xl font-bold text-white">Candlestick Chart mit Mustern</h3>
-                                <div class="flex gap-2">
-                                    <button onclick="changeTimeframe('1H')" class="px-4 py-2 rounded font-semibold ${currentTimeframe === '1H' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300'}">1H</button>
-                                    <button onclick="changeTimeframe('1D')" class="px-4 py-2 rounded font-semibold ${currentTimeframe === '1D' ? 'bg-blue-600 text-white' : 'bg-gray-700 text-gray-300'}">1D</button>
-                                </div>
-                            </div>
-                            <div class="bg-gray-900 p-4 rounded">
-                                <div class="mb-2 flex gap-4 text-xs">
-                                    <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-yellow-500"></span><span class="text-gray-400">Bullish Pattern</span></div>
-                                    <div class="flex items-center gap-2"><span class="w-3 h-3 rounded-full bg-red-500"></span><span class="text-gray-400">Bearish Pattern</span></div>
-                                </div>
-                                <svg width="100%" height="400" viewBox="0 0 800 400">
-                                    ${[0,1,2,3,4,5].map(i => `<line x1="0" y1="${i*70}" x2="800" y2="${i*70}" stroke="#374151" stroke-width="0.5" stroke-dasharray="2,2"/>`).join('')}
-                                    ${renderCandles(currentData)}
-                                </svg>
-                            </div>
-                            <div class="mt-4">
-                                <h4 class="text-sm font-semibold text-gray-400 mb-2">Volumen</h4>
-                                <svg width="100%" height="120" viewBox="0 0 100 100" preserveAspectRatio="none">
-                                    ${renderVolume(currentData)}
-                                </svg>
-                            </div>
-                        </div>
-
-                        <!-- Scores -->
-                        <div class="grid grid-cols-6 gap-4 mb-6">
-                            ${Object.entries(analysisData.scores).map(([k, v]) => `
-                                <div class="${getScoreBg(v)} rounded p-4 border-l-4">
-                                    <div class="text-xs uppercase text-gray-400 mb-1">${k}</div>
-                                    <div class="text-3xl font-bold ${getScoreColor(v)}">${v}</div>
-                                </div>
-                            `).join('')}
-                        </div>
-
-                        <!-- Entry & Exit -->
-                        <div class="grid grid-cols-2 gap-6 mb-6">
-                            <div class="bg-gray-800 rounded p-4 text-center border border-gray-700">
-                            <p class="text-gray-400 text-sm">7-Agenten Swing Trading System | ⚠️ Keine Anlageberatung</p>
+                        <div>
+                            <div class="metric-title">Zeithorizont</div>
+                            <div class="metric-value" style="font-size: 1.5rem;" id="recTimeframe">-</div>
                         </div>
                     </div>
                 </div>
-            `;
-        }
 
-        function changeTimeframe(tf) {
-            currentTimeframe = tf;
-            currentData = candlestickData[tf];
-            render();
-        }
-
-        // Initial render
-        render();
-    </script>
-</body>
-</html>-6 border border-gray-700">
-                                <h3 class="text-xl font-bold text-white mb-4">Entry</h3>
-                                <div class="bg-yellow-900 bg-opacity-30 border-l-4 border-yellow-500 p-4 rounded mb-4">
-                                    <div class="font-bold text-yellow-400">Status: ${analysisData.entry.status}</div>
-                                    <div class="text-sm text-gray-400">Best: ${analysisData.entry.best}</div>
-                                </div>
-                                <div class="bg-green-900 bg-opacity-30 p-4 rounded border border-green-700">
-                                    <div class="text-sm text-gray-300">Preis: <span class="font-bold text-green-400">${analysisData.entry.preis} EUR</span></div>
-                                    <div class="text-sm text-gray-300">Methode: <span class="font-bold text-white">${analysisData.entry.methode}</span></div>
-                                </div>
+                <!-- Score Breakdown -->
+                <div class="card" style="margin-top: 20px; background: rgba(0,0,0,0.3);">
+                    <h3 style="color: #00d4ff; margin-bottom: 15px;">📊 Score Breakdown</h3>
+                    <div class="score-bars">
+                        <div class="score-bar">
+                            <div class="score-bar-label">
+                                <span>💭 Sentiment Score</span>
+                                <span id="sentimentScoreValue">-</span>
                             </div>
-
-                            <div class="bg-gray-800 rounded p-6 border border-gray-700">
-                                <h3 class="text-xl font-bold text-white mb-4">Exit</h3>
-                                <div class="bg-red-900 bg-opacity-30 border-l-4 border-red-500 p-3 rounded mb-4">
-                                    <div class="text-sm text-gray-400">Stop Loss</div>
-                                    <div class="text-2xl font-bold text-red-400">${analysisData.exit.stop} EUR</div>
-                                </div>
-                                <div class="space-y-2">
-                                    <div class="bg-gray-700 p-3 rounded border border-gray-600">
-                                        <div class="flex justify-between">
-                                            <span class="font-bold text-white">${analysisData.exit.t1} EUR</span>
-                                            <span class="text-green-400">T1 (50%)</span>
-                                        </div>
-                                    </div>
-                                    <div class="bg-gray-700 p-3 rounded border border-gray-600">
-                                        <div class="flex justify-between">
-                                            <span class="font-bold text-white">${analysisData.exit.t2} EUR</span>
-                                            <span class="text-green-400">T2 (30%)</span>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="score-bar-fill">
+                                <div class="score-bar-progress" id="sentimentBar" style="width: 0%"></div>
                             </div>
                         </div>
-
-                        <!-- Levels & Risk -->
-                        <div class="grid grid-cols-2 gap-6 mb-6">
-                            <div class="bg-gray-800 rounded p-6 border border-gray-700">
-                                <h3 class="text-xl font-bold text-white mb-4">Levels</h3>
-                                <div class="mb-4">
-                                    <div class="text-gray-300 mb-2">Widerstände</div>
-                                    ${analysisData.levels.resist.map(r => `
-                                        <div class="bg-red-900 bg-opacity-20 p-2 rounded mb-2 border border-red-800">
-                                            <span class="font-bold text-white">${r} EUR</span>
-                                        </div>
-                                    `).join('')}
-                                </div>
-                                <div>
-                                    <div class="text-gray-300 mb-2">Unterstützung</div>
-                                    ${analysisData.levels.support.map(s => `
-                                        <div class="bg-green-900 bg-opacity-20 p-2 rounded mb-2 border border-green-800">
-                                            <span class="font-bold text-white">${s} EUR</span>
-                                        </div>
-                                    `).join('')}
-                                </div>
+                        <div class="score-bar">
+                            <div class="score-bar-label">
+                                <span>📈 Technical Score</span>
+                                <span id="technicalScoreValue">-</span>
                             </div>
-
-                            <div class="bg-gray-800 rounded p-6 border border-gray-700">
-                                <h3 class="text-xl font-bold text-white mb-4">Risiko</h3>
-                                <div class="grid grid-cols-2 gap-4 mb-4">
-                                    <div class="bg-red-900 bg-opacity-20 p-4 rounded text-center border border-red-800">
-                                        <div class="text-sm text-gray-400">Risiko</div>
-                                        <div class="text-2xl font-bold text-red-400">${analysisData.risk.loss}€</div>
-                                    </div>
-                                    <div class="bg-green-900 bg-opacity-20 p-4 rounded text-center border border-green-800">
-                                        <div class="text-sm text-gray-400">Ertrag</div>
-                                        <div class="text-2xl font-bold text-green-400">${analysisData.risk.gain}€</div>
-                                    </div>
-                                </div>
-                                <div class="bg-blue-900 bg-opacity-30 p-4 rounded text-center border border-blue-700">
-                                    <div class="text-sm text-gray-400">R:R Ratio</div>
-                                    <div class="text-3xl font-bold text-blue-400">${analysisData.risk.ratio}</div>
-                                </div>
+                            <div class="score-bar-fill">
+                                <div class="score-bar-progress" id="technicalBar" style="width: 0%"></div>
                             </div>
                         </div>
+                        <div class="score-bar">
+                            <div class="score-bar-label">
+                                <span>💼 Fundamental Score</span>
+                                <span id="fundamentalScoreValue">-</span>
+                            </div>
+                            <div class="score-bar-fill">
+                                <div class="score-bar-progress" id="fundamentalBar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div class="score-bar">
+                            <div class="score-bar-label">
+                                <span>🌍 Makro Score</span>
+                                <span id="makroScoreValue">-</span>
+                            </div>
+                            <div class="score-bar-fill">
+                                <div class="score-bar-progress" id="makroBar" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                        <div class="bg-gray-800 rounded p
+                <!-- Technische Indikatoren -->
+                <div class="metrics-grid" style="margin-top: 20px;">
+                    <div class="metric-card">
+                        <div class="metric-title">📊 RSI (14)</div>
+                        <div class="metric-value" style="font-size: 1.5rem;" id="detailRSI">-</div>
+                        <div class="metric-subtitle" id="rsiStatus">-</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">📉 MACD Signal</div>
+                        <div class="metric-value" style="font-size: 1.5rem;" id="detailMACD">-</div>
+                        <div class="metric-subtitle">Trend-Indikator</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">💹 KGV (P/E)</div>
+                        <div class="metric-value" style="font-size: 1.5rem;" id="detailKGV">-</div>
+                        <div class="metric-subtitle">Bewertung</div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-title">📊 ROE</div>
+                        <div class="metric-value" style="font-size: 1.5rem;" id="detailROE">-</div>
+                        <div class="metric-subtitle">Eigenkapitalrendite</div>
+                    </div>
+                </div>
+
+                <!-- Trading Levels -->
+                <div class="card" style="margin-top: 20px; background: rgba(0,0,0,0.3);">
+                    <h3 style="color: #00d4ff; margin-bottom: 15px;">🎯 Trading Levels</h3>
+                    <div class="metrics-grid">
+                        <div class="metric-card" style="border-left-color: #00ff88;">
+                            <div class="metric-title">💚 Entry Zone</div>
+                            <div class="metric-value" style="font-size: 1.3rem; color: #00ff88;" id="detailEntry">-</div>
+                        </div>
+                        <div class="metric-card" style="border-left-color: #ff4444;">
+                            <div class="metric-title">⛔ Stop Loss</div>
+                            <div class="metric-value" style="font-size: 1.3rem; color: #ff4444;" id="detailSL">-</div>
+                        </div>
+                        <div class="metric-card" style="border-left-color: #00d4ff;">
+                            <div class="metric-title">🎯 Take Profit 1</div>
+                            <div class="metric-value" style="font-size: 1.3rem; color: #00d4ff;" id="detailTP1">-</div>
+                        </div>
+                        <div class="metric-card" style="border-left-color: #00d4ff;">
+                            <div class="metric-title">🚀 Take Profit 2</div>
+                            <div class="metric-value" style="font-size: 1.3rem; color: #00d4ff;" id="detailTP2">-</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Zusammenfassung -->
+                <div class="summary-box">
+                    <h4>📝 KI-Analyse Zusammenfassung</h4>
+                    <p id="detailSummary">-</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        function extractData(jsonText) {
+            try {
+                const data = JSON.parse(jsonText);
+                
+                // Extrahiere alle relevanten Daten
+                const extractedData = {
+                    // Basis-Daten
+                    stock: data.aktie || data.stock || 'Unknown',
+                    currentPrice: data.aktueller_kurs_eur || data.current_price || 0,
+                    score: data.gesamtbewertung?.gewichteter_score || data.score || 0,
+                    setupQuality: data.setup_qualitaet || data.setup_rating_final?.rating || 'N/A',
+                    
+                    // Trading Daten
+                    entryLow: data.trading_empfehlung?.einstiegsstrategie?.akzeptabler_einstiegsbereich_eur?.von || 
+                              data.entry_analyse?.entry_szenarien?.[1]?.entry_preis_eur || 0,
+                    entryHigh: data.trading_empfehlung?.einstiegsstrategie?.akzeptabler_einstiegsbereich_eur?.bis || 
+                               data.entry_analyse?.entry_szenarien?.[0]?.entry_preis_eur || 0,
+                    stopLoss: data.trading_empfehlung?.stop_loss?.stop_loss_kurs_eur || 
+                              data.exit_strategie?.stop_loss_strategie?.initial_stop?.kurs_eur || 0,
+                    takeProfit1: data.trading_empfehlung?.kursziele?.konservativ_eur || 
+                                 data.exit_strategie?.gewinnmitnahme_plan?.[0]?.kurs_eur || 0,
+                    takeProfit2: data.trading_empfehlung?.kursziele?.realistisch_eur || 
+                                 data.exit_strategie?.gewinnmitnahme_plan?.[1]?.kurs_eur || 0,
+                    takeProfit3: data.trading_empfehlung?.kursziele?.optimistisch_eur || 
+                                 data.exit_strategie?.gewinnmitnahme_plan?.[2]?.kurs_eur || 0,
+                    
+                    // Support/Resistance
+                    support1: data.support_resistance?.major_support?.[0]?.level || 0,
+                    support2: data.support_resistance?.major_support?.[1]?.level || 0,
+                    resistance1: data.support_resistance?.major_resistance?.[0]?.level || 0,
+                    resistance2: data.support_resistance?.major_resistance?.[1]?.level || 0,
+                    
+                    // Technische Indikatoren
+                    sma20: data.moving_averages?.sma_20 || 0,
+                    sma50: data.moving_averages?.sma_50 || 0,
+                    sma200: data.moving_averages?.sma_200 || 0,
+                    rsi: data.momentum_indikatoren?.rsi_14?.wert || 0,
+                    macd: data.momentum_indikatoren?.macd?.signal || 'neutral',
+                    
+                    // Sentiment & Scores
+                    sentimentScore: data.sentiment_score || 0,
+                    sentimentKategorie: data.sentiment_kategorie || 'neutral',
+                    technicalScore: data.analysen_scores?.technical?.score_0_100 || 0,
+                    fundamentalScore: data.analysen_scores?.fundamental?.score_0_100 || 0,
+                    makroScore: data.analysen_scores?.makro?.score_0_100 || 0,
+                    
+                    // Fundamental-Daten
+                    kgv: data.bewertungskennzahlen?.kgv || 0,
+                    roe: data.profitabilitaet?.roe_prozent || 0,
+                    ebitdaMarge: data.profitabilitaet?.ebitda_marge_prozent || 0,
+                    
+                    // Empfehlung
+                    empfehlung: data.gesamtbewertung?.empfehlung || data.trading_empfehlung?.aktion || 'N/A',
+                    konfidenz: data.gesamtbewertung?.konfidenz_prozent || 0,
+                    
+                    // Risk/Reward
+                    risikoRendite: data.trading_empfehlung?.risiko_rendite_verhaeltnis || 0,
+                    erwarteterGewinn: data.trading_empfehlung?.erwarteter_gewinn_prozent || 0,
+                    
+                    // Zeithorizont
+                    haltedauer: data.trading_empfehlung?.kursziele?.zeithorizont || 
+                                data.swing_setup_typ || 'N/A',
+                    
+                    // Zusammenfassung
+                    zusammenfassung: data.zusammenfassung || data.setup_rating_final?.zusammenfassung || 'Keine Zusammenfassung verfügbar'
+                };
+
+                return extractedData;
+            } catch (e) {
+                throw new Error('Ungültiges JSON Format: ' + e.message);
+            }
+        }
+
+        function updateStats(data) {
+            document.getElementById('statStock').textContent = data.stock;
+            document.getElementById('statPrice').textContent = data.currentPrice ? `€${data.currentPrice.toFixed(2)}` : '-';
+            document.getElementById('statScore').textContent = data.score ? `${data.score}/100` : '-';
+            document.getElementById('statSetup').textContent = data.setupQuality || '-';
+            document.getElementById('statEntry').textContent = data.entryLow && data.entryHigh ? 
+                `€${data.entryLow.toFixed(2)} - €${data.entryHigh.toFixed(2)}` : '-';
+            document.getElementById('statSL').textContent = data.stopLoss ? `€${data.stopLoss.toFixed(2)}` : '-';
+            document.getElementById('statTP1').textContent = data.takeProfit1 ? `€${data.takeProfit1.toFixed(2)}` : '-';
+            document.getElementById('statTP2').textContent = data.takeProfit2 ? `€${data.takeProfit2.toFixed(2)}` : '-';
+        }
+
+        function updateDetailedAnalysis(data) {
+            // Hauptmetriken
+            document.getElementById('detailPrice').textContent = `€${data.currentPrice.toFixed(2)}`;
+            document.getElementById('detailStock').textContent = data.stock;
+            document.getElementById('detailScore').textContent = `${data.score}/100`;
+            document.getElementById('detailSetup').textContent = `Setup: ${data.setupQuality}`;
+            
+            const gainPercent = ((data.takeProfit2 - data.currentPrice) / data.currentPrice * 100).toFixed(1);
+            document.getElementById('detailGain').textContent = `+${gainPercent}%`;
+            document.getElementById('detailRR').textContent = `1:${data.risikoRendite.toFixed(1)}`;
+
+            // Empfehlung
+            const recAction = document.getElementById('recAction');
+            recAction.textContent = data.empfehlung;
+            recAction.className = 'metric-value';
+            if (data.empfehlung.toLowerCase().includes('kauf')) {
+                recAction.style.color = '#00ff88';
+            } else if (data.empfehlung.toLowerCase().includes('halt')) {
+                recAction.style.color = '#ffc107';
+            }
+            
+            document.getElementById('recConfidence').textContent = `${data.konfidenz}%`;
+            document.getElementById('recTimeframe').textContent = data.haltedauer;
+
+            // Score Breakdown mit Animation
+            setTimeout(() => {
+                updateScoreBar('sentimentBar', 'sentimentScoreValue', data.sentimentScore);
+                updateScoreBar('technicalBar', 'technicalScoreValue', data.technicalScore);
+                updateScoreBar('fundamentalBar', 'fundamentalScoreValue', data.fundamentalScore);
+                updateScoreBar('makroBar', 'makroScoreValue', data.makroScore);
+            }, 100);
+
+            // Technische Indikatoren
+            document.getElementById('detailRSI').textContent = data.rsi.toFixed(0);
+            const rsiStatus = document.getElementById('rsiStatus');
+            if (data.rsi < 30) {
+                rsiStatus.textContent = 'Überverkauft';
+                rsiStatus.style.color = '#00ff88';
+            } else if (data.rsi > 70) {
+                rsiStatus.textContent = 'Überkauft';
+                rsiStatus.style.color = '#ff4444';
+            } else {
+                rsiStatus.textContent = 'Neutral';
+                rsiStatus.style.color = '#ffc107';
+            }
+
+            document.getElementById('detailMACD').textContent = data.macd.toUpperCase();
+            document.getElementById('detailKGV').textContent = data.kgv.toFixed(1);
+            document.getElementById('detailROE').textContent = `${data.roe.toFixed(1)}%`;
+
+            // Trading Levels
+            document.getElementById('detailEntry').textContent = `€${data.entryLow.toFixed(2)} - €${data.entryHigh.toFixed(2)}`;
+            document.getElementById('detailSL').textContent = `€${data.stopLoss.toFixed(2)}`;
+            document.getElementById('detailTP1').textContent = `€${data.takeProfit1.toFixed(2)}`;
+            document.getElementById('detailTP2').textContent = `€${data.takeProfit2.toFixed(2)}`;
+
+            // Zusammenfassung
+            document.getElementById('detailSummary').textContent = data.zusammenfassung;
+
+            // Chart erstellen
+            createPriceChart(data);
+
+            // Analyse-Sektion anzeigen
+            document.getElementById('analysisSection').classList.add('active');
+        }
+
+        function updateScoreBar(barId, valueId, score) {
+            const bar = document.getElementById(barId);
+            const value = document.getElementById(valueId);
+            
+            bar.style.width = `${score}%`;
+            value.textContent = `${score}/100`;
+            
+            if (score >= 70) {
+                bar.style.background = 'linear-gradient(90deg, #00ff88, #00d4ff)';
+            } else if (score >= 50) {
+                bar.style.background = 'linear-gradient(90deg, #ffc107, #ff9800)';
+            } else {
+                bar.style.background = 'linear-gradient(90deg, #ff4444, #f5576c)';
+            }
+        }
+
+        let priceChart = null;
+
+        function createPriceChart(data) {
+            const ctx = document.getElementById('priceChart');
+            
+            if (priceChart) {
+                priceChart.destroy();
+            }
+
+            const levels = [
+                { label: 'TP2', value: data.takeProfit2, color: '#00d4ff' },
+                { label: 'TP1', value: data.takeProfit1, color: '#00ff88' },
+                { label: 'R1', value: data.resistance1, color: '#ff4444' },
+                { label: 'Aktuell', value: data.currentPrice, color: '#ffc107' },
+                { label: 'Entry High', value: data.entryHigh, color: '#00ff88' },
+                { label: 'Entry Low', value: data.entryLow, color: '#00ff88' },
+                { label: 'S1', value: data.support1, color: '#00ff88' },
+                { label: 'Stop Loss', value: data.stopLoss, color: '#ff4444' }
+            ].filter(l => l.value > 0).sort((a, b) => b.value - a.value);
+
+            priceChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: levels.map(l => l.label),
+                    datasets: [{
+                        label: 'EUR',
+                        data: levels.map(l => l.value),
+                        backgroundColor: levels.map(l => l.color + '40'),
+                        borderColor: levels.map(l => l.color),
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                            titleColor: '#00ff88',
+                            bodyColor: '#fff',
+                            borderColor: '#00ff88',
+                            borderWidth: 1,
+                            callbacks: {
+                                label: (context) => `€${context.parsed.x.toFixed(2)}`
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#aaa',
+                                callback: (value) => `€${value}`
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.1)'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#fff',
+                                font: {
+                                    size: 12,
+                                    weight: 'bold'
+                                }
+                            },
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)'
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function generatePineScript() {
+            const jsonInput = document.getElementById('jsonInput').value.trim();
+            const output = document.getElementById('pineScriptOutput');
+            const status = document.getElementById('status');
+
+            if (!jsonInput) {
+                showStatus('❌ Bitte füge zuerst JSON-Daten ein!', 'error');
+                return;
+            }
+
+            try {
+                const data = extractData(jsonInput);
+                updateStats(data);
+                updateDetailedAnalysis(data);
+
+                const pineScript = `//@version=5
+indicator("🎯 ${data.stock} - Multi-Agent Trading Signals", overlay=true, max_labels_count=50, max_boxes_count=20, max_lines_count=50)
+
+// ══════════════════════════════════════════════════════════
+// 🎛️ AUTO-GENERIERT VON MULTI-AGENT WORKFLOW
+// ══════════════════════════════════════════════════════════
+
+// Aktie: ${data.stock}
+// Analyse-Datum: ${new Date().toLocaleDateString('de-DE')}
+// Multi-Agent Score: ${data.score}/100
+// Setup Qualität: ${data.setupQuality}
+
+// ══════════════════════════════════════════════════════════
+// 🎛️ EINSTELLUNGEN
+// ══════════════════════════════════════════════════════════
+
+showEntrySignals = input.bool(true, "🟢 Kaufsignale anzeigen", group="Anzeige")
+showExitSignals = input.bool(true, "🔴 Verkaufssignale anzeigen", group="Anzeige")
+showStopLoss = input.bool(true, "⛔ Stop Loss", group="Anzeige")
+showTakeProfit = input.bool(true, "🎯 Take Profit", group="Anzeige")
+showKeyLevels = input.bool(true, "📊 Support/Resistance", group="Anzeige")
+
+// Trading Parameter (Multi-Agent Analyse)
+analyzedEntryLow = input.float(${data.entryLow.toFixed(2)}, "Entry Zone - Untergrenze", group="Entry Setup")
+analyzedEntryHigh = input.float(${data.entryHigh.toFixed(2)}, "Entry Zone - Obergrenze", group="Entry Setup")
+analyzedStopLoss = input.float(${data.stopLoss.toFixed(2)}, "Stop Loss Level", group="Risk Management")
+analyzedTakeProfit1 = input.float(${data.takeProfit1.toFixed(2)}, "Take Profit 1 (R1)", group="Targets")
+analyzedTakeProfit2 = input.float(${data.takeProfit2.toFixed(2)}, "Take Profit 2 (R2)", group="Targets")
+
+analyzedS1 = input.float(${data.support1.toFixed(2)}, "Support 1", group="Key Levels")
+analyzedR1 = input.float(${data.resistance1.toFixed(2)}, "Resistance 1", group="Key Levels")
+
+// Multi-Agent Intelligence
+gesamtScore = input.float(${data.score}, "Multi-Agent Score (0-100)", minval=0, maxval=100, group="Trading Intelligence")
+setupQuality = input.string("${data.setupQuality}", "Setup Qualität", options=["A++", "A+", "A", "B+", "B", "C"], group="Trading Intelligence")
+
+// ══════════════════════════════════════════════════════════
+// 📊 BERECHNUNGEN
+// ══════════════════════════════════════════════════════════
+
+sma20 = ta.sma(close, 20)
+sma50 = ta.sma(close, 50)
+rsi = ta.rsi(close, 14)
+atr = ta.atr(14)
+
+inEntryZone = close >= analyzedEntryLow and close <= analyzedEntryHigh
+avgEntry = (analyzedEntryLow + analyzedEntryHigh) / 2
+
+potentialGainTP1 = ((analyzedTakeProfit1 - avgEntry) / avgEntry) * 100
+potentialGainTP2 = ((analyzedTakeProfit2 - avgEntry) / avgEntry) * 100
+potentialLoss = ((avgEntry - analyzedStopLoss) / avgEntry) * 100
+rrRatioTP1 = potentialLoss > 0 ? potentialGainTP1 / potentialLoss : 0
+rrRatioTP2 = potentialLoss > 0 ? potentialGainTP2 / potentialLoss : 0
+
+bullishTrend = close > sma20 and sma20 > sma50
+bearishTrend = close < sma20 and sma20 < sma50
+rsiOversold = rsi < 35
+rsiOverbought = rsi > 70
+
+buySignal = inEntryZone and bullishTrend and gesamtScore >= 60 and not inEntryZone[1]
+sellSignalTP1 = ta.crossover(close, analyzedTakeProfit1)
+sellSignalTP2 = ta.crossover(close, analyzedTakeProfit2)
+sellSignalRSI = rsiOverbought and close > avgEntry
+stopLossHit = ta.crossunder(close, analyzedStopLoss)
+
+// ══════════════════════════════════════════════════════════
+// 🎨 VISUALISIERUNG
+// ══════════════════════════════════════════════════════════
+
+plot(sma20, "SMA 20", color=color.new(color.yellow, 60), linewidth=1)
+plot(sma50, "SMA 50", color=color.new(color.orange, 60), linewidth=1)
+
+// ══════════════════════════════════════════════════════════
+// 📍 KEY LEVELS
+// ══════════════════════════════════════════════════════════
+
+if barstate.islast and showKeyLevels
+    if showTakeProfit
+        line.new(bar_index - 50, analyzedTakeProfit1, bar_index + 20, analyzedTakeProfit1, 
+             color=color.new(color.lime, 30), width=2, style=line.style_dashed)
+        label.new(bar_index + 22, analyzedTakeProfit1, "🎯 TP1: " + str.tostring(analyzedTakeProfit1, "#.##"), 
+             style=label.style_label_left, color=color.new(color.lime, 30), textcolor=color.white, size=size.small)
+        
+        line.new(bar_index - 50, analyzedTakeProfit2, bar_index + 20, analyzedTakeProfit2, 
+             color=color.new(color.lime, 50), width=1, style=line.style_dotted)
+        label.new(bar_index + 22, analyzedTakeProfit2, "🎯 TP2: " + str.tostring(analyzedTakeProfit2, "#.##"), 
+             style=label.style_label_left, color=color.new(color.lime, 50), textcolor=color.white, size=size.tiny)
+    
+    if showStopLoss
+        line.new(bar_index - 50, analyzedStopLoss, bar_index + 20, analyzedStopLoss, 
+             color=color.new(color.red, 20), width=3, style=line.style_solid)
+        label.new(bar_index + 22, analyzedStopLoss, "⛔ STOP LOSS: " + str.tostring(analyzedStopLoss, "#.##"), 
+             style=label.style_label_left, color=color.new(color.red, 20), textcolor=color.white, size=size.normal)
+    
+    if analyzedS1 != analyzedEntryLow
+        line.new(bar_index - 50, analyzedS1, bar_index + 20, analyzedS1, 
+             color=color.new(color.green, 50), width=1, style=line.style_dotted)
+        label.new(bar_index + 22, analyzedS1, "S1", 
+             style=label.style_label_left, color=color.new(color.green, 70), textcolor=color.white, size=size.tiny)
+    
+    if analyzedR1 != analyzedTakeProfit1
+        line.new(bar_index - 50, analyzedR1, bar_index + 20, analyzedR1, 
+             color=color.new(color.red, 50), width=1, style=line.style_dotted)
+        label.new(bar_index + 22, analyzedR1, "R1", 
+             style=label.style_label_left, color=color.new(color.red, 70), textcolor=color.white, size=size.tiny)
+
+// ══════════════════════════════════════════════════════════
+// 💚 ENTRY ZONE
+// ══════════════════════════════════════════════════════════
+
+if barstate.islast and showEntrySignals and gesamtScore >= 50
+    box.new(bar_index - 30, analyzedEntryLow, bar_index + 15, analyzedEntryHigh, 
+         border_color=color.new(color.lime, 40), 
+         bgcolor=color.new(color.lime, 93), 
+         border_width=2,
+         text="💚 ENTRY ZONE\\n\\n" + 
+              str.tostring(analyzedEntryLow, "#.##") + " - " + str.tostring(analyzedEntryHigh, "#.##") + "\\n\\n" +
+              "Score: " + str.tostring(gesamtScore, "#") + "/100\\n" +
+              "Setup: " + setupQuality,
+         text_color=color.new(color.lime, 0), 
+         text_size=size.small, 
+         text_halign=text.align_center,
+         text_valign=text.align_center)
+
+// ══════════════════════════════════════════════════════════
+// 🔔 TRADING SIGNALE
+// ══════════════════════════════════════════════════════════
+
+if buySignal and showEntrySignals
+    label.new(bar_index, low - atr * 0.5, 
+         "🟢 KAUFEN\\n" + str.tostring(close, "#.##") + " EUR\\n\\n" +
+         "SL: " + str.tostring(analyzedStopLoss, "#.##") + "\\n" +
+         "TP1: " + str.tostring(analyzedTakeProfit1, "#.##") + "\\n" +
+         "R/R: 1:" + str.tostring(rrRatioTP1, "#.#"),
+         style=label.style_label_up, 
+         color=color.new(color.lime, 0), 
+         textcolor=color.black, 
+         size=size.large,
+         tooltip="Multi-Agent Score: " + str.tostring(gesamtScore, "#") + "/100\\nSetup: " + setupQuality)
+
+if sellSignalTP1 and showExitSignals
+    label.new(bar_index, high + atr * 0.5, 
+         "🎯 TAKE PROFIT 1\\n" + str.tostring(close, "#.##") + " EUR\\n\\n" +
+         "Gewinn: +" + str.tostring(potentialGainTP1, "#.#") + "%",
+         style=label.style_label_down, 
+         color=color.new(color.lime, 0), 
+         textcolor=color.black, 
+         size=size.large)
+
+if sellSignalTP2 and showExitSignals
+    label.new(bar_index, high + atr * 0.5, 
+         "🚀 TAKE PROFIT 2!\\n" + str.tostring(close, "#.##") + " EUR\\n\\n" +
+         "Gewinn: +" + str.tostring(potentialGainTP2, "#.#") + "%",
+         style=label.style_label_down, 
+         color=color.new(color.aqua, 0), 
+         textcolor=color.black, 
+         size=size.huge)
+
+if sellSignalRSI and showExitSignals
+    label.new(bar_index, high + atr * 0.3, 
+         "⚠️ OVERBOUGHT\\nRSI: " + str.tostring(rsi, "#"),
+         style=label.style_label_down, 
+         color=color.new(color.orange, 20), 
+         textcolor=color.white, 
+         size=size.small,
+         tooltip="Erwäge Teil-Verkauf")
+
+if stopLossHit
+    label.new(bar_index, low - atr * 0.5, 
+         "⛔ STOP LOSS!\\n" + str.tostring(close, "#.##") + " EUR\\n\\n" +
+         "SOFORT VERKAUFEN!",
+         style=label.style_label_up, 
+         color=color.new(color.red, 0), 
+         textcolor=color.white, 
+         size=size.huge)
+
+// ══════════════════════════════════════════════════════════
+// 📊 DASHBOARD
+// ══════════════════════════════════════════════════════════
+
+var table dashboard = table.new(position.top_left, 2, 6, 
+     bgcolor=color.new(color.black, 5), 
+     border_color=color.new(color.gray, 50), 
+     border_width=2)
+
+if barstate.islast
+    scoreColor = gesamtScore >= 70 ? color.lime : gesamtScore >= 50 ? color.yellow : color.red
+    table.cell(dashboard, 0, 0, "🤖 ${data.stock} SIGNAL", 
+         bgcolor=color.new(scoreColor, 60), text_color=color.white, text_size=size.normal)
+    table.merge_cells(dashboard, 0, 0, 1, 0)
+    
+    currentStatus = inEntryZone ? "🟢 IN ENTRY ZONE" : (close > avgEntry ? "📈 ÜBER ENTRY" : "📉 UNTER ENTRY")
+    statusColor = inEntryZone ? color.lime : (close > avgEntry ? color.blue : color.gray)
+    
+    table.cell(dashboard, 0, 1, "STATUS:", text_color=color.white, text_size=size.small)
+    table.cell(dashboard, 1, 1, currentStatus, 
+         bgcolor=color.new(statusColor, 70), text_color=color.white, text_size=size.small)
+    
+    table.cell(dashboard, 0, 2, "Entry:", text_color=color.white, text_size=size.small)
+    table.cell(dashboard, 1, 2, str.tostring(avgEntry, "#.##") + " EUR", 
+         text_color=color.yellow, text_size=size.small)
+    
+    table.cell(dashboard, 0, 3, "Stop Loss:", text_color=color.white, text_size=size.small)
+    table.cell(dashboard, 1, 3, str.tostring(analyzedStopLoss, "#.##") + " EUR", 
+         text_color=color.red, text_size=size.small)
+    
+    table.cell(dashboard, 0, 4, "TP1:", text_color=color.white, text_size=size.small)
+    table.cell(dashboard, 1, 4, str.tostring(analyzedTakeProfit1, "#.##") + " EUR", 
+         text_color=color.lime, text_size=size.small)
+    
+    table.cell(dashboard, 0, 5, "R/R Ratio:", text_color=color.white, text
