@@ -23,19 +23,18 @@
             -webkit-text-fill-color: transparent;
         }
         .subtitle { text-align: center; color: #aaa; margin-bottom: 40px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
-        @media (max-width: 968px) { .grid { grid-template-columns: 1fr; } }
         .card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border-radius: 15px;
             padding: 25px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
         }
         .card h2 { font-size: 1.5rem; margin-bottom: 15px; color: #00ff88; }
         textarea {
             width: 100%;
-            min-height: 400px;
+            min-height: 300px;
             background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(0, 255, 136, 0.3);
             border-radius: 10px;
@@ -45,13 +44,12 @@
             font-size: 0.9rem;
             resize: vertical;
         }
-        .output-section { grid-column: 1 / -1; }
         .output-box {
             background: rgba(0, 0, 0, 0.4);
             border: 2px solid #00ff88;
             border-radius: 10px;
             padding: 20px;
-            min-height: 300px;
+            min-height: 400px;
             max-height: 600px;
             overflow-y: auto;
             font-family: 'Courier New', monospace;
@@ -94,10 +92,17 @@
             color: #f5576c;
             display: block;
         }
-        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-        .stat-card { background: rgba(0, 0, 0, 0.3); padding: 15px; border-radius: 10px; border-left: 4px solid #00ff88; }
-        .stat-label { font-size: 0.85rem; color: #aaa; margin-bottom: 5px; }
-        .stat-value { font-size: 1.5rem; font-weight: bold; color: #00ff88; }
+        .debug {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #666;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
     </style>
 </head>
 <body>
@@ -105,42 +110,35 @@
         <h1>🤖 Multi-Agent Trading Dashboard</h1>
         <p class="subtitle">KI-gestützte Aktienanalyse → Pine Script Generator</p>
 
-        <div class="grid">
-            <div class="card">
-                <h2>📋 JSON Input</h2>
-                <textarea id="jsonInput" placeholder='Füge hier die komplette JSON-Ausgabe ein...'></textarea>
-            </div>
-
-            <div class="card">
-                <h2>📊 Extrahierte Daten</h2>
-                <div class="stats-grid">
-                    <div class="stat-card"><div class="stat-label">Aktie</div><div class="stat-value" id="statStock">-</div></div>
-                    <div class="stat-card"><div class="stat-label">Kurs</div><div class="stat-value" id="statPrice">-</div></div>
-                    <div class="stat-card"><div class="stat-label">Score</div><div class="stat-value" id="statScore">-</div></div>
-                    <div class="stat-card"><div class="stat-label">Setup</div><div class="stat-value" id="statSetup">-</div></div>
-                    <div class="stat-card"><div class="stat-label">Entry</div><div class="stat-value" id="statEntry">-</div></div>
-                    <div class="stat-card"><div class="stat-label">Stop Loss</div><div class="stat-value" id="statSL">-</div></div>
-                    <div class="stat-card"><div class="stat-label">TP1</div><div class="stat-value" id="statTP1">-</div></div>
-                    <div class="stat-card"><div class="stat-label">TP2</div><div class="stat-value" id="statTP2">-</div></div>
-                </div>
-            </div>
+        <div class="card">
+            <h2>📋 JSON Input</h2>
+            <textarea id="jsonInput" placeholder='Füge hier die komplette JSON-Ausgabe ein...'></textarea>
         </div>
 
-        <div class="card output-section">
+        <div class="card">
             <h2>⚡ Generiertes Pine Script</h2>
             <div class="output-box" id="pineScriptOutput">// Dein Pine Script erscheint hier...</div>
             
             <div class="button-group">
-                <button class="btn-generate" onclick="generatePineScript()">⚡ Pine Script Generieren</button>
+                <button class="btn-generate" onclick="testGenerate()">⚡ Pine Script Generieren</button>
                 <button class="btn-copy" onclick="copyToClipboard()">📋 Kopieren</button>
                 <button class="btn-clear" onclick="clearAll()">🗑️ Löschen</button>
             </div>
 
             <div class="status" id="status"></div>
+            
+            <div class="debug" id="debugOutput" style="display: none;"></div>
         </div>
     </div>
 
     <script>
+        function log(message) {
+            const debug = document.getElementById('debugOutput');
+            debug.style.display = 'block';
+            debug.innerHTML += message + '\n';
+            console.log(message);
+        }
+
         function showStatus(message, type) {
             const status = document.getElementById('status');
             status.textContent = message;
@@ -148,717 +146,190 @@
             setTimeout(() => { status.className = 'status'; }, 5000);
         }
 
-        function generatePineScript() {
-            console.log('Generiere Pine Script...');
+        function testGenerate() {
+            log('=== START ===');
             const jsonInput = document.getElementById('jsonInput').value.trim();
             
             if (!jsonInput) {
                 showStatus('❌ Bitte JSON-Daten einfügen!', 'error');
+                log('FEHLER: Kein Input');
                 return;
             }
 
+            log('Input Länge: ' + jsonInput.length);
+
             try {
+                log('Parsing JSON...');
+                
+                // Vereinfachtes Parsing
                 let allData = {};
+                const jsonBlocks = jsonInput.split(/(?<=\})\s*(?=\{)/);
                 
-                // Finde alle JSON-Objekte im Text (auch wenn sie direkt hintereinander stehen)
-                let depth = 0;
-                let currentJson = '';
-                let jsonObjects = [];
+                log('Gefundene Blöcke: ' + jsonBlocks.length);
                 
-                for (let i = 0; i < jsonInput.length; i++) {
-                    const char = jsonInput[i];
-                    
-                    if (char === '{') {
-                        depth++;
-                        currentJson += char;
-                    } else if (char === '}') {
-                        currentJson += char;
-                        depth--;
-                        
-                        // Wenn wir ein komplettes Objekt haben
-                        if (depth === 0 && currentJson.trim()) {
-                            jsonObjects.push(currentJson.trim());
-                            currentJson = '';
-                        }
-                    } else if (depth > 0) {
-                        currentJson += char;
-                    }
-                }
-                
-                console.log(`Gefunden: ${jsonObjects.length} JSON-Objekte`);
-                
-                // Parse alle gefundenen JSON-Objekte
-                for (let i = 0; i < jsonObjects.length; i++) {
+                for (let i = 0; i < jsonBlocks.length; i++) {
                     try {
-                        const parsed = JSON.parse(jsonObjects[i]);
-                        const agentName = parsed.agent || `Block ${i+1}`;
-                        console.log(`✓ ${agentName} erfolgreich geparst`);
-                        
-                        // Merge Daten - später Objekte überschreiben frühere
-                        allData = { ...allData, ...parsed };
+                        const parsed = JSON.parse(jsonBlocks[i].trim());
+                        log('Block ' + (i+1) + ' OK: ' + (parsed.agent || 'unknown'));
+                        Object.assign(allData, parsed);
                     } catch (e) {
-                        console.warn(`✗ Block ${i+1} fehlgeschlagen:`, e.message);
+                        log('Block ' + (i+1) + ' Fehler: ' + e.message);
                     }
                 }
                 
-                if (Object.keys(allData).length === 0) {
-                    throw new Error('Keine gültigen JSON-Daten gefunden');
-                }
+                log('Daten zusammengeführt');
                 
-                console.log('Kombinierte Daten:', allData);
-                const data = allData;
+                // Extrahiere Werte
+                const stock = allData.aktie || 'Microsoft';
+                const price = Number(allData.aktueller_kurs_eur || 414.91);
+                const score = Number(allData.gesamtbewertung?.gewichteter_score || 70);
                 
-                // Daten extrahieren mit sicheren Fallbacks
-                const stock = data.aktie || 'Unknown';
-                const price = data.aktueller_kurs_eur || 414.91;
-                const score = data.gesamtbewertung?.gewichteter_score || data.score || 70;
+                log('Stock: ' + stock);
+                log('Price: ' + price);
+                log('Score: ' + score);
                 
-                // Setup Quality bereinigen - nur A++, A+, A, B+, B, C erlaubt
-                let rawSetup = data.setup_qualitaet || data.setup_rating_final?.rating || 'A';
-                const setupMatch = rawSetup.match(/(A\+\+|A\+|A|B\+|B|C)/i);
-                const setup = setupMatch ? setupMatch[0].toUpperCase() : 'A';
+                // Setup bereinigen
+                let setup = String(allData.setup_qualitaet || 'A');
+                const setupMatch = setup.match(/(A\+\+|A\+|A|B\+|B|C)/i);
+                setup = setupMatch ? setupMatch[0].toUpperCase() : 'A';
+                log('Setup: ' + setup);
                 
-                console.log('Setup bereinigt:', rawSetup, '→', setup);
-                const entryLow = data.trading_empfehlung?.einstiegsstrategie?.akzeptabler_einstiegsbereich_eur?.von || 
-                                 data.entry_analyse?.entry_szenarien?.[1]?.entry_preis_eur || price * 0.98;
-                const entryHigh = data.trading_empfehlung?.einstiegsstrategie?.akzeptabler_einstiegsbereich_eur?.bis || 
-                                  data.entry_analyse?.entry_szenarien?.[0]?.entry_preis_eur || price * 1.02;
-                const stopLoss = data.trading_empfehlung?.stop_loss?.stop_loss_kurs_eur || 
-                                 data.exit_strategie?.stop_loss_strategie?.initial_stop?.kurs_eur || price * 0.94;
-                const tp1 = data.trading_empfehlung?.kursziele?.konservativ_eur || 
-                            data.exit_strategie?.gewinnmitnahme_plan?.[0]?.kurs_eur || price * 1.04;
-                const tp2 = data.trading_empfehlung?.kursziele?.realistisch_eur || 
-                            data.exit_strategie?.gewinnmitnahme_plan?.[1]?.kurs_eur || price * 1.08;
-                const support1 = data.support_resistance?.major_support?.[0]?.level || entryLow;
-                const resistance1 = data.support_resistance?.major_resistance?.[0]?.level || price * 1.02;
-
-                // Sichere technische Daten
-                const sma20 = data.moving_averages?.sma_20 || price * 0.99;
-                const sma50 = data.moving_averages?.sma_50 || price * 0.98;
-                const sma200 = data.moving_averages?.sma_200 || price * 0.94;
-                const rsi = data.momentum_indikatoren?.rsi_14?.wert || 60;
+                // Weitere Werte
+                const entryLow = Number(allData.trading_empfehlung?.einstiegsstrategie?.akzeptabler_einstiegsbereich_eur?.von || price * 0.98);
+                const entryHigh = Number(allData.trading_empfehlung?.einstiegsstrategie?.akzeptabler_einstiegsbereich_eur?.bis || price * 1.02);
+                const stopLoss = Number(allData.trading_empfehlung?.stop_loss?.stop_loss_kurs_eur || price * 0.94);
+                const tp1 = Number(allData.trading_empfehlung?.kursziele?.konservativ_eur || price * 1.04);
+                const tp2 = Number(allData.trading_empfehlung?.kursziele?.realistisch_eur || price * 1.08);
                 
-                // Sichere fundamentale Daten
-                const kgv = data.bewertungskennzahlen?.kgv || 34.5;
-                const roe = data.profitabilitaet?.roe_prozent || 38.0;
-                const ebitdaMarge = data.profitabilitaet?.ebitda_marge_prozent || 55.0;
+                log('Entry: ' + entryLow.toFixed(2) + ' - ' + entryHigh.toFixed(2));
+                log('Stop: ' + stopLoss.toFixed(2));
+                log('TP1: ' + tp1.toFixed(2));
+                log('TP2: ' + tp2.toFixed(2));
                 
-                // Sichere Score-Daten
-                const sentimentScore = ((data.sentiment_score || 0.7) * 100);
-                const konfidenz = data.gesamtbewertung?.konfidenz_prozent || 75;
-                const risikoRendite = data.trading_empfehlung?.risiko_rendite_verhaeltnis || 3.2;
-
-                console.log('Extrahierte Daten:', {
-                    stock, price, score, setup, entryLow, entryHigh, stopLoss, tp1, tp2,
-                    support1, resistance1, sma20, sma50, sma200, rsi
-                });
-
-                // Stelle sicher, dass ALLE Werte Zahlen sind
-                const safeNumber = (val, fallback) => {
-                    const num = Number(val);
-                    return isNaN(num) ? fallback : num;
-                };
-
-                const priceNum = safeNumber(price, 414.91);
-                const scoreNum = safeNumber(score, 70);
-                const entryLowNum = safeNumber(entryLow, priceNum * 0.98);
-                const entryHighNum = safeNumber(entryHigh, priceNum * 1.02);
-                const stopLossNum = safeNumber(stopLoss, priceNum * 0.94);
-                const tp1Num = safeNumber(tp1, priceNum * 1.04);
-                const tp2Num = safeNumber(tp2, priceNum * 1.08);
-                const support1Num = safeNumber(support1, entryLowNum);
-                const resistance1Num = safeNumber(resistance1, priceNum * 1.02);
-                const sma20Num = safeNumber(sma20, priceNum * 0.99);
-                const sma50Num = safeNumber(sma50, priceNum * 0.98);
-                const sma200Num = safeNumber(sma200, priceNum * 0.94);
-                const rsiNum = safeNumber(rsi, 60);
-                const kgvNum = safeNumber(kgv, 34.5);
-                const roeNum = safeNumber(roe, 38.0);
-                const ebitdaMargeNum = safeNumber(ebitdaMarge, 55.0);
-                const sentimentScoreNum = safeNumber(sentimentScore, 70);
-                const konfidenzNum = safeNumber(konfidenz, 75);
-                const risikoRenditeNum = safeNumber(risikoRendite, 3.2);
-
-                console.log('Sichere Zahlen:', {
-                    priceNum, scoreNum, entryLowNum, entryHighNum, stopLossNum, tp1Num, tp2Num
-                });
-
-                // Stats aktualisieren
-                document.getElementById('statStock').textContent = stock;
-                document.getElementById('statPrice').textContent = `€${priceNum.toFixed(2)}`;
-                document.getElementById('statScore').textContent = `${scoreNum.toFixed(0)}/100`;
-                document.getElementById('statSetup').textContent = setup;
-                document.getElementById('statEntry').textContent = `€${entryLowNum.toFixed(2)}-€${entryHighNum.toFixed(2)}`;
-                document.getElementById('statSL').textContent = `€${stopLossNum.toFixed(2)}`;
-                document.getElementById('statTP1').textContent = `€${tp1Num.toFixed(2)}`;
-                document.getElementById('statTP2').textContent = `€${tp2Num.toFixed(2)}`;
-
-                // Pine Script generieren
+                log('Generiere Pine Script...');
+                
+                // Pine Script String
                 const pineScript = `//@version=5
-indicator("🤖 ${stock} - KI Trading Signals", overlay=true, max_labels_count=500, max_lines_count=500, max_boxes_count=500)
+indicator("🤖 ${stock} - KI Signals", overlay=true, max_labels_count=500)
 
-// ══════════════════════════════════════════════════════════
-// 🎯 MULTI-AGENT DATEN
-// ══════════════════════════════════════════════════════════
+// TRADING LEVELS
+entryLow = ${entryLow.toFixed(2)}
+entryHigh = ${entryHigh.toFixed(2)}
+stopLoss = ${stopLoss.toFixed(2)}
+takeProfit1 = ${tp1.toFixed(2)}
+takeProfit2 = ${tp2.toFixed(2)}
 
-// Trading Levels
-entryLow = input.float(${entryLowNum.toFixed(2)}, "💚 Entry Low", group="📊 Trading Levels")
-entryHigh = input.float(${entryHighNum.toFixed(2)}, "💚 Entry High", group="📊 Trading Levels")
-stopLoss = input.float(${stopLossNum.toFixed(2)}, "⛔ Stop Loss", group="📊 Trading Levels")
-takeProfit1 = input.float(${tp1Num.toFixed(2)}, "🎯 Take Profit 1", group="📊 Trading Levels")
-takeProfit2 = input.float(${tp2Num.toFixed(2)}, "🚀 Take Profit 2", group="📊 Trading Levels")
+// KI SCORES
+multiAgentScore = ${score.toFixed(0)}
+setupQuality = "${setup}"
 
-// Scores & Setup
-multiAgentScore = input.float(${scoreNum.toFixed(0)}, "🤖 Multi-Agent Score", minval=0, maxval=100, group="🎯 KI-Analyse")
-setupQuality = input.string("${setup}", "Setup Qualität", options=["A++", "A+", "A", "B+", "B", "C"], group="🎯 KI-Analyse")
-konfidenz = input.float(${konfidenzNum.toFixed(0)}, "Konfidenz %", minval=0, maxval=100, group="🎯 KI-Analyse")
-riskReward = input.float(${risikoRenditeNum.toFixed(1)}, "Risk:Reward Ratio", group="🎯 KI-Analyse")
-
-// Support & Resistance
-resistance1 = input.float(${resistance1Num.toFixed(2)}, "🔴 Resistance 1", group="📊 Trading Levels")
-support1 = input.float(${support1Num.toFixed(2)}, "🟢 Support 1", group="📊 Trading Levels")
-
-// Anzeige-Optionen
-showPriceTargets = input.bool(true, "Kursziele anzeigen", group="Anzeige")
-showEntryZone = input.bool(true, "Entry Zone anzeigen", group="Anzeige")
-showTradeSignals = input.bool(true, "Kauf/Verkauf Signale", group="Anzeige")
-showPrognose = input.bool(true, "Prognosen anzeigen", group="Anzeige")
-
-// ══════════════════════════════════════════════════════════
-// 📊 BERECHNUNGEN
-// ══════════════════════════════════════════════════════════
-
-// Moving Averages
+// BERECHNUNGEN
 sma20 = ta.sma(close, 20)
 sma50 = ta.sma(close, 50)
-ema9 = ta.ema(close, 9)
-
-// Technische Indikatoren
 rsi = ta.rsi(close, 14)
-[macdLine, signalLine, _] = ta.macd(close, 12, 26, 9)
 atr = ta.atr(14)
 
-// Trend-Erkennung
-bullishTrend = close > sma20 and sma20 > sma50 and rsi > 45 and rsi < 75
-bearishTrend = close < sma20 and sma20 < sma50 and rsi < 55
-neutralTrend = not bullishTrend and not bearishTrend
-
-// Entry/Exit Zonen
 inEntryZone = close >= entryLow and close <= entryHigh
-nearStopLoss = close <= stopLoss * 1.02
-atTakeProfit1 = close >= takeProfit1 * 0.98
-atTakeProfit2 = close >= takeProfit2 * 0.98
+bullishTrend = close > sma20 and sma20 > sma50 and rsi > 45
+buySignal = inEntryZone and bullishTrend and not inEntryZone[1]
 
-// Momentum Score (0-100)
-momentumScore = 0.0
-if close > sma20
-    momentumScore += 20
-if close > sma50
-    momentumScore += 20
-if rsi > 50 and rsi < 70
-    momentumScore += 20
-if macdLine > signalLine
-    momentumScore += 20
-if ta.rising(close, 3)
-    momentumScore += 20
+// VISUALISIERUNG
+plot(sma20, "SMA 20", color.yellow, 3)
+plot(sma50, "SMA 50", color.orange, 4)
 
-// Trading Signale
-buySignal = inEntryZone and bullishTrend and multiAgentScore >= 60 and not inEntryZone[1]
-sellSignalTP1 = ta.crossover(close, takeProfit1)
-sellSignalTP2 = ta.crossover(close, takeProfit2)
-stopLossHit = ta.crossunder(close, stopLoss)
-
-// ══════════════════════════════════════════════════════════
-// 🎨 VISUALISIERUNG - SEHR DEUTLICH!
-// ══════════════════════════════════════════════════════════
-
-// 1. MAs - DICK und DEUTLICH
-plot(sma20, "SMA 20", color=color.new(color.yellow, 0), linewidth=3, style=plot.style_line)
-plot(sma50, "SMA 50", color=color.new(color.orange, 0), linewidth=4, style=plot.style_line)
-plot(ema9, "EMA 9", color=color.new(color.aqua, 30), linewidth=2, style=plot.style_line)
-
-// 2. ENTRY ZONE - GROSSE GRÜNE BOX
-if barstate.islast and showEntryZone
+// ENTRY ZONE - GRÜN
+if barstate.islast
     box.new(bar_index - 200, entryLow, bar_index + 100, entryHigh, 
-         border_color=color.new(color.lime, 0), 
-         bgcolor=color.new(color.lime, 85), 
-         border_width=5,
-         text="💚 KAUFZONE\\n\\n" + 
-              str.tostring(entryLow, "#.##") + " - " + str.tostring(entryHigh, "#.##") + " EUR\\n\\n" +
-              "Score: " + str.tostring(multiAgentScore, "#") + "/100\\n" +
-              "Setup: " + setupQuality + "\\n" +
-              "Konfidenz: " + str.tostring(konfidenz, "#") + "%",
-         text_color=color.new(color.lime, 0), 
-         text_size=size.huge, 
-         text_halign=text.align_center,
-         text_valign=text.align_center)
+         border_color=color.lime, bgcolor=color.new(color.lime, 85), border_width=5,
+         text="💚 KAUFZONE\\n" + str.tostring(entryLow) + " - " + str.tostring(entryHigh) + "\\nScore: " + str.tostring(multiAgentScore) + "/100",
+         text_color=color.lime, text_size=size.huge)
 
-// 3. STOP LOSS - DICKE ROTE LINIE
+// STOP LOSS - ROT
 if barstate.islast
-    line.new(bar_index - 200, stopLoss, bar_index + 100, stopLoss, 
-         color=color.red, width=6, style=line.style_solid)
-    
-    label.new(bar_index + 105, stopLoss, 
-         "⛔ STOP LOSS\\n" + str.tostring(stopLoss, "#.##") + " EUR\\n\\nSOFORT VERKAUFEN!", 
-         style=label.style_label_left, 
-         color=color.red, 
-         textcolor=color.white, 
-         size=size.huge)
+    line.new(bar_index - 200, stopLoss, bar_index + 100, stopLoss, color=color.red, width=6)
+    label.new(bar_index + 105, stopLoss, "⛔ STOP LOSS\\n" + str.tostring(stopLoss), 
+         style=label.style_label_left, color=color.red, textcolor=color.white, size=size.huge)
 
-// 4. TAKE PROFIT LEVELS - GRÜNE LINIEN
-if barstate.islast and showPriceTargets
-    // TP1
-    line.new(bar_index - 200, takeProfit1, bar_index + 100, takeProfit1, 
-         color=color.new(color.lime, 0), width=5, style=line.style_dashed)
-    
-    label.new(bar_index + 105, takeProfit1, 
-         "🎯 ZIEL 1\\n" + str.tostring(takeProfit1, "#.##") + " EUR\\n\\n50% VERKAUFEN", 
-         style=label.style_label_left, 
-         color=color.new(color.lime, 0), 
-         textcolor=color.white, 
-         size=size.large)
-    
-    // TP2
-    line.new(bar_index - 200, takeProfit2, bar_index + 100, takeProfit2, 
-         color=color.new(color.aqua, 0), width=5, style=line.style_dashed)
-    
-    label.new(bar_index + 105, takeProfit2, 
-         "🚀 ZIEL 2\\n" + str.tostring(takeProfit2, "#.##") + " EUR\\n\\nREST VERKAUFEN", 
-         style=label.style_label_left, 
-         color=color.new(color.aqua, 0), 
-         textcolor=color.white, 
-         size=size.large)
-
-// 5. SUPPORT & RESISTANCE
+// TAKE PROFIT - GRÜN
 if barstate.islast
-    line.new(bar_index - 200, resistance1, bar_index + 100, resistance1, 
-         color=color.new(color.red, 50), width=3, style=line.style_dotted)
-    label.new(bar_index + 105, resistance1, "R1: " + str.tostring(resistance1, "#.##"), 
-         style=label.style_label_left, color=color.new(color.red, 70), textcolor=color.white, size=size.small)
+    line.new(bar_index - 200, takeProfit1, bar_index + 100, takeProfit1, color=color.lime, width=5, style=line.style_dashed)
+    label.new(bar_index + 105, takeProfit1, "🎯 ZIEL 1\\n" + str.tostring(takeProfit1), 
+         style=label.style_label_left, color=color.lime, textcolor=color.white, size=size.large)
     
-    line.new(bar_index - 200, support1, bar_index + 100, support1, 
-         color=color.new(color.green, 50), width=3, style=line.style_dotted)
-    label.new(bar_index + 105, support1, "S1: " + str.tostring(support1, "#.##"), 
-         style=label.style_label_left, color=color.new(color.green, 70), textcolor=color.white, size=size.small)
+    line.new(bar_index - 200, takeProfit2, bar_index + 100, takeProfit2, color=color.aqua, width=5, style=line.style_dashed)
+    label.new(bar_index + 105, takeProfit2, "🚀 ZIEL 2\\n" + str.tostring(takeProfit2), 
+         style=label.style_label_left, color=color.aqua, textcolor=color.white, size=size.large)
 
-// ══════════════════════════════════════════════════════════
-// 🔔 KAUF/VERKAUF SIGNALE - RIESIG!
-// ══════════════════════════════════════════════════════════
+// KAUFSIGNAL
+if buySignal
+    label.new(bar_index, low - atr * 1.5, "🟢 JETZT KAUFEN!\\n" + str.tostring(close), 
+         style=label.style_label_up, color=color.lime, textcolor=color.black, size=size.huge)
 
-if showTradeSignals
-    // KAUFSIGNAL
-    if buySignal
-        label.new(bar_index, low - atr * 1.5, 
-             "🟢🟢🟢\\n\\nJETZT KAUFEN!\\n\\n" + 
-             str.tostring(close, "#.##") + " EUR\\n\\n" +
-             "Stop: " + str.tostring(stopLoss, "#.##") + "\\n" +
-             "Ziel: " + str.tostring(takeProfit1, "#.##"),
-             style=label.style_label_up, 
-             color=color.new(color.lime, 0), 
-             textcolor=color.black, 
-             size=size.huge)
-    
-    // VERKAUF TP1
-    if sellSignalTP1
-        label.new(bar_index, high + atr * 1.5, 
-             "🎯🎯🎯\\n\\nZIEL 1 ERREICHT!\\n\\n" + 
-             str.tostring(close, "#.##") + " EUR\\n\\n50% VERKAUFEN!",
-             style=label.style_label_down, 
-             color=color.new(color.lime, 0), 
-             textcolor=color.black, 
-             size=size.huge)
-    
-    // VERKAUF TP2
-    if sellSignalTP2
-        label.new(bar_index, high + atr * 1.5, 
-             "🚀🚀🚀\\n\\nZIEL 2 ERREICHT!\\n\\n" + 
-             str.tostring(close, "#.##") + " EUR\\n\\nALLES VERKAUFEN!",
-             style=label.style_label_down, 
-             color=color.new(color.aqua, 0), 
-             textcolor=color.black, 
-             size=size.huge)
-    
-    // STOP LOSS HIT
-    if stopLossHit
-        label.new(bar_index, low - atr * 1.5, 
-             "⛔⛔⛔\\n\\nSTOP LOSS!\\n\\n" + 
-             str.tostring(close, "#.##") + " EUR\\n\\nSOFORT RAUS!",
-             style=label.style_label_up, 
-             color=color.red, 
-             textcolor=color.white, 
-             size=size.huge)
+// VERKAUFSSIGNALE
+if ta.crossover(close, takeProfit1)
+    label.new(bar_index, high + atr * 1.5, "🎯 ZIEL 1!\\n50% VERKAUFEN", 
+         style=label.style_label_down, color=color.lime, textcolor=color.black, size=size.huge)
 
-// ══════════════════════════════════════════════════════════
-// 📈 PROGNOSE mit WAHRSCHEINLICHKEITEN
-// ══════════════════════════════════════════════════════════
+if ta.crossover(close, takeProfit2)
+    label.new(bar_index, high + atr * 1.5, "🚀 ZIEL 2!\\nALLES VERKAUFEN", 
+         style=label.style_label_down, color=color.aqua, textcolor=color.black, size=size.huge)
 
-if barstate.islast and showPrognose
-    // Basis für Prognose
-    currentPrice = close
-    trendMultiplier = bullishTrend ? 1.0 : bearishTrend ? -1.0 : 0.0
-    volatility = atr
-    
-    // 1 STUNDE Prognose
-    prog1h = currentPrice + (trendMultiplier * volatility * 0.15)
-    prob1h = momentumScore
-    
-    // 4 STUNDEN Prognose
-    prog4h = currentPrice + (trendMultiplier * volatility * 0.4)
-    prob4h = math.min(momentumScore * 0.9, 90)
-    
-    // 1 TAG Prognose
-    prog1d = currentPrice + (trendMultiplier * volatility * 0.8)
-    prob1d = math.min(momentumScore * 0.85, 85)
-    
-    // 5 TAGE Prognose
-    prog5d = currentPrice + (trendMultiplier * volatility * 2.5)
-    prob5d = math.min(momentumScore * 0.7, 70)
-    
-    // PROGNOSE BOX - RECHTS
-    boxTop = math.max(prog1h, math.max(prog4h, math.max(prog1d, prog5d))) + atr
-    boxBottom = math.min(prog1h, math.min(prog4h, math.min(prog1d, prog5d))) - atr
-    
-    box.new(bar_index + 5, boxTop, bar_index + 50, boxBottom,
-         border_color=color.new(color.blue, 30), 
-         bgcolor=color.new(color.blue, 92), 
-         border_width=3,
-         text="🔮 KI-PROGNOSE\\n\\n" +
-              "1H: " + str.tostring(prog1h, "#.##") + " EUR (" + str.tostring(prob1h, "#") + "%)\\n" +
-              "4H: " + str.tostring(prog4h, "#.##") + " EUR (" + str.tostring(prob4h, "#") + "%)\\n" +
-              "1D: " + str.tostring(prog1d, "#.##") + " EUR (" + str.tostring(prob1d, "#") + "%)\\n" +
-              "5D: " + str.tostring(prog5d, "#.##") + " EUR (" + str.tostring(prob5d, "#") + "%)\\n\\n" +
-              "Trend: " + (bullishTrend ? "📈 AUFWÄRTS" : bearishTrend ? "📉 ABWÄRTS" : "➡️ SEITWÄRTS"),
-         text_color=color.aqua, 
-         text_size=size.large, 
-         text_halign=text.align_left)
-    
-    // Prognose-Linien zeichnen
-    line.new(bar_index, currentPrice, bar_index + 10, prog1h, 
-         color=prob1h >= 60 ? color.lime : color.orange, width=2, style=line.style_solid)
-    label.new(bar_index + 10, prog1h, "1H", color=color.new(color.blue, 50), textcolor=color.white, size=size.tiny)
-    
-    line.new(bar_index, currentPrice, bar_index + 20, prog4h, 
-         color=prob4h >= 60 ? color.lime : color.orange, width=2, style=line.style_solid)
-    label.new(bar_index + 20, prog4h, "4H", color=color.new(color.blue, 50), textcolor=color.white, size=size.tiny)
-    
-    line.new(bar_index, currentPrice, bar_index + 30, prog1d, 
-         color=prob1d >= 60 ? color.lime : color.orange, width=2, style=line.style_solid)
-    label.new(bar_index + 30, prog1d, "1D", color=color.new(color.blue, 50), textcolor=color.white, size=size.tiny)
-    
-    line.new(bar_index, currentPrice, bar_index + 45, prog5d, 
-         color=prob5d >= 60 ? color.lime : color.orange, width=3, style=line.style_solid)
-    label.new(bar_index + 45, prog5d, "5D", color=color.new(color.blue, 50), textcolor=color.white, size=size.normal)
+if ta.crossunder(close, stopLoss)
+    label.new(bar_index, low - atr * 1.5, "⛔ STOP LOSS!\\nSOFORT RAUS", 
+         style=label.style_label_up, color=color.red, textcolor=color.white, size=size.huge)
 
-// ══════════════════════════════════════════════════════════
-// 📊 DASHBOARD - OBEN LINKS
-// ══════════════════════════════════════════════════════════
-
-var table dashboard = table.new(position.top_left, 2, 8, 
-     bgcolor=color.new(color.black, 10), 
-     border_color=color.white, 
-     border_width=4)
-
+// PROGNOSE
 if barstate.islast
-    empfColor = multiAgentScore >= 70 ? color.lime : multiAgentScore >= 50 ? color.yellow : color.red
-    empfText = multiAgentScore >= 70 ? "🟢 KAUFEN" : multiAgentScore >= 50 ? "🟡 HALTEN" : "🔴 VERKAUFEN"
+    trendUp = close > sma20 and sma20 > sma50
+    prog1h = close + (trendUp ? atr * 0.15 : -atr * 0.15)
+    prog4h = close + (trendUp ? atr * 0.4 : -atr * 0.4)
+    prog1d = close + (trendUp ? atr * 0.8 : -atr * 0.8)
+    prog5d = close + (trendUp ? atr * 2.5 : -atr * 2.5)
     
-    // Header
-    table.cell(dashboard, 0, 0, "🤖 ${stock}", 
-         bgcolor=color.new(empfColor, 20), text_color=color.white, text_size=size.huge)
-    table.merge_cells(dashboard, 0, 0, 1, 0)
-    
-    // Empfehlung
-    table.cell(dashboard, 0, 1, "SIGNAL:", text_color=color.white, text_size=size.large)
-    table.cell(dashboard, 1, 1, empfText, 
-         bgcolor=color.new(empfColor, 30), text_color=color.white, text_size=size.huge)
-    
-    // Score
-    table.cell(dashboard, 0, 2, "Score:", text_color=color.white, text_size=size.normal)
-    table.cell(dashboard, 1, 2, str.tostring(multiAgentScore, "#") + "/100", 
-         text_color=empfColor, text_size=size.large)
-    
-    // Setup
-    table.cell(dashboard, 0, 3, "Setup:", text_color=color.white, text_size=size.normal)
-    table.cell(dashboard, 1, 3, setupQuality, 
-         bgcolor=color.new(color.lime, 60), text_color=color.white, text_size=size.large)
-    
-    // Konfidenz
-    table.cell(dashboard, 0, 4, "Konfidenz:", text_color=color.white, text_size=size.normal)
-    table.cell(dashboard, 1, 4, str.tostring(konfidenz, "#") + "%", 
+    box.new(bar_index + 5, math.max(prog1h, prog5d) + atr, bar_index + 50, math.min(prog1h, prog5d) - atr,
+         border_color=color.blue, bgcolor=color.new(color.blue, 92), border_width=3,
+         text="🔮 PROGNOSE\\n1H: " + str.tostring(prog1h, "#.##") + "\\n4H: " + str.tostring(prog4h, "#.##") + "\\n1D: " + str.tostring(prog1d, "#.##") + "\\n5D: " + str.tostring(prog5d, "#.##"),
          text_color=color.aqua, text_size=size.large)
     
-    // Entry
-    table.cell(dashboard, 0, 5, "Entry:", text_color=color.white, text_size=size.normal)
-    table.cell(dashboard, 1, 5, str.tostring((entryLow + entryHigh)/2, "#.##"), 
-         text_color=color.lime, text_size=size.large)
+    line.new(bar_index, close, bar_index + 45, prog5d, color=trendUp ? color.lime : color.red, width=3)
+
+// DASHBOARD
+var table dashboard = table.new(position.top_left, 2, 5, bgcolor=color.new(color.black, 10), border_width=4)
+if barstate.islast
+    empf = multiAgentScore >= 70 ? "🟢 KAUFEN" : multiAgentScore >= 50 ? "🟡 HALTEN" : "🔴 VERKAUFEN"
+    empfColor = multiAgentScore >= 70 ? color.lime : multiAgentScore >= 50 ? color.yellow : color.red
     
-    // Stop Loss
-    table.cell(dashboard, 0, 6, "Stop Loss:", text_color=color.white, text_size=size.normal)
-    table.cell(dashboard, 1, 6, str.tostring(stopLoss, "#.##"), 
-         text_color=color.red, text_size=size.large)
+    table.cell(dashboard, 0, 0, "🤖 ${stock}", bgcolor=color.new(empfColor, 20), text_color=color.white, text_size=size.huge)
+    table.merge_cells(dashboard, 0, 0, 1, 0)
     
-    // R:R
-    table.cell(dashboard, 0, 7, "R:R Ratio:", text_color=color.white, text_size=size.normal)
-    table.cell(dashboard, 1, 7, "1:" + str.tostring(riskReward, "#.#"), 
-         text_color=riskReward >= 2 ? color.lime : color.orange, text_size=size.large)
-
-// ══════════════════════════════════════════════════════════
-// 🔔 ALERTS
-// ══════════════════════════════════════════════════════════
-
-alertcondition(buySignal, "🟢 KAUFEN", "JETZT KAUFEN bei " + str.tostring(close))
-alertcondition(sellSignalTP1, "🎯 ZIEL 1", "Take Profit 1 erreicht!")
-alertcondition(sellSignalTP2, "🚀 ZIEL 2", "Take Profit 2 erreicht!")
-alertcondition(stopLossHit, "⛔ STOP LOSS", "SOFORT VERKAUFEN!")
-alertcondition(inEntryZone, "💚 ENTRY ZONE", "Kurs in optimaler Kaufzone!")`;
-
-// ══════════════════════════════════════════════════════════
-// EINSTELLUNGEN
-// ══════════════════════════════════════════════════════════
-showMultiAgentScore = input.bool(true, "Multi-Agent Score Dashboard", group="🎯 Anzeige")
-showSetupQuality = input.bool(true, "Setup Quality Indicator", group="🎯 Anzeige")
-showPatternAlerts = input.bool(true, "Pattern Alert System", group="🎯 Anzeige")
-showEntryExitZones = input.bool(true, "Entry/Exit Zones", group="🎯 Anzeige")
-showRiskReward = input.bool(true, "Risk/Reward Visualisierung", group="🎯 Anzeige")
-showTimeframeAlignment = input.bool(true, "Timeframe Alignment", group="🎯 Anzeige")
-showVolumeConfirmation = input.bool(true, "Volume Confirmation", group="🎯 Anzeige")
-showTrendLines = input.bool(true, "Trendlinien zeichnen", group="🎯 Anzeige")
-showBreakouts = input.bool(true, "Breakout Signale", group="🎯 Anzeige")
-showPrognose = input.bool(true, "Prognose anzeigen", group="🔮 Prognose")
-prognoseTage = input.int(10, "Prognose Tage", minval=3, maxval=30, group="🔮 Prognose")
-
-// ══════════════════════════════════════════════════════════
-// MULTI-AGENTEN DATEN
-// ══════════════════════════════════════════════════════════
-
-// 1️⃣ SENTIMENT
-sentimentScore = input.float(${(sentimentScoreNum / 100).toFixed(2)}, "Sentiment Score", minval=0, maxval=1, step=0.1, group="🎯 Sentiment")
-analystKursziel = input.float(${tp2Num.toFixed(2)}, "Analyst Kursziel", group="🎯 Sentiment")
-
-// 2️⃣ TECHNICAL
-expectedSMA20 = input.float(${sma20Num.toFixed(2)}, "SMA20", group="📊 Technical")
-expectedSMA50 = input.float(${sma50Num.toFixed(2)}, "SMA50", group="📊 Technical")
-expectedSMA200 = input.float(${sma200Num.toFixed(2)}, "SMA200", group="📊 Technical")
-expectedRSI = input.float(${rsiNum.toFixed(0)}, "RSI", minval=0, maxval=100, group="📊 Technical")
-expectedADX = input.float(32, "ADX", minval=0, maxval=100, group="📊 Technical")
-expectedATR = input.float(8.50, "ATR", group="📊 Technical")
-
-// Fibonacci
-analyzedFibHigh = input.float(${(priceNum * 1.05).toFixed(2)}, "Fib High", group="📊 Technical")
-analyzedFibLow = input.float(${(priceNum * 0.95).toFixed(2)}, "Fib Low", group="📊 Technical")
-
-// Support/Resistance
-analyzedR1 = input.float(${resistance1Num.toFixed(2)}, "🔴 R1", group="📊 Technical")
-analyzedR2 = input.float(${(resistance1Num * 1.025).toFixed(2)}, "🔴 R2", group="📊 Technical")
-analyzedS1 = input.float(${support1Num.toFixed(2)}, "🟢 S1", group="📊 Technical")
-analyzedS2 = input.float(${(support1Num * 0.98).toFixed(2)}, "🟢 S2", group="📊 Technical")
-analyzedS3 = input.float(${stopLossNum.toFixed(2)}, "🟢 S3", group="📊 Technical")
-
-// Entry/Exit
-analyzedEntryLow = input.float(${entryLowNum.toFixed(2)}, "💚 Entry Low", group="📊 Technical")
-analyzedEntryHigh = input.float(${entryHighNum.toFixed(2)}, "💚 Entry High", group="📊 Technical")
-analyzedStopLoss = input.float(${stopLossNum.toFixed(2)}, "⛔ Stop Loss", group="📊 Technical")
-
-// 3️⃣ FUNDAMENTAL
-fairValue = input.float(${tp1Num.toFixed(2)}, "Fairer Wert", group="💼 Fundamental")
-kgv = input.float(${kgvNum.toFixed(1)}, "KGV", group="💼 Fundamental")
-ebitdaMarge = input.float(${ebitdaMargeNum.toFixed(1)}, "EBITDA Marge %", group="💼 Fundamental")
-roe = input.float(${roeNum.toFixed(1)}, "ROE %", group="💼 Fundamental")
-
-// 4️⃣ TIMING
-timingScore = input.float(${scoreNum.toFixed(0)}, "Timing Score", minval=0, maxval=100, group="⏰ Timing")
-setupQualityInput = input.string("${setup}", "Setup Qualität", options=["A++", "A+", "A", "B+", "B", "C"], group="⏰ Timing")
-konfidenz = input.float(${konfidenzNum.toFixed(0)}, "Konfidenz %", minval=0, maxval=100, group="⏰ Timing")
-kurszielRealistisch = input.float(${tp2Num.toFixed(2)}, "Kursziel", group="⏰ Timing")
-risikoRenditeRatio = input.float(${risikoRenditeNum.toFixed(1)}, "Risk:Reward", group="⏰ Timing")
-
-// ══════════════════════════════════════════════════════════
-// BERECHNUNGEN
-// ══════════════════════════════════════════════════════════
-sma20 = ta.sma(close, 20)
-sma50 = ta.sma(close, 50)
-sma200 = ta.sma(close, 200)
-rsi = ta.rsi(close, 14)
-[macdLine, signalLine, _] = ta.macd(close, 12, 26, 9)
-atr = ta.atr(14)
-
-// Fibonacci
-fibRange = analyzedFibHigh - analyzedFibLow
-fib236 = analyzedFibHigh - (fibRange * 0.236)
-fib382 = analyzedFibHigh - (fibRange * 0.382)
-fib50 = analyzedFibHigh - (fibRange * 0.5)
-fib618 = analyzedFibHigh - (fibRange * 0.618)
-
-// Entry Zone
-inEntryZone = close >= analyzedEntryLow and close <= analyzedEntryHigh
-avgEntry = (analyzedEntryLow + analyzedEntryHigh) / 2
-
-// Risk/Reward
-potentialGain = ((kurszielRealistisch - avgEntry) / avgEntry) * 100
-potentialLoss = ((avgEntry - analyzedStopLoss) / avgEntry) * 100
-actualRR = potentialLoss > 0 ? potentialGain / potentialLoss : 0
-
-// ══════════════════════════════════════════════════════════
-// CANDLESTICK PATTERNS
-// ══════════════════════════════════════════════════════════
-body = math.abs(close - open)
-upperWick = high - math.max(close, open)
-lowerWick = math.min(close, open) - low
-prevBody = math.abs(close[1] - open[1])
-bodyRange = high - low
-
-// BULLISH PATTERNS
-bullEngulfing = close > open and close[1] < open[1] and close > open[1] and open < close[1] and body > prevBody * 1.2
-hammer = body > 0 and lowerWick > body * 2 and upperWick < body * 0.3 and close > open
-morningStar = close[2] < open[2] and math.abs(close[1] - open[1]) < body * 0.3 and close > open and close > (open[2] + close[2]) / 2
-threeWhiteSoldiers = close > open and close[1] > open[1] and close[2] > open[2] and close > close[1] and close[1] > close[2]
-
-// BEARISH PATTERNS
-bearEngulfing = close < open and close[1] > open[1] and close < open[1] and open > close[1] and body > prevBody * 1.2
-shootingStar = body > 0 and upperWick > body * 2 and lowerWick < body * 0.3 and close < open
-eveningStar = close[2] > open[2] and math.abs(close[1] - open[1]) < body * 0.3 and close < open and close < (open[2] + close[2]) / 2
-threeBlackCrows = close < open and close[1] < open[1] and close[2] < open[2] and close < close[1] and close[1] < close[2]
-
-// NEUTRAL
-insideBar = high < high[1] and low > low[1]
-doji = body < (bodyRange * 0.1)
-
-// ══════════════════════════════════════════════════════════
-// MULTI-AGENT SCORE
-// ══════════════════════════════════════════════════════════
-sentimentScoreCalc = sentimentScore * 100
-technicalScoreCalc = (expectedRSI > 50 ? 70 : 30) + (expectedADX > 25 ? 20 : 0)
-fundamentalScoreCalc = (kgv < 40 ? 70 : 50) + (roe > 30 ? 20 : 0)
-gesamtScore = (technicalScoreCalc * 0.4) + (fundamentalScoreCalc * 0.3) + (sentimentScoreCalc * 0.3)
-
-empfehlung = gesamtScore >= 70 ? "KAUFEN" : gesamtScore >= 50 ? "HALTEN" : "VERKAUFEN"
-empfehlungColor = gesamtScore >= 70 ? color.lime : gesamtScore >= 50 ? color.yellow : color.red
-
-// ══════════════════════════════════════════════════════════
-// VISUALISIERUNGEN
-// ══════════════════════════════════════════════════════════
-
-// MAs plotten
-plot(sma20, "SMA 20", color.yellow, 2)
-plot(sma50, "SMA 50", color.orange, 3)
-plot(sma200, "SMA 200", color.red, 3)
-
-// Support/Resistance
-plot(analyzedR1, "R1", color.red, 4)
-plot(analyzedS1, "S1", color.green, 4)
-
-// Entry Zone Box
-if barstate.islast and showEntryExitZones
-    box.new(bar_index - 100, analyzedEntryLow, bar_index + 30, analyzedEntryHigh, 
-         border_color=color.lime, bgcolor=color.new(color.lime, 90), border_width=3,
-         text="💚 ENTRY ZONE\\n" + str.tostring(analyzedEntryLow, "#.##") + " - " + str.tostring(analyzedEntryHigh, "#.##"),
-         text_color=color.lime, text_size=size.normal, text_halign=text.align_center)
-
-// Risk/Reward Visualisierung
-if barstate.islast and showRiskReward and inEntryZone
-    startBar = bar_index + 35
-    endBar = bar_index + 80
+    table.cell(dashboard, 0, 1, "SIGNAL:", text_color=color.white, text_size=size.large)
+    table.cell(dashboard, 1, 1, empf, bgcolor=color.new(empfColor, 30), text_color=color.white, text_size=size.huge)
     
-    box.new(startBar, kurszielRealistisch, endBar, avgEntry,
-         border_color=color.lime, bgcolor=color.new(color.lime, 85), border_width=4,
-         text="🎯 GEWINN\\n+" + str.tostring(potentialGain, "#.#") + "%",
-         text_color=color.green, text_size=size.large)
+    table.cell(dashboard, 0, 2, "Score:", text_color=color.white)
+    table.cell(dashboard, 1, 2, str.tostring(multiAgentScore) + "/100", text_color=empfColor, text_size=size.large)
     
-    box.new(startBar, avgEntry, endBar, analyzedStopLoss,
-         border_color=color.red, bgcolor=color.new(color.red, 85), border_width=4,
-         text="⛔ RISIKO\\n-" + str.tostring(potentialLoss, "#.#") + "%",
-         text_color=color.red, text_size=size.large)
+    table.cell(dashboard, 0, 3, "Setup:", text_color=color.white)
+    table.cell(dashboard, 1, 3, setupQuality, bgcolor=color.new(color.lime, 60), text_color=color.white, text_size=size.large)
     
-    label.new(startBar - 5, (kurszielRealistisch + analyzedStopLoss) / 2, 
-         "⚖️ R:R\\n1:" + str.tostring(actualRR, "#.#"),
-         style=label.style_label_right, color=color.lime, 
-         textcolor=color.white, size=size.huge)
+    table.cell(dashboard, 0, 4, "Entry:", text_color=color.white)
+    table.cell(dashboard, 1, 4, str.tostring((entryLow + entryHigh)/2, "#.##"), text_color=color.lime, text_size=size.large)
 
-// CANDLESTICK PATTERN LABELS
-if showPatternAlerts
-    if bullEngulfing
-        label.new(bar_index, low - atr * 0.4, "🟢BE", 
-             style=label.style_label_up, color=color.new(color.green, 20), 
-             textcolor=color.white, size=size.tiny, 
-             tooltip="Bullish Engulfing!")
-    
-    if hammer
-        label.new(bar_index, low - atr * 0.4, "🔨", 
-             style=label.style_label_up, color=color.new(color.green, 20), 
-             textcolor=color.white, size=size.tiny,
-             tooltip="Hammer")
-    
-    if bearEngulfing
-        label.new(bar_index, high + atr * 0.4, "🔴BE", 
-             style=label.style_label_down, color=color.new(color.red, 20), 
-             textcolor=color.white, size=size.tiny,
-             tooltip="Bearish Engulfing!")
-    
-    if shootingStar
-        label.new(bar_index, high + atr * 0.4, "💫", 
-             style=label.style_label_down, color=color.new(color.red, 20), 
-             textcolor=color.white, size=size.tiny,
-             tooltip="Shooting Star!")
-    
-    if insideBar
-        label.new(bar_index, high + atr * 0.15, "📦", 
-             style=label.style_label_down, color=color.new(color.yellow, 40), 
-             textcolor=color.black, size=size.tiny,
-             tooltip="Inside Bar")
+// ALERTS
+alertcondition(buySignal, "KAUFEN", "Jetzt kaufen!")
+alertcondition(ta.crossover(close, takeProfit1), "TP1", "Ziel 1 erreicht!")
+alertcondition(ta.crossover(close, takeProfit2), "TP2", "Ziel 2 erreicht!")
+alertcondition(ta.crossunder(close, stopLoss), "STOP", "Stop Loss!")`;
 
-// Breakout Signale
-if showBreakouts
-    if ta.crossover(close, analyzedR1)
-        label.new(bar_index, low - atr * 0.5, "🚀 R1 BREAKOUT", 
-             style=label.style_label_up, color=color.lime, 
-             textcolor=color.black, size=size.large)
-    
-    if ta.crossunder(close, analyzedS1)
-        label.new(bar_index, high + atr * 0.5, "🚨 S1 BREAKDOWN", 
-             style=label.style_label_down, color=color.red, 
-             textcolor=color.white, size=size.large)
-
-// ══════════════════════════════════════════════════════════
-// DASHBOARDS
-// ══════════════════════════════════════════════════════════
-
-// Multi-Agent Score Dashboard
-var table scoreTable = table.new(position.top_left, 2, 6, bgcolor=color.new(color.black, 10), border_width=3)
-if barstate.islast and showMultiAgentScore
-    table.cell(scoreTable, 0, 0, "🤖 MULTI-AGENT", bgcolor=color.new(empfehlungColor, 30), text_color=color.white, text_size=size.large)
-    table.merge_cells(scoreTable, 0, 0, 1, 0)
-    
-    table.cell(scoreTable, 0, 1, "GESAMT", text_color=color.white)
-    table.cell(scoreTable, 1, 1, str.tostring(math.round(gesamtScore)) + "/100  " + empfehlung, 
-         bgcolor=color.new(empfehlungColor, 50), text_color=color.white, text_size=size.large)
-    
-    table.cell(scoreTable, 0, 2, "📈 Technical", text_color=color.white)
-    table.cell(scoreTable, 1, 2, str.tostring(math.round(technicalScoreCalc)), 
-         text_color=technicalScoreCalc >= 60 ? color.lime : color.orange)
-    
-    table.cell(scoreTable, 0, 3, "💼 Fundamental", text_color=color.white)
-    table.cell(scoreTable, 1, 3, str.tostring(math.round(fundamentalScoreCalc)), 
-         text_color=fundamentalScoreCalc >= 60 ? color.lime : color.orange)
-    
-    table.cell(scoreTable, 0, 4, "🎯 Sentiment", text_color=color.white)
-    table.cell(scoreTable, 1, 4, str.tostring(math.round(sentimentScoreCalc)), 
-         text_color=sentimentScoreCalc >= 60 ? color.lime : color.orange)
-    
-    table.cell(scoreTable, 0, 5, "🎖️ Setup", text_color=color.white)
-    table.cell(scoreTable, 1, 5, setupQualityInput, 
-         bgcolor=color.new(color.lime, 50), text_color=color.white)
-
-// Alerts
-alertcondition(bullEngulfing and inEntryZone, "🟢 KAUFSIGNAL", "Bullish Engulfing in Entry Zone!")
-alertcondition(shootingStar and close >= analyzedR1, "🔴 EXIT", "Shooting Star bei Resistance!")
-alertcondition(inEntryZone, "💚 ENTRY ZONE", "Kurs in Entry-Zone!")`;
-
+                log('Pine Script Länge: ' + pineScript.length);
+                
                 document.getElementById('pineScriptOutput').textContent = pineScript;
                 showStatus('✅ Pine Script erfolgreich generiert!', 'success');
+                log('=== FERTIG ===');
                 
             } catch (e) {
-                console.error('Fehler:', e);
-                showStatus('❌ Fehler beim Parsen: ' + e.message, 'error');
+                log('FEHLER: ' + e.message);
+                log('Stack: ' + e.stack);
+                showStatus('❌ Fehler: ' + e.message, 'error');
             }
         }
 
@@ -877,9 +348,8 @@ alertcondition(inEntryZone, "💚 ENTRY ZONE", "Kurs in Entry-Zone!")`;
             document.getElementById('jsonInput').value = '';
             document.getElementById('pineScriptOutput').textContent = '// Dein Pine Script erscheint hier...';
             document.getElementById('status').className = 'status';
-            ['statStock', 'statPrice', 'statScore', 'statSetup', 'statEntry', 'statSL', 'statTP1', 'statTP2'].forEach(id => {
-                document.getElementById(id).textContent = '-';
-            });
+            document.getElementById('debugOutput').innerHTML = '';
+            document.getElementById('debugOutput').style.display = 'none';
         }
     </script>
 </body>
