@@ -158,8 +158,55 @@
             }
 
             try {
-                const data = JSON.parse(jsonInput);
-                console.log('JSON geparst:', data);
+                let allData = {};
+                
+                // Finde alle JSON-Objekte im Text (auch wenn sie direkt hintereinander stehen)
+                let depth = 0;
+                let currentJson = '';
+                let jsonObjects = [];
+                
+                for (let i = 0; i < jsonInput.length; i++) {
+                    const char = jsonInput[i];
+                    
+                    if (char === '{') {
+                        depth++;
+                        currentJson += char;
+                    } else if (char === '}') {
+                        currentJson += char;
+                        depth--;
+                        
+                        // Wenn wir ein komplettes Objekt haben
+                        if (depth === 0 && currentJson.trim()) {
+                            jsonObjects.push(currentJson.trim());
+                            currentJson = '';
+                        }
+                    } else if (depth > 0) {
+                        currentJson += char;
+                    }
+                }
+                
+                console.log(`Gefunden: ${jsonObjects.length} JSON-Objekte`);
+                
+                // Parse alle gefundenen JSON-Objekte
+                for (let i = 0; i < jsonObjects.length; i++) {
+                    try {
+                        const parsed = JSON.parse(jsonObjects[i]);
+                        const agentName = parsed.agent || `Block ${i+1}`;
+                        console.log(`✓ ${agentName} erfolgreich geparst`);
+                        
+                        // Merge Daten - später Objekte überschreiben frühere
+                        allData = { ...allData, ...parsed };
+                    } catch (e) {
+                        console.warn(`✗ Block ${i+1} fehlgeschlagen:`, e.message);
+                    }
+                }
+                
+                if (Object.keys(allData).length === 0) {
+                    throw new Error('Keine gültigen JSON-Daten gefunden');
+                }
+                
+                console.log('Kombinierte Daten:', allData);
+                const data = allData;
                 
                 // Daten extrahieren
                 const stock = data.aktie || 'Unknown';
