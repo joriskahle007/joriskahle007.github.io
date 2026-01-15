@@ -295,7 +295,322 @@
 
                 // Pine Script generieren
                 const pineScript = `//@version=5
-indicator("🤖 ${stock} Multi-Agent ADVANCED", overlay=true, max_boxes_count=100, max_lines_count=100, max_labels_count=100)
+indicator("🤖 ${stock} - KI Trading Signals", overlay=true, max_labels_count=500, max_lines_count=500, max_boxes_count=500)
+
+// ══════════════════════════════════════════════════════════
+// 🎯 MULTI-AGENT DATEN
+// ══════════════════════════════════════════════════════════
+
+// Trading Levels
+entryLow = input.float(${entryLowNum.toFixed(2)}, "💚 Entry Low", group="📊 Trading Levels")
+entryHigh = input.float(${entryHighNum.toFixed(2)}, "💚 Entry High", group="📊 Trading Levels")
+stopLoss = input.float(${stopLossNum.toFixed(2)}, "⛔ Stop Loss", group="📊 Trading Levels")
+takeProfit1 = input.float(${tp1Num.toFixed(2)}, "🎯 Take Profit 1", group="📊 Trading Levels")
+takeProfit2 = input.float(${tp2Num.toFixed(2)}, "🚀 Take Profit 2", group="📊 Trading Levels")
+
+// Scores & Setup
+multiAgentScore = input.float(${scoreNum.toFixed(0)}, "🤖 Multi-Agent Score", minval=0, maxval=100, group="🎯 KI-Analyse")
+setupQuality = input.string("${setup}", "Setup Qualität", options=["A++", "A+", "A", "B+", "B", "C"], group="🎯 KI-Analyse")
+konfidenz = input.float(${konfidenzNum.toFixed(0)}, "Konfidenz %", minval=0, maxval=100, group="🎯 KI-Analyse")
+riskReward = input.float(${risikoRenditeNum.toFixed(1)}, "Risk:Reward Ratio", group="🎯 KI-Analyse")
+
+// Support & Resistance
+resistance1 = input.float(${resistance1Num.toFixed(2)}, "🔴 Resistance 1", group="📊 Trading Levels")
+support1 = input.float(${support1Num.toFixed(2)}, "🟢 Support 1", group="📊 Trading Levels")
+
+// Anzeige-Optionen
+showPriceTargets = input.bool(true, "Kursziele anzeigen", group="Anzeige")
+showEntryZone = input.bool(true, "Entry Zone anzeigen", group="Anzeige")
+showTradeSignals = input.bool(true, "Kauf/Verkauf Signale", group="Anzeige")
+showPrognose = input.bool(true, "Prognosen anzeigen", group="Anzeige")
+
+// ══════════════════════════════════════════════════════════
+// 📊 BERECHNUNGEN
+// ══════════════════════════════════════════════════════════
+
+// Moving Averages
+sma20 = ta.sma(close, 20)
+sma50 = ta.sma(close, 50)
+ema9 = ta.ema(close, 9)
+
+// Technische Indikatoren
+rsi = ta.rsi(close, 14)
+[macdLine, signalLine, _] = ta.macd(close, 12, 26, 9)
+atr = ta.atr(14)
+
+// Trend-Erkennung
+bullishTrend = close > sma20 and sma20 > sma50 and rsi > 45 and rsi < 75
+bearishTrend = close < sma20 and sma20 < sma50 and rsi < 55
+neutralTrend = not bullishTrend and not bearishTrend
+
+// Entry/Exit Zonen
+inEntryZone = close >= entryLow and close <= entryHigh
+nearStopLoss = close <= stopLoss * 1.02
+atTakeProfit1 = close >= takeProfit1 * 0.98
+atTakeProfit2 = close >= takeProfit2 * 0.98
+
+// Momentum Score (0-100)
+momentumScore = 0.0
+if close > sma20
+    momentumScore += 20
+if close > sma50
+    momentumScore += 20
+if rsi > 50 and rsi < 70
+    momentumScore += 20
+if macdLine > signalLine
+    momentumScore += 20
+if ta.rising(close, 3)
+    momentumScore += 20
+
+// Trading Signale
+buySignal = inEntryZone and bullishTrend and multiAgentScore >= 60 and not inEntryZone[1]
+sellSignalTP1 = ta.crossover(close, takeProfit1)
+sellSignalTP2 = ta.crossover(close, takeProfit2)
+stopLossHit = ta.crossunder(close, stopLoss)
+
+// ══════════════════════════════════════════════════════════
+// 🎨 VISUALISIERUNG - SEHR DEUTLICH!
+// ══════════════════════════════════════════════════════════
+
+// 1. MAs - DICK und DEUTLICH
+plot(sma20, "SMA 20", color=color.new(color.yellow, 0), linewidth=3, style=plot.style_line)
+plot(sma50, "SMA 50", color=color.new(color.orange, 0), linewidth=4, style=plot.style_line)
+plot(ema9, "EMA 9", color=color.new(color.aqua, 30), linewidth=2, style=plot.style_line)
+
+// 2. ENTRY ZONE - GROSSE GRÜNE BOX
+if barstate.islast and showEntryZone
+    box.new(bar_index - 200, entryLow, bar_index + 100, entryHigh, 
+         border_color=color.new(color.lime, 0), 
+         bgcolor=color.new(color.lime, 85), 
+         border_width=5,
+         text="💚 KAUFZONE\\n\\n" + 
+              str.tostring(entryLow, "#.##") + " - " + str.tostring(entryHigh, "#.##") + " EUR\\n\\n" +
+              "Score: " + str.tostring(multiAgentScore, "#") + "/100\\n" +
+              "Setup: " + setupQuality + "\\n" +
+              "Konfidenz: " + str.tostring(konfidenz, "#") + "%",
+         text_color=color.new(color.lime, 0), 
+         text_size=size.huge, 
+         text_halign=text.align_center,
+         text_valign=text.align_center)
+
+// 3. STOP LOSS - DICKE ROTE LINIE
+if barstate.islast
+    line.new(bar_index - 200, stopLoss, bar_index + 100, stopLoss, 
+         color=color.red, width=6, style=line.style_solid)
+    
+    label.new(bar_index + 105, stopLoss, 
+         "⛔ STOP LOSS\\n" + str.tostring(stopLoss, "#.##") + " EUR\\n\\nSOFORT VERKAUFEN!", 
+         style=label.style_label_left, 
+         color=color.red, 
+         textcolor=color.white, 
+         size=size.huge)
+
+// 4. TAKE PROFIT LEVELS - GRÜNE LINIEN
+if barstate.islast and showPriceTargets
+    // TP1
+    line.new(bar_index - 200, takeProfit1, bar_index + 100, takeProfit1, 
+         color=color.new(color.lime, 0), width=5, style=line.style_dashed)
+    
+    label.new(bar_index + 105, takeProfit1, 
+         "🎯 ZIEL 1\\n" + str.tostring(takeProfit1, "#.##") + " EUR\\n\\n50% VERKAUFEN", 
+         style=label.style_label_left, 
+         color=color.new(color.lime, 0), 
+         textcolor=color.white, 
+         size=size.large)
+    
+    // TP2
+    line.new(bar_index - 200, takeProfit2, bar_index + 100, takeProfit2, 
+         color=color.new(color.aqua, 0), width=5, style=line.style_dashed)
+    
+    label.new(bar_index + 105, takeProfit2, 
+         "🚀 ZIEL 2\\n" + str.tostring(takeProfit2, "#.##") + " EUR\\n\\nREST VERKAUFEN", 
+         style=label.style_label_left, 
+         color=color.new(color.aqua, 0), 
+         textcolor=color.white, 
+         size=size.large)
+
+// 5. SUPPORT & RESISTANCE
+if barstate.islast
+    line.new(bar_index - 200, resistance1, bar_index + 100, resistance1, 
+         color=color.new(color.red, 50), width=3, style=line.style_dotted)
+    label.new(bar_index + 105, resistance1, "R1: " + str.tostring(resistance1, "#.##"), 
+         style=label.style_label_left, color=color.new(color.red, 70), textcolor=color.white, size=size.small)
+    
+    line.new(bar_index - 200, support1, bar_index + 100, support1, 
+         color=color.new(color.green, 50), width=3, style=line.style_dotted)
+    label.new(bar_index + 105, support1, "S1: " + str.tostring(support1, "#.##"), 
+         style=label.style_label_left, color=color.new(color.green, 70), textcolor=color.white, size=size.small)
+
+// ══════════════════════════════════════════════════════════
+// 🔔 KAUF/VERKAUF SIGNALE - RIESIG!
+// ══════════════════════════════════════════════════════════
+
+if showTradeSignals
+    // KAUFSIGNAL
+    if buySignal
+        label.new(bar_index, low - atr * 1.5, 
+             "🟢🟢🟢\\n\\nJETZT KAUFEN!\\n\\n" + 
+             str.tostring(close, "#.##") + " EUR\\n\\n" +
+             "Stop: " + str.tostring(stopLoss, "#.##") + "\\n" +
+             "Ziel: " + str.tostring(takeProfit1, "#.##"),
+             style=label.style_label_up, 
+             color=color.new(color.lime, 0), 
+             textcolor=color.black, 
+             size=size.huge)
+    
+    // VERKAUF TP1
+    if sellSignalTP1
+        label.new(bar_index, high + atr * 1.5, 
+             "🎯🎯🎯\\n\\nZIEL 1 ERREICHT!\\n\\n" + 
+             str.tostring(close, "#.##") + " EUR\\n\\n50% VERKAUFEN!",
+             style=label.style_label_down, 
+             color=color.new(color.lime, 0), 
+             textcolor=color.black, 
+             size=size.huge)
+    
+    // VERKAUF TP2
+    if sellSignalTP2
+        label.new(bar_index, high + atr * 1.5, 
+             "🚀🚀🚀\\n\\nZIEL 2 ERREICHT!\\n\\n" + 
+             str.tostring(close, "#.##") + " EUR\\n\\nALLES VERKAUFEN!",
+             style=label.style_label_down, 
+             color=color.new(color.aqua, 0), 
+             textcolor=color.black, 
+             size=size.huge)
+    
+    // STOP LOSS HIT
+    if stopLossHit
+        label.new(bar_index, low - atr * 1.5, 
+             "⛔⛔⛔\\n\\nSTOP LOSS!\\n\\n" + 
+             str.tostring(close, "#.##") + " EUR\\n\\nSOFORT RAUS!",
+             style=label.style_label_up, 
+             color=color.red, 
+             textcolor=color.white, 
+             size=size.huge)
+
+// ══════════════════════════════════════════════════════════
+// 📈 PROGNOSE mit WAHRSCHEINLICHKEITEN
+// ══════════════════════════════════════════════════════════
+
+if barstate.islast and showPrognose
+    // Basis für Prognose
+    currentPrice = close
+    trendMultiplier = bullishTrend ? 1.0 : bearishTrend ? -1.0 : 0.0
+    volatility = atr
+    
+    // 1 STUNDE Prognose
+    prog1h = currentPrice + (trendMultiplier * volatility * 0.15)
+    prob1h = momentumScore
+    
+    // 4 STUNDEN Prognose
+    prog4h = currentPrice + (trendMultiplier * volatility * 0.4)
+    prob4h = math.min(momentumScore * 0.9, 90)
+    
+    // 1 TAG Prognose
+    prog1d = currentPrice + (trendMultiplier * volatility * 0.8)
+    prob1d = math.min(momentumScore * 0.85, 85)
+    
+    // 5 TAGE Prognose
+    prog5d = currentPrice + (trendMultiplier * volatility * 2.5)
+    prob5d = math.min(momentumScore * 0.7, 70)
+    
+    // PROGNOSE BOX - RECHTS
+    boxTop = math.max(prog1h, math.max(prog4h, math.max(prog1d, prog5d))) + atr
+    boxBottom = math.min(prog1h, math.min(prog4h, math.min(prog1d, prog5d))) - atr
+    
+    box.new(bar_index + 5, boxTop, bar_index + 50, boxBottom,
+         border_color=color.new(color.blue, 30), 
+         bgcolor=color.new(color.blue, 92), 
+         border_width=3,
+         text="🔮 KI-PROGNOSE\\n\\n" +
+              "1H: " + str.tostring(prog1h, "#.##") + " EUR (" + str.tostring(prob1h, "#") + "%)\\n" +
+              "4H: " + str.tostring(prog4h, "#.##") + " EUR (" + str.tostring(prob4h, "#") + "%)\\n" +
+              "1D: " + str.tostring(prog1d, "#.##") + " EUR (" + str.tostring(prob1d, "#") + "%)\\n" +
+              "5D: " + str.tostring(prog5d, "#.##") + " EUR (" + str.tostring(prob5d, "#") + "%)\\n\\n" +
+              "Trend: " + (bullishTrend ? "📈 AUFWÄRTS" : bearishTrend ? "📉 ABWÄRTS" : "➡️ SEITWÄRTS"),
+         text_color=color.aqua, 
+         text_size=size.large, 
+         text_halign=text.align_left)
+    
+    // Prognose-Linien zeichnen
+    line.new(bar_index, currentPrice, bar_index + 10, prog1h, 
+         color=prob1h >= 60 ? color.lime : color.orange, width=2, style=line.style_solid)
+    label.new(bar_index + 10, prog1h, "1H", color=color.new(color.blue, 50), textcolor=color.white, size=size.tiny)
+    
+    line.new(bar_index, currentPrice, bar_index + 20, prog4h, 
+         color=prob4h >= 60 ? color.lime : color.orange, width=2, style=line.style_solid)
+    label.new(bar_index + 20, prog4h, "4H", color=color.new(color.blue, 50), textcolor=color.white, size=size.tiny)
+    
+    line.new(bar_index, currentPrice, bar_index + 30, prog1d, 
+         color=prob1d >= 60 ? color.lime : color.orange, width=2, style=line.style_solid)
+    label.new(bar_index + 30, prog1d, "1D", color=color.new(color.blue, 50), textcolor=color.white, size=size.tiny)
+    
+    line.new(bar_index, currentPrice, bar_index + 45, prog5d, 
+         color=prob5d >= 60 ? color.lime : color.orange, width=3, style=line.style_solid)
+    label.new(bar_index + 45, prog5d, "5D", color=color.new(color.blue, 50), textcolor=color.white, size=size.normal)
+
+// ══════════════════════════════════════════════════════════
+// 📊 DASHBOARD - OBEN LINKS
+// ══════════════════════════════════════════════════════════
+
+var table dashboard = table.new(position.top_left, 2, 8, 
+     bgcolor=color.new(color.black, 10), 
+     border_color=color.white, 
+     border_width=4)
+
+if barstate.islast
+    empfColor = multiAgentScore >= 70 ? color.lime : multiAgentScore >= 50 ? color.yellow : color.red
+    empfText = multiAgentScore >= 70 ? "🟢 KAUFEN" : multiAgentScore >= 50 ? "🟡 HALTEN" : "🔴 VERKAUFEN"
+    
+    // Header
+    table.cell(dashboard, 0, 0, "🤖 ${stock}", 
+         bgcolor=color.new(empfColor, 20), text_color=color.white, text_size=size.huge)
+    table.merge_cells(dashboard, 0, 0, 1, 0)
+    
+    // Empfehlung
+    table.cell(dashboard, 0, 1, "SIGNAL:", text_color=color.white, text_size=size.large)
+    table.cell(dashboard, 1, 1, empfText, 
+         bgcolor=color.new(empfColor, 30), text_color=color.white, text_size=size.huge)
+    
+    // Score
+    table.cell(dashboard, 0, 2, "Score:", text_color=color.white, text_size=size.normal)
+    table.cell(dashboard, 1, 2, str.tostring(multiAgentScore, "#") + "/100", 
+         text_color=empfColor, text_size=size.large)
+    
+    // Setup
+    table.cell(dashboard, 0, 3, "Setup:", text_color=color.white, text_size=size.normal)
+    table.cell(dashboard, 1, 3, setupQuality, 
+         bgcolor=color.new(color.lime, 60), text_color=color.white, text_size=size.large)
+    
+    // Konfidenz
+    table.cell(dashboard, 0, 4, "Konfidenz:", text_color=color.white, text_size=size.normal)
+    table.cell(dashboard, 1, 4, str.tostring(konfidenz, "#") + "%", 
+         text_color=color.aqua, text_size=size.large)
+    
+    // Entry
+    table.cell(dashboard, 0, 5, "Entry:", text_color=color.white, text_size=size.normal)
+    table.cell(dashboard, 1, 5, str.tostring((entryLow + entryHigh)/2, "#.##"), 
+         text_color=color.lime, text_size=size.large)
+    
+    // Stop Loss
+    table.cell(dashboard, 0, 6, "Stop Loss:", text_color=color.white, text_size=size.normal)
+    table.cell(dashboard, 1, 6, str.tostring(stopLoss, "#.##"), 
+         text_color=color.red, text_size=size.large)
+    
+    // R:R
+    table.cell(dashboard, 0, 7, "R:R Ratio:", text_color=color.white, text_size=size.normal)
+    table.cell(dashboard, 1, 7, "1:" + str.tostring(riskReward, "#.#"), 
+         text_color=riskReward >= 2 ? color.lime : color.orange, text_size=size.large)
+
+// ══════════════════════════════════════════════════════════
+// 🔔 ALERTS
+// ══════════════════════════════════════════════════════════
+
+alertcondition(buySignal, "🟢 KAUFEN", "JETZT KAUFEN bei " + str.tostring(close))
+alertcondition(sellSignalTP1, "🎯 ZIEL 1", "Take Profit 1 erreicht!")
+alertcondition(sellSignalTP2, "🚀 ZIEL 2", "Take Profit 2 erreicht!")
+alertcondition(stopLossHit, "⛔ STOP LOSS", "SOFORT VERKAUFEN!")
+alertcondition(inEntryZone, "💚 ENTRY ZONE", "Kurs in optimaler Kaufzone!")`;
 
 // ══════════════════════════════════════════════════════════
 // EINSTELLUNGEN
