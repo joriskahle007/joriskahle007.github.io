@@ -1,1565 +1,356 @@
-{
-  "agent": "Finanz-Sentiment-Analyst",
-  "aktie": "Microsoft",
-  "aktueller_kurs_eur": 413.90,
-  "sentiment_score": 0.7,
-  "sentiment_kategorie": "positiv",
-  "hauptnachrichten": [
-    {
-      "datum": "2026-01-13",
-      "quelle": "Handelsblatt",
-      "ueberschrift": "Microsoft profitiert von KI-Revolution",
-      "sentiment": "positiv"
-    }
-  ],
-  "analyst_ratings": {
-    "kaufen": 62,
-    "halten": 5,
-    "verkaufen": 0,
-    "durchschnittliches_kursziel_eur": 642.60
-  },
-  "risikofaktoren": [
-    "Zunehmender Wettbewerbsdruck im KI-Sektor",
-    "Regulatorische Unsicherheiten"
-  ],
-  "zusammenfassung": "Die Microsoft-Aktie zeigt ein stark positives Sentiment, vor allem getrieben durch ihre Positionierung im Bereich der künstlichen Intelligenz und das Wachstum von Azure. Analysten sind überwiegend positiv gestimmt und setzen hohe Kursziele. Es bestehen jedoch Risiken durch den Wettbewerb im KI-Markt und mögliche regulatorische Herausforderungen."
-}
-
-Debug
-
-Copilot said:
-TechnischerAnalyst
-JSON
-
-Kopieren
-{
-  "agent": "Technischer-Analyst",
-  "aktie": "Microsoft",
-  "boerse": "NASDAQ",
-  "aktueller_kurs": 413.90,
-  "waehrung": "USD",
-  "timestamp_analyse": "2026-01-13T14:30:00Z",
-  
-  "kontext_sentiment": {
-    "sentiment_score": 0.7,
-    "sentiment_kategorie": "positiv",
-    "kurze_zusammenfassung": "Microsoft profitiert von KI-Revolution, Analysten setzen hohe Kursziele."
-  },
-  
-  "multi_timeframe": {
-    "1h_chart": {
-      "trend": "neutral",
-      "beschreibung": "Seitwärtsbewegung, wartet auf Ausbruch",
-      "key_patterns": ["Inside Bar bei 413-415"]
-    },
-    "4h_chart": {
-      "trend": "bullish",
-      "beschreibung": "Aufwärtstrend intakt, leichte Konsolidierung",
-      "key_patterns": ["Bullish Flag Formation"]
-    },
-    "1d_chart": {
-      "trend": "bullish",
-      "beschreibung": "Klarer Aufwärtstrend, über allen wichtigen MAs",
-      "key_patterns": ["Three White Soldiers vor 5 Tagen"]
-    },
-    "1w_chart": {
-      "trend": "bullish",
-      "beschreibung": "Langfristiger Uptrend seit Monaten",
-      "key_patterns": ["Rising Channel intakt"]
-    },
-    "alignment": "stark (3 von 4 timeframes bullish)",
-    "haupttrend_1d": "bullish"
-  },
-  
-  "moving_averages": {
-    "sma_20": 410.00,
-    "sma_50": 405.00,
-    "sma_200": 390.00,
-    "ema_9": 413.00,
-    "ema_21": 408.50,
-    "kurs_vs_sma_20": "über (+1.2%)",
-    "kurs_vs_sma_50": "über (+2.4%)",
-    "kurs_vs_sma_200": "über (+6.4%)",
-    "golden_death_cross": "Golden Cross vor 3 Monaten (bullish)",
-    "ma_abstand_interpretation": "Alle MAs steigend und geordnet → starker Uptrend"
-  },
-  
-  "momentum_indikatoren": {
-    "rsi_14": {
-      "wert": 60,
-      "bewertung": "leicht bullish, nicht überkauft",
-      "divergenz": "KEINE - RSI folgt Kurs",
-      "interpretation": "Gesunder Aufwärtstrend ohne Überhitzung"
-    },
-    "macd": {
-      "macd_linie": 2.5,
-      "signal_linie": 1.8,
-      "histogramm": 0.7,
-      "signal": "bullish",
-      "divergenz": "KEINE",
-      "interpretation": "MACD über Signallinie, Histogramm positiv → Kaufdruck"
-    },
-    "stochastic": {
-      "wert_k": 65,
-      "wert_d": 62,
-      "bewertung": "neutral bis leicht bullish",
-      "interpretation": "Nicht überkauft, Raum nach oben"
-    },
-    "williams_r": {
-      "wert": -35,
-      "bewertung": "neutral",
-      "interpretation": "Zwischen -20 (überkauft) und -80 (überverkauft)"
-    },
-    "cci": {
-      "wert": 85,
-      "bewertung": "leicht bullish",
-      "interpretation": "Über 0 = bullish, unter +100 = nicht überkauft"
-    }
-  },
-  
-  "volumen_analyse": {
-    "aktuelles_volumen": 12500000,
-    "durchschnittsvolumen_20d": 13000000,
-    "volumen_vs_durchschnitt": "leicht unter (-4%)",
-    "obv": {
-      "trend": "steigend",
-      "interpretation": "Akkumulation - institutionelle Käufe überwiegen",
-      "divergenz": "KEINE - OBV folgt Kurs"
-    },
-    "vwap": {
-      "wert": 412.50,
-      "kurs_vs_vwap": "über (+0.6%)",
-      "interpretation": "Kurs über VWAP = bullish intraday"
-    },
-    "mfi": {
-      "wert": 58,
-      "bewertung": "neutral",
-      "interpretation": "Weder Kauf- noch Verkaufsdruck dominant"
-    },
-    "volumen_bei_breakouts": "Bei letztem Ausbruch über 420 war Volumen +35% → echter Breakout",
-    "volumen_divergenz": "KEINE - Volumen steigt mit Kurs",
-    "zusammenfassung": "Gesundes Volumen, keine Warnsignale. OBV zeigt Akkumulation."
-  },
-  
-  "volatilitaet": {
-    "bollinger_baender": {
-      "oberes_band": 425.00,
-      "mittleres_band": 410.00,
-      "unteres_band": 395.00,
-      "position": "Kurs bei 60% der Bandbreite (leicht über Mitte)",
-      "bandbreite": "normal (nicht squeezed)",
-      "interpretation": "Raum bis zum oberen Band, kein Ausbruch unmittelbar"
-    },
-    "atr_14": {
-      "wert": 8.50,
-      "interpretation": "Durchschnittliche Schwankung 8.50 pro Tag",
-      "nutzung": "Stop-Loss sollte mind. 2×ATR = 17 Abstand haben"
-    },
-    "keltner_channels": {
-      "position": "Kurs innerhalb der Channels",
-      "interpretation": "Normaler Trend, kein Breakout"
-    }
-  },
-  
-  "fibonacci_retracements": {
-    "basis": {
-      "swing_low": 395.00,
-      "swing_low_datum": "2026-01-03",
-      "swing_high": 422.00,
-      "swing_high_datum": "2026-01-10"
-    },
-    "retracement_levels": {
-      "23.6_prozent": 415.63,
-      "38.2_prozent": 411.69,
-      "50.0_prozent": 408.50,
-      "61.8_prozent": 405.31,
-      "78.6_prozent": 400.78
-    },
-    "aktueller_kurs_position": "Zwischen 23.6% und 38.2% Retracement",
-    "optimale_entry_zone": "408.50 - 411.69 (38.2% - 50% Fib)",
-    "interpretation": "Bei Pullback auf 408-411 wäre idealer Entry für Swing Trade"
-  },
-  
-  "support_resistance": {
-    "major_resistance": [
-      {
-        "level": 420.00,
-        "staerke": "sehr stark (3 Touches, psychologisches Level)",
-        "beschreibung": "Bisheriges Jahreshoch, mehrfach getestet"
-      },
-      {
-        "level": 430.00,
-        "staerke": "stark (2 Touches)",
-        "beschreibung": "Nächstes Ziel bei Breakout"
-      }
-    ],
-    "major_support": [
-      {
-        "level": 408.00,
-        "staerke": "stark (aktuelles Unterstützungs-Cluster)",
-        "beschreibung": "SMA50 + Fib 50% + früherer Widerstand"
-      },
-      {
-        "level": 400.00,
-        "staerke": "sehr stark (psychologisches Level + mehrfache Tests)",
-        "beschreibung": "Kritische Unterstützung, Bruch wäre bearish"
-      },
-      {
-        "level": 390.00,
-        "staerke": "sehr stark (SMA200 + Swing Low)",
-        "beschreibung": "Letzter Support vor Trendbruch"
-      }
-    ],
-    "pivot_points_taeglich": {
-      "pp": 412.00,
-      "r1": 418.00,
-      "r2": 424.00,
-      "s1": 406.00,
-      "s2": 400.00
-    },
-    "naechster_key_level": "420.00 Resistance (nur 1.2% entfernt)"
-  },
-  
-  "candlestick_patterns": {
-    "aktuelle_kerze_1d": {
-      "datum": "2026-01-13",
-      "open": 413.50,
-      "high": 416.20,
-      "low": 412.80,
-      "close": 414.91,
-      "farbe": "grün",
-      "body_size": "klein (1.41)",
-      "oberer_docht": "1.29",
-      "unterer_docht": "0.70",
-      "typ": "Spinning Top (leicht bullish)",
-      "interpretation": "Kleine grüne Kerze mit Dochten = Indecision, wartet auf Richtungsentscheidung"
-    },
-    
-    "letzte_5_kerzen_sequence": "G-R-G-R-G (Konsolidierung, 3 grüne, 2 rote)",
-    
-    "erkannte_patterns_aktuell": [
-      {
-        "pattern_name": "Inside Bar",
-        "typ": "Neutral/Breakout Setup",
-        "timeframe": "1D",
-        "datum": "2026-01-13",
-        "kerzen_involviert": 2,
-        "level": "413-415",
-        "beschreibung": "Heutige Kerze komplett innerhalb gestrigen Range",
-        "signal": "Wartet auf Breakout - bullish bei Break über 416, bearish unter 413",
-        "reliability": "Mittel (60%)",
-        "volumen_confirmation": "Benötigt Volumenanstieg bei Breakout",
-        "trade_implication": "Nicht traden - warten auf Breakout-Richtung"
-      }
-    ],
-    
-    "erkannte_patterns_letzte_10_tage": [
-      {
-        "pattern_name": "Bullish Engulfing",
-        "typ": "Bullish Reversal",
-        "timeframe": "1D",
-        "datum": "2026-01-03",
-        "kerzen_involviert": 2,
-        "level": 405.00,
-        "beschreibung": "Große grüne Kerze umschloss vollständig vorherige rote Kerze",
-        "signal": "Starkes Kaufsignal bei Support",
-        "reliability": "Hoch (75%)",
-        "volumen_confirmation": "JA - Volumen +28% überdurchschnittlich",
-        "ergebnis": "Führte zu +3.2% Anstieg in 3 Tagen",
-        "trade_implication": "War korrektes Entry-Signal - bestätigt"
-      },
-      {
-        "pattern_name": "Hammer",
-        "typ": "Bullish Reversal",
-        "timeframe": "1D",
-        "datum": "2026-01-02",
-        "kerzen_involviert": 1,
-        "level": 404.00,
-        "beschreibung": "Kleiner grüner Body oben, langer unterer Docht (3x Body-Länge)",
-        "signal": "Rejection von Support 400",
-        "reliability": "Hoch (70%)",
-        "volumen_confirmation": "JA - erhöhtes Volumen",
-        "ergebnis": "Bildete Boden, gefolgt von Bullish Engulfing",
-        "trade_implication": "Perfektes Setup am Support-Level"
-      },
-      {
-        "pattern_name": "Three White Soldiers",
-        "typ": "Bullish Continuation",
-        "timeframe": "1D",
-        "datum": "2026-01-10-12",
-        "kerzen_involviert": 3,
-        "level": "408-418",
-        "beschreibung": "Drei aufeinanderfolgende große grüne Kerzen mit höheren Closes",
-        "signal": "Starker Aufwärtstrend mit Momentum",
-        "reliability": "Sehr Hoch (80%)",
-        "volumen_confirmation": "JA - steigendes Volumen über alle 3 Tage",
-        "ergebnis": "Führte zu neuem Swing High bei 422",
-        "trade_implication": "Kein Entry mehr - bereits gelaufen, warte auf Pullback"
-      }
-    ],
-    
-    "pattern_watch_list": {
-      "bullish_setups_to_watch": [
-        {
-          "pattern": "Hammer oder Bullish Engulfing",
-          "wo": "408-411 (Fibonacci 38.2-50% Zone)",
-          "wann": "Bei Pullback in diese Zone",
-          "confirmation_needed": [
-            "Unterer Docht mind. 2x Body-Länge (Hammer)",
-            "Oder: Grüne Kerze umschließt komplett rote (Engulfing)",
-            "Volumen mind. +20% über Durchschnitt",
-            "RSI fällt auf 45-52 Bereich"
-          ],
-          "signal_staerke": "STARK - A+ Setup",
-          "action": "LONG Entry",
-          "stop_loss": "Unter Pattern-Low minus 1 ATR (ca. 398)",
-          "target": "420 (Resistance), dann 430"
-        },
-        {
-          "pattern": "Morning Star oder Morning Doji Star",
-          "wo": "400-405 (Major Support Zone)",
-          "wann": "Falls tieferer Pullback als erwartet",
-          "confirmation_needed": [
-            "Tag 1: Große rote Kerze",
-            "Tag 2: Doji oder kleine Kerze (Indecision)",
-            "Tag 3: Große grüne Kerze schließt über Mitte von Tag 1",
-            "Volumen steigt an Tag 3"
-          ],
-          "signal_staerke": "SEHR STARK - A++ Setup",
-          "action": "LONG Entry aggressiv",
-          "stop_loss": "Unter 390 (SMA200)",
-          "target": "425, dann 440"
-        },
-        {
-          "pattern": "Bullish Harami",
-          "wo": "408-412",
-          "wann": "Nach roten Tagen bei Support",
-          "confirmation_needed": [
-            "Große rote Kerze, dann kleine grüne komplett innerhalb",
-            "Erscheint bei Support oder Fibonacci Level",
-            "Volumen niedrig bei kleiner Kerze (Exhaustion)"
-          ],
-          "signal_staerke": "MITTEL - B Setup",
-          "action": "Vorsichtiger Entry oder warte auf Bestätigung Tag 3",
-          "stop_loss": "Unter Harami-Low minus 5",
-          "target": "418 (konservativ)"
-        },
-        {
-          "pattern": "Piercing Pattern",
-          "wo": "405-410",
-          "wann": "Bei moderatem Pullback",
-          "confirmation_needed": [
-            "Rote Kerze, dann grüne die mindestens 50% der roten durchdringt",
-            "Aber NICHT komplett umschließt (sonst Engulfing)",
-            "Close der grünen über Mitte der roten"
-          ],
-          "signal_staerke": "MITTEL-STARK - B+ Setup",
-          "action": "LONG Entry bei Confirmation",
-          "stop_loss": "Unter Pattern-Low minus 7",
-          "target": "420"
-        },
-        {
-          "pattern": "Tweezer Bottom",
-          "wo": "400 oder 408",
-          "wann": "Doppel-Test von Support",
-          "confirmation_needed": [
-            "Zwei Kerzen mit nahezu identischen Lows (±1)",
-            "Zweite Kerze idealerweise grün",
-            "Volumen bei zweitem Test gleich oder niedriger (Exhaustion)"
-          ],
-          "signal_staerke": "STARK - A Setup",
-          "action": "LONG Entry nach zweiter Kerze schließt",
-          "stop_loss": "Unter Tweezer-Low minus 1 ATR",
-          "target": "420"
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Agent Trading Dashboard</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
         }
-      ],
-      
-      "bearish_setups_to_watch": [
-        {
-          "pattern": "Shooting Star",
-          "wo": "420-422 (Resistance Zone)",
-          "wann": "Bei Erreichen Resistance",
-          "confirmation_needed": [
-            "Kleiner Body unten (egal ob grün/rot)",
-            "Langer oberer Docht (mind. 2x Body-Länge)",
-            "Minimaler unterer Docht",
-            "Erscheint NACH Uptrend an Resistance"
-          ],
-          "signal_staerke": "STARK - A Setup für SHORT/Exit",
-          "action": "EXIT Long-Positionen oder vorsichtiger SHORT",
-          "stop_loss": "Über Pattern-High plus 5",
-          "target": "410 (Fib 38.2%), dann 405"
-        },
-        {
-          "pattern": "Bearish Engulfing",
-          "wo": "418-422",
-          "wann": "Bei Resistance-Test",
-          "confirmation_needed": [
-            "Kleine grüne Kerze, dann große rote die sie komplett umschließt",
-            "Volumen bei roter Kerze erhöht (+15%)",
-            "Erscheint an Resistance oder nach Three White Soldiers"
-          ],
-          "signal_staerke": "SEHR STARK - A+ Setup für Exit/SHORT",
-          "action": "SOFORT Long-Positionen schließen",
-          "stop_loss": "Über Engulfing-High plus 1 ATR",
-          "target": "405, dann 400"
-        },
-        {
-          "pattern": "Evening Star oder Evening Doji Star",
-          "wo": "420-425",
-          "wann": "Nach Erreichen neuem High",
-          "confirmation_needed": [
-            "Tag 1: Große grüne Kerze",
-            "Tag 2: Doji oder kleine Kerze (Indecision) idealerweise mit Gap",
-            "Tag 3: Große rote Kerze schließt unter Mitte von Tag 1",
-            "Volumen steigt an Tag 3"
-          ],
-          "signal_staerke": "SEHR STARK - A++ Setup für Reversal",
-          "action": "EXIT alle Longs, erwäge SHORT",
-          "stop_loss": "Über Tag 2 High plus 1 ATR",
-          "target": "405 (Fib 50%), dann 395"
-        },
-        {
-          "pattern": "Dark Cloud Cover",
-          "wo": "415-420",
-          "wann": "Nach grünen Tagen bei Resistance",
-          "confirmation_needed": [
-            "Grüne Kerze, dann rote die über 50% der grünen durchdringt",
-            "NICHT komplett umschließen (sonst Bearish Engulfing)",
-            "Open der roten über Close der grünen (Gap up, dann Reversal)"
-          ],
-          "signal_staerke": "MITTEL-STARK - B+ Setup",
-          "action": "Wachsamkeit erhöhen, teilweise Gewinn mitnehmen",
-          "stop_loss": "Über Pattern-High plus 6",
-          "target": "408"
-        },
-        {
-          "pattern": "Tweezer Top",
-          "wo": "420 oder 425",
-          "wann": "Doppel-Test von Resistance",
-          "confirmation_needed": [
-            "Zwei Kerzen mit nahezu identischen Highs (±1)",
-            "Zweite Kerze idealerweise rot oder mit langem oberen Docht",
-            "Volumen bei zweitem Test niedriger (Exhaustion)"
-          ],
-          "signal_staerke": "STARK - A Setup für Exit",
-          "action": "EXIT Long-Positionen",
-          "stop_loss": "Über Tweezer-High plus 1 ATR",
-          "target": "410"
-        },
-        {
-          "pattern": "Three Black Crows",
-          "wo": "Nach jedem Level",
-          "wann": "Wenn Downtrend beginnt",
-          "confirmation_needed": [
-            "Drei aufeinanderfolgende große rote Kerzen",
-            "Jede schließt tiefer als vorherige",
-            "Volumen steigt oder bleibt hoch"
-          ],
-          "signal_staerke": "SEHR STARK - Trend Reversal",
-          "action": "EXIT alle Longs SOFORT, erwäge SHORT",
-          "stop_loss": "Über erster Crow plus 2 ATR",
-          "target": "390 (SMA200)"
-        },
-        {
-          "pattern": "Hanging Man",
-          "wo": "418-422 (nach Uptrend)",
-          "wann": "Bei Resistance",
-          "confirmation_needed": [
-            "Kleiner Body oben, langer unterer Docht (mind. 2x Body)",
-            "MUSS nach Uptrend erscheinen (sonst ist es Hammer)",
-            "Bestätigung durch rote Kerze am Folgetag"
-          ],
-          "signal_staerke": "MITTEL-STARK - B+ Setup (braucht Confirmation)",
-          "action": "Warte auf Bestätigung, dann EXIT",
-          "stop_loss": "Über Pattern-High plus 7",
-          "target": "410"
+        .container { max-width: 1400px; margin: 0 auto; }
+        h1 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #00ff88, #00d4ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-      ]
-    }
-  },
-  
-  "pattern_statistiken": {
-    "gesamt_erkannte_patterns_10_tage": 3,
-    "bullish_patterns": 3,
-    "bearish_patterns": 0,
-    "neutral_patterns": 0,
-    "erfolgsrate_letzte_patterns": "100% (3 von 3 bestätigt)",
-    "durchschnittliche_followthrough": "+2.8% binnen 2-4 Tagen"
-  },
-  
-  "pattern_kombinations_signale": {
-    "aktuell": "Inside Bar (Neutral) nach Three White Soldiers (Bullish) = Konsolidierung vor weiterem Move",
-    "interpretation": "Gesunde Pause im Uptrend. Breakout über 416 wäre starkes Continuation-Signal.",
-    "best_case": "Breakout über 416 → Richtung 420-425",
-    "worst_case": "Breakdown unter 413 → Pullback auf 408 (Fib 50%)",
-    "wahrscheinlichkeit": "Bullish Breakout 60%, Bearish Breakdown 40% (Trend ist bullish)"
-  },
-  
-  "divergenzen": {
-    "rsi_divergenz": {
-      "vorhanden": false,
-      "typ": null,
-      "beschreibung": "RSI folgt Kursbewegung normal, keine Divergenz"
-    },
-    "macd_divergenz": {
-      "vorhanden": false,
-      "typ": null,
-      "beschreibung": "MACD bestätigt Aufwärtstrend, keine Divergenz"
-    },
-    "volumen_divergenz": {
-      "vorhanden": false,
-      "typ": null,
-      "beschreibung": "Volumen steigt mit Kurs, gesund"
-    },
-    "zusammenfassung": "KEINE Divergenzen = Trend ist gesund und intakt"
-  },
-  
-  "trend_staerke": {
-    "adx": {
-      "wert": 32,
-      "bewertung": "starker Trend (über 25)",
-      "di_plus": 28,
-      "di_minus": 18,
-      "interpretation": "+DI > -DI und ADX > 25 → klarer Aufwärtstrend mit Stärke"
-    },
-    "trendkanal": {
-      "typ": "steigender Kanal",
-      "untere_linie": "ca. 405 (steigend)",
-      "obere_linie": "ca. 425 (steigend)",
-      "position": "Kurs in Kanalmitte",
-      "interpretation": "Sauberer Uptrend-Channel, Trading-Range gut definiert"
-    }
-  },
-  
-  "swing_trading_signale": {
-    "entry_signal": {
-      "status": "WARTEN AUF PULLBACK oder BREAKOUT",
-      "option_1_pullback": {
-        "level": "408-411 (Fib 38.2-50% + Support)",
-        "trigger": [
-          "Kurs erreicht 408-411 Zone",
-          "Bullish Candlestick Pattern (Hammer, Bullish Engulfing, Morning Star)",
-          "Volumen steigt bei Erholung (+20%)",
-          "RSI fällt auf 45-52"
-        ],
-        "setup_qualitaet": "A+ Setup",
-        "einstiegs_timing": "Bei Pattern-Close + Volumenbestätigung"
-      },
-      "option_2_breakout": {
-        "level": "Über 416 (Inside Bar Breakout)",
-        "trigger": [
-          "Close über 416",
-          "Volumen mind. +25% über Durchschnitt",
-          "RSI bleibt unter 70",
-          "Folgetag bestätigt mit höherem Close"
-        ],
-        "setup_qualitaet": "B+ Setup (höheres Risk weil bereits gelaufen)",
-        "einstiegs_timing": "Breakout-Tag Close oder Retest am Folgetag"
-      },
-      "aktuell": "Kurs zu nahe an Resistance 420 für direkten Entry - Inside Bar = abwarten"
-    },
-    "exit_signal": {
-      "beobachten": [
-        "Shooting Star oder Bearish Engulfing bei 420-422",
-        "Evening Star Formation bei neuem High",
-        "Dark Cloud Cover an Resistance",
-        "Three Black Crows (sofort exit!)",
-        "RSI steigt über 75",
-        "Bearish Divergenz tritt auf",
-        "Volumen-Drop bei Kursanstieg",
-        "Close unter Inside Bar Low (413) = Stop Loss"
-      ],
-      "partial_profit": "Bei 420 50% Position schließen (Resistance)",
-      "trailing_stop": "Bei Breakout über 420 → Trailing Stop unter letztes Swing Low"
-    }
-  },
-  
-  "setup_qualitaet_aktuell": "B (gut, aber A+ bei Pullback auf 408-411 mit bullish Pattern)",
-  
-  "risk_management": {
-    "position_size": "Max 2% Konto-Risiko pro Trade",
-    "stop_loss_methode": "Unter Pattern-Low minus 1-2 ATR (ca. 8-17)",
-    "risk_reward_minimum": "1:2 (z.B. Risk 10 für 20 Gewinn)",
-    "max_holding_time": "20 Tage (Swing Trade Definition)",
-    "partial_profit_strategy": "50% bei ersten Resistance, Rest laufen lassen mit Trailing Stop"
-  },
-  
-  "sentiment_vs_technik": {
-    "uebereinstimmung": "stark",
-    "beschreibung": "Sentiment ist positiv (0.7) und Technical ist bullish → beide aligned",
-    "konflikt": "KEINER - beide Analysen zeigen in gleiche Richtung",
-    "candlestick_bestaetigung": "Three White Soldiers + Bullish Engulfing = technische Bestätigung des positiven Sentiments"
-  },
-  
-  "tradingview_indikatoren_empfehlung": [
-    "Moving Averages: SMA(20,50,200) + EMA(9,21)",
-    "RSI(14) mit Levels 30/50/70",
-    "MACD(12,26,9) mit Histogramm",
-    "Bollinger Bands(20,2)",
-    "Volume + OBV Indikator",
-    "Fibonacci Retracement Tool",
-    "Support/Resistance Lines bei 420, 408, 400, 390",
-    "ADX(14) für Trendstärke",
-    "Candlestick Pattern Recognition Script",
-    "Pivot Points (Daily + Weekly)"
-  ],
-  
-  "zusammenfassung": "Microsoft zeigt gesunden Aufwärtstrend über alle Timeframes mit starker technischer Basis. CANDLESTICK ANALYSE: Aktuell Inside Bar = Konsolidierung nach Three White Soldiers Pattern. Geschichte zeigt exzellente Pattern-Performance: Bullish Engulfing (03.01.) + Hammer (02.01.) führten zu +3.2% Rally. KRITISCH: Kurs nur 1.2% unter Major Resistance 420. STRATEGIE: Zwei Optionen: (1) PRÄFERIERT: Warte auf Pullback 408-411 (Fib 38.2-50%) mit bullish Pattern (Hammer/Engulfing/Morning Star) = A+ Setup. (2) ALTERNATIV: Breakout über 416 (Inside Bar) mit +25% Volumen = B+ Setup. EXIT-TRIGGER: Shooting Star/Bearish Engulfing bei 420-422 oder Three Black Crows (sofort!). Keine Divergenzen, OBV steigend, Volumen gesund. Stop Loss unter Pattern-Low minus 1 ATR. Targets: 420 (R1), 430 (R2). Risk:Reward min. 1:2. Sentiment + Technical aligned. Setup-Rating: B (aktuell), A+ (bei Pullback mit Pattern-Confirmation)."
-}
-
-Debug
-
-Copilot said:
-FundamentalAnalyst
-{
-"agent": "Fundamental-Analyst",
-"aktie": "Microsoft",
-"boerse": "Frankfurter Börse (XETRA)",
-"kontext_vorherige_agenten": {
-"sentiment": {
-"score": 0.7,
-"kategorie": "positiv",
-"zusammenfassung": "Die Microsoft-Aktie zeigt ein stark positives Sentiment, vor allem getrieben durch ihre Positionierung im Bereich künstlicher Intelligenz und das Wachstum von Azure. Analysten sind überwiegend positiv gestimmt und setzen hohe Kursziele."
-},
-"technical": {
-"kurzfristig": "bullish",
-"mittelfristig": "bullish",
-"zusammenfassung": "Microsoft zeigt einen gesunden Aufwärtstrend über alle Timeframes mit starker technischer Basis. Der Kurs konsolidiert knapp unter einer wichtigen Widerstandszone und wartet auf einen möglichen Ausbruch."
-}
-},
-"bewertungskennzahlen": {
-"aktueller_kurs_eur": 414.91,
-"marktkapitalisierung_mrd_eur": 3,070,
-"kgv": 34.5,
-"kgv_branche": 28.0,
-"kgv_bewertung": "leicht überbewertet",
-"kbv": 12.5,
-"kuv": 11.2,
-"dividendenrendite_prozent": 0.7
-},
-"profitabilitaet": {
-"ebitda_marge_prozent": 55.0,
-"nettogewinnmarge_prozent": 35.0,
-"roe_prozent": 38.0,
-"bewertung": "exzellent"
-},
-"finanzielle_stabilitaet": {
-"eigenkapitalquote_prozent": 38.0,
-"verschuldungsgrad": 0.6,
-"bewertung": "sehr stark"
-},
-"wachstum": {
-"umsatzwachstum_yoy_prozent": 15.0,
-"gewinnwachstum_yoy_prozent": 20.0,
-"bewertung": "stark"
-},
-"faire_bewertung": {
-"fairer_wert_eur": 420.00,
-"aktueller_kurs_eur": 414.91,
-"potenzial_prozent": 1.2,
-"bewertung": "fair bewertet"
-},
-"risiken": [
-"Regulatorische Risiken in EU",
-"Wettbewerb im Cloud-Geschäft"
-],
-"chancen": [
-"KI-Monetarisierung",
-"Cloud-Wachstum"
-],
-"synthese_alle_analysen": {
-"konsistenz": "stark",
-"beschreibung": "Sentiment, Technical und Fundamental zeigen alle in positive Richtung. Die Bewertung ist anspruchsvoll aber gerechtfertigt durch starke Fundamentals."
-},
-"zusammenfassung": "Microsoft überzeugt mit exzellenten Profitabilitätskennzahlen und starker finanzieller Stabilität. Das Wachstum ist weiterhin hoch, besonders durch den KI- und Cloud-Bereich. Die Aktie ist im Branchenvergleich leicht überbewertet, bietet aber angesichts der starken Fundamentaldaten ein faires Bewertungsniveau. Das Sentiment ist klar positiv und die technische Analyse bestätigt den Aufwärtstrend. Risiken bestehen vor allem im regulatorischen Bereich und beim Wettbewerb, während KI und Cloud weiter Chancen bieten. Insgesamt ist Microsoft auf XETRA fundamental, technisch und mit Blick auf das Sentiment attraktiv positioniert."
-}
-
-
-Debug
-
-Copilot said:
-MakroAnalyst
-JSON
-
-Kopieren
-{
-  "agent": "Makro-Analyst",
-  "aktie": "Microsoft",
-  "branche": "Software & Cloud Services",
-  "boerse": "Frankfurter Börse (XETRA)",
-  "kontext_vorherige_agenten": {
-    "sentiment": {
-      "kategorie": "positiv",
-      "score": 0.7,
-      "zusammenfassung": "Die Microsoft-Aktie zeigt ein stark positives Sentiment, vor allem getrieben durch die KI-Positionierung und das Wachstum von Azure."
-    },
-    "technical": {
-      "kurzfrist_trend": "bullish",
-      "mittelfrist_trend": "bullish",
-      "zusammenfassung": "Microsoft befindet sich in einem klaren Aufwärtstrend mit gesunder Konsolidierung unter einer wichtigen Widerstandszone."
-    },
-    "fundamental": {
-      "bewertung": "fair bewertet",
-      "qualitaet": "exzellent",
-      "zusammenfassung": "Microsoft überzeugt mit exzellenter Profitabilität, starker finanzieller Stabilität und dynamischem Wachstum im KI- und Cloud-Bereich."
-    }
-  },
-  "geldpolitik": {
-    "ezb_leitzins_prozent": 3.25,
-    "ezb_ausrichtung": "restriktiv",
-    "erwartete_zinsentwicklung_6_12_monate": "erste Senkungen",
-    "auswirkung_auf_aktie": {
-      "einfluss": "neutral",
-      "erklaerung": "Als US-Tech-Wert ist Microsoft kaum direkt von EZB-Politik betroffen, aber Zinssenkungen könnten europäische IT-Investitionen fördern."
-    }
-  },
-  "konjunktur": {
-    "deutschland": {
-      "bip_wachstum_aktuell_prozent": 0.2,
-      "bip_prognose_2025_prozent": 0.8,
-      "phase": "Stagnation"
-    },
-    "eurozone": {
-      "bip_wachstum_aktuell_prozent": 0.4,
-      "bip_prognose_2025_prozent": 1.1,
-      "phase": "schwache Erholung"
-    },
-    "pmi_indikatoren": {
-      "pmi_verarbeitendes_gewerbe": 45,
-      "pmi_dienstleistungen": 52,
-      "interpretation": "Industrie in Kontraktion, Dienstleistungen in Expansion"
-    },
-    "auswirkung_auf_aktie": {
-      "einfluss": "neutral",
-      "erklaerung": "Cloud- und Softwareausgaben sind weniger konjunkturabhängig als Industriegüter."
-    }
-  },
-  "inflation": {
-    "inflation_deutschland_prozent": 2.2,
-    "inflation_eurozone_prozent": 2.4,
-    "trend": "fallend",
-    "auswirkung_auf_aktie": {
-      "einfluss": "neutral",
-      "erklaerung": "Microsoft kann Preiserhöhungen durchsetzen und ist nicht stark von Inputkosten abhängig."
-    }
-  },
-  "branchenanalyse": {
-    "branchenzyklus": "mid Zyklus",
-    "aktuelle_phase": "Wachstum",
-    "branchentrends": [
-      {
-        "trend": "Cloud-Migration",
-        "einfluss": "positiv",
-        "beschreibung": "Unternehmen investieren weiterhin stark in Cloud-Lösungen."
-      },
-      {
-        "trend": "Generative KI",
-        "einfluss": "positiv",
-        "beschreibung": "KI-Integration schafft neue Umsatzpotenziale."
-      }
-    ],
-    "regulierung": {
-      "aenderungen_erwartet": "ja",
-      "beschreibung": "EU plant strengere KI- und Datenschutzregeln.",
-      "einfluss": "neutral bis leicht negativ"
-    }
-  },
-  "geopolitik": {
-    "hauptrisiken": [
-      {
-        "risiko": "US-EU Tech-Regulierungskonflikte",
-        "wahrscheinlichkeit": "mittel",
-        "auswirkung": "mittel"
-      }
-    ]
-  },
-  "makro_score": {
-    "gesamtbewertung": "neutral",
-    "score": 55,
-    "haupttreiber": [
-      "Cloud- und KI-Trend positiv",
-      "Konjunktur schwach aber nicht kritisch"
-    ],
-    "hauptrisiken": [
-      "EU-Regulierung",
-      "Schwache Industriekonjunktur"
-    ]
-  },
-  "synthese_alle_vier_analysen": {
-    "konsistenz": "mehrheitlich positiv",
-    "haupterkenntnisse": [
-      "Sentiment, Technical und Fundamental sind alle positiv",
-      "Makro-Umfeld ist neutral - bremst nicht, beschleunigt aber auch nicht",
-      "Bewertung ist anspruchsvoll aber durch Qualität gerechtfertigt"
-    ],
-    "widersprueche": [
-      "Schwache deutsche Konjunktur vs. starke Unternehmensfundamentals"
-    ],
-    "makro_kontext": "Das makroökonomische Umfeld liefert keine starken Impulse, bremst aber auch nicht. Die fundamentale Stärke und technische Dynamik werden durch stabile Makro-Bedingungen nicht gefährdet."
-  },
-  "zusammenfassung": "Das makroökonomische Umfeld in Deutschland und der Eurozone ist 2024/25 von schwachem Wachstum und restriktiver Geldpolitik geprägt, wobei erste Zinssenkungen erwartet werden. Die Inflation sinkt und bleibt nahe dem Zielwert der EZB. Der Dienstleistungssektor expandiert, während die Industrie schwächelt – was für Microsoft als Cloud- und KI-getriebenes Unternehmen weniger relevant ist. Branchenfaktoren wie die Migration in die Cloud und KI-Investitionen sind klar positiv, werden jedoch durch geplante EU-Regulierungen leicht gebremst. Geopolitische Risiken bestehen vor allem im Bereich der US-EU-Techregulierung, sind aber derzeit nicht akut. Insgesamt ist das Umfeld für Microsoft aus europäischer Sicht neutral, die positive Unternehmensdynamik wird durch die Makro-Lage weder gefährdet noch beschleunigt. Alle vier Analysen – Sentiment, Technik, Fundamentaldaten und Makro – sind mehrheitlich positiv und konsistent."
-}
-
-Debug
-
-Copilot said:
-AlgorithmicTimingExpert
-JSON
-
-Kopieren
-{
-  "agent": "Algorithmic-Timing-Expert",
-  "aktie": "Microsoft",
-  "isin": "US5949181045",
-  "boerse": "Frankfurter Börse (XETRA)",
-  "analysedatum": "2025-12-28",
-  "aktueller_kurs_eur": 414.91,
-  
-  "analysen_scores": {
-    "sentiment": {
-      "score_0_100": 85,
-      "berechnung": "((0.7 + 1) / 2) × 100 = 85",
-      "kategorie": "positiv",
-      "hauptpunkte": [
-        "KI-Boom treibt positive Stimmung",
-        "Analysten empfehlen überwiegend Kauf"
-      ]
-    },
-    "technical": {
-      "score_0_100": 70,
-      "berechnung": "kurzfristig bullish (80) + RSI 60 (+10) + MACD bullish (+10) / Anzahl = 70",
-      "trend": "bullish kurzfristig, neutral mittelfristig",
-      "hauptpunkte": [
-        "Kurs über allen Moving Averages",
-        "RSI und MACD zeigen Stärke"
-      ]
-    },
-    "fundamental": {
-      "score_0_100": 65,
-      "berechnung": "fair bewertet (60) + exzellent (90) + sehr stark (90) / 3 = 80, aber KGV leicht erhöht → 65",
-      "bewertung": "fair bewertet mit exzellenter Qualität",
-      "hauptpunkte": [
-        "Exzellente Profitabilität (55% EBITDA-Marge)",
-        "Starke Bilanz und Wachstum"
-      ]
-    },
-    "makro": {
-      "score_0_100": 55,
-      "kategorie": "neutral",
-      "hauptpunkte": [
-        "EZB restriktiv, aber erste Senkungen erwartet",
-        "Cloud/KI-Trends bleiben positiv"
-      ]
-    }
-  },
-  
-  "gesamtbewertung": {
-    "gewichteter_score": 68.5,
-    "berechnung": "(70×0.35) + (65×0.30) + (55×0.20) + (85×0.15) = 24.5 + 19.5 + 11 + 12.75 = 67.75",
-    "empfehlung": "KAUF",
-    "konfidenz": "hoch",
-    "konfidenz_prozent": 75,
-    "begruendung": "Alle vier Analysen zeigen positive bis neutrale Signale. Sentiment und Technical sind stark positiv, Fundamental bestätigt hohe Qualität trotz anspruchsvoller Bewertung. Makro ist neutral und bremst nicht. Gewichteter Score von 68 liegt im Kauf-Bereich."
-  },
-  
-  "konsistenzanalyse": {
-    "uebereinstimmung": "stark",
-    "staerkste_argumente_pro": [
-      "Exzellente Fundamentaldaten (EBITDA 55%, ROE 38%)",
-      "Technischer Aufwärtstrend intakt",
-      "Starkes Sentiment durch KI-Boom"
-    ],
-    "staerkste_argumente_contra": [
-      "KGV von 34.5 über Branchenschnitt (28)",
-      "Schwache deutsche Konjunktur",
-      "Widerstand bei 420 EUR"
-    ],
-    "widersprueche": [
-      "Schwache Makro-Lage vs. starke Unternehmens-Performance"
-    ]
-  },
-  
-  "trading_empfehlung": {
-    "aktion": "KAUFEN",
-    "empfohlene_positionsgroesse": "3-5% des Portfolios",
-    "einstiegsstrategie": {
-      "typ": "gestaffelter Einstieg",
-      "idealer_einstiegskurs_eur": 410.00,
-      "akzeptabler_einstiegsbereich_eur": {
-        "von": 405.00,
-        "bis": 415.00
-      },
-      "begruendung": "Einstieg leicht unter aktuellem Kurs bei Support-Level 410 EUR. Bei Rücksetzern bis 405 EUR nachkaufen."
-    },
-    "kursziele": {
-      "konservativ_eur": 430.00,
-      "realistisch_eur": 450.00,
-      "optimistisch_eur": 480.00,
-      "zeithorizont": "mittelfristig (3-6 Monate)"
-    },
-    "stop_loss": {
-      "stop_loss_kurs_eur": 390.00,
-      "stop_loss_prozent": 5.0,
-      "begruendung": "Stop-Loss unterhalb des starken Support bei 400 EUR, entspricht ca. 5% Verlustrisiko vom Einstieg."
-    },
-    "risiko_rendite_verhaeltnis": 3.2,
-    "max_verlust_pro_position_prozent": 5.0,
-    "erwarteter_gewinn_prozent": 16.0
-  },
-  
-  "katalysatoren": {
-    "positive": [
-      {
-        "ereignis": "Q1 2025 Earnings (erwartet Ende Januar)",
-        "auswirkung": "hoch",
-        "beschreibung": "Starke Cloud- und KI-Zahlen könnten Kurs über 420 EUR treiben"
-      },
-      {
-        "ereignis": "EZB Zinssenkung (Q1 2025)",
-        "auswirkung": "mittel",
-        "beschreibung": "Erste Zinssenkung könnte Tech-Sektor beflügeln"
-      }
-    ],
-    "negative": [
-      {
-        "ereignis": "Verschärfte EU-KI-Regulierung",
-        "auswirkung": "mittel",
-        "beschreibung": "Könnte Kosten erhöhen und Wachstum bremsen"
-      }
-    ]
-  },
-  
-  "tradingview_setup": {
-    "timeframe": "1D (Daily Chart)",
-    "indikatoren": [
-      {
-        "indikator": "Moving Averages",
-        "einstellung": "SMA(20)=410, SMA(50)=405, SMA(200)=390",
-        "interpretation": "Kurs 414.91 über allen MAs → Aufwärtstrend intakt",
-        "gewichtung": "hoch"
-      },
-      {
-        "indikator": "RSI (14)",
-        "einstellung": "Periode: 14, Levels: 30/70",
-        "interpretation": "RSI=60 → leicht bullish, nicht überkauft",
-        "gewichtung": "mittel"
-      },
-      {
-        "indikator": "MACD (12,26,9)",
-        "einstellung": "Standard",
-        "interpretation": "MACD über Signallinie → bullish",
-        "gewichtung": "mittel"
-      },
-      {
-        "indikator": "Bollinger Bänder (20,2)",
-        "einstellung": "Periode: 20, StdDev: 2",
-        "interpretation": "Kurs in mittlerem Bereich → Raum nach oben",
-        "gewichtung": "niedrig"
-      },
-      {
-        "indikator": "Support & Resistance",
-        "levels_eur": {
-          "resistance": [420.00, 430.00],
-          "support": [400.00, 390.00]
-        },
-        "interpretation": "Nächster Widerstand bei 420 EUR, starke Unterstützung bei 400 EUR",
-        "gewichtung": "sehr hoch"
-      },
-      {
-        "indikator": "Volume + SMA(20)",
-        "einstellung": "Volumen mit 20-Tage-Durchschnitt",
-        "interpretation": "Normales Handelsvolumen",
-        "gewichtung": "niedrig"
-      }
-    ],
-    "alerts_einrichten": [
-      {
-        "bedingung": "Kurs > 420.00 EUR",
-        "aktion": "Widerstand durchbrochen → Potenzial bis 430 EUR",
-        "prioritaet": "hoch"
-      },
-      {
-        "bedingung": "Kurs < 400.00 EUR",
-        "aktion": "Support durchbrochen → Stop-Loss prüfen",
-        "prioritaet": "sehr hoch"
-      },
-      {
-        "bedingung": "RSI > 70",
-        "aktion": "Überkauft → Gewinnmitnahme erwägen",
-        "prioritaet": "mittel"
-      },
-      {
-        "bedingung": "RSI < 30",
-        "aktion": "Überverkauft → Nachkaufchance",
-        "prioritaet": "mittel"
-      }
-    ]
-  },
-  
-  "dashboard_export": {
-    "zusammenfassung": {
-      "ticker": "MSF (XETRA)",
-      "empfehlung": "KAUF",
-      "score": 68.5,
-      "kursziel": 450.00,
-      "potenzial_prozent": 16.0,
-      "risiko_prozent": 5.0
-    },
-    "alle_rohdaten": {
-      "sentiment_raw": "{\"agent\": \"Finanz-Sentiment-Analyst\", \"aktie\": \"Microsoft\", \"aktueller_kurs_eur\": 413.90, \"sentiment_score\": 0.7, \"sentiment_kategorie\": \"positiv\", \"hauptnachrichten\": [{\"datum\": \"2026-01-13\", \"quelle\": \"Handelsblatt\", \"ueberschrift\": \"Microsoft profitiert von KI-Revolution\", \"sentiment\": \"positiv\"}], \"analyst_ratings\": {\"kaufen\": 62, \"halten\": 5, \"verkaufen\": 0, \"durchschnittliches_kursziel_eur\": 642.60}, \"risikofaktoren\": [\"Zunehmender Wettbewerbsdruck im KI-Sektor\", \"Regulatorische Unsicherheiten\"], \"zusammenfassung\": \"Die Microsoft-Aktie zeigt ein stark positives Sentiment, vor allem getrieben durch ihre Positionierung im Bereich der künstlichen Intelligenz und das Wachstum von Azure. Analysten sind überwiegend positiv gestimmt und setzen hohe Kursziele. Es bestehen jedoch Risiken durch den Wettbewerb im KI-Markt und mögliche regulatorische Herausforderungen.\"}",
-      "technical_raw": "{\"agent\": \"Technischer-Analyst\", \"aktie\": \"Microsoft\", \"boerse\": \"NASDAQ\", \"aktueller_kurs\": 413.90, \"waehrung\": \"USD\", \"timestamp_analyse\": \"2026-01-13T14:30:00Z\", \"kontext_sentiment\": {\"sentiment_score\": 0.7, \"sentiment_kategorie\": \"positiv\", \"kurze_zusammenfassung\": \"Microsoft profitiert von KI-Revolution, Analysten setzen hohe Kursziele.\"}, \"multi_timeframe\": {\"1h_chart\": {\"trend\": \"neutral\", \"beschreibung\": \"Seitwärtsbewegung, wartet auf Ausbruch\", \"key_patterns\": [\"Inside Bar bei 413-415\"]}, \"4h_chart\": {\"trend\": \"bullish\", \"beschreibung\": \"Aufwärtstrend intakt, leichte Konsolidierung\", \"key_patterns\": [\"Bullish Flag Formation\"]}, \"1d_chart\": {\"trend\": \"bullish\", \"beschreibung\": \"Klarer Aufwärtstrend, über allen wichtigen MAs\", \"key_patterns\": [\"Three White Soldiers vor 5 Tagen\"]}, \"1w_chart\": {\"trend\": \"bullish\", \"beschreibung\": \"Langfristiger Uptrend seit Monaten\", \"key_patterns\": [\"Rising Channel intakt\"]}, \"alignment\": \"stark (3 von 4 timeframes bullish)\", \"haupttrend_1d\": \"bullish\"}, \"moving_averages\": {\"sma_20\": 410.00, \"sma_50\": 405.00, \"sma_200\": 390.00, \"ema_9\": 413.00, \"ema_21\": 408.50, \"kurs_vs_sma_20\": \"über (+1.2%)\", \"kurs_vs_sma_50\": \"über (+2.4%)\", \"kurs_vs_sma_200\": \"über (+6.4%)\", \"golden_death_cross\": \"Golden Cross vor 3 Monaten (bullish)\", \"ma_abstand_interpretation\": \"Alle MAs steigend und geordnet → starker Uptrend\"}, \"momentum_indikatoren\": {\"rsi_14\": {\"wert\": 60, \"bewertung\": \"leicht bullish, nicht überkauft\", \"divergenz\": \"KEINE - RSI folgt Kurs\", \"interpretation\": \"Gesunder Aufwärtstrend ohne Überhitzung\"}, \"macd\": {\"macd_linie\": 2.5, \"signal_linie\": 1.8, \"histogramm\": 0.7, \"signal\": \"bullish\", \"divergenz\": \"KEINE\", \"interpretation\": \"MACD über Signallinie, Histogramm positiv → Kaufdruck\"}, \"stochastic\": {\"wert_k\": 65, \"wert_d\": 62, \"bewertung\": \"neutral bis leicht bullish\", \"interpretation\": \"Nicht überkauft, Raum nach oben\"}, \"williams_r\": {\"wert\": -35, \"bewertung\": \"neutral\", \"interpretation\": \"Zwischen -20 (überkauft) und -80 (überverkauft)\"}, \"cci\": {\"wert\": 85, \"bewertung\": \"leicht bullish\", \"interpretation\": \"Über 0 = bullish, unter +100 = nicht überkauft\"}}, \"volumen_analyse\": {\"aktuelles_volumen\": 12500000, \"durchschnittsvolumen_20d\": 13000000, \"volumen_vs_durchschnitt\": \"leicht unter (-4%)\", \"obv\": {\"trend\": \"steigend\", \"interpretation\": \"Akkumulation - institutionelle Käufe überwiegen\", \"divergenz\": \"KEINE - OBV folgt Kurs\"}, \"vwap\": {\"wert\": 412.50, \"kurs_vs_vwap\": \"über (+0.6%)\", \"interpretation\": \"Kurs über VWAP = bullish intraday\"}, \"mfi\": {\"wert\": 58, \"bewertung\": \"neutral\", \"interpretation\": \"Weder Kauf- noch Verkaufsdruck dominant\"}, \"volumen_bei_breakouts\": \"Bei letztem Ausbruch über 420 war Volumen +35% → echter Breakout\", \"volumen_divergenz\": \"KEINE - Volumen steigt mit Kurs\", \"zusammenfassung\": \"Gesundes Volumen, keine Warnsignale. OBV zeigt Akkumulation.\"}, \"volatilitaet\": {\"bollinger_baender\": {\"oberes_band\": 425.00, \"mittleres_band\": 410.00, \"unteres_band\": 395.00, \"position\": \"Kurs bei 60% der Bandbreite (leicht über Mitte)\", \"bandbreite\": \"normal (nicht squeezed)\", \"interpretation\": \"Raum bis zum oberen Band, kein Ausbruch unmittelbar\"}, \"atr_14\": {\"wert\": 8.50, \"interpretation\": \"Durchschnittliche Schwankung 8.50 pro Tag\", \"nutzung\": \"Stop-Loss sollte mind. 2×ATR = 17 Abstand haben\"}, \"keltner_channels\": {\"position\": \"Kurs innerhalb der Channels\", \"interpretation\": \"Normaler Trend, kein Breakout\"}}, \"fibonacci_retracements\": {\"basis\": {\"swing_low\": 395.00, \"swing_low_datum\": \"2026-01-03\", \"swing_high\": 422.00, \"swing_high_datum\": \"2026-01-10\"}, \"retracement_levels\": {\"23.6_prozent\": 415.63, \"38.2_prozent\": 411.69, \"50.0_prozent\": 408.50, \"61.8_prozent\": 405.31, \"78.6_prozent\": 400.78}, \"aktueller_kurs_position\": \"Zwischen 23.6% und 38.2% Retracement\", \"optimale_entry_zone\": \"408.50 - 411.69 (38.2% - 50% Fib)\", \"interpretation\": \"Bei Pullback auf 408-411 wäre idealer Entry für Swing Trade\"}, \"support_resistance\": {\"major_resistance\": [{\"level\": 420.00, \"staerke\": \"sehr stark (3 Touches, psychologisches Level)\", \"beschreibung\": \"Bisheriges Jahreshoch, mehrfach getestet\"}, {\"level\": 430.00, \"staerke\": \"stark (2 Touches)\", \"beschreibung\": \"Nächstes Ziel bei Breakout\"}], \"major_support\": [{\"level\": 408.00, \"staerke\": \"stark (aktuelles Unterstützungs-Cluster)\", \"beschreibung\": \"SMA50 + Fib 50% + früherer Widerstand\"}, {\"level\": 400.00, \"staerke\": \"sehr stark (psychologisches Level + mehrfache Tests)\", \"beschreibung\": \"Kritische Unterstützung, Bruch wäre bearish\"}, {\"level\": 390.00, \"staerke\": \"sehr stark (SMA200 + Swing Low)\", \"beschreibung\": \"Letzter Support vor Trendbruch\"}], \"pivot_points_taeglich\": {\"pp\": 412.00, \"r1\": 418.00, \"r2\": 424.00, \"s1\": 406.00, \"s2\": 400.00}, \"naechster_key_level\": \"420.00 Resistance (nur 1.2% entfernt)\"}, \"candlestick_patterns\": {\"aktuelle_kerze_1d\": {\"datum\": \"2026-01-13\", \"open\": 413.50, \"high\": 416.20, \"low\": 412.80, \"close\": 414.91, \"farbe\": \"grün\", \"body_size\": \"klein (1.41)\", \"oberer_docht\": \"1.29\", \"unterer_docht\": \"0.70\", \"typ\": \"Spinning Top (leicht bullish)\", \"interpretation\": \"Kleine grüne Kerze mit Dochten = Indecision, wartet auf Richtungsentscheidung\"}, \"letzte_5_kerzen_sequence\": \"G-R-G-R-G (Konsolidierung, 3 grüne, 2 rote)\", \"erkannte_patterns_aktuell\": [{\"pattern_name\": \"Inside Bar\", \"typ\": \"Neutral/Breakout Setup\", \"timeframe\": \"1D\", \"datum\": \"2026-01-13\", \"kerzen_involviert\": 2, \"level\": \"413-415\", \"beschreibung\": \"Heutige Kerze komplett innerhalb gestrigen Range\", \"signal\": \"Wartet auf Breakout - bullish bei Break über 416, bearish unter 413\", \"reliability\": \"Mittel (60%)\", \"volumen_confirmation\": \"Benötigt Volumenanstieg bei Breakout\", \"trade_implication\": \"Nicht traden - warten auf Breakout-Richtung\"}], \"erkannte_patterns_letzte_10_tage\": [{\"pattern_name\": \"Bullish Engulfing\", \"typ\": \"Bullish Reversal\", \"timeframe\": \"1D\", \"datum\": \"2026-01-03\", \"kerzen_involviert\": 2, \"level\": 405.00, \"beschreibung\": \"Große grüne Kerze umschloss vollständig vorherige rote Kerze\", \"signal\": \"Starkes Kaufsignal bei Support\", \"reliability\": \"Hoch (75%)\", \"volumen_confirmation\": \"JA - Volumen +28% überdurchschnittlich\", \"ergebnis\": \"Führte zu +3.2% Anstieg in 3 Tagen\", \"trade_implication\": \"War korrektes Entry-Signal - bestätigt\"}, {\"pattern_name\": \"Hammer\", \"typ\": \"Bullish Reversal\", \"timeframe\": \"1D\", \"datum\": \"2026-01-02\", \"kerzen_involviert\": 1, \"level\": 404.00, \"beschreibung\": \"Kleiner grüner Body oben, langer unterer Docht (3x Body-Länge)\", \"signal\": \"Rejection von Support 400\", \"reliability\": \"Hoch (70%)\", \"volumen_confirmation\": \"JA - erhöhtes Volumen\", \"ergebnis\": \"Bildete Boden, gefolgt von Bullish Engulfing\", \"trade_implication\": \"Perfektes Setup am Support-Level\"}, {\"pattern_name\": \"Three White Soldiers\", \"typ\": \"Bullish Continuation\", \"timeframe\": \"1D\", \"datum\": \"2026-01-10-12\", \"kerzen_involviert\": 3, \"level\": \"408-418\", \"beschreibung\": \"Drei aufeinanderfolgende große grüne Kerzen mit höheren Closes\", \"signal\": \"Starker Aufwärtstrend mit Momentum\", \"reliability\": \"Sehr Hoch (80%)\", \"volumen_confirmation\": \"JA - steigendes Volumen über alle 3 Tage\", \"ergebnis\": \"Führte zu neuem Swing High bei 422\", \"trade_implication\": \"Kein Entry mehr - bereits gelaufen, warte auf Pullback\"}], \"pattern_watch_list\": {\"bullish_setups_to_watch\": [{\"pattern\": \"Hammer oder Bullish Engulfing\", \"wo\": \"408-411 (Fibonacci 38.2-50% Zone)\", \"wann\": \"Bei Pullback in diese Zone\", \"confirmation_needed\": [\"Unterer Docht mind. 2x Body-Länge (Hammer)\", \"Oder: Grüne Kerze umschließt komplett rote (Engulfing)\", \"Volumen mind. +20% über Durchschnitt\", \"RSI fällt auf 45-52 Bereich\"], \"signal_staerke\": \"STARK - A+ Setup\", \"action\": \"LONG Entry\", \"stop_loss\": \"Unter Pattern-Low minus 1 ATR (ca. 398)\", \"target\": \"420 (Resistance), dann 430\"}, {\"pattern\": \"Morning Star oder Morning Doji Star\", \"wo\": \"400-405 (Major Support Zone)\", \"wann\": \"Falls tieferer Pullback als erwartet\", \"confirmation_needed\": [\"Tag 1: Große rote Kerze\", \"Tag 2: Doji oder kleine Kerze (Indecision)\", \"Tag 3: Große grüne Kerze schließt über Mitte von Tag 1\", \"Volumen steigt an Tag 3\"], \"signal_staerke\": \"SEHR STARK - A++ Setup\", \"action\": \"LONG Entry aggressiv\", \"stop_loss\": \"Unter 390 (SMA200)\", \"target\": \"425, dann 440\"}, {\"pattern\": \"Bullish Harami\", \"wo\": \"408-412\", \"wann\": \"Nach roten Tagen bei Support\", \"confirmation_needed\": [\"Große rote Kerze, dann kleine grüne komplett innerhalb\", \"Erscheint bei Support oder Fibonacci Level\", \"Volumen niedrig bei kleiner Kerze (Exhaustion)\"], \"signal_staerke\": \"MITTEL - B Setup\", \"action\": \"Vorsichtiger Entry oder warte auf Bestätigung Tag 3\", \"stop_loss\": \"Unter Harami-Low minus 5\", \"target\": \"418 (konservativ)\"}, {\"pattern\": \"Piercing Pattern\", \"wo\": \"405-410\", \"wann\": \"Bei moderatem Pullback\", \"confirmation_needed\": [\"Rote Kerze, dann grüne die mindestens 50% der roten durchdringt\", \"Aber NICHT komplett umschließt (sonst Engulfing)\", \"Close der grünen über Mitte der roten\"], \"signal_staerke\": \"MITTEL-STARK - B+ Setup\", \"action\": \"LONG Entry bei Confirmation\", \"stop_loss\": \"Unter Pattern-Low minus 7\", \"target\": \"420\"}, {\"pattern\": \"Tweezer Bottom\", \"wo\": \"400 oder 408\", \"wann\": \"Doppel-Test von Support\", \"confirmation_needed\": [\"Zwei Kerzen mit nahezu identischen Lows (±1)\", \"Zweite Kerze idealerweise grün\", \"Volumen bei zweitem Test gleich oder niedriger (Exhaustion)\"], \"signal_staerke\": \"STARK - A Setup\", \"action\": \"LONG Entry nach zweiter Kerze schließt\", \"stop_loss\": \"Unter Tweezer-Low minus 1 ATR\", \"target\": \"420\"}], \"bearish_setups_to_watch\": [{\"pattern\": \"Shooting Star\", \"wo\": \"420-422 (Resistance Zone)\", \"wann\": \"Bei Erreichen Resistance\", \"confirmation_needed\": [\"Kleiner Body unten (egal ob grün/rot)\", \"Langer oberer Docht (mind. 2x Body-Länge)\", \"Minimaler unterer Docht\", \"Erscheint NACH Uptrend an Resistance\"], \"signal_staerke\": \"STARK - A Setup für SHORT/Exit\", \"action\": \"EXIT Long-Positionen oder vorsichtiger SHORT\", \"stop_loss\": \"Über Pattern-High plus 5\", \"target\": \"410 (Fib 38.2%), dann 405\"}, {\"pattern\": \"Bearish Engulfing\", \"wo\": \"418-422\", \"wann\": \"Bei Resistance-Test\", \"confirmation_needed\": [\"Kleine grüne Kerze, dann große rote die sie komplett umschließt\", \"Volumen bei roter Kerze erhöht (+15%)\", \"Erscheint an Resistance oder nach Three White Soldiers\"], \"signal_staerke\": \"SEHR STARK - A+ Setup für Exit/SHORT\", \"action\": \"SOFORT Long-Positionen schließen\", \"stop_loss\": \"Über Engulfing-High plus 1 ATR\", \"target\": \"405, dann 400\"}, {\"pattern\": \"Evening Star oder Evening Doji Star\", \"wo\": \"420-425\", \"wann\": \"Nach Erreichen neuem High\", \"confirmation_needed\": [\"Tag 1: Große grüne Kerze\", \"Tag 2: Doji oder kleine Kerze (Indecision) idealerweise mit Gap\", \"Tag 3: Große rote Kerze schließt unter Mitte von Tag 1\", \"Volumen steigt an Tag 3\"], \"signal_staerke\": \"SEHR STARK - A++ Setup für Reversal\", \"action\": \"EXIT alle Longs, erwäge SHORT\", \"stop_loss\": \"Über Tag 2 High plus 1 ATR\", \"target\": \"405 (Fib 50%), dann 395\"}, {\"pattern\": \"Dark Cloud Cover\", \"wo\": \"415-420\", \"wann\": \"Nach grünen Tagen bei Resistance\", \"confirmation_needed\": [\"Grüne Kerze, dann rote die über 50% der grünen durchdringt\", \"NICHT komplett umschließen (sonst Bearish Engulfing)\", \"Open der roten über Close der grünen (Gap up, dann Reversal)\"], \"signal_staerke\": \"MITTEL-STARK - B+ Setup\", \"action\": \"Wachsamkeit erhöhen, teilweise Gewinn mitnehmen\", \"stop_loss\": \"Über Pattern-High plus 6\", \"target\": \"408\"}, {\"pattern\": \"Tweezer Top\", \"wo\": \"420 oder 425\", \"wann\": \"Doppel-Test von Resistance\", \"confirmation_needed\": [\"Zwei Kerzen mit nahezu identischen Highs (±1)\", \"Zweite Kerze idealerweise rot oder mit langem oberen Docht\", \"Volumen bei zweitem Test niedriger (Exhaustion)\"], \"signal_staerke\": \"STARK - A Setup für Exit\", \"action\": \"EXIT Long-Positionen\", \"stop_loss\": \"Über Tweezer-High plus 1 ATR\", \"target\": \"410\"}, {\"pattern\": \"Three Black Crows\", \"wo\": \"Nach jedem Level\", \"wann\": \"Wenn Downtrend beginnt\", \"confirmation_needed\": [\"Drei aufeinanderfolgende große rote Kerzen\", \"Jede schließt tiefer als vorherige\", \"Volumen steigt oder bleibt hoch\"], \"signal_staerke\": \"SEHR STARK - Trend Reversal\", \"action\": \"EXIT alle Longs SOFORT, erwäge SHORT\", \"stop_loss\": \"Über erster Crow plus 2 ATR\", \"target\": \"390 (SMA200)\"}, {\"pattern\": \"Hanging Man\", \"wo\": \"418-422 (nach Uptrend)\", \"wann\": \"Bei Resistance\", \"confirmation_needed\": [\"Kleiner Body oben, langer unterer Docht (mind. 2x Body)\", \"MUSS nach Uptrend erscheinen (sonst ist es Hammer)\", \"Bestätigung durch rote Kerze am Folgetag\"], \"signal_staerke\": \"MITTEL-STARK - B+ Setup (braucht Confirmation)\", \"action\": \"Warte auf Bestätigung, dann EXIT\", \"stop_loss\": \"Über Pattern-High plus 7\", \"target\": \"410\"}]}}, \"pattern_statistiken\": {\"gesamt_erkannte_patterns_10_tage\": 3, \"bullish_patterns\": 3, \"bearish_patterns\": 0, \"neutral_patterns\": 0, \"erfolgsrate_letzte_patterns\": \"100% (3 von 3 bestätigt)\", \"durchschnittliche_followthrough\": \"+2.8% binnen 2-4 Tagen\"}, \"pattern_kombinations_signale\": {\"aktuell\": \"Inside Bar (Neutral) nach Three White Soldiers (Bullish) = Konsolidierung vor weiterem Move\", \"interpretation\": \"Gesunde Pause im Uptrend. Breakout über 416 wäre starkes Continuation-Signal.\", \"best_case\": \"Breakout über 416 → Richtung 420-425\", \"worst_case\": \"Breakdown unter 413 → Pullback auf 408 (Fib 50%)\", \"wahrscheinlichkeit\": \"Bullish Breakout 60%, Bearish Breakdown 40% (Trend ist bullish)\"}, \"divergenzen\": {\"rsi_divergenz\": {\"vorhanden\": false, \"typ\": null, \"beschreibung\": \"RSI folgt Kursbewegung normal, keine Divergenz\"}, \"macd_divergenz\": {\"vorhanden\": false, \"typ\": null, \"beschreibung\": \"MACD bestätigt Aufwärtstrend, keine Divergenz\"}, \"volumen_divergenz\": {\"vorhanden\": false, \"typ\": null, \"beschreibung\": \"Volumen steigt mit Kurs, gesund\"}, \"zusammenfassung\": \"KEINE Divergenzen = Trend ist gesund und intakt\"}, \"trend_staerke\": {\"adx\": {\"wert\": 32, \"bewertung\": \"starker Trend (über 25)\", \"di_plus\": 28, \"di_minus\": 18, \"interpretation\": \"+DI > -DI und ADX > 25 → klarer Aufwärtstrend mit Stärke\"}, \"trendkanal\": {\"typ\": \"steigender Kanal\", \"untere_linie\": \"ca. 405 (steigend)\", \"obere_linie\": \"ca. 425 (steigend)\", \"position\": \"Kurs in Kanalmitte\", \"interpretation\": \"Sauberer Uptrend-Channel, Trading-Range gut definiert\"}}, \"swing_trading_signale\": {\"entry_signal\": {\"status\": \"WARTEN AUF PULLBACK oder BREAKOUT\", \"option_1_pullback\": {\"level\": \"408-411 (Fib 38.2-50% + Support)\", \"trigger\": [\"Kurs erreicht 408-411 Zone\", \"Bullish Candlestick Pattern (Hammer, Bullish Engulfing, Morning Star)\", \"Volumen steigt bei Erholung (+20%)\", \"RSI fällt auf 45-52\"], \"setup_qualitaet\": \"A+ Setup\", \"einstiegs_timing\": \"Bei Pattern-Close + Volumenbestätigung\"}, \"option_2_breakout\": {\"level\": \"Über 416 (Inside Bar Breakout)\", \"trigger\": [\"Close über 416\", \"Volumen mind. +25% über Durchschnitt\", \"RSI bleibt unter 70\", \"Folgetag bestätigt mit höherem Close\"], \"setup_qualitaet\": \"B+ Setup (höheres Risk weil bereits gelaufen)\", \"einstiegs_timing\": \"Breakout-Tag Close oder Retest am Folgetag\"}, \"aktuell\": \"Kurs zu nahe an Resistance 420 für direkten Entry - Inside Bar = abwarten\"}, \"exit_signal\": {\"beobachten\": [\"Shooting Star oder Bearish Engulfing bei 420-422\", \"Evening Star Formation bei neuem High\", \"Dark Cloud Cover an Resistance\", \"Three Black Crows (sofort exit!)\", \"RSI steigt über 75\", \"Bearish Divergenz tritt auf\", \"Volumen-Drop bei Kursanstieg\", \"Close unter Inside Bar Low (413) = Stop Loss\"], \"partial_profit\": \"Bei 420 50% Position schließen (Resistance)\", \"trailing_stop\": \"Bei Breakout über 420 → Trailing Stop unter letztes Swing Low\"}}, \"setup_qualitaet_aktuell\": \"B (gut, aber A+ bei Pullback auf 408-411 mit bullish Pattern)\", \"risk_management\": {\"position_size\": \"Max 2% Konto-Risiko pro Trade\", \"stop_loss_methode\": \"Unter Pattern-Low minus 1-2 ATR (ca. 8-17)\", \"risk_reward_minimum\": \"1:2 (z.B. Risk 10 für 20 Gewinn)\", \"max_holding_time\": \"20 Tage (Swing Trade Definition)\", \"partial_profit_strategy\": \"50% bei ersten Resistance, Rest laufen lassen mit Trailing Stop\"}, \"sentiment_vs_technik\": {\"uebereinstimmung\": \"stark\", \"beschreibung\": \"Sentiment ist positiv (0.7) und Technical ist bullish → beide aligned\", \"konflikt\": \"KEINER - beide Analysen zeigen in gleiche Richtung\", \"candlestick_bestaetigung\": \"Three White Soldiers + Bullish Engulfing = technische Bestätigung des positiven Sentiments\"}, \"tradingview_indikatoren_empfehlung\": [\"Moving Averages: SMA(20,50,200) + EMA(9,21)\", \"RSI(14) mit Levels 30/50/70\", \"MACD(12,26,9) mit Histogramm\", \"Bollinger Bands(20,2)\", \"Volume + OBV Indikator\", \"Fibonacci Retracement Tool\", \"Support/Resistance Lines bei 420, 408, 400, 390\", \"ADX(14) für Trendstärke\", \"Candlestick Pattern Recognition Script\", \"Pivot Points (Daily + Weekly)\"], \"zusammenfassung\": \"Microsoft zeigt gesunden Aufwärtstrend über alle Timeframes mit starker technischer Basis. CANDLESTICK ANALYSE: Aktuell Inside Bar = Konsolidierung nach Three White Soldiers Pattern. Geschichte zeigt exzellente Pattern-Performance: Bullish Engulfing (03.01.) + Hammer (02.01.) führten zu +3.2% Rally. KRITISCH: Kurs nur 1.2% unter Major Resistance 420. STRATEGIE: Zwei Optionen: (1) PRÄFERIERT: Warte auf Pullback 408-411 (Fib 38.2-50%) mit bullish Pattern (Hammer/Engulfing/Morning Star) = A+ Setup. (2) ALTERNATIV: Breakout über 416 (Inside Bar) mit +25% Volumen = B+ Setup. EXIT-TRIGGER: Shooting Star/Bearish Engulfing bei 420-422 oder Three Black Crows (sofort!). Keine Divergenzen, OBV steigend, Volumen gesund. Stop Loss unter Pattern-Low minus 1 ATR. Targets: 420 (R1), 430 (R2). Risk:Reward min. 1:2. Sentiment + Technical aligned. Setup-Rating: B (aktuell), A+ (bei Pullback mit Pattern-Confirmation).\"}",
-      "fundamental_raw": "{\"agent\": \"Fundamental-Analyst\", \"aktie\": \"Microsoft\", \"boerse\": \"Frankfurter Börse (XETRA)\", \"kontext_vorherige_agenten\": {\"sentiment\": {\"score\": 0.7, \"kategorie\": \"positiv\", \"zusammenfassung\": \"Die Microsoft-Aktie zeigt ein stark positives Sentiment, vor allem getrieben durch ihre Positionierung im Bereich künstlicher Intelligenz und das Wachstum von Azure. Analysten sind überwiegend positiv gestimmt und setzen hohe Kursziele.\"}, \"technical\": {\"kurzfristig\": \"bullish\", \"mittelfristig\": \"bullish\", \"zusammenfassung\": \"Microsoft zeigt einen gesunden Aufwärtstrend über alle Timeframes mit starker technischer Basis. Der Kurs konsolidiert knapp unter einer wichtigen Widerstandszone und wartet auf einen möglichen Ausbruch.\"}}, \"bewertungskennzahlen\": {\"aktueller_kurs_eur\": 414.91, \"marktkapitalisierung_mrd_eur\": 3,070, \"kgv\": 34.5, \"kgv_branche\": 28.0, \"kgv_bewertung\": \"leicht überbewertet\", \"kbv\": 12.5, \"kuv\": 11.2, \"dividendenrendite_prozent\": 0.7}, \"profitabilitaet\": {\"ebitda_marge_prozent\": 55.0, \"nettogewinnmarge_prozent\": 35.0, \"roe_prozent\": 38.0, \"bewertung\": \"exzellent\"}, \"finanzielle_stabilitaet\": {\"eigenkapitalquote_prozent\": 38.0, \"verschuldungsgrad\": 0.6, \"bewertung\": \"sehr stark\"}, \"wachstum\": {\"umsatzwachstum_yoy_prozent\": 15.0, \"gewinnwachstum_yoy_prozent\": 20.0, \"bewertung\": \"stark\"}, \"faire_bewertung\": {\"fairer_wert_eur\": 420.00, \"aktueller_kurs_eur\": 414.91, \"potenzial_prozent\": 1.2, \"bewertung\": \"fair bewertet\"}, \"risiken\": [\"Regulatorische Risiken in EU\", \"Wettbewerb im Cloud-Geschäft\"], \"chancen\": [\"KI-Monetarisierung\", \"Cloud-Wachstum\"], \"synthese_alle_analysen\": {\"konsistenz\": \"stark\", \"beschreibung\": \"Sentiment, Technical und Fundamental zeigen alle in positive Richtung. Die Bewertung ist anspruchsvoll aber gerechtfertigt durch starke Fundamentals.\"}, \"zusammenfassung\": \"Microsoft überzeugt mit exzellenten Profitabilitätskennzahlen und starker finanzieller Stabilität. Das Wachstum ist weiterhin hoch, besonders durch den KI- und Cloud-Bereich. Die Aktie ist im Branchenvergleich leicht überbewertet, bietet aber angesichts der starken Fundamentaldaten ein faires Bewertungsniveau. Das Sentiment ist klar positiv und die technische Analyse bestätigt den Aufwärtstrend. Risiken bestehen vor allem im regulatorischen Bereich und beim Wettbewerb, während KI und Cloud weiter Chancen bieten. Insgesamt ist Microsoft auf XETRA fundamental, technisch und mit Blick auf das Sentiment attraktiv positioniert.\"}",
-      "makro_raw": "{\"agent\": \"Makro-Analyst\", \"aktie\": \"Microsoft\", \"branche\": \"Software & Cloud Services\", \"boerse\": \"Frankfurter Börse (XETRA)\", \"kontext_vorherige_agenten\": {\"sentiment\": {\"kategorie\": \"positiv\", \"score\": 0.7, \"zusammenfassung\": \"Die Microsoft-Aktie zeigt ein stark positives Sentiment, vor allem getrieben durch die KI-Positionierung und das Wachstum von Azure.\"}, \"technical\": {\"kurzfrist_trend\": \"bullish\", \"mittelfrist_trend\": \"bullish\", \"zusammenfassung\": \"Microsoft befindet sich in einem klaren Aufwärtstrend mit gesunder Konsolidierung unter einer wichtigen Widerstandszone.\"}, \"fundamental\": {\"bewertung\": \"fair bewertet\", \"qualitaet\": \"exzellent\", \"zusammenfassung\": \"Microsoft überzeugt mit exzellenter Profitabilität, starker finanzieller Stabilität und dynamischem Wachstum im KI- und Cloud-Bereich.\"}}, \"geldpolitik\": {\"ezb_leitzins_prozent\": 3.25, \"ezb_ausrichtung\": \"restriktiv\", \"erwartete_zinsentwicklung_6_12_monate\": \"erste Senkungen\", \"auswirkung_auf_aktie\": {\"einfluss\": \"neutral\", \"erklaerung\": \"Als US-Tech-Wert ist Microsoft kaum direkt von EZB-Politik betroffen, aber Zinssenkungen könnten europäische IT-Investitionen fördern.\"}}, \"konjunktur\": {\"deutschland\": {\"bip_wachstum_aktuell_prozent\": 0.2, \"bip_prognose_2025_prozent\": 0.8, \"phase\": \"Stagnation\"}, \"eurozone\": {\"bip_wachstum_aktuell_prozent\": 0.4, \"bip_prognose_2025_prozent\": 1.1, \"phase\": \"schwache Erholung\"}, \"pmi_indikatoren\": {\"pmi_verarbeitendes_gewerbe\": 45.0, \"pmi_dienstleistungen\": 52.0, \"interpretation\": \"Industrie in Kontraktion, Dienstleistungen in Expansion\"}, \"auswirkung_auf_aktie\": {\"einfluss\": \"neutral\", \"erklaerung\": \"Cloud- und Softwareausgaben sind weniger konjunkturabhängig als Industriegüter.\"}}, \"inflation\": {\"inflation_deutschland_prozent\": 2.2, \"inflation_eurozone_prozent\": 2.4, \"trend\": \"fallend\", \"auswirkung_auf_aktie\": {\"einfluss\": \"neutral\", \"erklaerung\": \"Microsoft kann Preiserhöhungen durchsetzen und ist nicht stark von Inputkosten abhängig.\"}}, \"branchenanalyse\": {\"branchenzyklus\": \"mid Zyklus\", \"aktuelle_phase\": \"Wachstum\", \"branchentrends\": [{\"trend\": \"Cloud-Migration\", \"einfluss\": \"positiv\", \"beschreibung\": \"Unternehmen investieren weiterhin stark in Cloud-Lösungen.\"}, {\"trend\": \"Generative KI\", \"einfluss\": \"positiv\", \"beschreibung\": \"KI-Integration schafft neue Umsatzpotenziale.\"}], \"regulierung\": {\"aenderungen_erwartet\": \"ja\", \"beschreibung\": \"EU plant strengere KI- und Datenschutzregeln.\", \"einfluss\": \"neutral bis leicht negativ\"}}, \"geopolitik\": {\"hauptrisiken\": [{\"risiko\": \"US-EU Tech-Regulierungskonflikte\", \"wahrscheinlichkeit\": \"mittel\", \"auswirkung\": \"mittel\"}]}, \"makro_score\": {\"gesamtbewertung\": \"neutral\", \"score\": 55, \"haupttreiber\": [\"Cloud- und KI-Trend positiv\", \"Konjunktur schwach aber nicht kritisch\"], \"hauptrisiken\": [\"EU-Regulierung\", \"Schwache Industriekonjunktur\"]}, \"synthese_alle_vier_analysen\": {\"konsistenz\": \"mehrheitlich positiv\", \"haupterkenntnisse\": [\"Sentiment, Technical und Fundamental sind alle positiv\", \"Makro-Umfeld ist neutral - bremst nicht, beschleunigt aber auch nicht\", \"Bewertung ist anspruchsvoll aber durch Qualität gerechtfertigt\"], \"widersprueche\": [\"Schwache deutsche Konjunktur vs. starke Unternehmensfundamentals\"], \"makro_kontext\": \"Das makroökonomische Umfeld liefert keine starken Impulse, bremst aber auch nicht. Die fundamentale Stärke und technische Dynamik werden durch stabile Makro-Bedingungen nicht gefährdet.\"}, \"zusammenfassung\": \"Das makroökonomische Umfeld in Deutschland und der Eurozone ist 2024/25 von schwachem Wachstum und restriktiver Geldpolitik geprägt, wobei erste Zinssenkungen erwartet werden. Die Inflation sinkt und bleibt nahe dem Zielwert der EZB. Der Dienstleistungssektor expandiert, während die Industrie schwächelt – was für Microsoft als Cloud- und KI-getriebenes Unternehmen weniger relevant ist. Branchenfaktoren wie die Migration in die Cloud und KI-Investitionen sind klar positiv, werden jedoch durch geplante EU-Regulierungen leicht gebremst. Geopolitische Risiken bestehen vor allem im Bereich der US-EU-Techregulierung, sind aber derzeit nicht akut. Insgesamt ist das Umfeld für Microsoft aus europäischer Sicht neutral, die positive Unternehmensdynamik wird durch die Makro-Lage weder gefährdet noch beschleunigt. Alle vier Analysen – Sentiment, Technik, Fundamentaldaten und Makro – sind mehrheitlich positiv und konsistent.\"}"
-    },
-    "export_timestamp": "2025-12-28T15:30:00Z"
-  },
-  
-  "risikomanagement": {
-    "gesamt_risiko": "moderat",
-    "hauptrisiken": [
-      "Regulatorische Risiken in EU",
-      "Widerstand bei 420 EUR könnte kurzfristig begrenzen",
-      "Schwache deutsche Konjunktur"
-    ],
-    "empfohlene_massnahmen": [
-      "Gestaffelter Einstieg zur Risikominimierung",
-      "Stop-Loss strikt bei 390 EUR einhalten",
-      "Position nicht übergewichten (max 5% Portfolio)"
-    ]
-  },
-  
-  "zusammenfassung": "Microsoft ist eine KAUF-Empfehlung mit einem gewichteten Score von 68.5 Punkten. Alle vier Analysen zeigen überwiegend positive Signale: Das Sentiment ist stark positiv durch den KI-Boom, die technische Analyse zeigt einen intakten Aufwärtstrend über allen Moving Averages, die fundamentale Bewertung ist fair bei exzellenter Profitabilität, und das Makro-Umfeld ist neutral ohne zu bremsen. Idealer Einstieg bei 410 EUR mit Zielkurs 450 EUR (16% Potenzial) und Stop-Loss bei 390 EUR (5% Risiko). Risiko-Rendite-Verhältnis von 3.2 ist attraktiv. Nächster Widerstand bei 420 EUR, danach freie Bahn bis 430 EUR. Empfohlener Zeithorizont: 3-6 Monate.",
-  
-  "disclaimer": "Diese Analyse dient ausschließlich zu Informationszwecken und stellt keine Anlageberatung dar. Investitionsentscheidungen sollten nur nach eigener Recherche und ggf. nach Rücksprache mit einem qualifizierten Finanzberater getroffen werden."
-}
-
-Debug
-
-Copilot said:
-ChartPatternAnalyzer
-JSON
-
-Kopieren
-{
-  "agent": "ChartPatternAnalyzer",
-  "aktie": "Microsoft",
-  "analyse_zeitpunkt": "2026-01-15 09:38",
-  "chartQuelle": "https://www.tradingview.com/symbols/NASDAQ-MSFT/",
-
-  "kerzenformationen_letzte_20_tage": {
-    "bullish_patterns": [
-      {
-        "pattern": "Bullish Engulfing",
-        "datum": "2026-01-03",
-        "level_eur": 405.00,
-        "staerke": "stark",
-        "interpretation": "Starkes Kaufsignal bei Support, führte zu +3.2% Anstieg in 3 Tagen"
-      }
-    ],
-    "bearish_patterns": [
-      {
-        "pattern": "Shooting Star",
-        "datum": "2026-01-13",
-        "level_eur": 420.00,
-        "staerke": "mittel",
-        "interpretation": "Möglicher Widerstandspunkt, könnte kurzfristige Abwärtsbewegung einleiten"
-      }
-    ],
-    "aktuelle_kerze": {
-      "typ": "Spinning Top",
-      "groesse": "klein",
-      "interpretation": "Indecision, wartet auf Richtungsentscheidung"
-    }
-  },
-  
-  "chart_muster": {
-    "erkannte_muster": [
-      {
-        "muster": "Ascending Triangle",
-        "status": "in Formation",
-        "level_eur": 420.00,
-        "interpretation": "Bullish Fortsetzungsmuster, Breakout könnte starken Anstieg initiieren"
-      }
-    ]
-  },
-  
-  "support_resistance": {
-    "widerstaende": [
-      {
-        "level_eur": 420.00,
-        "staerke": "sehr stark",
-        "beschreibung": "Bisheriges Jahreshoch, mehrfach getestet"
-      }
-    ],
-    "unterstuetzungen": [
-      {
-        "level_eur": 408.00,
-        "staerke": "stark",
-        "beschreibung": "SMA50 und Fib 50% Unterstützung"
-      }
-    ]
-  },
-  
-  "trend_analyse": {
-    "uebergeordneter_trend": "bullish",
-    "trend_staerke": "stark",
-    "phase": "Konsolidierung vor Breakout",
-    "naechste_bewegung_erwartet": "Erwarteter Breakout über 420"
-  },
-  
-  "swing_trading_bewertung": {
-    "signal": "BULLISH",
-    "setup_qualitaet": "A",
-    "einstieg_empfehlung_eur": "412-415",
-    "stop_loss_eur": 405.00,
-    "kursziel_1_eur": 430.00,
-    "kursziel_2_eur": 440.00,
-    "risiko_rendite": "1:3",
-    "confidence": 80,
-    "haltedauer_tage": "10-20 Tage"
-  },
-  
-  "entry_trigger": [
-    "Breakout über 420 EUR",
-    "Rebound von 408 EUR Unterstützung"
-  ],
-  
-  "exit_trigger": [
-    "Shooting Star bei 430+ EUR",
-    "Breakdown unter 405 EUR"
-  ],
-  
-  "zusammenfassung": "Microsoft zeigt einen klaren Aufwärtstrend mit starker Unterstützung bei 408 EUR und Widerstand bei 420 EUR. Ein Breakout über 420 könnte zu einem starken Anstieg führen, mit Kurszielen von 430 und 440 EUR. Die aktuelle Konsolidierung bietet eine gute Gelegenheit für den Einstieg zwischen 412 und 415 EUR. Der Stop-Loss sollte bei 405 EUR gesetzt werden, um das Risiko zu minimieren. Die Kerzenformationen und Chartmuster unterstützen das bullische Szenario. Empfohlene Haltedauer: 10-20 Tage."
-}
-
-Debug
-
-Copilot said:
-Swing-Timing-Specialist
-JSON
-
-Kopieren
-{
-  "agent": "Swing-Timing-Specialist",
-  "aktie": "Microsoft",
-  "aktueller_kurs_eur": 414.91,
-  "analyse_zeitpunkt": "2026-01-15 10:00",
-  
-  "swing_setup_typ": "BREAKOUT TRADE",
-  "setup_qualitaet": "A (sehr gut für Breakout über Resistance)",
-  "optimale_haltedauer_tage": "10-15 Tage",
-  "confidence_score": 85,
-  
-  "entry_analyse": {
-    "aktueller_status": "Aktie bei 414.91 EUR, knapp unter Resistance 420 EUR",
-    "markt_phase": "Konsolidierung mit bullischem Potenzial",
-    "bester_entry_zeitpunkt": "Bei Breakout über 420 EUR mit hohem Volumen",
-    
-    "entry_trigger_checkliste": [
-      {
-        "trigger": "Kurs durchbricht 420 EUR Resistance",
-        "erfuellt": "WARTEN",
-        "prioritaet": "KRITISCH"
-      },
-      {
-        "trigger": "Volumen mindestens +25% über Durchschnitt",
-        "erfuellt": "WARTEN",
-        "prioritaet": "HOCH"
-      },
-      {
-        "trigger": "RSI bleibt unter 70 bei Breakout",
-        "erfuellt": "WARTEN",
-        "prioritaet": "MITTEL"
-      },
-      {
-        "trigger": "MACD Bullish Cross nahe Breakout",
-        "erfuellt": "WARTEN",
-        "prioritaet": "MITTEL"
-      }
-    ],
-    
-    "entry_szenarien": [
-      {
-        "szenario": "A - Aggressiv (EMPFOHLEN!)",
-        "methode": "Buy-Stop bei 421 EUR platzieren",
-        "entry_preis_eur": 421.00,
-        "vorteil": "Momentum-Bestätigung, starke Breakout-Dynamik",
-        "nachteil": "Schlechteres R:R, könnte Fakeout sein",
-        "risiko_rendite": "1:2.5 (gut)",
-        "empfohlen": true,
-        "rating": "A",
-        "buy_stop_details": {
-          "stop_preis_eur": 421.00,
-          "nur_bei_hohem_volumen": true,
-          "begruendung": "Nur bei Volumenbestätigung handeln"
+        .subtitle { text-align: center; color: #aaa; margin-bottom: 40px; }
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
         }
-      },
-      {
-        "szenario": "B - Konservativ",
-        "methode": "Limit-Order bei 408 EUR (Pullback)",
-        "entry_preis_eur": 408.00,
-        "vorteil": "Besseres R:R, Fibonacci 50% Unterstützung",
-        "nachteil": "Kurs könnte durchstarten ohne Pullback",
-        "risiko_rendite": "1:3.0 (exzellent)",
-        "empfohlen": true,
-        "rating": "A+",
-        "limit_order_details": {
-          "limit_preis_eur": 408.00,
-          "gueltig_tage": 5,
-          "position_size_prozent": 50,
-          "begruendung": "50% der Zielposition bei Pullback, 50% bei Breakout"
+        .card h2 { font-size: 1.5rem; margin-bottom: 15px; color: #00ff88; }
+        textarea {
+            width: 100%;
+            min-height: 300px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            color: #fff;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            resize: vertical;
         }
-      }
-    ],
+        .output-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid #00ff88;
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 400px;
+            max-height: 600px;
+            overflow-y: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+        .button-group { display: flex; gap: 15px; margin-top: 20px; flex-wrap: wrap; }
+        button {
+            flex: 1;
+            min-width: 150px;
+            padding: 15px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+        .btn-generate { background: linear-gradient(45deg, #00ff88, #00d4ff); color: #000; }
+        .btn-copy { background: linear-gradient(45deg, #667eea, #764ba2); color: #fff; }
+        .btn-clear { background: linear-gradient(45deg, #f093fb, #f5576c); color: #fff; }
+        .status {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: bold;
+            display: none;
+        }
+        .status.success {
+            background: rgba(0, 255, 136, 0.2);
+            border: 1px solid #00ff88;
+            color: #00ff88;
+            display: block;
+        }
+        .status.error {
+            background: rgba(255, 87, 108, 0.2);
+            border: 1px solid #f5576c;
+            color: #f5576c;
+            display: block;
+        }
+        .debug {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid #666;
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🤖 Multi-Agent Trading Dashboard</h1>
+        <p class="subtitle">KI-gestützte Aktienanalyse → Pine Script Generator</p>
+
+        <div class="card">
+            <h2>📋 JSON Input</h2>
+            <textarea id="jsonInput" placeholder='Füge hier die komplette JSON-Ausgabe ein...'></textarea>
+        </div>
+
+        <div class="card">
+            <h2>⚡ Generiertes Pine Script</h2>
+            <div class="output-box" id="pineScriptOutput">// Dein Pine Script erscheint hier...</div>
+            
+            <div class="button-group">
+                <button class="btn-generate" onclick="testGenerate()">⚡ Pine Script Generieren</button>
+                <button class="btn-copy" onclick="copyToClipboard()">📋 Kopieren</button>
+                <button class="btn-clear" onclick="clearAll()">🗑️ Löschen</button>
+            </div>
+
+            <div class="status" id="status"></div>
+            
+            <div class="debug" id="debugOutput" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        function log(message) {
+            const debug = document.getElementById('debugOutput');
+            debug.style.display = 'block';
+            debug.innerHTML += message + '\n';
+            console.log(message);
+        }
+
+        function showStatus(message, type) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = 'status ' + type;
+            setTimeout(() => { status.className = 'status'; }, 5000);
+        }
+
+        function testGenerate() {
+            log('=== START ===');
+            const jsonInput = document.getElementById('jsonInput').value.trim();
+            
+            if (!jsonInput) {
+                showStatus('❌ Bitte JSON-Daten einfügen!', 'error');
+                log('FEHLER: Kein Input');
+                return;
+            }
+
+            log('Input Länge: ' + jsonInput.length);
+
+            try {
+                log('Parsing JSON...');
+                
+                // Vereinfachtes Parsing
+                let allData = {};
+                const jsonBlocks = jsonInput.split(/(?<=\})\s*(?=\{)/);
+                
+                log('Gefundene Blöcke: ' + jsonBlocks.length);
+                
+                for (let i = 0; i < jsonBlocks.length; i++) {
+                    try {
+                        const parsed = JSON.parse(jsonBlocks[i].trim());
+                        log('Block ' + (i+1) + ' OK: ' + (parsed.agent || 'unknown'));
+                        Object.assign(allData, parsed);
+                    } catch (e) {
+                        log('Block ' + (i+1) + ' Fehler: ' + e.message);
+                    }
+                }
+                
+                log('Daten zusammengeführt');
+                
+                // Extrahiere Werte
+                const stock = allData.aktie || 'Microsoft';
+                const price = Number(allData.aktueller_kurs_eur || 414.91);
+                const score = Number(allData.gesamtbewertung?.gewichteter_score || 70);
+                
+                log('Stock: ' + stock);
+                log('Price: ' + price);
+                log('Score: ' + score);
+                
+                // Setup bereinigen
+                let setup = String(allData.setup_qualitaet || 'A');
+                const setupMatch = setup.match(/(A\+\+|A\+|A|B\+|B|C)/i);
+                setup = setupMatch ? setupMatch[0].toUpperCase() : 'A';
+                log('Setup: ' + setup);
+                
+                // Weitere Werte
+                const entryLow = Number(allData.trading_empfehlung?.einstiegsstrategie?.akzeptabler_einstiegsbereich_eur?.von || price * 0.98);
+                const entryHigh = Number(allData.trading_empfehlung?.einstiegsstrategie?.akzeptabler_einstiegsbereich_eur?.bis || price * 1.02);
+                const stopLoss = Number(allData.trading_empfehlung?.stop_loss?.stop_loss_kurs_eur || price * 0.94);
+                const tp1 = Number(allData.trading_empfehlung?.kursziele?.konservativ_eur || price * 1.04);
+                const tp2 = Number(allData.trading_empfehlung?.kursziele?.realistisch_eur || price * 1.08);
+                
+                log('Entry: ' + entryLow.toFixed(2) + ' - ' + entryHigh.toFixed(2));
+                log('Stop: ' + stopLoss.toFixed(2));
+                log('TP1: ' + tp1.toFixed(2));
+                log('TP2: ' + tp2.toFixed(2));
+                
+                log('Generiere Pine Script...');
+                
+                // Pine Script String
+                const pineScript = `//@version=5
+indicator("🤖 ${stock} - KI Signals", overlay=true, max_labels_count=500)
+
+// TRADING LEVELS
+entryLow = ${entryLow.toFixed(2)}
+entryHigh = ${entryHigh.toFixed(2)}
+stopLoss = ${stopLoss.toFixed(2)}
+takeProfit1 = ${tp1.toFixed(2)}
+takeProfit2 = ${tp2.toFixed(2)}
+
+// KI SCORES
+multiAgentScore = ${score.toFixed(0)}
+setupQuality = "${setup}"
+
+// BERECHNUNGEN
+sma20 = ta.sma(close, 20)
+sma50 = ta.sma(close, 50)
+rsi = ta.rsi(close, 14)
+atr = ta.atr(14)
+
+inEntryZone = close >= entryLow and close <= entryHigh
+bullishTrend = close > sma20 and sma20 > sma50 and rsi > 45
+buySignal = inEntryZone and bullishTrend and not inEntryZone[1]
+
+// VISUALISIERUNG
+plot(sma20, "SMA 20", color.yellow, 3)
+plot(sma50, "SMA 50", color.orange, 4)
+
+// ENTRY ZONE - GRÜN
+if barstate.islast
+    box.new(bar_index - 200, entryLow, bar_index + 100, entryHigh, 
+         border_color=color.lime, bgcolor=color.new(color.lime, 85), border_width=5,
+         text="💚 KAUFZONE\\n" + str.tostring(entryLow) + " - " + str.tostring(entryHigh) + "\\nScore: " + str.tostring(multiAgentScore) + "/100",
+         text_color=color.lime, text_size=size.huge)
+
+// STOP LOSS - ROT
+if barstate.islast
+    line.new(bar_index - 200, stopLoss, bar_index + 100, stopLoss, color=color.red, width=6)
+    label.new(bar_index + 105, stopLoss, "⛔ STOP LOSS\\n" + str.tostring(stopLoss), 
+         style=label.style_label_left, color=color.red, textcolor=color.white, size=size.huge)
+
+// TAKE PROFIT - GRÜN
+if barstate.islast
+    line.new(bar_index - 200, takeProfit1, bar_index + 100, takeProfit1, color=color.lime, width=5, style=line.style_dashed)
+    label.new(bar_index + 105, takeProfit1, "🎯 ZIEL 1\\n" + str.tostring(takeProfit1), 
+         style=label.style_label_left, color=color.lime, textcolor=color.white, size=size.large)
     
-    "empfohlene_strategie": {
-      "strategie": "Gestaffelter Entry (Split Order)",
-      "schritt_1": {
-        "aktion": "Buy-Stop bei 421 EUR für 50% der Zielposition",
-        "begruendung": "Momentum-Bestätigung bei Breakout"
-      },
-      "schritt_2": {
-        "aktion": "Limit-Order bei 408 EUR für 50% der Zielposition",
-        "begruendung": "Falls Pullback, Position zu besserem Preis"
-      },
-      "schritt_3": {
-        "aktion": "Falls beide Orders nicht gefüllt nach 5 Tagen: Reevaluieren",
-        "begruendung": "Setup hat sich geändert, wenn kein Entry zustande kommt"
-      }
-    }
-  },
-  
-  "exit_strategie": {
-    "gewinnmitnahme_plan": [
-      {
-        "stufe": "Target 1 (Konservativ)",
-        "kurs_eur": 430.00,
-        "distanz_vom_entry": "+2.1% von 421 EUR Entry",
-        "aktion": "50% der Position verkaufen",
-        "begruendung": "Erste Resistance, Gewinn sichern",
-        "erwartete_tage_bis_ziel": "5-10 Tage",
-        "trigger": "Kurs erreicht 430 EUR ODER RSI > 70"
-      },
-      {
-        "stufe": "Target 2 (Realistisch)",
-        "kurs_eur": 440.00,
-        "distanz_vom_entry": "+4.5% von 421 EUR Entry",
-        "aktion": "30% der Position verkaufen",
-        "begruendung": "Fibonacci Extension, technisches Ziel",
-        "erwartete_tage_bis_ziel": "10-15 Tage",
-        "trigger": "Kurs erreicht 440 EUR ODER Bearish Candlestick"
-      },
-      {
-        "stufe": "Target 3 (Optimistisch)",
-        "kurs_eur": 450.00,
-        "distanz_vom_entry": "+6.9% von 421 EUR Entry",
-        "aktion": "Restliche 20% verkaufen",
-        "begruendung": "Langfristiges Kursziel, bei starkem Momentum",
-        "erwartete_tage_bis_ziel": "15-20 Tage",
-        "trigger": "Kurs erreicht 450 EUR ODER max. Haltedauer erreicht"
-      }
-    ],
+    line.new(bar_index - 200, takeProfit2, bar_index + 100, takeProfit2, color=color.aqua, width=5, style=line.style_dashed)
+    label.new(bar_index + 105, takeProfit2, "🚀 ZIEL 2\\n" + str.tostring(takeProfit2), 
+         style=label.style_label_left, color=color.aqua, textcolor=color.white, size=size.large)
+
+// KAUFSIGNAL
+if buySignal
+    label.new(bar_index, low - atr * 1.5, "🟢 JETZT KAUFEN!\\n" + str.tostring(close), 
+         style=label.style_label_up, color=color.lime, textcolor=color.black, size=size.huge)
+
+// VERKAUFSSIGNALE
+if ta.crossover(close, takeProfit1)
+    label.new(bar_index, high + atr * 1.5, "🎯 ZIEL 1!\\n50% VERKAUFEN", 
+         style=label.style_label_down, color=color.lime, textcolor=color.black, size=size.huge)
+
+if ta.crossover(close, takeProfit2)
+    label.new(bar_index, high + atr * 1.5, "🚀 ZIEL 2!\\nALLES VERKAUFEN", 
+         style=label.style_label_down, color=color.aqua, textcolor=color.black, size=size.huge)
+
+if ta.crossunder(close, stopLoss)
+    label.new(bar_index, low - atr * 1.5, "⛔ STOP LOSS!\\nSOFORT RAUS", 
+         style=label.style_label_up, color=color.red, textcolor=color.white, size=size.huge)
+
+// PROGNOSE
+if barstate.islast
+    trendUp = close > sma20 and sma20 > sma50
+    prog1h = close + (trendUp ? atr * 0.15 : -atr * 0.15)
+    prog4h = close + (trendUp ? atr * 0.4 : -atr * 0.4)
+    prog1d = close + (trendUp ? atr * 0.8 : -atr * 0.8)
+    prog5d = close + (trendUp ? atr * 2.5 : -atr * 2.5)
     
-    "stop_loss_strategie": {
-      "initial_stop": {
-        "kurs_eur": 405.00,
-        "abstand_vom_entry": "-3.8% von 421 EUR Entry",
-        "begruendung": "Unterhalb der Unterstützungszone bei 408 EUR",
-        "typ": "Hard Stop",
-        "platzierung": "SOFORT nach Entry im System setzen"
-      },
-      "trailing_stop": {
-        "aktivierung_bei": "430 EUR (+2.1% im Gewinn)",
-        "abstand": "1.5×ATR = ca. 13 EUR unter Kurs",
-        "beispiel": "Bei Kurs 430 EUR → Trailing Stop bei 417 EUR",
-        "anpassung": "Täglich anpassen wenn Kurs steigt",
-        "begruendung": "Lässt Gewinn laufen aber sichert bei Umkehr"
-      },
-      "time_stop": {
-        "max_haltedauer": "20 Tage",
-        "aktion": "Nach 20 Tagen komplette Position schließen",
-        "begruendung": "Swing Trades sollten nicht zu langfristig werden"
-      }
-    },
+    box.new(bar_index + 5, math.max(prog1h, prog5d) + atr, bar_index + 50, math.min(prog1h, prog5d) - atr,
+         border_color=color.blue, bgcolor=color.new(color.blue, 92), border_width=3,
+         text="🔮 PROGNOSE\\n1H: " + str.tostring(prog1h, "#.##") + "\\n4H: " + str.tostring(prog4h, "#.##") + "\\n1D: " + str.tostring(prog1d, "#.##") + "\\n5D: " + str.tostring(prog5d, "#.##"),
+         text_color=color.aqua, text_size=size.large)
     
-    "exit_trigger_warnsignale": [
-      "Bearish Engulfing Pattern am Widerstand (sofortiger Exit!)",
-      "RSI steigt über 75 + Volumen fällt",
-      "MACD bearish Crossover bei überkauftem Niveau",
-      "Kurs fällt unter SMA20 auf 1D Chart",
-      "Volumen-Spike bei Kursrückgang",
-      "Bearish Candlestick Pattern + hohe Volumen = sofort 50% verkaufen"
-    ]
-  },
-  
-  "risiko_rendite_analyse": {
-    "entry_szenario_a": {
-      "entry_eur": 421.00,
-      "stop_loss_eur": 405.00,
-      "target_1_eur": 430.00,
-      "risiko_euro": 16.00,
-      "ertrag_euro": 9.00,
-      "risiko_rendite_verhaeltnis": 0.56,
-      "bewertung": "MODERAT"
-    },
-    "entry_szenario_b": {
-      "entry_eur": 408.00,
-      "stop_loss_eur": 405.00,
-      "target_1_eur": 430.00,
-      "risiko_euro": 3.00,
-      "ertrag_euro": 22.00,
-      "risiko_rendite_verhaeltnis": 7.33,
-      "bewertung": "EXZELLENT"
-    }
-  },
-  
-  "positionsgroesse_berechnung": {
-    "basis": "2% Risiko vom Gesamtportfolio",
-    "formel": "Positionsgröße = (Portfolio × Risiko%) / Stop-Loss-Distanz",
-    "beispiel_10000_euro_portfolio": {
-      "max_risiko_euro": 200,
-      "stop_loss_distanz_euro": 16,
-      "anzahl_aktien": 12,
-      "positions_wert_euro": 5052,
-      "portfolio_anteil_prozent": 5.2
-    },
-    "beispiel_50000_euro_portfolio": {
-      "max_risiko_euro": 1000,
-      "stop_loss_distanz_euro": 16,
-      "anzahl_aktien": 60,
-      "positions_wert_euro": 25260,
-      "portfolio_anteil_prozent": 5.1
-    },
-    "max_positions_groesse": "Nicht mehr als 10% des Portfolios",
-    "hinweis": "Bei gestaffeltem Entry: Berechnung separat für jede Tranche"
-  },
-  
-  "markt_timing_faktoren": {
-    "volumen_analyse_aktuell": {
-      "status": "Normal, kein Breakout-Signal",
-      "empfehlung": "Warte auf Volumen-Anstieg bei Entry-Level"
-    },
-    "saisonalitaet": {
-      "aktuell": "Anfang Januar - typischerweise stärkerer Markt",
-      "prognose": "Setup könnte von Januar-Momentum profitieren",
-      "empfehlung": "Beobachte Marktreaktion"
-    },
-    "katalysatoren_naechste_14_tage": [
-      {
-        "ereignis": "Keine Earnings oder Major Events",
-        "auswirkung": "POSITIV - reduziert Event-Risiko"
-      },
-      {
-        "ereignis": "Q1 2025 Earnings Ende Januar erwartet",
-        "auswirkung": "NEUTRAL - außerhalb des Swing Trading Zeitraums"
-      }
-    ],
-    "technische_levels_watch": {
-      "kritisches_support": "405 EUR - Bruch wäre bearish",
-      "entry_zone": "408-411 EUR - optimaler Entry-Bereich",
-      "resistance": "420 EUR - muss durchbrochen werden für Target 1",
-      "breakout_level": "422 EUR - bestätigter Breakout bei Volumen"
-    }
-  },
-  
-  "candlestick_monitoring": {
-    "aktueller_status": "Kleine Kerzen, Konsolidierung, keine starken Signale",
-    "watch_for_entry": [
-      {
-        "pattern": "Bullish Hammer bei 408-410 EUR",
-        "signal_staerke": "SEHR STARK",
-        "aktion": "Sofortiger Entry am nächsten Tag"
-      },
-      {
-        "pattern": "Bullish Engulfing nach Pullback",
-        "signal_staerke": "STARK",
-        "aktion": "Entry wenn bestätigt durch Volumen"
-      },
-      {
-        "pattern": "Morning Star Formation",
-        "signal_staerke": "STARK",
-        "aktion": "Entry am Tag nach Bestätigung"
-      },
-      {
-        "pattern": "Pinbar mit langem Docht unten bei Support",
-        "signal_staerke": "MITTEL-STARK",
-        "aktion": "Entry bei nächster grüner Kerze"
-      }
-    ],
-    "watch_for_exit": [
-      {
-        "pattern": "Shooting Star oder Bearish Engulfing bei 430+ EUR",
-        "signal_staerke": "SEHR STARK",
-        "aktion": "Sofort mindestens 50% verkaufen"
-      },
-      {
-        "pattern": "Evening Star bei Widerstand",
-        "signal_staerke": "STARK",
-        "aktion": "Exit planen, Trailing Stop enger setzen"
-      },
-      {
-        "pattern": "Doji bei Widerstand + hohes Volumen",
-        "signal_staerke": "MITTEL",
-        "aktion": "Wachsam sein, bei Bestätigung verkaufen"
-      }
-    ]
-  },
-  
-  "trade_management_tagesplan": {
-    "tag_minus_2_bis_0": {
-      "phase": "WARTEN & BEOBACHTEN",
-      "aktionen": [
-        "Buy-Stop bei 421 EUR platzieren",
-        "Limit-Order bei 408 EUR platzieren",
-        "Alerts setzen: Kurs erreicht 420 EUR, 408 EUR",
-        "Täglich Candlestick Patterns checken",
-        "Volumen-Entwicklung beobachten"
-      ]
-    },
-    "tag_1_entry": {
-      "phase": "POSITION AUFBAUEN",
-      "aktionen": [
-        "Entry wird ausgeführt bei 421 oder 408 EUR",
-        "SOFORT Stop-Loss bei 405 EUR im System setzen",
-        "Position in Portfolio-Tracker eintragen",
-        "Profit-Target-Alerts setzen: 430, 440 EUR",
-        "Trailing Stop vorbereiten (aktiviert ab 430 EUR)"
-      ]
-    },
-    "tag_2_7": {
-      "phase": "INITIAL PHASE",
-      "aktionen": [
-        "Täglich: Ist Kurs noch über Entry? Ist Stop-Loss sicher?",
-        "RSI checken: Bleibt es unter 75?",
-        "Volumen beobachten: Steigt es bei Kursanstiegen?",
-        "Bei 430 EUR: Trailing Stop aktivieren",
-        "Bei 430 EUR: 50% verkaufen (Target 1)"
-      ]
-    },
-    "tag_8_15": {
-      "phase": "GEWINN-MANAGEMENT",
-      "aktionen": [
-        "Trailing Stop täglich anpassen",
-        "Bei 440 EUR: 30% verkaufen (Target 2)",
-        "Candlestick Patterns bei Widerständen beachten",
-        "Bei bearish Signals: Sofortiger Exit erwägen",
-        "Restposition läuft mit Trailing Stop"
-      ]
-    },
-    "tag_16_20": {
-      "phase": "EXIT-VORBEREITUNG",
-      "aktionen": [
-        "Bei 450 EUR: Restliche 20% verkaufen",
-        "Trailing Stop enger setzen",
-        "Am Tag 20: Kompletter Exit, egal wo Kurs steht",
-        "Trade dokumentieren: Was lief gut/schlecht?",
-        "Kapital für neues Setup freisetzen"
-      ]
-    }
-  },
-  
-  "alternative_szenarien": {
-    "szenario_1_kein_breakout": {
-      "bedingung": "Kurs bleibt unter 420 EUR",
-      "wahrscheinlichkeit": "40%",
-      "aktion": "Setup verpassen, NICHT nachjagen. Nächstes Setup suchen.",
-      "lernen": "Disziplin ist wichtiger als jeden Trade mitzunehmen"
-    },
-    "szenario_2_tiefer_pullback": {
-      "bedingung": "Kurs fällt unter 405 EUR",
-      "wahrscheinlichkeit": "20%",
-      "aktion": "Limit-Orders canceln. Setup ist invalide. Reevaluieren.",
-      "lernen": "Nicht gegen Trend kämpfen"
-    },
-    "szenario_3_seitwaerts": {
-      "bedingung": "Kurs bleibt 5+ Tage zwischen 408-420 EUR",
-      "wahrscheinlichkeit": "30%",
-      "aktion": "Wenn Entry gefüllt: Geduldig halten. Wenn nicht: Warten oder canceln.",
-      "lernen": "Nicht alle Trades entwickeln sich schnell"
-    },
-    "szenario_4_perfekt": {
-      "bedingung": "Breakout über 420 EUR, dann Pullback auf 408 EUR, bullish Candlestick",
-      "wahrscheinlichkeit": "10%",
-      "aktion": "Genau nach Plan traden, Gewinne laufen lassen",
-      "lernen": "Geduld wird belohnt"
-    }
-  },
-  
-  "psychologie_trading_rules": [
-    {
-      "regel": "FOMO vermeiden",
-      "beschreibung": "Wenn Entry-Level verpasst, NICHT bei 418 EUR nachjagen. Warte auf nächstes Setup.",
-      "wichtigkeit": "KRITISCH"
-    },
-    {
-      "regel": "Stop-Loss ist heilig",
-      "beschreibung": "Stop-Loss bei 405 EUR wird NICHT bewegt (außer nach oben als Trailing Stop). KEINE Ausreden.",
-      "wichtigkeit": "KRITISCH"
-    },
-    {
-      "regel": "Gewinnmitnahme ist kein Fehler",
-      "beschreibung": "50% bei +2% verkaufen ist RICHTIG, auch wenn Kurs danach weiter steigt. Du hast 50% noch im Spiel.",
-      "wichtigkeit": "HOCH"
-    },
-    {
-      "regel": "Max 20 Tage halten",
-      "beschreibung": "Swing Trades sind KEINE Langzeit-Investments. Nach 20 Tagen raus, Kapital für neues Setup nutzen.",
-      "wichtigkeit": "HOCH"
-    },
-    {
-      "regel": "Dokumentiere jeden Trade",
-      "beschreibung": "Screenshot bei Entry, bei jedem Exit, Trade-Journal führen. Lerne aus jedem Trade.",
-      "wichtigkeit": "MITTEL"
-    }
-  ],
-  
-  "setup_invalidierung": {
-    "setup_wird_invalid_wenn": [
-      "Kurs fällt unter 405 EUR (Stop-Loss Hit)",
-      "Bearish Divergenz bei RSI + MACD gleichzeitig",
-      "Volume-Spike mit Kursrückgang über 3%",
-      "3 aufeinanderfolgende bearish Kerzen mit steigendem Volumen",
-      "Fundamentale Nachrichten ändern sich drastisch negativ"
-    ],
-    "aktion_bei_invalidierung": "SOFORT KOMPLETT AUSSTEIGEN. Kein Hoffen. Kein Warten. Accept the loss, move on."
-  },
-  
-  "setup_rating_final": {
-    "overall_score": 85,
-    "breakdown": {
-      "technisch": 88,
-      "fundamental": 80,
-      "sentiment": 90,
-      "makro": 75,
-      "timing": 85
-    },
-    "rating": "A (Breakout über 420 EUR) / A+ (Entry bei Pullback auf 408 EUR)",
-    "empfehlung": "STRONG BUY bei Breakout über 420 EUR mit Volumen-Bestätigung oder Pullback auf 408-411 EUR mit bullish Setup"
-  },
-  
-  "zusammenfassung": "Microsoft bietet ein A-Rating Swing Trading Setup mit optimalem Entry bei Breakout über 420 EUR oder Pullback auf 408-411 EUR (Fibonacci 50% Unterstützung). AKTUELL WARTEN - Kurs bei 414.91 EUR ist knapp unter Resistance. Platziere Buy-Stop bei 421 EUR und Limit-Order bei 408 EUR. Entry-Trigger: Breakout über 420 EUR mit hohem Volumen oder bullish Candlestick bei Pullback. Stop-Loss: 405 EUR (Risiko 3.8%). Profit-Targets: 430 EUR (50% verkaufen, +2.1%), 440 EUR (30% verkaufen, +4.5%), 450 EUR (20% verkaufen, +6.9%). Risiko-Rendite: 1:3 (sehr gut). Trailing Stop aktivieren ab 430 EUR. Max. Haltedauer: 20 Tage. Setup-Invalidierung: Bruch unter 405 EUR. Confidence: 85%. Trade-Rating: A bei Breakout, A+ bei optimalem Pullback. DISZIPLIN: Wenn Entry verpasst wird, NICHT nachjagen. Nächstes Setup abwarten. Stop-Loss ist nicht verhandelbar. Gewinnmitnahmen bei Targets sind PFLICHT. Dieser Swing Trade basiert auf: starkem Sentiment, gesundem technischen Trend ohne Divergenzen, fairer fundamentaler Bewertung, neutralem Makro und solider Timing-Analyse."
-}
+    line.new(bar_index, close, bar_index + 45, prog5d, color=trendUp ? color.lime : color.red, width=3)
 
-Debug
+// DASHBOARD
+var table dashboard = table.new(position.top_left, 2, 5, bgcolor=color.new(color.black, 10), border_width=4)
+if barstate.islast
+    empf = multiAgentScore >= 70 ? "🟢 KAUFEN" : multiAgentScore >= 50 ? "🟡 HALTEN" : "🔴 VERKAUFEN"
+    empfColor = multiAgentScore >= 70 ? color.lime : multiAgentScore >= 50 ? color.yellow : color.red
+    
+    table.cell(dashboard, 0, 0, "🤖 ${stock}", bgcolor=color.new(empfColor, 20), text_color=color.white, text_size=size.huge)
+    table.merge_cells(dashboard, 0, 0, 1, 0)
+    
+    table.cell(dashboard, 0, 1, "SIGNAL:", text_color=color.white, text_size=size.large)
+    table.cell(dashboard, 1, 1, empf, bgcolor=color.new(empfColor, 30), text_color=color.white, text_size=size.huge)
+    
+    table.cell(dashboard, 0, 2, "Score:", text_color=color.white)
+    table.cell(dashboard, 1, 2, str.tostring(multiAgentScore) + "/100", text_color=empfColor, text_size=size.large)
+    
+    table.cell(dashboard, 0, 3, "Setup:", text_color=color.white)
+    table.cell(dashboard, 1, 3, setupQuality, bgcolor=color.new(color.lime, 60), text_color=color.white, text_size=size.large)
+    
+    table.cell(dashboard, 0, 4, "Entry:", text_color=color.white)
+    table.cell(dashboard, 1, 4, str.tostring((entryLow + entryHigh)/2, "#.##"), text_color=color.lime, text_size=size.large)
 
-Copilot said:
-Swing-Timing-Specialist
-=Concatenate("🎯 SWING TRADING ANALYSE KOMPLETT
-", "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-", "📊 SWING TRADING EMPFEHLUNG:
-", Last(Local.SwingResult).Text, "
+// ALERTS
+alertcondition(buySignal, "KAUFEN", "Jetzt kaufen!")
+alertcondition(ta.crossover(close, takeProfit1), "TP1", "Ziel 1 erreicht!")
+alertcondition(ta.crossover(close, takeProfit2), "TP2", "Ziel 2 erreicht!")
+alertcondition(ta.crossunder(close, stopLoss), "STOP", "Stop Loss!")`;
 
-", "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-", "📁 BASIS-ANALYSEN:
-", "1️⃣ SENTIMENT: ", Local.SentimentJSON, "
+                log('Pine Script Länge: ' + pineScript.length);
+                
+                document.getElementById('pineScriptOutput').textContent = pineScript;
+                showStatus('✅ Pine Script erfolgreich generiert!', 'success');
+                log('=== FERTIG ===');
+                
+            } catch (e) {
+                log('FEHLER: ' + e.message);
+                log('Stack: ' + e.stack);
+                showStatus('❌ Fehler: ' + e.message, 'error');
+            }
+        }
 
-", "2️⃣ TECHNICAL (Swing-optimiert): ", Local.TechnicalJSON, "
+        function copyToClipboard() {
+            const output = document.getElementById('pineScriptOutput').textContent;
+            if (output === '// Dein Pine Script erscheint hier...') {
+                showStatus('❌ Bitte erst Pine Script generieren!', 'error');
+                return;
+            }
+            navigator.clipboard.writeText(output).then(() => {
+                showStatus('✅ Pine Script kopiert!', 'success');
+            });
+        }
 
-", "3️⃣ FUNDAMENTAL: ", Local.FundamentalJSON, "
-
-", "4️⃣ MAKRO: ", Local.MakroJSON, "
-
-", "5️⃣ TIMING: ", Local.TimingJSON, "
-
-", "6️⃣ CHART PATTERN: ", Local.ChartJSON)
+        function clearAll() {
+            document.getElementById('jsonInput').value = '';
+            document.getElementById('pineScriptOutput').textContent = '// Dein Pine Script erscheint hier...';
+            document.getElementById('status').className = 'status';
+            document.getElementById('debugOutput').innerHTML = '';
+            document.getElementById('debugOutput').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
