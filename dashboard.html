@@ -147,7 +147,17 @@
         }
 
         function testGenerate() {
-            log('=== START ===');
+            const debug = document.getElementById('debugOutput');
+            debug.innerHTML = '';
+            debug.style.display = 'block';
+            
+            function log(msg) {
+                debug.innerHTML += msg + '\n';
+                console.log(msg);
+            }
+            
+            log('=== START GENERIERUNG ===');
+            
             const jsonInput = document.getElementById('jsonInput').value.trim();
             
             if (!jsonInput) {
@@ -159,50 +169,72 @@
             log('Input Länge: ' + jsonInput.length);
 
             try {
-                log('Parsing JSON...');
+                log('Starte JSON Parsing...');
                 
-                // Vereinfachtes Parsing
+                // Einfachstes Parsing - split bei }  {
                 let allData = {};
-                const jsonBlocks = jsonInput.split(/(?<=\})\s*(?=\{)/);
+                const parts = jsonInput.split(/\}\s*\{/);
                 
-                log('Gefundene Blöcke: ' + jsonBlocks.length);
+                log('Teile gefunden: ' + parts.length);
                 
-                for (let i = 0; i < jsonBlocks.length; i++) {
+                for (let i = 0; i < parts.length; i++) {
+                    let jsonStr = parts[i];
+                    
+                    // Füge geschweifte Klammern wieder hinzu
+                    if (i > 0) jsonStr = '{' + jsonStr;
+                    if (i < parts.length - 1) jsonStr = jsonStr + '}';
+                    
                     try {
-                        const parsed = JSON.parse(jsonBlocks[i].trim());
-                        log('Block ' + (i+1) + ' OK: ' + (parsed.agent || 'unknown'));
+                        const parsed = JSON.parse(jsonStr);
+                        log('✓ Teil ' + (i+1) + ' OK: ' + (parsed.agent || 'unknown'));
                         Object.assign(allData, parsed);
                     } catch (e) {
-                        log('Block ' + (i+1) + ' Fehler: ' + e.message);
+                        log('✗ Teil ' + (i+1) + ' Fehler: ' + e.message.substring(0, 50));
                     }
                 }
                 
-                log('Daten zusammengeführt');
+                if (Object.keys(allData).length === 0) {
+                    throw new Error('Keine Daten gefunden');
+                }
                 
-                // Extrahiere Werte
+                log('Daten zusammengeführt: ' + Object.keys(allData).length + ' Keys');
+                
+                // Werte extrahieren
+                log('Extrahiere Werte...');
                 const stock = allData.aktie || 'Microsoft';
                 const price = Number(allData.aktueller_kurs_eur || 414.91);
-                const score = Number(allData.gesamtbewertung?.gewichteter_score || 70);
+                const score = Number(allData.gesamtbewertung?.gewichteter_score || allData.score || 70);
                 
                 log('Stock: ' + stock);
                 log('Price: ' + price);
                 log('Score: ' + score);
                 
                 // Setup bereinigen
-                let setup = String(allData.setup_qualitaet || 'A');
-                const setupMatch = setup.match(/(A\+\+|A\+|A|B\+|B|C)/i);
-                setup = setupMatch ? setupMatch[0].toUpperCase() : 'A';
-                log('Setup: ' + setup);
+                let rawSetup = String(allData.setup_qualitaet || allData.setup_rating_final?.rating || 'A');
+                const setupMatch = rawSetup.match(/(A\+\+|A\+|A|B\+|B|C)/i);
+                const setup = setupMatch ? setupMatch[0].toUpperCase() : 'A';
+                log('Setup: ' + rawSetup + ' -> ' + setup);
                 
-                // Weitere Werte
-                const entryLow = Number(allData.trading_empfehlung?.einstiegsstrategie?.akzeptabler_einstiegsbereich_eur?.von || price * 0.98);
-                const entryHigh = Number(allData.trading_empfehlung?.einstiegsstrategie?.akzeptabler_einstiegsbereich_eur?.bis || price * 1.02);
-                const stopLoss = Number(allData.trading_empfehlung?.stop_loss?.stop_loss_kurs_eur || price * 0.94);
-                const tp1 = Number(allData.trading_empfehlung?.kursziele?.konservativ_eur || price * 1.04);
-                const tp2 = Number(allData.trading_empfehlung?.kursziele?.realistisch_eur || price * 1.08);
+                // Trading Levels
+                const entryLow = Number(allData.trading_empfehlung?.einstiegsstrategie?.akzeptabler_einstiegsbereich_eur?.von || 
+                                        allData.entry_analyse?.entry_szenarien?.[1]?.entry_preis_eur || 
+                                        price * 0.98);
+                const entryHigh = Number(allData.trading_empfehlung?.einstiegsstrategie?.akzeptabler_einstiegsbereich_eur?.bis || 
+                                         allData.entry_analyse?.entry_szenarien?.[0]?.entry_preis_eur || 
+                                         price * 1.02);
+                const stopLoss = Number(allData.trading_empfehlung?.stop_loss?.stop_loss_kurs_eur || 
+                                        allData.exit_strategie?.stop_loss_strategie?.initial_stop?.kurs_eur || 
+                                        price * 0.94);
+                const tp1 = Number(allData.trading_empfehlung?.kursziele?.konservativ_eur || 
+                                   allData.exit_strategie?.gewinnmitnahme_plan?.[0]?.kurs_eur || 
+                                   price * 1.04);
+                const tp2 = Number(allData.trading_empfehlung?.kursziele?.realistisch_eur || 
+                                   allData.exit_strategie?.gewinnmitnahme_plan?.[1]?.kurs_eur || 
+                                   price * 1.08);
                 
-                log('Entry: ' + entryLow.toFixed(2) + ' - ' + entryHigh.toFixed(2));
-                log('Stop: ' + stopLoss.toFixed(2));
+                log('EntryLow: ' + entryLow.toFixed(2));
+                log('EntryHigh: ' + entryHigh.toFixed(2));
+                log('StopLoss: ' + stopLoss.toFixed(2));
                 log('TP1: ' + tp1.toFixed(2));
                 log('TP2: ' + tp2.toFixed(2));
                 
