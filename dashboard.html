@@ -102,6 +102,7 @@
             font-size: 0.8rem;
             max-height: 300px;
             overflow-y: auto;
+            display: none;
         }
     </style>
 </head>
@@ -120,148 +121,34 @@
             <div class="output-box" id="pineScriptOutput">// Dein Pine Script erscheint hier...</div>
             
             <div class="button-group">
-                <button class="btn-generate" onclick="alert('Button geklickt!'); testGenerate();">⚡ Pine Script Generieren</button>
-                <button class="btn-copy" onclick="alert('Copy geklickt!'); copyToClipboard();">📋 Kopieren</button>
-                <button class="btn-clear" onclick="alert('Clear geklickt!'); clearAll();">🗑️ Löschen</button>
+                <button class="btn-generate" id="generateBtn">⚡ Pine Script Generieren</button>
+                <button class="btn-copy" id="copyBtn">📋 Kopieren</button>
+                <button class="btn-clear" id="clearBtn">🗑️ Löschen</button>
             </div>
 
             <div class="status" id="status"></div>
-            
-            <div class="debug" id="debugOutput" style="display: none;"></div>
+            <div class="debug" id="debugOutput"></div>
         </div>
     </div>
 
     <script>
-        // WICHTIG: Logs auch in Console ausgeben
-        window.onerror = function(msg, url, lineNo, columnNo, error) {
-            alert('JavaScript Fehler: ' + msg);
-            return false;
-        };
-
-        function log(message) {
-            const debug = document.getElementById('debugOutput');
-            debug.style.display = 'block';
-            debug.innerHTML += message + '\n';
-            console.log(message);
-        }
-
-        function showStatus(message, type) {
-            const status = document.getElementById('status');
-            status.textContent = message;
-            status.className = 'status ' + type;
-            setTimeout(() => { status.className = 'status'; }, 5000);
-        }
-
-        function testGenerate() {
-            try {
-                const debug = document.getElementById('debugOutput');
-                debug.innerHTML = '';
-                debug.style.display = 'block';
-                
-                log('=== START GENERIERUNG ===');
-                
-                const jsonInput = document.getElementById('jsonInput').value.trim();
-                
-                if (!jsonInput) {
-                    showStatus('❌ Bitte JSON-Daten einfügen!', 'error');
-                    log('FEHLER: Kein Input');
-                    return;
-                }
-
-                log('Input Länge: ' + jsonInput.length + ' Zeichen');
-
-                log('Starte JSON Parsing...');
-                
-                // Einfachstes Parsing - split bei }  {
-                let allData = {};
-                const parts = jsonInput.split(/\}\s*\{/);
-                
-                log('JSON-Teile gefunden: ' + parts.length);
-                
-                for (let i = 0; i < parts.length; i++) {
-                    let jsonStr = parts[i];
-                    
-                    // Füge geschweifte Klammern wieder hinzu
-                    if (i > 0) jsonStr = '{' + jsonStr;
-                    if (i < parts.length - 1) jsonStr = jsonStr + '}';
-                    
-                    try {
-                        const parsed = JSON.parse(jsonStr);
-                        log('✓ Teil ' + (i+1) + ' OK: ' + (parsed.agent || 'unknown'));
-                        Object.assign(allData, parsed);
-                    } catch (e) {
-                        log('✗ Teil ' + (i+1) + ' Fehler: ' + e.message.substring(0, 50));
-                    }
-                }
-                
-                if (Object.keys(allData).length === 0) {
-                    throw new Error('Keine Daten gefunden');
-                }
-                
-                log('Daten zusammengeführt: ' + Object.keys(allData).length + ' Keys');
-                
-                // Werte extrahieren
-                log('Extrahiere Werte...');
-                const stock = allData.aktie || 'Microsoft';
-                const price = Number(allData.aktueller_kurs_eur || 414.91);
-                const score = Number(allData.gesamtbewertung?.gewichteter_score || allData.score || 70);
-                
-                log('Stock: ' + stock);
-                log('Price: ' + price);
-                log('Score: ' + score);
-                
-                // Setup bereinigen
-                let rawSetup = String(allData.setup_qualitaet || allData.setup_rating_final?.rating || 'A');
-                const setupMatch = rawSetup.match(/(A\+\+|A\+|A|B\+|B|C)/i);
-                const setup = setupMatch ? setupMatch[0].toUpperCase() : 'A';
-                log('Setup: ' + rawSetup + ' -> ' + setup);
-                
-                // Trading Levels
-                const entryLow = Number(allData.trading_empfehlung?.einstiegsstrategie?.akzeptabler_einstiegsbereich_eur?.von || 
-                                        allData.entry_analyse?.entry_szenarien?.[1]?.entry_preis_eur || 
-                                        price * 0.98);
-                const entryHigh = Number(allData.trading_empfehlung?.einstiegsstrategie?.akzeptabler_einstiegsbereich_eur?.bis || 
-                                         allData.entry_analyse?.entry_szenarien?.[0]?.entry_preis_eur || 
-                                         price * 1.02);
-                const stopLoss = Number(allData.trading_empfehlung?.stop_loss?.stop_loss_kurs_eur || 
-                                        allData.exit_strategie?.stop_loss_strategie?.initial_stop?.kurs_eur || 
-                                        price * 0.94);
-                const tp1 = Number(allData.trading_empfehlung?.kursziele?.konservativ_eur || 
-                                   allData.exit_strategie?.gewinnmitnahme_plan?.[0]?.kurs_eur || 
-                                   price * 1.04);
-                const tp2 = Number(allData.trading_empfehlung?.kursziele?.realistisch_eur || 
-                                   allData.exit_strategie?.gewinnmitnahme_plan?.[1]?.kurs_eur || 
-                                   price * 1.08);
-                
-                log('EntryLow: ' + entryLow.toFixed(2));
-                log('EntryHigh: ' + entryHigh.toFixed(2));
-                log('StopLoss: ' + stopLoss.toFixed(2));
-                log('TP1: ' + tp1.toFixed(2));
-                log('TP2: ' + tp2.toFixed(2));
-                
-                log('Generiere Pine Script...');
-                
-                // Pine Script String
-                const pineScript = `//@version=5
+        // Pine Script Template als Funktion
+        function generatePineScriptCode(stock, entryLow, entryHigh, stopLoss, tp1, tp2, score, setup) {
+            return `//@version=5
 indicator("🎯 ${stock} - KLARE TRADING SIGNALE", overlay=true, max_labels_count=500, max_boxes_count=100)
 
-// ══════════════════════════════════════════════════════════
-// 📊 DATEN AUS WORKFLOW
-// ══════════════════════════════════════════════════════════
-ENTRY_LOW = ${entryLow.toFixed(2)}
-ENTRY_HIGH = ${entryHigh.toFixed(2)}
-STOP_LOSS = ${stopLoss.toFixed(2)}
-TAKE_PROFIT_1 = ${tp1.toFixed(2)}
-TAKE_PROFIT_2 = ${tp2.toFixed(2)}
-SCORE = ${score.toFixed(0)}
+// DATEN
+ENTRY_LOW = ${entryLow}
+ENTRY_HIGH = ${entryHigh}
+STOP_LOSS = ${stopLoss}
+TAKE_PROFIT_1 = ${tp1}
+TAKE_PROFIT_2 = ${tp2}
+SCORE = ${score}
 
-// Anzeige-Optionen
-showOnlySignals = input.bool(true, "🎯 Nur Signale anzeigen (empfohlen)", group="Anzeige")
-showSupportResistance = input.bool(true, "Support/Resistance Lines", group="Anzeige")
+// Optionen
+showOnlySignals = input.bool(true, "Nur Signale", group="Anzeige")
 
-// ══════════════════════════════════════════════════════════
-// 📈 EINFACHE INDIKATOREN
-// ══════════════════════════════════════════════════════════
+// Indikatoren
 sma20 = ta.sma(close, 20)
 sma50 = ta.sma(close, 50)
 rsi = ta.rsi(close, 14)
@@ -269,403 +156,217 @@ atr = ta.atr(14)
 
 // Trend
 trendBullish = close > sma20 and sma20 > sma50
-trendBearish = close < sma20 and sma20 < sma50
-
-// Trading Zonen
 inBuyZone = close >= ENTRY_LOW and close <= ENTRY_HIGH
-nearStopLoss = close <= STOP_LOSS * 1.03
-atTP1 = close >= TAKE_PROFIT_1
-atTP2 = close >= TAKE_PROFIT_2
 
-// ══════════════════════════════════════════════════════════
-// 🎯 KLARE TRADING SIGNALE
-// ══════════════════════════════════════════════════════════
-
-// 🟢 KAUFSIGNAL
+// Signale
 buyNow = inBuyZone and trendBullish and SCORE >= 60 and not inBuyZone[1]
-
-// 🔴 VERKAUFSSIGNALE
 sellTP1 = ta.crossover(close, TAKE_PROFIT_1)
 sellTP2 = ta.crossover(close, TAKE_PROFIT_2)
 sellStop = ta.crossunder(close, STOP_LOSS)
 
-// ⚠️ WARNUNGEN
-warning_NearStop = nearStopLoss and close > STOP_LOSS
-warning_InBuyZone = inBuyZone and trendBullish
-
-// ══════════════════════════════════════════════════════════
-// 🎨 NUR WICHTIGE LINES (WENN GEWÜNSCHT)
-// ══════════════════════════════════════════════════════════
+// MAs (optional)
 plot(showOnlySignals ? na : sma20, "SMA 20", color.new(color.yellow, 50), 2)
 plot(showOnlySignals ? na : sma50, "SMA 50", color.new(color.orange, 50), 2)
 
-// ══════════════════════════════════════════════════════════
-// 🟢 KAUFZONE - PERMANENT SICHTBAR
-// ══════════════════════════════════════════════════════════
-if barstate.islast and showSupportResistance
-    // KAUFZONE (GRÜN)
+// KAUFZONE
+if barstate.islast
     var box buyBox = box.new(bar_index - 300, ENTRY_LOW, bar_index + 50, ENTRY_HIGH, 
-         border_color=color.new(color.lime, 0), 
-         bgcolor=color.new(color.lime, 90), 
-         border_width=4,
-         text="🟢 HIER KAUFEN\\n\\n" + str.tostring(ENTRY_LOW, "#.##") + " - " + str.tostring(ENTRY_HIGH, "#.##") + " EUR",
-         text_color=color.lime, 
-         text_size=size.huge,
-         text_halign=text.align_center,
-         text_valign=text.align_center)
+         border_color=color.lime, bgcolor=color.new(color.lime, 90), border_width=4,
+         text="🟢 HIER KAUFEN\\n" + str.tostring(ENTRY_LOW, "#.##") + " - " + str.tostring(ENTRY_HIGH, "#.##"),
+         text_color=color.lime, text_size=size.huge)
     box.set_right(buyBox, bar_index + 50)
     
-    // STOP LOSS (ROT)
+    // STOP LOSS
     var line stopLine = line.new(bar_index - 300, STOP_LOSS, bar_index + 50, STOP_LOSS, 
-         color=color.red, width=5, style=line.style_solid)
+         color=color.red, width=5)
     line.set_x2(stopLine, bar_index + 50)
     
-    var label stopLabel = label.new(bar_index + 55, STOP_LOSS, 
-         "⛔ STOP\\n" + str.tostring(STOP_LOSS, "#.##"), 
-         style=label.style_label_left, 
-         color=color.red, 
-         textcolor=color.white, 
-         size=size.large)
+    var label stopLabel = label.new(bar_index + 55, STOP_LOSS, "⛔ STOP " + str.tostring(STOP_LOSS, "#.##"), 
+         style=label.style_label_left, color=color.red, textcolor=color.white, size=size.large)
     label.set_x(stopLabel, bar_index + 55)
     
-    // TAKE PROFIT 1 (GELB)
+    // TP1
     var line tp1Line = line.new(bar_index - 300, TAKE_PROFIT_1, bar_index + 50, TAKE_PROFIT_1, 
          color=color.yellow, width=5, style=line.style_dashed)
     line.set_x2(tp1Line, bar_index + 50)
     
     var label tp1Label = label.new(bar_index + 55, TAKE_PROFIT_1, 
-         "🎯 ZIEL 1\\n" + str.tostring(TAKE_PROFIT_1, "#.##") + "\\n50% verkaufen", 
-         style=label.style_label_left, 
-         color=color.yellow, 
-         textcolor=color.black, 
-         size=size.large)
+         "🎯 ZIEL 1 " + str.tostring(TAKE_PROFIT_1, "#.##") + "\\n50% verkaufen", 
+         style=label.style_label_left, color=color.yellow, textcolor=color.black, size=size.large)
     label.set_x(tp1Label, bar_index + 55)
     
-    // TAKE PROFIT 2 (GRÜN)
+    // TP2
     var line tp2Line = line.new(bar_index - 300, TAKE_PROFIT_2, bar_index + 50, TAKE_PROFIT_2, 
          color=color.lime, width=5, style=line.style_dashed)
     line.set_x2(tp2Line, bar_index + 50)
     
     var label tp2Label = label.new(bar_index + 55, TAKE_PROFIT_2, 
-         "🚀 ZIEL 2\\n" + str.tostring(TAKE_PROFIT_2, "#.##") + "\\nAlles verkaufen", 
-         style=label.style_label_left, 
-         color=color.lime, 
-         textcolor=color.black, 
-         size=size.large)
+         "🚀 ZIEL 2 " + str.tostring(TAKE_PROFIT_2, "#.##") + "\\nAlles verkaufen", 
+         style=label.style_label_left, color=color.lime, textcolor=color.black, size=size.large)
     label.set_x(tp2Label, bar_index + 55)
 
-// ══════════════════════════════════════════════════════════
-// 🟢🟢🟢 KAUFSIGNAL - RIESIG UND DEUTLICH!
-// ══════════════════════════════════════════════════════════
-if buyNow
-    // PFEIL NACH OBEN
-    label.new(bar_index, low, "▲", 
-         style=label.style_none, 
-         color=color.new(color.lime, 100), 
-         textcolor=color.lime, 
-         size=size.huge,
-         yloc=yloc.belowbar)
-    
-    // TEXT SIGNAL
-    label.new(bar_index, low - atr * 2, 
-         "🟢🟢🟢\\n\\nJETZT KAUFEN!\\n\\n" + str.tostring(close, "#.##") + " EUR\\n\\n" +
-         "Stop Loss: " + str.tostring(STOP_LOSS, "#.##") + "\\n" +
-         "Ziel 1: " + str.tostring(TAKE_PROFIT_1, "#.##") + "\\n" +
-         "Ziel 2: " + str.tostring(TAKE_PROFIT_2, "#.##"),
-         style=label.style_label_up, 
-         color=color.lime, 
-         textcolor=color.black, 
-         size=size.huge,
-         tooltip="KI-Score: " + str.tostring(SCORE) + "/100")
-
-// ══════════════════════════════════════════════════════════
-// 🎯 ZIEL 1 ERREICHT - 50% VERKAUFEN
-// ══════════════════════════════════════════════════════════
-if sellTP1
-    // PFEIL NACH UNTEN
-    label.new(bar_index, high, "▼", 
-         style=label.style_none, 
-         color=color.new(color.yellow, 100), 
-         textcolor=color.yellow, 
-         size=size.huge,
-         yloc=yloc.abovebar)
-    
-    // TEXT SIGNAL
-    label.new(bar_index, high + atr * 2, 
-         "🎯🎯🎯\\n\\nZIEL 1 ERREICHT!\\n\\n" + str.tostring(close, "#.##") + " EUR\\n\\n" +
-         "JETZT 50% VERKAUFEN!\\n\\n" +
-         "Rest läuft weiter zu Ziel 2",
-         style=label.style_label_down, 
-         color=color.yellow, 
-         textcolor=color.black, 
-         size=size.huge)
-
-// ══════════════════════════════════════════════════════════
-// 🚀 ZIEL 2 ERREICHT - ALLES VERKAUFEN
-// ══════════════════════════════════════════════════════════
-if sellTP2
-    // PFEIL NACH UNTEN
-    label.new(bar_index, high, "▼", 
-         style=label.style_none, 
-         color=color.new(color.lime, 100), 
-         textcolor=color.lime, 
-         size=size.huge,
-         yloc=yloc.abovebar)
-    
-    // TEXT SIGNAL
-    label.new(bar_index, high + atr * 2, 
-         "🚀🚀🚀\\n\\nZIEL 2 ERREICHT!\\n\\n" + str.tostring(close, "#.##") + " EUR\\n\\n" +
-         "ALLES VERKAUFEN!\\n\\n" +
-         "GEWINN MITNEHMEN!",
-         style=label.style_label_down, 
-         color=color.lime, 
-         textcolor=color.black, 
-         size=size.huge)
-
-// ══════════════════════════════════════════════════════════
-// ⛔ STOP LOSS - SOFORT RAUS!
-// ══════════════════════════════════════════════════════════
-if sellStop
-    // PFEIL NACH OBEN (ROT)
-    label.new(bar_index, low, "▲", 
-         style=label.style_none, 
-         color=color.new(color.red, 100), 
-         textcolor=color.red, 
-         size=size.huge,
-         yloc=yloc.belowbar)
-    
-    // TEXT SIGNAL
-    label.new(bar_index, low - atr * 2, 
-         "⛔⛔⛔\\n\\nSTOP LOSS!\\n\\n" + str.tostring(close, "#.##") + " EUR\\n\\n" +
-         "SOFORT ALLES VERKAUFEN!\\n\\n" +
-         "VERLUST BEGRENZEN!",
-         style=label.style_label_up, 
-         color=color.red, 
-         textcolor=color.white, 
-         size=size.huge)
-
-// ══════════════════════════════════════════════════════════
-// ⚠️ WARNUNGEN (KLEINE HINWEISE)
-// ══════════════════════════════════════════════════════════
-if warning_InBuyZone and not buyNow and barstate.islast
-    label.new(bar_index, high + atr * 0.5, 
-         "💡 In Kaufzone\\nWarte auf Kaufsignal", 
-         style=label.style_label_down, 
-         color=color.new(color.blue, 50), 
-         textcolor=color.white, 
-         size=size.small)
-
-if warning_NearStop and barstate.islast
-    label.new(bar_index, low - atr * 0.5, 
-         "⚠️ Nahe Stop Loss\\nAchtung!", 
-         style=label.style_label_up, 
-         color=color.new(color.orange, 50), 
-         textcolor=color.white, 
-         size=size.small)
-
-// ══════════════════════════════════════════════════════════
-// 📊 MINIMAL DASHBOARD (OBEN LINKS)
-// ══════════════════════════════════════════════════════════
-var table dashboard = table.new(position.top_left, 2, 4, 
-     bgcolor=color.new(color.black, 20), 
-     border_color=color.white, 
-     border_width=3)
-
-if barstate.islast
-    empfehlung = SCORE >= 70 ? "🟢 KAUFEN" : SCORE >= 50 ? "🟡 HALTEN" : "🔴 VERKAUFEN"
-    empfColor = SCORE >= 70 ? color.lime : SCORE >= 50 ? color.yellow : color.red
-    
-    table.cell(dashboard, 0, 0, "🤖 ${stock}", 
-         bgcolor=color.new(empfColor, 30), 
-         text_color=color.white, 
-         text_size=size.huge)
-    table.merge_cells(dashboard, 0, 0, 1, 0)
-    
-    table.cell(dashboard, 0, 1, "SIGNAL:", text_color=color.white, text_size=size.large)
-    table.cell(dashboard, 1, 1, empfehlung, 
-         bgcolor=color.new(empfColor, 40), 
-         text_color=color.white, 
-         text_size=size.huge)
-    
-    table.cell(dashboard, 0, 2, "KI-Score:", text_color=color.white, text_size=size.normal)
-    table.cell(dashboard, 1, 2, str.tostring(SCORE) + "/100", 
-         text_color=empfColor, 
-         text_size=size.large)
-    
-    // Aktueller Status
-    currentStatus = inBuyZone ? "💚 IN KAUFZONE" : 
-                   atTP2 ? "✅ ÜBER ZIEL 2" :
-                   atTP1 ? "✅ ÜBER ZIEL 1" :
-                   nearStopLoss ? "⚠️ NAHE STOP" : 
-                   "📊 Beobachten"
-    
-    table.cell(dashboard, 0, 3, "Status:", text_color=color.white, text_size=size.normal)
-    table.cell(dashboard, 1, 3, currentStatus, 
-         text_color=inBuyZone ? color.lime : atTP1 ? color.yellow : nearStopLoss ? color.orange : color.white, 
-         text_size=size.normal)
-
-// ══════════════════════════════════════════════════════════
-// 🔔 ALERTS - BENACHRICHTIGUNGEN
-// ══════════════════════════════════════════════════════════
-alertcondition(buyNow, "🟢 KAUFEN", "JETZT KAUFEN bei " + str.tostring(close, "#.##") + " EUR!")
-alertcondition(sellTP1, "🎯 ZIEL 1", "ZIEL 1 erreicht! 50% verkaufen bei " + str.tostring(close, "#.##") + " EUR")
-alertcondition(sellTP2, "🚀 ZIEL 2", "ZIEL 2 erreicht! ALLES verkaufen bei " + str.tostring(close, "#.##") + " EUR")
-alertcondition(sellStop, "⛔ STOP LOSS", "STOP LOSS! Sofort verkaufen bei " + str.tostring(close, "#.##") + " EUR")
-alertcondition(inBuyZone and trendBullish, "💚 KAUFZONE", "Kurs in optimaler Kaufzone!")
-
-// ══════════════════════════════════════════════════════════
-// 📝 HINWEIS
-// ══════════════════════════════════════════════════════════
-// Dieses Script zeigt dir GENAU:
-// 🟢 Wann du KAUFEN sollst (grüner Pfeil + Label)
-// 🎯 Wann du 50% VERKAUFEN sollst (gelber Pfeil bei Ziel 1)
-// 🚀 Wann du ALLES VERKAUFEN sollst (grüner Pfeil bei Ziel 2)
-// ⛔ Wann du bei STOP LOSS raus musst (roter Pfeil)
-//
-// Die KAUFZONE (grüne Box) zeigt dir wo du kaufen sollst
-// Rote Linie = Stop Loss (sofort raus!)
-// Gelbe Linie = Ziel 1 (50% verkaufen)
-// Grüne Linie = Ziel 2 (alles verkaufen)`;
-
-// TRADING LEVELS
-entryLow = ${entryLow.toFixed(2)}
-entryHigh = ${entryHigh.toFixed(2)}
-stopLoss = ${stopLoss.toFixed(2)}
-takeProfit1 = ${tp1.toFixed(2)}
-takeProfit2 = ${tp2.toFixed(2)}
-
-// KI SCORES
-multiAgentScore = ${score.toFixed(0)}
-setupQuality = "${setup}"
-
-// BERECHNUNGEN
-sma20 = ta.sma(close, 20)
-sma50 = ta.sma(close, 50)
-rsi = ta.rsi(close, 14)
-atr = ta.atr(14)
-
-inEntryZone = close >= entryLow and close <= entryHigh
-bullishTrend = close > sma20 and sma20 > sma50 and rsi > 45
-buySignal = inEntryZone and bullishTrend and not inEntryZone[1]
-
-// VISUALISIERUNG
-plot(sma20, "SMA 20", color.yellow, 3)
-plot(sma50, "SMA 50", color.orange, 4)
-
-// ENTRY ZONE - GRÜN
-if barstate.islast
-    box.new(bar_index - 200, entryLow, bar_index + 100, entryHigh, 
-         border_color=color.lime, bgcolor=color.new(color.lime, 85), border_width=5,
-         text="💚 KAUFZONE\\n" + str.tostring(entryLow) + " - " + str.tostring(entryHigh) + "\\nScore: " + str.tostring(multiAgentScore) + "/100",
-         text_color=color.lime, text_size=size.huge)
-
-// STOP LOSS - ROT
-if barstate.islast
-    line.new(bar_index - 200, stopLoss, bar_index + 100, stopLoss, color=color.red, width=6)
-    label.new(bar_index + 105, stopLoss, "⛔ STOP LOSS\\n" + str.tostring(stopLoss), 
-         style=label.style_label_left, color=color.red, textcolor=color.white, size=size.huge)
-
-// TAKE PROFIT - GRÜN
-if barstate.islast
-    line.new(bar_index - 200, takeProfit1, bar_index + 100, takeProfit1, color=color.lime, width=5, style=line.style_dashed)
-    label.new(bar_index + 105, takeProfit1, "🎯 ZIEL 1\\n" + str.tostring(takeProfit1), 
-         style=label.style_label_left, color=color.lime, textcolor=color.white, size=size.large)
-    
-    line.new(bar_index - 200, takeProfit2, bar_index + 100, takeProfit2, color=color.aqua, width=5, style=line.style_dashed)
-    label.new(bar_index + 105, takeProfit2, "🚀 ZIEL 2\\n" + str.tostring(takeProfit2), 
-         style=label.style_label_left, color=color.aqua, textcolor=color.white, size=size.large)
-
 // KAUFSIGNAL
-if buySignal
-    label.new(bar_index, low - atr * 1.5, "🟢 JETZT KAUFEN!\\n" + str.tostring(close), 
+if buyNow
+    label.new(bar_index, low, "▲", style=label.style_none, color=color.new(color.lime, 100), 
+         textcolor=color.lime, size=size.huge, yloc=yloc.belowbar)
+    label.new(bar_index, low - atr * 2, 
+         "🟢 JETZT KAUFEN!\\n" + str.tostring(close, "#.##") + "\\nStop: " + str.tostring(STOP_LOSS, "#.##"),
          style=label.style_label_up, color=color.lime, textcolor=color.black, size=size.huge)
 
-// VERKAUFSSIGNALE
-if ta.crossover(close, takeProfit1)
-    label.new(bar_index, high + atr * 1.5, "🎯 ZIEL 1!\\n50% VERKAUFEN", 
+// ZIEL 1
+if sellTP1
+    label.new(bar_index, high, "▼", style=label.style_none, color=color.new(color.yellow, 100), 
+         textcolor=color.yellow, size=size.huge, yloc=yloc.abovebar)
+    label.new(bar_index, high + atr * 2, 
+         "🎯 ZIEL 1!\\n50% VERKAUFEN\\n" + str.tostring(close, "#.##"),
+         style=label.style_label_down, color=color.yellow, textcolor=color.black, size=size.huge)
+
+// ZIEL 2
+if sellTP2
+    label.new(bar_index, high, "▼", style=label.style_none, color=color.new(color.lime, 100), 
+         textcolor=color.lime, size=size.huge, yloc=yloc.abovebar)
+    label.new(bar_index, high + atr * 2, 
+         "🚀 ZIEL 2!\\nALLES VERKAUFEN\\n" + str.tostring(close, "#.##"),
          style=label.style_label_down, color=color.lime, textcolor=color.black, size=size.huge)
 
-if ta.crossover(close, takeProfit2)
-    label.new(bar_index, high + atr * 1.5, "🚀 ZIEL 2!\\nALLES VERKAUFEN", 
-         style=label.style_label_down, color=color.aqua, textcolor=color.black, size=size.huge)
-
-if ta.crossunder(close, stopLoss)
-    label.new(bar_index, low - atr * 1.5, "⛔ STOP LOSS!\\nSOFORT RAUS", 
+// STOP LOSS
+if sellStop
+    label.new(bar_index, low, "▲", style=label.style_none, color=color.new(color.red, 100), 
+         textcolor=color.red, size=size.huge, yloc=yloc.belowbar)
+    label.new(bar_index, low - atr * 2, 
+         "⛔ STOP LOSS!\\nSOFORT RAUS\\n" + str.tostring(close, "#.##"),
          style=label.style_label_up, color=color.red, textcolor=color.white, size=size.huge)
 
-// PROGNOSE
-if barstate.islast
-    trendUp = close > sma20 and sma20 > sma50
-    prog1h = close + (trendUp ? atr * 0.15 : -atr * 0.15)
-    prog4h = close + (trendUp ? atr * 0.4 : -atr * 0.4)
-    prog1d = close + (trendUp ? atr * 0.8 : -atr * 0.8)
-    prog5d = close + (trendUp ? atr * 2.5 : -atr * 2.5)
-    
-    box.new(bar_index + 5, math.max(prog1h, prog5d) + atr, bar_index + 50, math.min(prog1h, prog5d) - atr,
-         border_color=color.blue, bgcolor=color.new(color.blue, 92), border_width=3,
-         text="🔮 PROGNOSE\\n1H: " + str.tostring(prog1h, "#.##") + "\\n4H: " + str.tostring(prog4h, "#.##") + "\\n1D: " + str.tostring(prog1d, "#.##") + "\\n5D: " + str.tostring(prog5d, "#.##"),
-         text_color=color.aqua, text_size=size.large)
-    
-    line.new(bar_index, close, bar_index + 45, prog5d, color=trendUp ? color.lime : color.red, width=3)
-
 // DASHBOARD
-var table dashboard = table.new(position.top_left, 2, 5, bgcolor=color.new(color.black, 10), border_width=4)
+var table dashboard = table.new(position.top_left, 2, 4, bgcolor=color.new(color.black, 20), border_width=3)
 if barstate.islast
-    empf = multiAgentScore >= 70 ? "🟢 KAUFEN" : multiAgentScore >= 50 ? "🟡 HALTEN" : "🔴 VERKAUFEN"
-    empfColor = multiAgentScore >= 70 ? color.lime : multiAgentScore >= 50 ? color.yellow : color.red
+    empf = SCORE >= 70 ? "🟢 KAUFEN" : SCORE >= 50 ? "🟡 HALTEN" : "🔴 VERKAUFEN"
+    empfColor = SCORE >= 70 ? color.lime : SCORE >= 50 ? color.yellow : color.red
     
-    table.cell(dashboard, 0, 0, "🤖 ${stock}", bgcolor=color.new(empfColor, 20), text_color=color.white, text_size=size.huge)
+    table.cell(dashboard, 0, 0, "🤖 ${stock}", bgcolor=color.new(empfColor, 30), text_color=color.white, text_size=size.huge)
     table.merge_cells(dashboard, 0, 0, 1, 0)
     
     table.cell(dashboard, 0, 1, "SIGNAL:", text_color=color.white, text_size=size.large)
-    table.cell(dashboard, 1, 1, empf, bgcolor=color.new(empfColor, 30), text_color=color.white, text_size=size.huge)
+    table.cell(dashboard, 1, 1, empf, bgcolor=color.new(empfColor, 40), text_color=color.white, text_size=size.huge)
     
     table.cell(dashboard, 0, 2, "Score:", text_color=color.white)
-    table.cell(dashboard, 1, 2, str.tostring(multiAgentScore) + "/100", text_color=empfColor, text_size=size.large)
+    table.cell(dashboard, 1, 2, str.tostring(SCORE) + "/100", text_color=empfColor, text_size=size.large)
     
-    table.cell(dashboard, 0, 3, "Setup:", text_color=color.white)
-    table.cell(dashboard, 1, 3, setupQuality, bgcolor=color.new(color.lime, 60), text_color=color.white, text_size=size.large)
-    
-    table.cell(dashboard, 0, 4, "Entry:", text_color=color.white)
-    table.cell(dashboard, 1, 4, str.tostring((entryLow + entryHigh)/2, "#.##"), text_color=color.lime, text_size=size.large)
+    currentStatus = inBuyZone ? "💚 IN KAUFZONE" : "📊 Beobachten"
+    table.cell(dashboard, 0, 3, "Status:", text_color=color.white)
+    table.cell(dashboard, 1, 3, currentStatus, text_color=inBuyZone ? color.lime : color.white)
 
 // ALERTS
-alertcondition(buySignal, "KAUFEN", "Jetzt kaufen!")
-alertcondition(ta.crossover(close, takeProfit1), "TP1", "Ziel 1 erreicht!")
-alertcondition(ta.crossover(close, takeProfit2), "TP2", "Ziel 2 erreicht!")
-alertcondition(ta.crossunder(close, stopLoss), "STOP", "Stop Loss!")`;
+alertcondition(buyNow, "🟢 KAUFEN", "JETZT KAUFEN!")
+alertcondition(sellTP1, "🎯 TP1", "Ziel 1 erreicht!")
+alertcondition(sellTP2, "🚀 TP2", "Ziel 2 erreicht!")
+alertcondition(sellStop, "⛔ STOP", "Stop Loss!")`;
+        }
 
-                log('Pine Script Länge: ' + pineScript.length);
+        // Event Listeners
+        document.getElementById('generateBtn').addEventListener('click', function() {
+            const debug = document.getElementById('debugOutput');
+            debug.innerHTML = '';
+            debug.style.display = 'block';
+            
+            function log(msg) {
+                debug.innerHTML += msg + '\n';
+                console.log(msg);
+            }
+            
+            function showStatus(msg, type) {
+                const status = document.getElementById('status');
+                status.textContent = msg;
+                status.className = 'status ' + type;
+            }
+            
+            try {
+                log('=== START ===');
+                const jsonInput = document.getElementById('jsonInput').value.trim();
                 
+                if (!jsonInput) {
+                    showStatus('❌ Bitte JSON-Daten einfügen!', 'error');
+                    return;
+                }
+                
+                log('Input Länge: ' + jsonInput.length);
+                log('Parse JSON...');
+                
+                let allData = {};
+                const parts = jsonInput.split(/\}\s*\{/);
+                log('Teile: ' + parts.length);
+                
+                for (let i = 0; i < parts.length; i++) {
+                    let jsonStr = parts[i];
+                    if (i > 0) jsonStr = '{' + jsonStr;
+                    if (i < parts.length - 1) jsonStr = jsonStr + '}';
+                    
+                    try {
+                        const parsed = JSON.parse(jsonStr);
+                        log('✓ Teil ' + (i+1) + ': ' + (parsed.agent || 'OK'));
+                        Object.assign(allData, parsed);
+                    } catch (e) {
+                        log('✗ Teil ' + (i+1) + ': Fehler');
+                    }
+                }
+                
+                log('Extrahiere Werte...');
+                const stock = allData.aktie || 'Microsoft';
+                const price = Number(allData.aktueller_kurs_eur || 414.91);
+                const score = Number(allData.gesamtbewertung?.gewichteter_score || 70);
+                
+                let rawSetup = String(allData.setup_qualitaet || 'A');
+                const setupMatch = rawSetup.match(/(A\+\+|A\+|A|B\+|B|C)/i);
+                const setup = setupMatch ? setupMatch[0].toUpperCase() : 'A';
+                
+                const entryLow = Number(allData.trading_empfehlung?.einstiegsstrategie?.akzeptabler_einstiegsbereich_eur?.von || price * 0.98);
+                const entryHigh = Number(allData.trading_empfehlung?.einstiegsstrategie?.akzeptabler_einstiegsbereich_eur?.bis || price * 1.02);
+                const stopLoss = Number(allData.trading_empfehlung?.stop_loss?.stop_loss_kurs_eur || price * 0.94);
+                const tp1 = Number(allData.trading_empfehlung?.kursziele?.konservativ_eur || price * 1.04);
+                const tp2 = Number(allData.trading_empfehlung?.kursziele?.realistisch_eur || price * 1.08);
+                
+                log('Stock: ' + stock);
+                log('Price: ' + price.toFixed(2));
+                log('Entry: ' + entryLow.toFixed(2) + '-' + entryHigh.toFixed(2));
+                log('Stop: ' + stopLoss.toFixed(2));
+                log('TP1: ' + tp1.toFixed(2));
+                log('TP2: ' + tp2.toFixed(2));
+                
+                log('Generiere Pine Script...');
+                const pineScript = generatePineScriptCode(stock, entryLow.toFixed(2), entryHigh.toFixed(2), 
+                                                         stopLoss.toFixed(2), tp1.toFixed(2), tp2.toFixed(2), 
+                                                         score.toFixed(0), setup);
+                
+                log('Fertig! Länge: ' + pineScript.length);
                 document.getElementById('pineScriptOutput').textContent = pineScript;
                 showStatus('✅ Pine Script erfolgreich generiert!', 'success');
-                log('=== FERTIG ===');
                 
             } catch (e) {
                 log('FEHLER: ' + e.message);
-                log('Stack: ' + e.stack);
                 showStatus('❌ Fehler: ' + e.message, 'error');
             }
-        }
+        });
 
-        function copyToClipboard() {
+        document.getElementById('copyBtn').addEventListener('click', function() {
             const output = document.getElementById('pineScriptOutput').textContent;
             if (output === '// Dein Pine Script erscheint hier...') {
-                showStatus('❌ Bitte erst Pine Script generieren!', 'error');
+                alert('Bitte erst Pine Script generieren!');
                 return;
             }
             navigator.clipboard.writeText(output).then(() => {
-                showStatus('✅ Pine Script kopiert!', 'success');
+                const status = document.getElementById('status');
+                status.textContent = '✅ Pine Script kopiert!';
+                status.className = 'status success';
             });
-        }
+        });
 
-        function clearAll() {
+        document.getElementById('clearBtn').addEventListener('click', function() {
             document.getElementById('jsonInput').value = '';
             document.getElementById('pineScriptOutput').textContent = '// Dein Pine Script erscheint hier...';
-            document.getElementById('status').className = 'status';
             document.getElementById('debugOutput').innerHTML = '';
             document.getElementById('debugOutput').style.display = 'none';
-        }
+            document.getElementById('status').className = 'status';
+        });
     </script>
 </body>
 </html>
