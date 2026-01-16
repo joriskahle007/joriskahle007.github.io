@@ -132,6 +132,12 @@
     </div>
 
     <script>
+        // WICHTIG: Logs auch in Console ausgeben
+        window.onerror = function(msg, url, lineNo, columnNo, error) {
+            alert('JavaScript Fehler: ' + msg);
+            return false;
+        };
+
         function log(message) {
             const debug = document.getElementById('debugOutput');
             debug.style.display = 'block';
@@ -147,35 +153,30 @@
         }
 
         function testGenerate() {
-            const debug = document.getElementById('debugOutput');
-            debug.innerHTML = '';
-            debug.style.display = 'block';
-            
-            function log(msg) {
-                debug.innerHTML += msg + '\n';
-                console.log(msg);
-            }
-            
-            log('=== START GENERIERUNG ===');
-            
-            const jsonInput = document.getElementById('jsonInput').value.trim();
-            
-            if (!jsonInput) {
-                showStatus('❌ Bitte JSON-Daten einfügen!', 'error');
-                log('FEHLER: Kein Input');
-                return;
-            }
-
-            log('Input Länge: ' + jsonInput.length);
-
             try {
+                const debug = document.getElementById('debugOutput');
+                debug.innerHTML = '';
+                debug.style.display = 'block';
+                
+                log('=== START GENERIERUNG ===');
+                
+                const jsonInput = document.getElementById('jsonInput').value.trim();
+                
+                if (!jsonInput) {
+                    showStatus('❌ Bitte JSON-Daten einfügen!', 'error');
+                    log('FEHLER: Kein Input');
+                    return;
+                }
+
+                log('Input Länge: ' + jsonInput.length + ' Zeichen');
+
                 log('Starte JSON Parsing...');
                 
                 // Einfachstes Parsing - split bei }  {
                 let allData = {};
                 const parts = jsonInput.split(/\}\s*\{/);
                 
-                log('Teile gefunden: ' + parts.length);
+                log('JSON-Teile gefunden: ' + parts.length);
                 
                 for (let i = 0; i < parts.length; i++) {
                     let jsonStr = parts[i];
