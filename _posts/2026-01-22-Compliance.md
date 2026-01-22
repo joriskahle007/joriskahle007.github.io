@@ -65,7 +65,7 @@ Um das Ganze etwas greifbarer zu machen, habe ich meine wichtigsten Learnings in
 | Zugriffsmanagement |	RBAC über Entra ID |	Nachvollziehbarkeit und Least-Privilege-Prinzip |
 | Modelltraining |	Dokumentation von Trainingsdaten |	Erklärbarkeit und Audit-Fähigkeit |
 | Deployment |	Monitoring, Logging und Schutz über Defender-Pläne |	Frühzeitiges Erkennen von Fehlverhalten und Bedrohungen |
-| Betrieb |	Regelmäßige Reviews |	Compliance ist kein einmaliger Zustand |<br><br>
+| Betrieb |	Regelmäßige Reviews |	Compliance ist kein einmaliger Zustand |
 
 
 ## Governance statt Verbotspolitik
