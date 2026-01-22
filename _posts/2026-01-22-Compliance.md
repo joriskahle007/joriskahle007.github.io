@@ -1,12 +1,10 @@
 ---
 layout: post
-title: Compliance im MicrosoftFoundry Portal – meine ganz persönlichen Learnings
-tags: [Microsoft Foundry, Compliance, Governance]
+title: Compliance im Microsoft Foundry Portal – meine ganz persönlichen Learnings
+tags: [Microsoft Foundry, Compliance, Governance, Fundament, Voraussetzung]
 ---
 
-Wenn man, so wie ich, mehrere Projekte im Microsoft Foundry Portal aufsetzt, kommt man an einem Thema nicht vorbei, egal ob man es liebt, fürchtet oder am liebsten ganz weit nach hinten schieben würde: Compliance.<br><br>
-
-Ich gebe es offen zu, Compliance war für mich lange Zeit ein Buzzword. Wichtig, ja, aber auch abstrakt, sperrig und irgendwie immer ein bisschen losgelöst vom eigentlichen Projektalltag. Etwas für Auditoren, für Legal-Abteilungen oder für Menschen, die Freude an sehr detaillierten Richtliniendokumenten haben. Spätestens mit meinen ersten echten, produktiven AI-Projekten im Microsoft Foundry Portal hat sich diese Sichtweise radikal geändert. Heute sehe ich Compliance nicht mehr als notwendiges Übel, sondern als etwas, das mir Struktur gibt, als Leitplanke und manchmal auch als Rettungsanker.<br><br>
+Wenn man, so wie ich, mehrere Projekte im Microsoft Foundry Portal aufsetzt, kommt man an einem Thema nicht vorbei, egal ob man es liebt, fürchtet oder am liebsten ganz weit nach hinten schieben würde: Compliance. Ich gebe es offen zu, Compliance war für mich lange Zeit ein Buzzword. Wichtig, ja, aber auch abstrakt, sperrig und irgendwie immer ein bisschen losgelöst vom eigentlichen Projektalltag. Etwas für Auditoren, für Legal-Abteilungen oder für Menschen, die Freude an sehr detaillierten Richtliniendokumenten haben. Spätestens mit meinen ersten echten, produktiven AI-Projekten im Microsoft Foundry Portal hat sich diese Sichtweise radikal geändert. Heute sehe ich Compliance nicht mehr als notwendiges Übel, sondern als etwas, das mir Struktur gibt, als Leitplanke und manchmal auch als Rettungsanker.<br><br>
 
 ## Warum Compliance im Foundry Portal so früh relevant wird
 
