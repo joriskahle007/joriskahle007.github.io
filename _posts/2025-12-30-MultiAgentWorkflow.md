@@ -100,9 +100,9 @@ Weil wir das Projekt und den dahinterliegenden Ansatz so spannend fanden, haben 
 
 Genau so fühlt sich für mich moderne, verantwortungsvolle KI Nutzung an.<br><br>
 
-<a href="[https://github.com/username/repo-name](https://github.com/joriskahle007/Multi-agent-stock-analysis)"
+<a href="https://github.com/joriskahle007/Multi-agent-stock-analysis"
    target="_blank"
    rel="noopener noreferrer">
-   👉 **Source Code:**    
-</a>.
+   👉 <strong>Source Code</strong>
+</a>
 <br><br>
