@@ -99,3 +99,6 @@ Microsoft Foundry liefert die Grundlage für skalierbare Agenten und saubere Wor
 Weil wir das Projekt und den dahinterliegenden Ansatz so spannend fanden, haben René Fürstenberg und ich dazu auch ein gemeinsames YouTube Video aufgezeichnet, in dem wir genau diesen Use Case vorstellen, die Architektur erklären und darüber sprechen, warum Multi Agent Systeme gerade für solche Szenarien extrem viel Potenzial haben.
 
 Genau so fühlt sich für mich moderne, verantwortungsvolle KI Nutzung an.<br><br>
+
+👉 **Source Code:**  
+[[github.com/username/repo-name](https://github.com/joriskahle007/Multi-agent-stock-analysis)]([thub.com/username/repo-name](https://github.com/joriskahle007/Multi-agent-stock-analysis))
