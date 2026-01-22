@@ -101,4 +101,4 @@ Weil wir das Projekt und den dahinterliegenden Ansatz so spannend fanden, haben 
 Genau so fühlt sich für mich moderne, verantwortungsvolle KI Nutzung an.<br><br>
 
 👉 **Source Code:**    
-<github.com/username/repo-name](https://github.com/joriskahle007/Multi-agent-stock-analysis><br><br>
+<https://github.com/joriskahle007/Multi-agent-stock-analysis><br><br>
