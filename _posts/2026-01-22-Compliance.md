@@ -78,7 +78,7 @@ Wenn Teams wissen, in welchem Rahmen sie sich bewegen dürfen, entstehen bessere
 
 Ein Aspekt, der mir in den letzten Monaten immer wichtiger geworden ist, gerade im Kontext von produktiven AI Systemen im Microsoft Foundry Portal, ist das Thema Inhaltssicherheit und der Schutz vor gezielten Manipulationsversuchen. Viele dieser Mechanismen laufen im Hintergrund, was dazu führt, dass man sie schnell als selbstverständlich hinnimmt. Genau das ist aber gefährlich.<br><br>
 
-<img src="/assets/img/'Richtlinien.jpg" alt="Richtlinien" /><br><br>
+<img src="/assets/img/Richtlinien.jpg" alt="Richtlinien" /><br><br>
 
 ## Jailbreak Angriffe und warum sie mehr als Spielerei sind
 
