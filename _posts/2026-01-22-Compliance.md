@@ -54,7 +54,7 @@ Neben der Datenklassifizierung und Zugriffssteuerung sind **Microsoft Defender-P
 
 Sobald KI ins Spiel kommt, verschiebt sich die Diskussion. Es geht nicht mehr nur darum, wer auf Daten zugreift, sondern auch darum, was Systeme selbstständig daraus machen.<br>
 
-Ich frage mich bei AI-Projekten im Foundry Portal inzwischen immer, können wir erklären, wie ein Modell zu seinen Ergebnissen kommt, ist dokumentiert, wofür es eingesetzt werden darf und wofür ausdrücklich nicht, und haben wir Mechanismen, um Fehlverhalten, Bias oder Missbrauch zumindest zu erkennen?<br>
+Ich frage mich bei AI-Projekten im Foundry Portal inzwischen immer, ob wir erklären können, wie ein Modell zu seinen Ergebnissen kommt, ob klar dokumentiert ist, wofür es eingesetzt werden darf und wofür nicht, und ob wir erkennen können, wenn das Modell sich auf eine Art verhält, die einzelne Gruppen benachteiligt, Fehler macht oder absichtlich missbraucht wird.<br>
 
 Je autonomer ein System wird, desto wichtiger werden klare Leitplanken. Nicht, weil man Innovation bremsen will, sondern weil man sie kontrollierbar halten muss.<br><br>
 
