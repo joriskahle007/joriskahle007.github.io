@@ -6,7 +6,7 @@ tags: [Microsoft Foundry, Compliance, Governance, Fundament, Voraussetzung]
 
 Wenn man, so wie ich, mehrere Projekte im Microsoft Foundry Portal aufsetzt, kommt man an einem Thema nicht vorbei, egal ob man es liebt, fürchtet oder am liebsten ganz weit nach hinten schieben würde: **Compliance**.<br><br>
 
-Ich gebe es offen zu, Compliance war für mich lange Zeit ein Buzzword. Wichtig, ja, aber auch abstrakt, sperrig und irgendwie immer ein bisschen losgelöst vom eigentlichen Projektalltag. Etwas für Auditoren, für Legal-Abteilungen oder für Menschen, die Freude an sehr detaillierten Richtliniendokumenten haben. Spätestens mit meinen ersten echten, produktiven AI-Projekten im Microsoft Foundry Portal hat sich diese Sichtweise radikal geändert. Heute sehe ich Compliance nicht mehr als notwendiges Übel, sondern als etwas, das mir Struktur gibt, als Leitplanke und manchmal auch als Rettungsanker.<br><br>
+Ich gebe es offen zu, Compliance war für mich lange Zeit ein Buzzword. Wichtig, ja, aber auch abstrakt, sperrig und irgendwie immer ein bisschen losgelöst vom eigentlichen Projektalltag. Etwas für Auditoren, für Legal-Abteilungen oder für Menschen, die Freude an sehr detaillierten Richtliniendokumenten haben. Nach und nach hat sich diese Sichtweise jedoch radikal geändert. Heute sehe ich Compliance nicht mehr als notwendiges Übel, sondern als etwas, das mir Struktur gibt, als Leitplanke und manchmal auch als Rettungsanker.<br><br>
 
 ## Warum Compliance im Foundry Portal so früh relevant wird
 
@@ -15,6 +15,20 @@ Microsoft Foundry ist extrem mächtig. Innerhalb kürzester Zeit lassen sich Dat
 Denn je schneller man etwas bauen kann, desto schneller kann man auch Dinge bauen, die man später nur mit großem Aufwand wieder einfängt. Compliance ist deshalb kein Thema für „später“, sondern etwas, das eigentlich schon beginnt, bevor das erste Projekt angelegt wird.<br>
 
 Ich habe gelernt, wenn ich mir zu Beginn nicht klar darüber bin, welche Daten ich verarbeite, wer darauf zugreifen darf und wofür das System am Ende eingesetzt wird, dann hole ich mir technische Schulden ins Haus, nur dass sie hier rechtlich und organisatorisch sind.<br><br>
+
+## Die Rolle der Landing Zone im Compliance Kontext
+
+Ein Thema, das in vielen Compliance Diskussionen erstaunlich spät auftaucht, ist die Azure Landing Zone. Dabei ist sie für mich eines der wichtigsten Elemente, wenn es um nachhaltige und skalierbare Compliance im Microsoft Kontext geht.<br>
+
+Eine Landing Zone ist keine rein technische Spielerei und auch kein einmaliges Setup, das man irgendwann abhakt. Sie ist die Grundlage dafür, wie Ressourcen erstellt werden dürfen, wer sie erstellen darf und unter welchen Rahmenbedingungen sie betrieben werden. Genau deshalb ist sie so eng mit Compliance verknüpft.<br>
+
+In einer gut aufgebauten Landing Zone werden zentrale Vorgaben technisch erzwungen. Dazu gehören Identitäten und Zugriffe über Entra ID, klare Subscription Strukturen, definierte Regionen, verpflichtende Sicherheitsmechanismen und zentrale Protokollierung. Was dort festgelegt ist, muss später nicht mehr in jedem einzelnen Projekt neu diskutiert werden.<br>
+
+Gerade im Microsoft Foundry Kontext wird dieser Zusammenhang deutlich. Foundry Projekte laufen immer innerhalb der bestehenden Azure Struktur. Sie nutzen Subscriptions, Netzwerke und angebundene Services, die durch die Landing Zone definiert sind. Wenn dort zum Beispiel Private Endpoints, Defender Pläne oder bestimmte Azure Policies verpflichtend sind, dann profitieren Foundry Projekte automatisch davon.<br>
+
+Für mich ist das der Kern von Compliance by Design. Nicht jedes Team muss Compliance verstehen oder interpretieren, sie ist bereits in der Plattform verankert. Das reduziert Fehler, Diskussionen und spätere Korrekturen erheblich.<br>
+
+Ohne eine saubere Landing Zone wird Compliance schnell reaktiv. Man reagiert auf Audits, Kundenfragen oder Vorfälle und versucht, bestehende Projekte nachträglich einzufangen. Mit einer Landing Zone passiert das Gegenteil. Compliance ist von Anfang an da, sie fällt kaum auf und sie bremst Innovation nicht aus.<br><br>
 
 ## Zugriffe, Identitäten und das Zusammenspiel mit Azure AD
 
