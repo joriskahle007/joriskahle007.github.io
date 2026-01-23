@@ -78,6 +78,8 @@ Wenn Teams wissen, in welchem Rahmen sie sich bewegen dürfen, entstehen bessere
 
 Ein Aspekt, der mir in den letzten Monaten immer wichtiger geworden ist, gerade im Kontext von produktiven AI Systemen im Microsoft Foundry Portal, ist das Thema Inhaltssicherheit und der Schutz vor gezielten Manipulationsversuchen. Viele dieser Mechanismen laufen im Hintergrund, was dazu führt, dass man sie schnell als selbstverständlich hinnimmt. Genau das ist aber gefährlich.<br><br>
 
+<img src="/assets/img/Schutzmaßnahmen.jpg" alt="Schutzmassnahmen" /><br><br>
+
 ## Jailbreak Angriffe und warum sie mehr als Spielerei sind
 
 Jailbreak Angriffe versuchen, ein KI Modell dazu zu bringen, seine Sicherheitsrichtlinien zu umgehen. Das passiert nicht über klassische technische Angriffe, sondern über Sprache. Über clever formulierte Prompts, die das Modell manipulieren sollen.<br><br>
