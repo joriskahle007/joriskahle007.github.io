@@ -6,15 +6,13 @@ tags: [Microsoft Foundry, Compliance, Governance, Fundament, Voraussetzung]
 
 Wenn man, so wie ich, mehrere Projekte im Microsoft Foundry Portal aufsetzt, kommt man an einem Thema nicht vorbei, egal ob man es liebt, fürchtet oder am liebsten ganz weit nach hinten schieben würde: **Compliance**.<br><br>
 
-Ich gebe es offen zu, Compliance war für mich lange Zeit ein Buzzword. Wichtig, ja, aber auch abstrakt, sperrig und irgendwie immer ein bisschen losgelöst vom eigentlichen Projektalltag. Etwas für Auditoren, für Legal-Abteilungen oder für Menschen, die Freude an sehr detaillierten Richtliniendokumenten haben. Spätestens mit meinen ersten echten, produktiven AI-Projekten im Microsoft Foundry Portal hat sich diese Sichtweise radikal geändert.<br><br>
-
-Heute sehe ich Compliance nicht mehr als notwendiges Übel, sondern als etwas, das mir Struktur gibt, als Leitplanke und manchmal auch als Rettungsanker.<br><br>
+Ich gebe es offen zu, Compliance war für mich lange Zeit ein Buzzword. Wichtig, ja, aber auch abstrakt, sperrig und irgendwie immer ein bisschen losgelöst vom eigentlichen Projektalltag. Etwas für Auditoren, für Legal-Abteilungen oder für Menschen, die Freude an sehr detaillierten Richtliniendokumenten haben. Spätestens mit meinen ersten echten, produktiven AI-Projekten im Microsoft Foundry Portal hat sich diese Sichtweise radikal geändert. Heute sehe ich Compliance nicht mehr als notwendiges Übel, sondern als etwas, das mir Struktur gibt, als Leitplanke und manchmal auch als Rettungsanker.<br><br>
 
 ## Warum Compliance im Foundry Portal so früh relevant wird
 
-Microsoft Foundry ist extrem mächtig. Innerhalb kürzester Zeit lassen sich Daten anbinden, Modelle trainieren, KI-Services bereitstellen und Prozesse automatisieren. Genau diese Geschwindigkeit ist Fluch und Segen zugleich.<br><br>
+Microsoft Foundry ist extrem mächtig. Innerhalb kürzester Zeit lassen sich Daten anbinden, Modelle trainieren, KI-Services bereitstellen und Prozesse automatisieren. Genau diese Geschwindigkeit ist Fluch und Segen zugleich.<br>
 
-Denn je schneller man etwas bauen kann, desto schneller kann man auch Dinge bauen, die man später nur mit großem Aufwand wieder einfängt. Compliance ist deshalb kein Thema für „später“, sondern etwas, das eigentlich schon beginnt, bevor das erste Projekt angelegt wird.<br><br>
+Denn je schneller man etwas bauen kann, desto schneller kann man auch Dinge bauen, die man später nur mit großem Aufwand wieder einfängt. Compliance ist deshalb kein Thema für „später“, sondern etwas, das eigentlich schon beginnt, bevor das erste Projekt angelegt wird.<br>
 
 Ich habe gelernt, wenn ich mir zu Beginn nicht klar darüber bin, welche Daten ich verarbeite, wer darauf zugreifen darf und wofür das System am Ende eingesetzt wird, dann hole ich mir technische Schulden ins Haus, nur dass sie hier rechtlich und organisatorisch sind.<br><br>
 
