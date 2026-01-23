@@ -78,7 +78,7 @@ Wenn Teams wissen, in welchem Rahmen sie sich bewegen dürfen, entstehen bessere
 
 Ein Aspekt, der mir in den letzten Monaten immer wichtiger geworden ist, gerade im Kontext von produktiven AI Systemen im Microsoft Foundry Portal, ist das Thema Inhaltssicherheit und der Schutz vor gezielten Manipulationsversuchen. Viele dieser Mechanismen laufen im Hintergrund, was dazu führt, dass man sie schnell als selbstverständlich hinnimmt. Genau das ist aber gefährlich.<br><br>
 
-<img src="/assets/img/Schutzmassnahmen.jpg" alt="Schutzmassnahmen" /><br><br>
+<img src="/assets/img/'Richtlinien.jpg" alt="Richtlinien" /><br><br>
 
 ## Jailbreak Angriffe und warum sie mehr als Spielerei sind
 
@@ -109,6 +109,8 @@ Ein weiterer Punkt, der häufig vergessen wird, ist der Schutz von urheberrechtl
 Beim Thema Code erkennt das System geschützten Code, etwa aus bekannten Repositories oder lizenzierter Software, und verhindert, dass dieser als Ausgabe reproduziert wird. Wichtig ist dabei, dieser Schutz greift ausschließlich bei der Ausgabe. Das Modell gibt keinen geschützten Code aus, selbst wenn er indirekt angefragt wird.<br><br>
 
 Dasselbe Prinzip gilt für geschützte Texte. Bücher, Artikel oder Songtexte werden erkannt und nicht wortwörtlich wiedergegeben. Damit wird geistiges Eigentum geschützt und rechtliche Risiken werden reduziert.<br><br>
+
+<img src="/assets/img/Schutzmassnahmen.jpg" alt="Schutzmassnahmen" /><br><br>
 
 ## Einordnung der Schutzmechanismen
 
