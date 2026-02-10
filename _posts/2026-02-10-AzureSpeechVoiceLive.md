@@ -1,8 +1,7 @@
 ---
 layout: post
 title: Azure Speech – Voice Live mit Avantar und Foundry Tools
-feature-img: assets/img/feature-img/enterprise-scale-architecture.jpg
-tags: [CSP, Azure, Incentives, Linzenzierung]
+tags: [CSP, Azure, GPT, Spillover, PTU, Azure Open AI]
 ---
 
 ## Dein kompletter Guide zu Voice Agents mit Echtzeit‑Sprachinteraktion
