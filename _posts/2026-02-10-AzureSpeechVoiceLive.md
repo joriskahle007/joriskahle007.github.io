@@ -8,7 +8,11 @@ Wenn du dich bereits mit Sprach KI beschäftigt hast, bist du vermutlich mit kla
 
 In diesem Beitrag bekommst du einen praxisnahen Überblick darüber, was Azure Speech Voice Live eigentlich ist, welche Modelle dir zur Verfügung stehen, wie es mit Verfügbarkeit aussieht und welche Kosten realistisch auf dich zukommen. Ziel ist es, dir eine fundierte Entscheidungsgrundlage zu geben, egal ob du gerade erst experimentierst oder bereits konkrete produktive Szenarien im Kopf hast.<br>
 
-Hier erzähle ich dir ganz praxisnah, was du wissen musst, welche Modelle du auswählen kannst, wo der Dienst verfügbar ist und welche Kosten wirklich auf dich zukommen.<br><br>
+Hier erzähle ich dir ganz praxisnah, was du wissen musst, welche Modelle du auswählen kannst, wo der Dienst verfügbar ist und welche Kosten wirklich auf dich zukommen.<br>
+
+**Azure Speech - Voice Live Chat**:<br><br>
+<img src="/assets/img/portfolio/voicechatuse.jpg" alt="Voice Live Chat" /><br><br>
+<br><br>
 
 ## Was ist Azure Speech Voice Live
 
@@ -16,7 +20,11 @@ Azure Speech Voice Live ist Microsofts Antwort auf echtzeitfähige, bidirektiona
 
 Der entscheidende Vorteil liegt dabei in der Echtzeitfähigkeit. Die Interaktion fühlt sich nicht wie ein klassischer Bot an, der nach jeder Eingabe kurz nachdenkt, sondern wie ein echtes Gespräch. Zusätzlich entfällt der gesamte operative Aufwand rund um Infrastruktur, Modell Deployment oder Kapazitätsplanung. Du nutzt den Dienst einfach so, wie du ihn brauchst, und Azure skaliert automatisch im Hintergrund.<br>
 
-Ein besonders spannender Aspekt ist die optionale Avatar Integration. Dein Voice Agent muss nicht auf eine Stimme reduziert bleiben. Du kannst ihm eine visuelle Präsenz geben, die synchron zur Sprache reagiert. Ein Avatar, der spricht, sich bewegt und Mimik zeigt, erhöht die Wahrnehmung von Natürlichkeit und macht die Interaktion deutlich zugänglicher. Gerade in Szenarien wie Kundenservice, Schulung oder digitaler Beratung entsteht dadurch ein ganz neues Nutzungserlebnis.<br><br>
+Ein besonders spannender Aspekt ist die optionale Avatar Integration. Dein Voice Agent muss nicht auf eine Stimme reduziert bleiben. Du kannst ihm eine visuelle Präsenz geben, die synchron zur Sprache reagiert. Ein Avatar, der spricht, sich bewegt und Mimik zeigt, erhöht die Wahrnehmung von Natürlichkeit und macht die Interaktion deutlich zugänglicher. Gerade in Szenarien wie Kundenservice, Schulung oder digitaler Beratung entsteht dadurch ein ganz neues Nutzungserlebnis.<br>
+
+**Avatar-Auswahl**:<br><br>
+<img src="/assets/img/portfolio/avatar.jpg" alt="Avtare" /><br><br>
+<br>
 
 ## Modellauswahl und Leistungsstufen
 
@@ -24,7 +32,11 @@ Ein zentrales Element von Azure Speech Voice Live ist die freie Wahl des zugrund
 
 Zur Verfügung stehen unter anderem echte Realtime Modelle wie gpt realtime, die speziell für natürliche Sprachinteraktion optimiert sind. Für kostenbewusstere Szenarien gibt es Varianten wie gpt realtime mini oder gpt 4o mini, die bei geringerer Rechenlast immer noch überzeugende Ergebnisse liefern. Darüber hinaus stehen leistungsstarke generative Modelle wie gpt 4o, gpt 4.1 oder gpt 5 zur Verfügung, die besonders gut mit komplexen Dialogen, tieferem Kontextverständnis und längeren Gesprächen umgehen können.<br>
 
-Am unteren Ende der Skala findest du sehr leichte Modelle wie gpt 5 nano oder phi4 mini. Diese sind ideal für einfache Voice Workloads, bei denen Reaktionszeit und Kosten wichtiger sind als maximale sprachliche Tiefe. Der große Vorteil für dich ist, dass du das Modell jederzeit an dein Szenario anpassen kannst. Du entscheidest selbst, ob du maximale Intelligenz oder maximale Kosteneffizienz benötigst.<br>
+Am unteren Ende der Skala findest du sehr leichte Modelle wie gpt 5 nano oder phi4 mini. Diese sind ideal für einfache Voice Workloads, bei denen Reaktionszeit und Kosten wichtiger sind als maximale sprachliche Tiefe. Der große Vorteil für dich ist, dass du das Modell jederzeit an dein Szenario anpassen kannst. Du entscheidest selbst, ob du maximale Intelligenz oder maximale Kosteneffizienz benötigst.<br><br>
+
+**Modellauswahl**:<br><br>
+<img src="/assets/img/portfolio/voicemodelle.jpg" alt="Modellauswahl" /><br><br>
+<br>
 
 Hier ein Überblick über die Modelle, die aktuell unterstützt werden:<br>
 
