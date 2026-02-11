@@ -8,15 +8,15 @@ Wenn du dich bereits mit Sprach KI beschäftigt hast, bist du vermutlich mit kla
 
 In diesem Beitrag bekommst du einen praxisnahen Überblick darüber, was Azure Speech Voice Live eigentlich ist, welche Modelle dir zur Verfügung stehen, wie es mit Verfügbarkeit aussieht und welche Kosten realistisch auf dich zukommen. Ziel ist es, dir eine fundierte Entscheidungsgrundlage zu geben, egal ob du gerade erst experimentierst oder bereits konkrete produktive Szenarien im Kopf hast.<br><br>
 
-Hier erzähle ich dir ganz praxisnah, was du wissen musst, welche Modelle du auswählen kannst, wo der Dienst verfügbar ist und welche Kosten wirklich auf dich zukommen.<br><br>
+Hier erzähle ich dir ganz praxisnah, was du wissen musst, welche Modelle du auswählen kannst, wo der Dienst verfügbar ist und welche Kosten wirklich auf dich zukommen.<br><br><br>
 
-##Was ist Azure Speech Voice Live
+## Was ist Azure Speech Voice Live
 
 Azure Speech Voice Live ist Microsofts Antwort auf echtzeitfähige, bidirektionale Sprachinteraktion mit generativer KI. Statt einzelne Komponenten wie Spracherkennung, Dialoglogik und Sprachsynthese selbst zu orchestrieren, bekommst du hier einen vollständig verwalteten Endpunkt. Du sendest Audio hinein und erhältst Audio zurück. Die komplette Verarbeitung, vom Verstehen über die Generierung der Antwort bis hin zur Sprachausgabe, übernimmt Azure für dich im Hintergrund.<br>
 
 Der entscheidende Vorteil liegt dabei in der Echtzeitfähigkeit. Die Interaktion fühlt sich nicht wie ein klassischer Bot an, der nach jeder Eingabe kurz nachdenkt, sondern wie ein echtes Gespräch. Zusätzlich entfällt der gesamte operative Aufwand rund um Infrastruktur, Modell Deployment oder Kapazitätsplanung. Du nutzt den Dienst einfach so, wie du ihn brauchst, und Azure skaliert automatisch im Hintergrund.<br>
 
-Ein besonders spannender Aspekt ist die optionale Avatar Integration. Dein Voice Agent muss nicht auf eine Stimme reduziert bleiben. Du kannst ihm eine visuelle Präsenz geben, die synchron zur Sprache reagiert. Ein Avatar, der spricht, sich bewegt und Mimik zeigt, erhöht die Wahrnehmung von Natürlichkeit und macht die Interaktion deutlich zugänglicher. Gerade in Szenarien wie Kundenservice, Schulung oder digitaler Beratung entsteht dadurch ein ganz neues Nutzungserlebnis.<br><br>
+Ein besonders spannender Aspekt ist die optionale Avatar Integration. Dein Voice Agent muss nicht auf eine Stimme reduziert bleiben. Du kannst ihm eine visuelle Präsenz geben, die synchron zur Sprache reagiert. Ein Avatar, der spricht, sich bewegt und Mimik zeigt, erhöht die Wahrnehmung von Natürlichkeit und macht die Interaktion deutlich zugänglicher. Gerade in Szenarien wie Kundenservice, Schulung oder digitaler Beratung entsteht dadurch ein ganz neues Nutzungserlebnis.<br><br><br>
 
 ## Modellauswahl und Leistungsstufen
 
@@ -36,12 +36,12 @@ Hier ein Überblick über die Modelle, die aktuell unterstützt werden:<br>
 - **gpt-5** und **gpt-5-mini**: noch leistungsfähigere Modelle (je nach Verfügbarkeit)
 - **gpt-5-nano**: sehr leichtes Modell für einfache Voice‑Workloads
 - **gpt-5-chat**: optimiert für dialogbasierte Anwendungen
-- **phi4-mm-realtime**, **phi4-mini**: Modelle, die alternative Eigenschaften bieten, z. B. andere Latenz‑ und Intelligenz‑Mischungen
+- **phi4-mm-realtime**, **phi4-mini**: Modelle, die alternative Eigenschaften bieten, z. B. andere Latenz‑ und Intelligenz‑Mischungen<br>
 
 
 ## Kosten & Preise für Azure Speech Voice Live – realitätsnah in Euro
 
-Wenn du deinen Voice Agent produktiv laufen lässt, zahlst du bei Azure nicht pauschal einen festen Monatspreis, sondern nach dem, was du **tatsächlich nutzt**. Die Stimme, die Verarbeitung von Audio‑Input, generative Antworten und Avatar‑Ausgabe werden nutzungsabhängig abgerechnet. Die Voice Live‑API ist so aufgebaut, dass du **pro Million Tokens** bzw. **pro Minute bei Avataren** zahlst – je nach gewähltem Modell und Leistungsniveau.<br>
+Wenn du deinen Voice Agent produktiv laufen lässt, zahlst du bei Azure nicht pauschal einen festen Monatspreis, sondern nach dem, was du **tatsächlich nutzt**. Die Stimme, die Verarbeitung von Audio‑Input, generative Antworten und Avatar‑Ausgabe werden nutzungsabhängig abgerechnet. Die Voice Live‑API ist so aufgebaut, dass du **pro Million Tokens** bzw. **pro Minute bei Avataren** zahlst – je nach gewähltem Modell und Leistungsniveau.<br><br>
 
 ## Kosten und Abrechnung in der Praxis
 
@@ -51,11 +51,11 @@ Die Abrechnung erfolgt in der Regel pro Million Tokens. Tokens sind die interne 
 
 Für leistungsstarke Pro Modelle wie gpt 4o im Realtime Betrieb liegen die Kosten für nativen Audio Input bei etwa vierzig bis einundvierzig Euro pro Million Tokens. Die Sprachausgabe bewegt sich je nach Konfiguration zwischen fünfunddreißig und über fünfzig Euro pro Million Tokens, insbesondere wenn Custom Voices genutzt werden. Mini Modelle sind deutlich günstiger und erlauben den Einstieg bereits im niedrigen zweistelligen Eurobereich pro Million Tokens.<br>
 
-Avatar Funktionen werden separat abgerechnet. Hier liegt die Größenordnung bei etwa fünfundfünfzig Cent pro Minute Avatar Nutzung, abhängig vom verwendeten Avatar Modell. Gerade bei visuellen Agents solltest du diesen Kostenpunkt frühzeitig mit einplanen.<br><br>
+Avatar Funktionen werden separat abgerechnet. Hier liegt die Größenordnung bei etwa fünfundfünfzig Cent pro Minute Avatar Nutzung, abhängig vom verwendeten Avatar Modell. Gerade bei visuellen Agents solltest du diesen Kostenpunkt frühzeitig mit einplanen.<br><br><br>
 
 ## Beispiel‑Preise in Euro
 
-Die folgenden Werte sind **ungefähre Umrechnungen** aus dem offiziellen US‑Dollar‑Preis in Euro (ca. **0,92 EUR pro 1 USD**). Sie gelten ab dem 1. Juli 2025, wenn die Voice Live‑Tarife in Kraft treten.<br>
+Die folgenden Werte sind **ungefähre Umrechnungen** aus dem offiziellen US‑Dollar‑Preis in Euro (ca. **0,84 EUR pro 1 USD**).<br>
 
 **Voice Live Pro (z. B. GPT‑4o / Realtime‑Input)**
 
