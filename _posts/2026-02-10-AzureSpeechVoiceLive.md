@@ -106,4 +106,6 @@ Azure Speech Voice Live ist in vielen Azure Regionen verfügbar, darunter auch z
 
 Azure Speech Voice Live ist deshalb so spannend, weil es die Komplexität von Voice KI drastisch reduziert und gleichzeitig neue kreative Möglichkeiten eröffnet. Du baust nicht einfach einen sprechenden Bot, sondern einen interaktiven, kontextbewussten Voice Agent, der sich natürlich anfühlt. Die Kombination aus Echtzeit Sprachverarbeitung, leistungsfähigen generativen Modellen und optionalen Avataren hebt Sprachinteraktion auf ein neues Niveau.<br>
 
-Für dich bedeutet das, dass du schneller experimentieren, einfacher skalieren und realistische, menschlich wirkende Sprachschnittstellen entwickeln kannst, ohne tief in Infrastruktur oder Modellbetrieb einzusteigen. Wenn du schon immer Voice Agents bauen wolltest, die nicht nur sprechen, sondern wirklich kommunizieren, dann ist Azure Speech Voice Live in Verbindung mit Avataren und Foundry Tools ein extrem starker und zugleich zugänglicher Einstiegspunkt.<br><br><br>
+Für dich bedeutet das, dass du schneller experimentieren, einfacher skalieren und realistische, menschlich wirkende Sprachschnittstellen entwickeln kannst, ohne tief in Infrastruktur oder Modellbetrieb einzusteigen. Wenn du schon immer Voice Agents bauen wolltest, die nicht nur sprechen, sondern wirklich kommunizieren, dann ist Azure Speech Voice Live in Verbindung mit Avataren und Foundry Tools ein extrem starker und zugleich zugänglicher Einstiegspunkt.<br>
+
+Falls du hierzu Fragen hast, komm sehr gerne auf mich zu, ich würde mich freuen.<br><br>
