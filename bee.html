@@ -253,6 +253,24 @@
   .load-btn:hover { background: var(--amber); }
   .load-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
+  .pause-btn {
+    background: transparent;
+    color: var(--muted);
+    border: 2px solid var(--soft);
+    border-radius: 8px;
+    padding: 8px 20px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75em;
+    font-weight: 500;
+    cursor: pointer;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+  .pause-btn:hover { border-color: var(--muted); color: var(--cream); }
+  .pause-btn.paused { border-color: var(--honey); color: var(--honey); }
+  .pause-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+
   .empty-hint {
     color: var(--muted);
     font-size: 0.75em;
@@ -286,6 +304,7 @@
     <button class="load-btn" id="loadBtn" onclick="loadDataAndConnect()">Verbinden &amp; Daten laden</button>
     <button class="mic-btn" id="micBtn" onclick="toggleMic()" disabled title="Sprechen">🎙️</button>
     <div class="mic-label" id="micLabel">Bitte zuerst verbinden</div>
+    <button class="pause-btn" id="pauseBtn" onclick="togglePause()" disabled>⏸ Pause</button>
   </div>
 
   <!-- Transkript -->
@@ -540,6 +559,7 @@ async function loadDataAndConnect() {
     await connectToRealtime();
 
     document.getElementById("micBtn").disabled = false;
+    document.getElementById("pauseBtn").disabled = false;
     setMicState("idle");
     btn.textContent = "Neu verbinden";
     btn.disabled = false;
@@ -552,12 +572,36 @@ async function loadDataAndConnect() {
 }
 
 // =========================
+// PAUSE / RESUME
+// =========================
+let isPaused = false;
+
+function togglePause() {
+  if (!peerConnection || !localStream) return;
+  isPaused = !isPaused;
+  const btn = document.getElementById("pauseBtn");
+
+  localStream.getAudioTracks().forEach(track => {
+    track.enabled = !isPaused;
+  });
+
+  if (isPaused) {
+    btn.textContent = "▶ Fortsetzen";
+    btn.classList.add("paused");
+    setMicState("idle");
+    setStatus("Pausiert · Mikrofon stumm", true);
+  } else {
+    btn.textContent = "⏸ Pause";
+    btn.classList.remove("paused");
+    setStatus("Verbunden · GPT-4o Realtime aktiv", true);
+  }
+}
+
+// =========================
 // MIC TOGGLE (manuell falls VAD ausgeschaltet)
 // =========================
 function toggleMic() {
   if (!dataChannel || dataChannel.readyState !== "open") return;
-  // Bei server_vad läuft alles automatisch
-  // Dieser Button zeigt nur den Status an
 }
 
 // Daten alle 5 Minuten im Hintergrund aktualisieren
