@@ -318,19 +318,14 @@ let sensorData     = null;
 // =========================
 async function loadSensorData() {
   try {
-    const ids = [
-      "mqtt.0.bienenwaage.stock1.gewicht_kg",
-      "mqtt.0.bienenwaage.stock1.temperatur_c",
-      "mqtt.0.bienenwaage.stock1.luftfeuchte_prozent",
-      "mqtt.0.bienenwaage.stock1.wlan_signal_dbm",
-      "mqtt.0.bienenwaage.stock1.wlan_signal_prozent"
-    ];
-
-    const res = await fetch(`${PROXY_URL}/api/sensor`, {
-      headers: { "ngrok-skip-browser-warning": "true" }
-    });
-    sensorData = await res.json();
+    const [sensorRes, historyRes] = await Promise.all([
+      fetch(`${PROXY_URL}/api/sensor`,  { headers: { "ngrok-skip-browser-warning": "true" } }),
+      fetch(`${PROXY_URL}/api/history`, { headers: { "ngrok-skip-browser-warning": "true" } })
+    ]);
+    sensorData = await sensorRes.json();
     sensorData.timestamp = new Date().toLocaleString("de-DE");
+    const historyData = await historyRes.json();
+    sensorData.historySummary = historyData.summary || "Keine historischen Daten verfügbar.";
 
     // UI aktualisieren
     document.getElementById("val-weight").innerHTML  = sensorData.gewicht_kg + '<span class="unit">kg</span>';
@@ -343,11 +338,12 @@ async function loadSensorData() {
     document.querySelectorAll(".data-card").forEach(c => c.classList.add("fresh"));
     return true;
   } catch(e) {
-    console.warn("ioBroker nicht erreichbar, nutze Platzhalterwerte:", e);
+    console.warn("Fehler beim Laden:", e);
     sensorData = {
       gewicht_kg: "nicht verfügbar", temperatur_c: "nicht verfügbar",
       luftfeuchte_prozent: "nicht verfügbar", wlan_signal_dbm: "nicht verfügbar",
-      wlan_signal_prozent: "nicht verfügbar", timestamp: new Date().toLocaleString("de-DE")
+      wlan_signal_prozent: "nicht verfügbar", timestamp: new Date().toLocaleString("de-DE"),
+      historySummary: "Keine historischen Daten verfügbar."
     };
     return false;
   }
@@ -359,16 +355,19 @@ async function loadSensorData() {
 function buildSystemPrompt() {
   return `Du bist ein freundlicher Sprachassistent für eine Bienenstockwaage.
 Du sprichst Deutsch und antwortest kurz und präzise.
-Du kennst die aktuellen Messwerte von Bienenstock stock1:
 
+Aktuelle Messwerte von Bienenstock stock1:
 - Gewicht: ${sensorData.gewicht_kg} kg
 - Temperatur: ${sensorData.temperatur_c} °C
 - Luftfeuchtigkeit: ${sensorData.luftfeuchte_prozent} %
 - WLAN-Signal: ${sensorData.wlan_signal_dbm} dBm (${sensorData.wlan_signal_prozent} %)
 - Letztes Update: ${sensorData.timestamp}
 
-Beantworte Fragen zu diesen Werten. Falls du nach historischen Daten gefragt wirst, erkläre dass du nur die aktuellen Werte kennst.
-Beginne das Gespräch mit einer kurzen Begrüßung und berichte die wichtigsten aktuellen Werte.`;
+${sensorData.historySummary || ""}
+
+Beantworte Fragen zu aktuellen und historischen Messwerten.
+Erkenne Trends und Auffälligkeiten in den Daten.
+Beginne mit einer kurzen Begrüßung und den wichtigsten aktuellen Werten.`;
 }
 
 // =========================
