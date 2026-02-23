@@ -433,7 +433,7 @@ async function connectToRealtime() {
   const offer = await peerConnection.createOffer();
   await peerConnection.setLocalDescription(offer);
 
-  const sdpUrl = `${endpoint}/openai/realtimeapi?api-version=${apiVersion}&deployment=${deployment}`;
+  const sdpUrl = `${endpoint}/openai/v1/realtime/calls?api-version=${apiVersion}&deployment=${deployment}`;
   const sdpRes = await fetch(sdpUrl, {
     method: "POST",
     headers: {
