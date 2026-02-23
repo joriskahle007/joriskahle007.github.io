@@ -429,9 +429,21 @@ async function connectToRealtime() {
 
   dataChannel.onmessage = e => handleRealtimeEvent(JSON.parse(e.data));
 
-  // 3) SDP Offer
-  const offer = await peerConnection.createOffer();
+  // 3) SDP Offer – Mikrofon muss VOR createOffer hinzugefügt sein!
+  const offer = await peerConnection.createOffer({
+    offerToReceiveAudio: true,
+    offerToReceiveVideo: false
+  });
   await peerConnection.setLocalDescription(offer);
+
+  // Warten bis ICE gathering abgeschlossen
+  await new Promise(resolve => {
+    if (peerConnection.iceGatheringState === "complete") { resolve(); return; }
+    peerConnection.addEventListener("icegatheringstatechange", () => {
+      if (peerConnection.iceGatheringState === "complete") resolve();
+    });
+    setTimeout(resolve, 3000); // max 3 Sekunden warten
+  });
 
   const sdpUrl = `https://swedencentral.realtimeapi-preview.ai.azure.com/v1/realtimertc?deployment=${deployment}`;
   const sdpRes = await fetch(sdpUrl, {
@@ -440,7 +452,7 @@ async function connectToRealtime() {
       "Authorization": "Bearer " + ephemeralKey,
       "Content-Type": "application/sdp"
     },
-    body: offer.sdp
+    body: peerConnection.localDescription.sdp
   });
 
   if (!sdpRes.ok) throw new Error("SDP fehlgeschlagen: " + await sdpRes.text());
