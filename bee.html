@@ -304,7 +304,7 @@
 const AZURE_OAI_ENDPOINT   = "https://Fabric-Data-Analyst-resource.openai.azure.com";
 const AZURE_OAI_KEY        = "4MseuCGDJgJjqpfauER0nkF5W7fgLLi31yT4myqEswVCPPxenpCwJQQJ99CBACHYHv6XJ3w3AAAAACOG1C0N";
 const DEPLOYMENT_NAME      = "gpt-realtime";
-const API_VERSION          = "2025-04-01-preview";
+const API_VERSION          = "2025-08-28";
 
 // Fabric SQL – wird per REST API mit Service Principal abgefragt
 // Da wir keinen direkten SQL-Zugriff im Browser haben, nutzen wir
@@ -397,7 +397,7 @@ async function connectToRealtime() {
   setStatus("Verbinde mit GPT-4o Realtime...", false);
 
   // 1) Ephemeral Token holen
-  const tokenUrl = `${AZURE_OAI_ENDPOINT}/openai/realtimeapi/sessions?api-version=${API_VERSION}`;
+  const tokenUrl = `${AZURE_OAI_ENDPOINT}/openai/v1/realtime/client_secrets?api-version=${API_VERSION}`;
   const tokenRes = await fetch(tokenUrl, {
     method: "POST",
     headers: {
@@ -405,6 +405,7 @@ async function connectToRealtime() {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
+      type: "realtime",
       model: DEPLOYMENT_NAME,
       voice: "alloy"
     })
@@ -416,8 +417,8 @@ async function connectToRealtime() {
   }
 
   const tokenData = await tokenRes.json();
-  const ephemeralKey = tokenData.client_secret?.value;
-  if (!ephemeralKey) throw new Error("Kein ephemeral key erhalten");
+  const ephemeralKey = tokenData.value ?? tokenData.client_secret?.value;
+  if (!ephemeralKey) throw new Error("Kein ephemeral key erhalten: " + JSON.stringify(tokenData));
 
   // 2) WebRTC PeerConnection
   peerConnection = new RTCPeerConnection();
@@ -456,7 +457,7 @@ async function connectToRealtime() {
   const offer = await peerConnection.createOffer();
   await peerConnection.setLocalDescription(offer);
 
-  const sdpUrl = `${AZURE_OAI_ENDPOINT}/openai/realtimeapi?api-version=${API_VERSION}&deployment=${DEPLOYMENT_NAME}`;
+  const sdpUrl = `${AZURE_OAI_ENDPOINT}/openai/v1/realtime/calls?api-version=${API_VERSION}`;
   const sdpRes = await fetch(sdpUrl, {
     method: "POST",
     headers: {
