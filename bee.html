@@ -301,18 +301,8 @@
 // =========================
 // KONFIGURATION
 // =========================
-const AZURE_OAI_ENDPOINT   = "https://Fabric-Data-Analyst-resource.openai.azure.com";
-const AZURE_OAI_KEY        = "4MseuCGDJgJjqpfauER0nkF5W7fgLLi31yT4myqEswVCPPxenpCwJQQJ99CBACHYHv6XJ3w3AAAAACOG1C0N";
-const DEPLOYMENT_NAME      = "gpt-realtime";
-const API_VERSION          = "2025-08-28";
-
-// Fabric SQL – wird per REST API mit Service Principal abgefragt
-// Da wir keinen direkten SQL-Zugriff im Browser haben, nutzen wir
-// die letzten bekannten Werte aus dem ioBroker MQTT direkt
-// (Alternativ: eigener Backend-Proxy)
-
-// ioBroker Web-Adapter URL – passe IP an
-const IOBROKER_URL = "http://192.168.0.129:8082";
+// Proxy-URL (ngrok Tunnel zum Raspberry Pi)
+const PROXY_URL = "https://resinous-darrin-euthermic.ngrok-free.dev";
 
 // =========================
 // STATE
@@ -336,20 +326,11 @@ async function loadSensorData() {
       "mqtt.0.bienenwaage.stock1.wlan_signal_prozent"
     ];
 
-    const results = await Promise.all(ids.map(id =>
-      fetch(`${IOBROKER_URL}/getBulk/${id}`)
-        .then(r => r.json())
-        .catch(() => null)
-    ));
-
-    sensorData = {
-      gewicht_kg:          results[0]?.[0]?.val ?? "unbekannt",
-      temperatur_c:        results[1]?.[0]?.val ?? "unbekannt",
-      luftfeuchte_prozent: results[2]?.[0]?.val ?? "unbekannt",
-      wlan_signal_dbm:     results[3]?.[0]?.val ?? "unbekannt",
-      wlan_signal_prozent: results[4]?.[0]?.val ?? "unbekannt",
-      timestamp:           new Date().toLocaleString("de-DE")
-    };
+    const res = await fetch(`${PROXY_URL}/api/sensor`, {
+      headers: { "ngrok-skip-browser-warning": "true" }
+    });
+    sensorData = await res.json();
+    sensorData.timestamp = new Date().toLocaleString("de-DE");
 
     // UI aktualisieren
     document.getElementById("val-weight").innerHTML  = sensorData.gewicht_kg + '<span class="unit">kg</span>';
@@ -397,18 +378,13 @@ async function connectToRealtime() {
   setStatus("Verbinde mit GPT-4o Realtime...", false);
 
   // 1) Ephemeral Token holen
-  const tokenUrl = `${AZURE_OAI_ENDPOINT}/openai/v1/realtime/client_secrets?api-version=${API_VERSION}`;
+  const tokenUrl = `${PROXY_URL}/api/token`;
   const tokenRes = await fetch(tokenUrl, {
     method: "POST",
     headers: {
-      "api-key": AZURE_OAI_KEY,
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      type: "realtime",
-      model: DEPLOYMENT_NAME,
-      voice: "alloy"
-    })
+      "Content-Type": "application/json",
+      "ngrok-skip-browser-warning": "true"
+    }
   });
 
   if (!tokenRes.ok) {
@@ -417,8 +393,8 @@ async function connectToRealtime() {
   }
 
   const tokenData = await tokenRes.json();
-  const ephemeralKey = tokenData.value ?? tokenData.client_secret?.value;
-  if (!ephemeralKey) throw new Error("Kein ephemeral key erhalten: " + JSON.stringify(tokenData));
+  const { ephemeralKey, endpoint, deployment, apiVersion } = tokenData;
+  if (!ephemeralKey) throw new Error("Kein ephemeral key: " + JSON.stringify(tokenData));
 
   // 2) WebRTC PeerConnection
   peerConnection = new RTCPeerConnection();
@@ -457,7 +433,7 @@ async function connectToRealtime() {
   const offer = await peerConnection.createOffer();
   await peerConnection.setLocalDescription(offer);
 
-  const sdpUrl = `${AZURE_OAI_ENDPOINT}/openai/v1/realtime/calls?api-version=${API_VERSION}`;
+  const sdpUrl = `${endpoint}/openai/realtimeapi?api-version=${apiVersion}&deployment=${deployment}`;
   const sdpRes = await fetch(sdpUrl, {
     method: "POST",
     headers: {
