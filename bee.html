@@ -445,7 +445,7 @@ async function connectToRealtime() {
     setTimeout(resolve, 3000); // max 3 Sekunden warten
   });
 
-  const sdpUrl = `https://swedencentral.realtimeapi-preview.ai.azure.com/v1/realtimertc?deployment=${deployment}`;
+  const sdpUrl = `https://eastus2.realtimeapi-preview.ai.azure.com/v1/realtimertc?deployment=${deployment}`;
   const sdpRes = await fetch(sdpUrl, {
     method: "POST",
     headers: {
