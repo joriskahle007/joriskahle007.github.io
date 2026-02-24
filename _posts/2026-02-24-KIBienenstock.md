@@ -1,117 +1,90 @@
 ---
-layout: post
-title: Vom Bienenstock in die Cloud
-tags: [CSP, Azure, GPT, IoT, Foundry, Voice, Speech, Realtime, Fabric]
----
 
-Wie ich meine Bienenstockwaage mit KI, Microsoft Fabric und GPT-4o Realtime verbunden habe. Ein Einblick, wie ich meine Bienenstöcke in Echtzeit überwache, Daten in die Cloud schicke und mit GPT-4o Realtime spreche.
+title: "🐝 Vom Bienenstock in die Cloud: Wie ich meine Bienenstockwaage mit KI, Microsoft Fabric und GPT-4o Realtime verbunden habe"
+date: "2026-02-24"
+author: "Joris Kahle"
+tags: [IoT, Bienen, Microsoft Fabric, GPT-4o, Cloud, Power BI]
+excerpt: "Ein Einblick, wie ich meine Bienenstöcke in Echtzeit überwache, Daten in die Cloud schicke und mit GPT-4o Realtime spreche."
+--------------------------------------------------------------------------------------------------------------------------------------
 
 ## Bienen, Daten und ein bisschen Verrücktheit
 
-Als Imker denkt man selten an Cloud Architektur, Echtzeit-APIs oder Sprachassistenten. Trotzdem stand ich eines Tages in meiner Werkstatt zwischen Holz, Wachs und Werkzeug, mit dem Gedanken: Was wäre, wenn ich meine Bienenstöcke in Echtzeit überwachen könnte – von überall auf der Welt – und sie mir sogar per Sprache Auskunft geben würden?
-
-Was als kleine Spielerei begann, ist inzwischen ein vollständiges IoT-System geworden. Meine Bienenstockwaage misst Gewicht, Temperatur und Luftfeuchtigkeit jede Minute, sendet alles in die Azure Cloud, speichert es in Microsoft Fabric, visualisiert es in Power BI und beantwortet Fragen per GPT-4o Realtime.
-
-Ja, das klingt nerdig. Und ja, es funktioniert.<br><br>
+Als Imker denkt man selten an Cloud-Architektur, Echtzeit-APIs oder KI-Sprachassistenten. Ich stand jedoch eines Tages zwischen Holz, Wachs und Werkzeug und fragte mich: Was, wenn ich meine Bienenstöcke in Echtzeit überwachen könnte? Und was, wenn sie mir sogar auf Sprache antworten würden? So begann ein Projekt, das sowohl meine Werkstatt als auch meine Vorstellungskraft sprengte. Was als kleines Experiment begann, ist inzwischen ein voll funktionsfähiges IoT-System, das Gewicht, Temperatur und Luftfeuchtigkeit misst, die Daten in Microsoft Fabric speichert, visualisiert und per GPT-4o Realtime auswertet. Es war eine Mischung aus handwerklicher Präzision, Softwarebastelei und Cloud-Know-how.
 
 ## Warum eine smarte Bienenstockwaage?
 
-Ein Bienenvolk ist dynamisch: Wenn ein Volk schwärmt, verliert es innerhalb weniger Stunden mehrere Kilogramm. Während der Trachtphase steigt das Gewicht kontinuierlich. Im Winter zeigt das Gewicht, ob noch genug Futter vorhanden ist.
+Ein Bienenvolk lebt im ständigen Wandel. Wenn ein Volk schwärmt, verliert der Stock innerhalb weniger Stunden mehrere Kilogramm. Wenn die Tracht beginnt, steigt das Gewicht kontinuierlich an, und im Winter zeigt sich am Gewicht, ob genügend Futter vorhanden ist. Früher bedeutete das: hinfahren, den Stock anheben, schätzen, Notizen machen. Ich wollte jedoch mehr: kontinuierliche Daten, präzise Messungen, und das alles aus der Ferne. Mit einer digitalen Waage unter dem Bienenstock, kombiniert mit Temperatur- und Luftfeuchtigkeitssensoren, kann ich nun jederzeit einen kompletten Überblick über das Volk erhalten. Es ist, als hätten die Bienen plötzlich eine Sprache, die ich verstehen kann, ohne dass ich täglich vor Ort sein muss.
 
-Traditionell bedeutet das: hinfahren, anheben, schätzen, notieren. Ich wollte kontinuierliche, präzise und historisch auswertbare Daten.
+## Die Hardware: ESP32 und Sensordaten
 
-Die Lösung: eine digitale Waage unter dem Bienenstock kombiniert mit Temperatur- und Luftfeuchtigkeitssensoren. So entsteht ein vollständiges Bild über den Zustand des Volkes – jederzeit und von überall.<br><br>
+Der ESP32 ist das Herzstück meiner Waage. Dieser Mikrocontroller ist klein, stromsparend und verfügt über integriertes WLAN. Er sammelt die Sensordaten der Wägezellen, der Temperatur- und Luftfeuchtigkeitssensoren und sendet sie zuverlässig über MQTT weiter. Jede Minute werden die Daten übertragen, sodass ich einen nahezu Live-Einblick in das Verhalten der Bienenstöcke erhalte. Es fühlt sich an, als würde ein winziger Assistent unermüdlich alles aufzeichnen, während ich mich anderen Dingen widmen kann.
 
-## Hardware: ESP32, Wägezellen und MQTT
+Hier ein kleiner Ausschnitt aus dem Script, das die Daten vom ESP32 an MQTT sendet:
 
-Herzstück ist ein ESP32. Eingebautes WLAN, stromsparend, preiswert und unterstützt von einer großen Community. Der Mikrocontroller liest die Sensordaten aus und sendet sie per MQTT weiter.
+```javascript
+const mqtt = require('mqtt');
+const client = mqtt.connect('mqtt://localhost:1883');
 
-Gemessen wird:
+function sendSensorData(weight, temp, humidity) {
+  client.publish('bienenwaage/stock1/gewicht', weight.toString());
+  client.publish('bienenwaage/stock1/temperatur', temp.toString());
+  client.publish('bienenwaage/stock1/luftfeuchtigkeit', humidity.toString());
+}
 
-- Gewicht in Kilogramm
-- Temperatur in °C
-- Luftfeuchtigkeit in %
-- WLAN-Signalstärke
+setInterval(() => {
+  const weight = readWeightSensor();
+  const temp = readTemperatureSensor();
+  const humidity = readHumiditySensor();
+  sendSensorData(weight, temp, humidity);
+}, 60000);
+```
 
-MQTT ist das perfekte Protokoll für IoT: leichtgewichtig, robust und ideal für batteriebetriebene oder netzwerkbegrenzte Geräte. Jeder Messwert landet auf einem Topic, das System ist für fünf Bienenstöcke vorbereitet – Skalierung kein Problem.<br><br>
+## Raspberry Pi und ioBroker als Gateway
 
-## Raspberry Pi als Gateway und Gehirn
+Alle Daten laufen auf einem Raspberry Pi 4 zusammen. Dort empfängt ioBroker die MQTT-Nachrichten, puffert sie und schreibt sie regelmäßig als CSV-Dateien in Microsoft Fabric. Der Sequenz-Counter stellt sicher, dass keine Datei überschrieben wird, selbst nach einem Neustart. Hier ein Auszug des Upload-Skripts:
 
-Ein Raspberry Pi 4 mit ioBroker empfängt die MQTT-Daten, puffert sie und führt mein Upload-Script aus. Alle 60 Sekunden schreibt es die Messwerte als CSV-Datei in Microsoft Fabric OneLake. Der Sequenz-Counter für die CSV-Dateien wird dauerhaft gespeichert, sodass keine alten Daten überschrieben werden.<br><br>
+```javascript
+const fs = require('fs');
+const path = require('path');
 
-## Microsoft Fabric: Die Datenpipeline
+const sequenceState = getState('javascript.0.bienenwaage.fileSequence');
+function writeCsv(data) {
+  const filename = sequenceState.value.toString().padStart(20, '0') + '.csv';
+  fs.writeFileSync(path.join('/OneLake/LandingZone/messwerte', filename), data);
+  setState('javascript.0.bienenwaage.fileSequence', sequenceState.value + 1);
+}
+```
 
-Microsoft Fabric wandelt die CSV-Dateien automatisch in Delta-Tabellen um – über Open Mirroring. Kein ETL-Aufwand, kein Schema-Gefrickel. Ein Spark Notebook sorgt zusätzlich für saubere Datenstruktur. Jetzt sind die Bienenstöcke SQL-abfragbar und bereit für Power BI und GPT-4o.<br><br>
+## Microsoft Fabric: Die Cloud-Pipeline
+
+Microsoft Fabric wandelt die CSV-Dateien automatisch in Delta-Tabellen um, bereit für SQL-Abfragen oder Power BI Dashboards. Das Open Mirroring Feature spart enorm Zeit, da kein manuelles Schema-Management nötig ist. Zusätzlich wird ein Spark Notebook verwendet, um die Daten zu strukturieren und für den KI-Assistenten aufzubereiten.
 
 ## Power BI Dashboard
 
-Das Dashboard zeigt Gewicht, Temperatur, Luftfeuchtigkeit und Signalstärke aller Bienenstöcke. Automatische Aktualisierung erlaubt, von überall zu überprüfen, ob ein Schwarm droht oder die Trachtphase beginnt.<br><br>
+Power BI zeigt in Echtzeit Gewicht, Temperatur und Luftfeuchtigkeit. Historische Trends sind ebenso abrufbar. Früher hätte ich Tabellen stundenlang analysieren müssen, heute genügt ein Blick auf das Dashboard.
 
-## Proxy und Sicherheit
+## KI-Sprachassistent mit GPT-4o Realtime
 
-Der KI-Sprachassistent darf API-Keys nicht ins Frontend legen. Lösung: ein Express.js Proxy auf dem Raspberry Pi. Der Browser kommuniziert mit dem Proxy, der dann mit Azure OpenAI spricht. HTTPS-Tunnel via ngrok ermöglicht sichere Kommunikation.
+Dank WebRTC kann ich direkt aus dem Browser mit GPT-4o Realtime kommunizieren. Der Assistent kennt aktuelle Messwerte und historische Daten der letzten 30 Tage. Über einen Proxy auf dem Raspberry Pi bleibt die API-Key-Sicherheit gewährleistet. Ngrok sorgt für HTTPS-Verbindungen und verhindert Mixed-Content-Probleme.
 
-Drei API-Endpunkte:
+## Architekturübersicht
 
-- /api/token – ephemeral Token für GPT-4o Realtime
-- /api/sensor – aktuelle Messwerte aus Fabric SQL
-- /api/history – statistische Zusammenfassung der letzten 30 Tage<br><br>
+```
+[ESP32] --> MQTT --> [Raspberry Pi/ioBroker] --> CSV Upload --> [Microsoft Fabric Delta Table] --> Power BI & GPT-4o Realtime
+```
 
-## Historische Daten und KI-Kontext
-
-Der Proxy liest die letzten 30 Tage aus Fabric SQL aus, berechnet Durchschnitt, Minimum, Maximum und füttert diese Zusammenfassung in den System Prompt. So kennt der Assistent aktuelle Werte und historische Trends.<br><br>
-
-## GPT-4o Realtime: Sprechen mit dem Bienenstock
-
-Bidirektionales Audio via WebRTC. Der Assistent weiß alles über Gewicht, Temperatur, Luftfeuchtigkeit und kann auf Fragen antworten wie:
-
-- „Wie schwer ist Stock 1 gerade?“
-- „War die Temperatur diese Woche ungewöhnlich hoch?“
-
-System Prompt wird dynamisch aus Live-Daten zusammengesetzt – ein wirklich interaktives Erlebnis.<br><br>
-
-## Tech Stack Zusammenfassung:
-
-- Hardware: ESP32, Wägezellen, DHT-Sensor
-- Protokoll: MQTT über TCP
-- Gateway: Raspberry Pi 4 mit ioBroker
-- Cloud Storage: Microsoft Fabric OneLake (ADLS Gen2)
-- Datenpipeline: Fabric Open Mirroring + Spark Notebook
-- Datenbank: Delta Table über Fabric SQL-Analyseendpunkt
-- Visualisierung: Power BI mit Auto-Refresh
-- Backend: Node.js / Express.js Proxy-Server
-- Tunnel: ngrok HTTPS-Tunnel
-- KI: Azure OpenAI GPT-4o Realtime (WebRTC)
-- Frontend: Vanilla HTML/CSS/JS auf GitHub Pages
-- Hosting: joriskahle.de / GitHub Pages
-
-## Architektur im Überblick
-
-- Edge: ESP32 misst und sendet Daten per MQTT
-- Gateway: Raspberry Pi mit ioBroker empfängt und puffert
-- Cloud: Microsoft Fabric speichert und verarbeitet Daten
-- Analyse: Power BI Dashboard & SQL Endpunkt
-- KI: GPT-4o Realtime beantwortet Fragen per Sprache
-
-Alle Komponenten laufen rund um die Uhr auf handelsüblicher Hardware, teils kostenlos, teils kostengünstig.<br><br>
+Dieses Diagramm stellt die fünf Schichten des Systems vereinfacht dar: Edge (ESP32), Gateway (Raspberry Pi), Cloud (Fabric), Analyse (Power BI), KI (GPT-4o).
 
 ## Lessons Learned
 
-- Den richtigen Azure Realtime Endpunkt zu finden, erfordert Geduld.
-- HTTPS vs. HTTP: ngrok rettet Mixed Content.
-- Persistenz der Sequenz-Counter ist entscheidend.
-- Fabric ist mächtig, selbst in einem Hobbyprojekt.
+Die größte Herausforderung war, die richtige Azure Realtime API zu finden und CORS-Probleme zu lösen. Der Sequenz-Counter musste persistent gespeichert werden, und das Proxy-Setup erforderte einige Tests. Diese Hürden zeigten mir, wie flexibel moderne Cloud-Lösungen für Hobbyprojekte sein können.
 
 ## Ausblick
 
-- Mehr Bienenstöcke integrieren
-- Schwarm-Erkennung automatisieren
-- Wetterdaten einbinden
-- Wintercluster-Überwachung
-- Feste Tunnel-URLs via Cloudflare
+Weitere Bienenstöcke lassen sich leicht hinzufügen, Schwarm-Erkennung automatisieren, Wetterdaten einbinden und Wintercluster überwachen. Eine feste Tunnel-URL könnte Stabilität erhöhen. Die Basis steht, und die Möglichkeiten sind nahezu unbegrenzt.
 
 ## Fazit
 
-Was als einfache Frage begann – „Wie schwer ist mein Bienenstock?“ – wurde ein vollständiges IoT-System mit Cloud-Datenpipeline und KI-Sprachassistent. Die Kombination aus ESP32, ioBroker, Microsoft Fabric, Power BI und GPT-4o zeigt, was heute möglich ist.
+Aus der simplen Frage „Wie schwer ist mein Bienenstock?“ ist ein vollwertiges IoT-System mit Cloud-Datenpipeline und KI-Sprachassistent entstanden. ESP32, ioBroker, Microsoft Fabric, Power BI und GPT-4o Realtime arbeiten zusammen wie ein kleines verteiltes Enterprise System – nur eben für Bienen. Sie haben keine Ahnung, dass sie Teil einer Cloud-KI-Pipeline sind, aber ich bin mir sicher, dass sie es gut finden würden. 🐝
 
-Die Bienen haben keine Ahnung, dass sie jetzt Teil einer Cloud-KI-Pipeline sind. Ich bin mir sicher, sie würden es gut finden. 🐝<br><br>
+Joris Kahle · Februar 2026
