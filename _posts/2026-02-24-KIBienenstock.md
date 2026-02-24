@@ -85,7 +85,7 @@ Die Verarbeitung in Microsoft Fabric gliedert sich in mehrere Schritte:
 
 1. **CSV-Upload in OneLake Landing Zone** – Das JavaScript-Skript auf dem Raspberry Pi schreibt die CSV-Dateien in einen speziell vorbereiteten Ordner in OneLake, z.B. /LandingZone/messwerte/. Jede Datei wird chronologisch nummeriert.
 
-<img src="/assets/img/javascript.jpg" alt="javascript" /><br><br>
+<img src="/assets/img/fabriccsv.jpg" alt="Fabric - CSV" /><br><br>
 <br><br>
 
 2. **Open Mirroring** – Fabric erkennt automatisch neue CSV-Dateien und spiegelt sie in eine Delta-Tabelle. Dabei werden die Daten strukturiert und für SQL-Abfragen vorbereitet, ohne dass manuell ein Schema definiert werden muss.
