@@ -1,0 +1,291 @@
+// ============================================================
+// Bienenstockwaage → Microsoft Fabric Open Mirroring
+// ioBroker JavaScript-Adapter Skript
+// ============================================================
+
+// =========================
+// KONFIGURATION
+// =========================
+
+const TENANT_ID     = "d2e6db08-fcd2-435c-aa9a-b0bbc387d3c7";
+const CLIENT_ID     = "bbae22b8-a669-4666-8870-35feb569884f";
+const CLIENT_SECRET = "78a8Q~dkspss2fNw9RKe3aq4vOYSjH~IXB-Qoayd";
+
+const WORKSPACE_ID  = "4733faaa-2c8f-44e6-9fd4-ad59d96c165e";
+const MIRROR_ID     = "82c6ffd7-25fa-43d1-be4a-61823387ac50";
+
+const TABLE_NAME       = "messwerte_v2";
+const SCALE_IDS        = ["stock1", "stock2", "stock3", "stock4", "stock5"];
+const MQTT_PREFIX      = "mqtt.0.bienenwaage";
+const FLUSH_INTERVAL_S = 60;
+
+// State-ID zum dauerhaften Speichern des Counters
+const SEQUENCE_STATE_ID = "javascript.0.bienenwaage.fileSequence";
+
+// =========================
+// INTERNER PUFFER & SEQUENZ
+// =========================
+var dataBuffer       = [];
+var accessToken      = null;
+var tokenExpiry      = 0;
+var metadataUploaded = false;
+var fileSequence     = null; // Wird aus ioBroker-State geladen
+
+// =========================
+// SEQUENZ AUS STATE LADEN
+// =========================
+function initSequence(callback) {
+    // State anlegen falls nicht vorhanden
+    createState(SEQUENCE_STATE_ID, 1, { type: "number", name: "Fabric File Sequence Counter" }, function() {
+        getState(SEQUENCE_STATE_ID, function(err, state) {
+            if (err || !state || !state.val) {
+                fileSequence = 1;
+            } else {
+                fileSequence = parseInt(state.val) || 1;
+            }
+            log("Fabric Sequenz-Counter geladen: " + fileSequence);
+            callback();
+        });
+    });
+}
+
+// =========================
+// SEQUENZ SPEICHERN
+// =========================
+function saveSequence() {
+    setState(SEQUENCE_STATE_ID, fileSequence, true);
+}
+
+// =========================
+// HTTP HELPER (natives Node.js https)
+// =========================
+function httpRequest(options, body, callback) {
+    var https = require("https");
+    var url   = require("url");
+    var parsed = url.parse(options.url);
+
+    var reqOptions = {
+        hostname: parsed.hostname,
+        port:     parsed.port || 443,
+        path:     parsed.path,
+        method:   options.method || "GET",
+        headers:  options.headers || {}
+    };
+
+    var bodyBuf = null;
+    if (body && body.length > 0) {
+        bodyBuf = Buffer.isBuffer(body) ? body : Buffer.from(body, "utf-8");
+        reqOptions.headers["Content-Length"] = bodyBuf.length;
+    } else {
+        reqOptions.headers["Content-Length"] = 0;
+    }
+
+    var req = https.request(reqOptions, function(res) {
+        var chunks = [];
+        res.on("data", function(chunk) { chunks.push(chunk); });
+        res.on("end", function() {
+            callback(null, res.statusCode, Buffer.concat(chunks).toString());
+        });
+    });
+    req.on("error", function(e) { callback(e.message, null, null); });
+    if (bodyBuf) req.write(bodyBuf);
+    req.end();
+}
+
+// =========================
+// TOKEN HOLEN
+// =========================
+function getAccessToken(callback) {
+    var now = Math.floor(Date.now() / 1000);
+    if (accessToken && now < tokenExpiry - 60) { callback(null, accessToken); return; }
+
+    var body = "grant_type=client_credentials" +
+               "&client_id=" + CLIENT_ID +
+               "&client_secret=" + encodeURIComponent(CLIENT_SECRET) +
+               "&scope=https%3A%2F%2Fstorage.azure.com%2F.default";
+
+    httpRequest({
+        url:     "https://login.microsoftonline.com/" + TENANT_ID + "/oauth2/v2.0/token",
+        method:  "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" }
+    }, body, function(err, status, data) {
+        if (err) { log("Token-Fehler: " + err, "error"); callback(err, null); return; }
+        try {
+            var parsed = JSON.parse(data);
+            if (parsed.access_token) {
+                accessToken = parsed.access_token;
+                tokenExpiry = now + (parsed.expires_in || 3600);
+                log("Fabric Token erneuert, gültig bis: " + new Date(tokenExpiry * 1000).toISOString());
+                callback(null, accessToken);
+            } else {
+                log("Token-Antwort ungültig: " + data, "error");
+                callback("Kein Token", null);
+            }
+        } catch(e) { log("Token-Parse-Fehler: " + e, "error"); callback(e, null); }
+    });
+}
+
+// =========================
+// DATEI IN ONELAKE SCHREIBEN (ADLS Gen2: create → append → flush)
+// =========================
+function writeOneLakeFile(path, content, contentType, callback) {
+    var baseUrl = "https://onelake.dfs.fabric.microsoft.com/" +
+                  WORKSPACE_ID + "/" + MIRROR_ID + "/" + path;
+
+    getAccessToken(function(err, token) {
+        if (err) { callback(err); return; }
+
+        var auth = { "Authorization": "Bearer " + token, "x-ms-version": "2021-06-08" };
+        var buf  = Buffer.isBuffer(content) ? content : Buffer.from(content, "utf-8");
+        var len  = buf.length;
+
+        // 1) create
+        httpRequest({ url: baseUrl + "?resource=file", method: "PUT", headers: auth }, "", function(err, status) {
+            if (err) { callback(err); return; }
+            if (status !== 201 && status !== 200) { callback("Create HTTP " + status); return; }
+
+            // 2) append
+            httpRequest({
+                url: baseUrl + "?action=append&position=0", method: "PATCH",
+                headers: Object.assign({}, auth, { "Content-Type": contentType || "application/octet-stream" })
+            }, buf, function(err, status) {
+                if (err) { callback(err); return; }
+                if (status !== 202 && status !== 200) { callback("Append HTTP " + status); return; }
+
+                // 3) flush
+                httpRequest({ url: baseUrl + "?action=flush&position=" + len, method: "PATCH", headers: auth }, "", function(err, status) {
+                    if (err) { callback(err); return; }
+                    if (status !== 200) { callback("Flush HTTP " + status); return; }
+                    callback(null);
+                });
+            });
+        });
+    });
+}
+
+// =========================
+// SEQUENZ-DATEINAME (z.B. 00000000000000000001.csv)
+// =========================
+function nextFileName() {
+    var seq = String(fileSequence).padStart(20, "0");
+    fileSequence++;
+    saveSequence(); // Dauerhaft speichern!
+    return seq + ".csv";
+}
+
+// =========================
+// METADATA.JSON
+// =========================
+function uploadMetadata(callback) {
+    var metadata = {
+        "keyColumns":    ["timestamp", "scale_id"],
+        "FileExtension": ".csv"
+    };
+
+    var path    = "Files/LandingZone/" + TABLE_NAME + "/_metadata.json";
+    var content = JSON.stringify(metadata);
+
+    log("Erstelle _metadata.json...");
+    writeOneLakeFile(path, content, "application/json", function(err) {
+        if (err) { log("Metadata Upload fehlgeschlagen: " + err, "error"); callback(err); }
+        else      { log("_metadata.json erfolgreich erstellt."); callback(null); }
+    });
+}
+
+// =========================
+// CSV BAUEN
+// =========================
+function buildCSV(rows) {
+    var header = "__rowMarker__,timestamp,scale_id,gewicht_kg,temperatur_c,luftfeuchte_prozent,wlan_signal_dbm,wlan_signal_prozent\n";
+    var lines = rows.map(function(r) {
+        return [
+            0,
+            r.timestamp,
+            r.scale_id,
+            r.gewicht_kg   !== null ? r.gewicht_kg   : "",
+            r.temperatur_c !== null ? r.temperatur_c : "",
+            r.luftfeuchte  !== null ? r.luftfeuchte  : "",
+            r.wlan_dbm     !== null ? r.wlan_dbm     : "",
+            r.wlan_pct     !== null ? r.wlan_pct     : ""
+        ].join(",");
+    });
+    return header + lines.join("\n");
+}
+
+// =========================
+// PUFFER LEEREN & SENDEN
+// =========================
+function flushBuffer() {
+    if (dataBuffer.length === 0) return;
+
+    var rows     = dataBuffer.slice();
+    dataBuffer   = [];
+    var filename = nextFileName();
+    var csv      = buildCSV(rows);
+    var path     = "Files/LandingZone/" + TABLE_NAME + "/" + filename;
+
+    log("Sende " + rows.length + " Messwerte → " + filename);
+
+    function doUpload() {
+        writeOneLakeFile(path, csv, "text/csv", function(err) {
+            if (err) {
+                log("Upload fehlgeschlagen: " + err, "error");
+                dataBuffer = rows.concat(dataBuffer);
+                fileSequence--; // Sequenz zurücksetzen bei Fehler
+                saveSequence();
+            } else {
+                log("Upload erfolgreich: " + rows.length + " Zeilen (" + filename + ")");
+            }
+        });
+    }
+
+    if (!metadataUploaded) {
+        uploadMetadata(function(err) {
+            if (!err) metadataUploaded = true;
+            doUpload();
+        });
+    } else {
+        doUpload();
+    }
+}
+
+// =========================
+// MESSWERTE SAMMELN
+// =========================
+var scaleState = {};
+SCALE_IDS.forEach(function(id) {
+    scaleState[id] = { gewicht_kg: null, temperatur_c: null, luftfeuchte: null, wlan_dbm: null, wlan_pct: null };
+});
+
+SCALE_IDS.forEach(function(scaleId) {
+    var p = MQTT_PREFIX + "." + scaleId + ".";
+    on({ id: p + "gewicht_kg",          change: "any" }, function(obj) { scaleState[scaleId].gewicht_kg   = obj.state.val; addToBuffer(scaleId); });
+    on({ id: p + "temperatur_c",        change: "any" }, function(obj) { scaleState[scaleId].temperatur_c = obj.state.val; });
+    on({ id: p + "luftfeuchte_prozent", change: "any" }, function(obj) { scaleState[scaleId].luftfeuchte  = obj.state.val; });
+    on({ id: p + "wlan_signal_dbm",     change: "any" }, function(obj) { scaleState[scaleId].wlan_dbm     = obj.state.val; });
+    on({ id: p + "wlan_signal_prozent", change: "any" }, function(obj) { scaleState[scaleId].wlan_pct     = obj.state.val; });
+});
+
+function addToBuffer(scaleId) {
+    var s = scaleState[scaleId];
+    dataBuffer.push({
+        timestamp:    new Date().toISOString(),
+        scale_id:     scaleId,
+        gewicht_kg:   s.gewicht_kg,
+        temperatur_c: s.temperatur_c,
+        luftfeuchte:  s.luftfeuchte,
+        wlan_dbm:     s.wlan_dbm,
+        wlan_pct:     s.wlan_pct
+    });
+}
+
+// =========================
+// START – erst Sequenz laden, dann loslegen
+// =========================
+initSequence(function() {
+    setInterval(function() { flushBuffer(); }, FLUSH_INTERVAL_S * 1000);
+    uploadMetadata(function(err) { if (!err) metadataUploaded = true; });
+    log("Bienenstockwaage → Fabric Mirroring gestartet.");
+    log("Sequenz startet bei: " + fileSequence);
+    log("Überwache " + SCALE_IDS.length + " Waagen, Upload alle " + FLUSH_INTERVAL_S + "s.");
+});
