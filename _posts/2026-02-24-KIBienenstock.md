@@ -27,6 +27,7 @@ Für die korrekte Montage der Wägezellen lässt ein Freund passende Halterungen
 
 Hier ein kleines Code-Schnipsel, wie die Sensoren ausgelesen und die Daten per MQTT gesendet werden:<br>
 
+```javascript
 const mqtt = require('mqtt');
 const client = mqtt.connect('mqtt://localhost:1883');
 const HX711 = require('hx711');
@@ -50,6 +51,7 @@ setInterval(() => {
   client.publish('bienenwaage/stock1/temperatur', data.temperature.toString());
   client.publish('bienenwaage/stock1/luftfeuchtigkeit', data.humidity.toString());
 }, 60000);
+```
 
 Mit dieser Kombination aus ESP32, SHT31-D und HX711 ist die Waage in der Lage, hochpräzise Messwerte zu liefern, die zuverlässig und regelmäßig in die Cloud übertragen werden.<br><br>
 
@@ -58,7 +60,7 @@ Mit dieser Kombination aus ESP32, SHT31-D und HX711 ist die Waage in der Lage, h
 Bei uns im Haus läuft ioBroker bereits seit Jahren als Smart-Home-Zentrale. Es steuern knapp hundert Sensoren und Aktoren das Licht, Bewegungsmelder, Rauchmelder, Rollläden und weitere Geräte. Für die Bienenstockwaage musste lediglich der MQTT-Adapter installiert und konfiguriert werden. Der bestehende JavaScript-Adapter, der schon für diverse Automatisierungen im Haus im Einsatz war, konnte direkt für die Übertragung der Messwerte in Richtung Microsoft Fabric genutzt werden. Dank dieser vorhandenen Infrastruktur war der Einstieg extrem einfach, und die Bienenstockdaten integrierten sich nahtlos in das bestehende Smart-Home-System.<br>
 
 <img src="/assets/img/mqtt.jpg" alt="MQTT-Adapter" /><br><br>
-Der Adapter erhält vom ESP die Messdaten!<br><br>
+Der Adapter erhält vom ESP die Messdaten!<br><br><br>
 
 <img src="/assets/img/javascript.jpg" alt="javascript" /><br><br>
 <br><br>
@@ -76,14 +78,14 @@ function writeCsv(data) {
   setState('javascript.0.bienenwaage.fileSequence', sequenceState.value + 1);
 }
 ```
-
+<br><br>
 ## Microsoft Fabric: Detaillierte Schritte
 
 Die Verarbeitung in Microsoft Fabric gliedert sich in mehrere Schritte:
 
 1. **CSV-Upload in OneLake Landing Zone** – Das JavaScript-Skript auf dem Raspberry Pi schreibt die CSV-Dateien in einen speziell vorbereiteten Ordner in OneLake, z.B. /LandingZone/messwerte/. Jede Datei wird chronologisch nummeriert.
 
-<img src="/assets/img/csv.jpg" alt="javascript" /><br><br>
+<img src="/assets/img/javascript.jpg" alt="javascript" /><br><br>
 <br><br>
 
 2. **Open Mirroring** – Fabric erkennt automatisch neue CSV-Dateien und spiegelt sie in eine Delta-Tabelle. Dabei werden die Daten strukturiert und für SQL-Abfragen vorbereitet, ohne dass manuell ein Schema definiert werden muss.
@@ -103,14 +105,12 @@ Dieser Aufbau erlaubt eine nahtlose Integration von Hardware-Daten in die Cloud,
 Power BI zeigt in Echtzeit Gewicht, Temperatur und Luftfeuchtigkeit. Historische Trends sind ebenso abrufbar. Früher hätte ich Tabellen stundenlang analysieren müssen, heute genügt ein Blick auf das Dashboard.<br><br>
 
 <img src="/assets/img/powerbi.jpg" alt="javascript" /><br><br>
-<br><br>
 
 ## KI-Sprachassistent mit GPT-4o Realtime
 
 Der spannendste Teil des Projekts ist der GPT-4o Realtime Sprachassistent. Dieser wurde in der Region West US 2 deployt und liefert eine beeindruckende Echtzeit-Konversation. Anders als bei klassischen REST-basierten APIs wird hier Audio bidirektional über WebRTC übertragen – der Browser sendet einen SDP-Offer, Azure antwortet mit einem SDP-Answer und ab diesem Moment fließt der Audio-Stream in beide Richtungen.<br>
 
 <img src="/assets/img/realtime.jpg" alt="javascript" /><br><br>
-<br><br>
 
 Das Ergebnis ist nahezu latenzfreie Kommunikation. Der Assistent kann Fragen zu aktuellen Messwerten oder historischen Trends beantworten, Zusammenhänge erkennen und sogar Vorhersagen basierend auf den letzten 30 Tagen liefern. Die Kombination aus Fabric SQL-Daten, Delta-Tabellen und Echtzeit-Audio macht die Interaktion fast schon magisch – man hat das Gefühl, direkt mit dem Bienenstock zu sprechen.<br>
 
