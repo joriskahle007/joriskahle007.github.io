@@ -1,14 +1,12 @@
 ---
-title: "🐝 Vom Bienenstock in die Cloud: Wie ich meine Bienenstockwaage mit KI, Microsoft Fabric und GPT-4o Realtime verbunden habe"
-tags: [IoT, Bienen, Microsoft Fabric, GPT-4o, Cloud, Power BI]
-excerpt: "Ein Einblick, wie ich meine Bienenstöcke in Echtzeit überwache, Daten in die Cloud schicke und mit GPT-4o Realtime spreche."
+layout: post
+title: 🐝 Vom Bienenstock in die Cloud: Wie ich meine Bienenstockwaage mit KI, Microsoft Fabric und GPT-4o Realtime verbunden habe
+tags: [IoT, Fabric, Power BI, Realtime, CSP, Azure, GPT, Foundry, Voice, Speech]
 ---
 
-## Bienen, Daten und ein bisschen Verrücktheit
+Als Imker denkt man selten an Cloud-Architektur, Echtzeit-APIs oder KI-Sprachassistenten. Ende Januar dachte: Was, wenn ich meine Bienenstöcke in Echtzeit überwachen könnte? Und was, wenn sie mir sogar per Sprache antworten würden? Diese Idee klang zunächst verrückt, aber genau solche Projekte haben das Potenzial, Hobbyimkerei auf ein völlig neues Level zu heben.<br>
 
-Als Imker denkt man selten an Cloud-Architektur, Echtzeit-APIs oder KI-Sprachassistenten. Ich stand eines Tages zwischen Holz, Wachs und Werkzeug und dachte: Was, wenn ich meine Bienenstöcke in Echtzeit überwachen könnte? Und was, wenn sie mir sogar per Sprache antworten würden? Diese Idee klang zunächst verrückt, aber genau solche Projekte haben das Potenzial, Hobbyimkerei auf ein völlig neues Level zu heben.
-
-In den letzten Monaten ist aus dieser kleinen Idee ein vollwertiges IoT-System geworden, das Gewicht, Temperatur und Luftfeuchtigkeit misst, die Daten in Microsoft Fabric speichert, sie visualisiert und per GPT-4o Realtime auswertet. Dabei handelt es sich nicht nur um ein technisches Spielzeug, sondern um ein praktisches Werkzeug, das mir hilft, die Gesundheit und Produktivität meiner Bienenvölker besser zu verstehen und zu steuern.<br><br>
+In den letzten Tagen ist aus dieser kleinen Idee ein vollwertiges IoT-System geworden, das Gewicht, Temperatur und Luftfeuchtigkeit misst, die Daten in Microsoft Fabric speichert, sie visualisiert und per GPT-4o Realtime auswertet. Dabei handelt es sich nicht nur um ein technisches Spielzeug, sondern um ein praktisches Werkzeug, das mir hilft, die Gesundheit und Produktivität meiner Bienenvölker besser zu verstehen und zu steuern.<br><br>
 
 ## Warum eine smarte Bienenstockwaage?
 
