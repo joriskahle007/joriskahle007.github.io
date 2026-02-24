@@ -75,7 +75,7 @@ function writeCsv(data) {
   fs.writeFileSync(path.join('/OneLake/LandingZone/messwerte', filename), data);
   setState('javascript.0.bienenwaage.fileSequence', sequenceState.value + 1);
 }
-```<br><br>
+```
 
 ## Microsoft Fabric: Detaillierte Schritte
 
