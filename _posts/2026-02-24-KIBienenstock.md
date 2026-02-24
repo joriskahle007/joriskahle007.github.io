@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Vom Bienenstock in die Cloud: Wie ich meine Bienenstockwaage mit KI, Microsoft Fabric und GPT-4o Realtime verbunden habe
+title: Vom Bienenstock in die Cloud - Wie ich meine Bienenstockwaage mit KI, Microsoft Fabric und GPT-4o Realtime verbunden habe
 tags: [IoT, Fabric, Power BI, Realtime, CSP, Azure, GPT, Foundry, Voice, Speech]
 ---
 
@@ -18,10 +18,12 @@ Mit der digitalen Waage unter dem Bienenstock, kombiniert mit Temperatur- und Lu
 
 Das Herzstück meiner Waage ist der ESP32-Mikrocontroller. Aber die Sensortechnik ist entscheidend. Für die Temperatur- und Luftfeuchtigkeitsmessung setze ich auf den SHT31-D Sensor. Er liefert präzise und stabile Messwerte, selbst bei wechselnden Außentemperaturen und Feuchtigkeitsschwankungen. Damit kann ich genau erkennen, ob das Klima im Bienenstock optimal ist.<br>
 
-Für die Gewichtsmessung nutze ich eine Halbbrücken-Wägezelle in Kombination mit einem HX711 ADC-Modul. Die Halbbrücken-Technik ist robust und ideal für die Belastung durch Bienenstockgewicht. Der HX711 wandelt die analogen Signale der Wägezelle in digitale Daten um, die der ESP32 auslesen kann. Zusammen mit der Kalibrierung ermöglicht dies eine Messgenauigkeit im Gramm-Bereich, was für Schwarm- und Futterüberwachung entscheidend ist.<br>
+Für die Gewichtsmessung nutze ich pro Bienenstock 4 Halbbrücken-Wägezelle in Kombination mit einem HX711 ADC-Modul. Die Halbbrücken-Technik ist robust und ideal für die Belastung durch Bienenstockgewicht. Der HX711 wandelt die analogen Signale der Wägezelle in digitale Daten um, die der ESP32 auslesen kann. Zusammen mit der Kalibrierung ermöglicht dies eine Messgenauigkeit im Gramm-Bereich, was für Schwarm- und Futterüberwachung entscheidend ist.<br>
 
 <img src="/assets/img/aufbau.jpg" alt="ESP-Aufbau" /><br><br>
 <br><br>
+
+Für die korrekte Montage der Wägezellen lässt ein Freund passende Halterungen im 3D-Drucker anfertigen. Parallel dazu wird die Verkabelung optimiert und die gesamte Technik in wasserdichte Behälter verbaut. Da die Wägezellen noch nicht final montiert sind, konnte die Kalibrierung noch nicht abgeschlossen werden, die aktuell etwas kuriosen Messwerte sind daher bewusst in Kauf genommen und werden sich nach der finalen Installation normalisieren.<br><br>
 
 Hier ein kleines Code-Schnipsel, wie die Sensoren ausgelesen und die Daten per MQTT gesendet werden:<br>
 
@@ -53,10 +55,10 @@ Mit dieser Kombination aus ESP32, SHT31-D und HX711 ist die Waage in der Lage, h
 
 ## Raspberry Pi und ioBroker als Gateway
 
-Bei uns im Haus läuft ioBroker bereits seit Jahren als Smart-Home-Zentrale. Es steuern knapp hundert Sensoren und Aktoren das Licht, Heizung, Rollläden und weitere Geräte. Für die Bienenstockwaage musste lediglich der MQTT-Adapter installiert und konfiguriert werden. Der bestehende JavaScript-Adapter, der schon für diverse Automatisierungen im Haus im Einsatz war, konnte direkt für die Übertragung der Messwerte in Richtung Microsoft Fabric genutzt werden. Dank dieser vorhandenen Infrastruktur war der Einstieg extrem einfach, und die Bienenstockdaten integrierten sich nahtlos in das bestehende Smart-Home-System.<br>
+Bei uns im Haus läuft ioBroker bereits seit Jahren als Smart-Home-Zentrale. Es steuern knapp hundert Sensoren und Aktoren das Licht, Bewegungsmelder, Rauchmelder, Rollläden und weitere Geräte. Für die Bienenstockwaage musste lediglich der MQTT-Adapter installiert und konfiguriert werden. Der bestehende JavaScript-Adapter, der schon für diverse Automatisierungen im Haus im Einsatz war, konnte direkt für die Übertragung der Messwerte in Richtung Microsoft Fabric genutzt werden. Dank dieser vorhandenen Infrastruktur war der Einstieg extrem einfach, und die Bienenstockdaten integrierten sich nahtlos in das bestehende Smart-Home-System.<br>
 
 <img src="/assets/img/mqtt.jpg" alt="MQTT-Adapter" /><br><br>
-<br><br>
+Der Adapter erhält vom ESP die Messdaten!<br><br>
 
 <img src="/assets/img/javascript.jpg" alt="javascript" /><br><br>
 <br><br>
