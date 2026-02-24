@@ -85,9 +85,6 @@ Die Verarbeitung in Microsoft Fabric gliedert sich in mehrere Schritte:
 
 1. **CSV-Upload in OneLake Landing Zone** – Das JavaScript-Skript auf dem Raspberry Pi schreibt die CSV-Dateien in einen speziell vorbereiteten Ordner in OneLake, z.B. /LandingZone/messwerte/. Jede Datei wird chronologisch nummeriert.
 
-<img src="/assets/img/fabriccsv.jpg" alt="Fabric - CSV" /><br><br>
-<br><br>
-
 2. **Open Mirroring** – Fabric erkennt automatisch neue CSV-Dateien und spiegelt sie in eine Delta-Tabelle. Dabei werden die Daten strukturiert und für SQL-Abfragen vorbereitet, ohne dass manuell ein Schema definiert werden muss.
 
 3. **Metadata-Definition** – Über die _metadata.json Datei wird festgelegt, welche Spalten als Schlüssel dienen (timestamp, scale_id) und welche Dateierweiterung genutzt wird (.csv).
@@ -97,6 +94,9 @@ Die Verarbeitung in Microsoft Fabric gliedert sich in mehrere Schritte:
 5. **SQL-Endpunkt & Power BI Integration** – Die bereinigten Delta-Tabellen sind direkt über den SQL-Endpunkt abfragbar. Power BI Dashboards greifen darauf zu, visualisieren Trends, Gewichtsentwicklung, Temperaturverläufe und Luftfeuchtigkeit, und aktualisieren automatisch in Echtzeit.
 
 6. **Historische Daten für GPT-4o Realtime** – Der KI-Assistent nutzt die SQL-Abfragen, um historische Zusammenfassungen (Durchschnitt, Min, Max der letzten 30 Tage) zu erstellen. So kann er fundierte Antworten geben, die nicht nur auf aktuellen, sondern auch auf historischen Daten basieren.
+
+<img src="/assets/img/fabriccsv.jpg" alt="Fabric - CSV" /><br><br>
+<br><br>
 
 Dieser Aufbau erlaubt eine nahtlose Integration von Hardware-Daten in die Cloud, deren Analyse und Visualisierung, sowie die Anbindung an den KI-Sprachassistenten. Jeder Schritt ist automatisiert, zuverlässig und skalierbar.<br><br>
 
