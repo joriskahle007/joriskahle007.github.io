@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Bienenstock Sprachassistent</title>
+<title>Bienenstock Assistent</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --honey:    #F5A623;
-    --amber:    #C47A1E;
-    --dark:     #1A1209;
-    --mid:      #2D1F0A;
-    --soft:     #3D2D14;
-    --cream:    #FDF6E3;
-    --muted:    #8B6F3E;
-    --green:    #4CAF50;
-    --red:      #E53935;
+    --honey:  #F5A623;
+    --amber:  #C47A1E;
+    --dark:   #1A1209;
+    --mid:    #2D1F0A;
+    --soft:   #3D2D14;
+    --cream:  #FDF6E3;
+    --muted:  #8B6F3E;
+    --green:  #4CAF50;
+    --red:    #E53935;
+    --blue:   #42A5F5;
   }
-
   * { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
@@ -25,228 +25,185 @@
     color: var(--cream);
     font-family: 'DM Mono', monospace;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
+    overflow-x: hidden;
   }
 
-  /* Honeycomb background */
   body::before {
     content: "";
     position: fixed;
     inset: 0;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V16L28 0l28 16v34L28 66zm0-10l20-12V22L28 10 8 22v22l20 12z' fill='%23ffffff04'/%3E%3C/svg%3E");
     pointer-events: none;
+    z-index: 0;
   }
 
-  .container {
-    width: 100%;
-    max-width: 640px;
-    padding: 40px 24px;
+  .page {
+    position: relative;
+    z-index: 1;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 32px 24px;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 32px;
-    position: relative;
-    z-index: 1;
   }
 
-  /* Header */
+  /* ── Header ── */
   header {
     text-align: center;
   }
-
-  header .emoji { font-size: 3em; display: block; margin-bottom: 8px; }
-
+  header .emoji { font-size: 2.8em; display: block; margin-bottom: 6px; }
   header h1 {
     font-family: 'DM Serif Display', serif;
-    font-size: 2.2em;
+    font-size: 2.4em;
     color: var(--honey);
     letter-spacing: -0.5px;
-    line-height: 1.1;
   }
-
   header p {
     color: var(--muted);
-    font-size: 0.8em;
-    margin-top: 6px;
+    font-size: 0.75em;
+    margin-top: 4px;
     letter-spacing: 1px;
     text-transform: uppercase;
   }
 
-  /* Data cards */
-  .data-grid {
+  /* ── LED Status ── */
+  .led-row {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 10px;
+  }
+  .led-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.7em;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .led {
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--muted);
+    flex-shrink: 0;
+    transition: background 0.5s;
+  }
+  .led.online {
+    background: var(--green);
+    box-shadow: 0 0 6px var(--green), 0 0 12px rgba(76,175,80,0.4);
+    animation: led-pulse 2s ease-in-out infinite;
+  }
+  .led.offline { background: var(--red); box-shadow: 0 0 6px var(--red); }
+  @keyframes led-pulse {
+    0%,100% { opacity:1; } 50% { opacity:0.5; }
+  }
+
+  /* ── Stöcke Grid ── */
+  .stocks-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
     width: 100%;
   }
 
-  .data-card {
+  .stock-card {
     background: var(--mid);
     border: 1px solid var(--soft);
-    border-radius: 12px;
-    padding: 14px;
-    text-align: center;
-    transition: border-color 0.3s;
+    border-radius: 16px;
+    padding: 20px;
+    transition: border-color 0.3s, opacity 0.3s;
+  }
+  .stock-card.online  { border-color: rgba(245,166,35,0.4); }
+  .stock-card.offline { opacity: 0.5; }
+
+  .stock-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .stock-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 1.3em;
+    color: var(--honey);
+  }
+  .stock-ts {
+    font-size: 0.62em;
+    color: var(--muted);
+    text-align: right;
   }
 
-  .data-card.fresh { border-color: var(--honey); }
-
-  .data-card .label {
-    font-size: 0.65em;
+  /* Messwert-Zeilen */
+  .metric {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 12px;
+  }
+  .metric-label {
+    font-size: 0.6em;
     color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-bottom: 6px;
   }
-
-  .data-card .value {
-    font-size: 1.3em;
+  .metric-row {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+  .metric-value {
+    font-size: 1.5em;
     font-weight: 500;
     color: var(--cream);
   }
-
-  .data-card .unit {
-    font-size: 0.7em;
-    color: var(--honey);
-    margin-left: 3px;
-  }
-
-  /* Mic button */
-  .mic-wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 16px;
-  }
-
-  .mic-btn {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 3px solid var(--honey);
-    background: var(--mid);
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 2.5em;
-    transition: all 0.2s;
-    position: relative;
-    outline: none;
-  }
-
-  .mic-btn:hover { background: var(--soft); transform: scale(1.05); }
-
-  .mic-btn.listening {
-    background: var(--honey);
-    border-color: var(--amber);
-    animation: pulse 1.2s ease-in-out infinite;
-  }
-
-  .mic-btn.speaking {
-    border-color: var(--green);
-    animation: pulse-green 1s ease-in-out infinite;
-  }
-
-  .mic-btn.paused {
-    border-color: var(--muted);
-    background: var(--soft);
-    opacity: 0.8;
-  }
-
-  @keyframes pulse {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(245,166,35,0.4); }
-    50% { box-shadow: 0 0 0 20px rgba(245,166,35,0); }
-  }
-
-  @keyframes pulse-green {
-    0%, 100% { box-shadow: 0 0 0 0 rgba(76,175,80,0.4); }
-    50% { box-shadow: 0 0 0 20px rgba(76,175,80,0); }
-  }
-
-  .mic-label {
+  .metric-unit {
     font-size: 0.75em;
+    color: var(--honey);
+  }
+  .metric-minmax {
+    font-size: 0.65em;
     color: var(--muted);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    height: 18px;
+    margin-left: auto;
+  }
+  .metric-minmax span { color: var(--cream); }
+
+  /* WLAN klein */
+  .wlan-row {
+    display: flex;
+    gap: 12px;
+    margin-top: 4px;
+    padding-top: 10px;
+    border-top: 1px solid var(--soft);
+  }
+  .wlan-item { font-size: 0.65em; color: var(--muted); }
+  .wlan-item span { color: var(--cream); }
+
+  /* Offline Overlay */
+  .offline-label {
     text-align: center;
+    padding: 20px 0;
+    color: var(--muted);
+    font-size: 0.75em;
+    letter-spacing: 1px;
   }
 
-  /* Transcript */
-  .transcript-box {
-    width: 100%;
-    background: var(--mid);
-    border: 1px solid var(--soft);
-    border-radius: 12px;
-    padding: 20px;
-    min-height: 120px;
-    max-height: 240px;
-    overflow-y: auto;
+  /* ── Steuerung ── */
+  .controls {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    align-items: center;
+    gap: 14px;
   }
-
-  .msg {
-    display: flex;
-    gap: 10px;
-    animation: fadeIn 0.3s ease;
-  }
-
-  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-
-  .msg .role {
-    font-size: 0.65em;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    padding-top: 2px;
-    min-width: 48px;
-    color: var(--muted);
-  }
-
-  .msg.user .role { color: var(--honey); }
-  .msg.assistant .role { color: var(--green); }
-
-  .msg .text {
-    font-size: 0.85em;
-    line-height: 1.5;
-    color: var(--cream);
-  }
-
-  /* Status bar */
-  .status {
-    font-size: 0.7em;
-    color: var(--muted);
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    text-align: center;
-  }
-
-  .status .dot {
-    display: inline-block;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--muted);
-    margin-right: 6px;
-    vertical-align: middle;
-  }
-
-  .status.connected .dot { background: var(--green); }
-  .status.error .dot { background: var(--red); }
-
-  /* Load btn */
   .load-btn {
     background: var(--honey);
     color: var(--dark);
     border: none;
     border-radius: 8px;
-    padding: 10px 24px;
+    padding: 10px 28px;
     font-family: 'DM Mono', monospace;
     font-size: 0.8em;
     font-weight: 500;
@@ -255,98 +212,92 @@
     text-transform: uppercase;
     transition: background 0.2s;
   }
-
   .load-btn:hover { background: var(--amber); }
   .load-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-  .pause-btn {
-    background: transparent;
-    color: var(--muted);
-    border: 2px solid var(--soft);
-    border-radius: 8px;
-    padding: 8px 20px;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.75em;
-    font-weight: 500;
+  .mic-btn {
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    border: 3px solid var(--honey);
+    background: var(--mid);
     cursor: pointer;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    transition: all 0.2s;
-  }
-  .pause-btn:hover { border-color: var(--muted); color: var(--cream); }
-  .pause-btn.paused { border-color: var(--honey); color: var(--honey); }
-  .pause-btn:disabled { opacity: 0.2; cursor: not-allowed; }
-
-  .empty-hint {
-    color: var(--muted);
-    font-size: 0.75em;
-    text-align: center;
-    margin: auto;
-    letter-spacing: 0.5px;
-  }
-
-  /* Online-Status LED */
-  .status-led {
     display: flex;
     align-items: center;
-    gap: 8px;
+    justify-content: center;
+    font-size: 2.2em;
+    transition: all 0.2s;
+    outline: none;
+  }
+  .mic-btn:hover { background: var(--soft); transform: scale(1.05); }
+  .mic-btn.listening { background: var(--honey); border-color: var(--amber); animation: pulse 1.2s ease-in-out infinite; }
+  .mic-btn.speaking  { border-color: var(--green); animation: pulse-green 1s ease-in-out infinite; }
+  .mic-btn.paused    { border-color: var(--muted); background: var(--soft); opacity: 0.8; }
+  .mic-btn:disabled  { opacity: 0.4; cursor: not-allowed; }
+
+  @keyframes pulse       { 0%,100%{box-shadow:0 0 0 0 rgba(245,166,35,0.4)} 50%{box-shadow:0 0 0 20px rgba(245,166,35,0)} }
+  @keyframes pulse-green { 0%,100%{box-shadow:0 0 0 0 rgba(76,175,80,0.4)}  50%{box-shadow:0 0 0 20px rgba(76,175,80,0)}  }
+
+  .mic-label {
+    font-size: 0.72em;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  /* ── Transkript ── */
+  .transcript-box {
+    width: 100%;
+    max-width: 700px;
+    background: var(--mid);
+    border: 1px solid var(--soft);
+    border-radius: 12px;
+    padding: 20px;
+    min-height: 100px;
+    max-height: 220px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .msg { display: flex; gap: 10px; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:none} }
+  .msg .role { font-size: 0.65em; text-transform: uppercase; letter-spacing: 1px; padding-top: 2px; min-width: 44px; color: var(--muted); }
+  .msg.user .role { color: var(--honey); }
+  .msg.assistant .role { color: var(--green); }
+  .msg .text { font-size: 0.85em; line-height: 1.5; color: var(--cream); }
+  .empty-hint { color: var(--muted); font-size: 0.75em; text-align: center; margin: auto; letter-spacing: 0.5px; }
+
+  /* ── Status Bar ── */
+  .status {
     font-size: 0.7em;
     color: var(--muted);
     letter-spacing: 1px;
     text-transform: uppercase;
+    text-align: center;
   }
-
-  .led {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--muted);
-    flex-shrink: 0;
-    transition: background 0.5s;
-  }
-
-  .led.online {
-    background: var(--green);
-    box-shadow: 0 0 6px var(--green), 0 0 12px rgba(76,175,80,0.4);
-    animation: led-pulse 2s ease-in-out infinite;
-  }
-
-  .led.offline {
-    background: var(--red);
-    box-shadow: 0 0 6px var(--red);
-  }
-
-  @keyframes led-pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.6; }
-  }
+  .status .dot { display:inline-block; width:6px; height:6px; border-radius:50%; background:var(--muted); margin-right:6px; vertical-align:middle; }
+  .status.connected .dot { background: var(--green); }
+  .status.error .dot { background: var(--red); }
 </style>
 </head>
 <body>
-<div class="container">
+<div class="page">
 
   <header>
     <span class="emoji">🐝</span>
     <h1>Bienenstock Assistent</h1>
     <p>Sprachassistent · GPT-4o Realtime</p>
-    <div class="status-led" id="ledWrap" style="justify-content:center;margin-top:8px">
-      <span class="led" id="led"></span>
-      <span id="ledLabel">Status wird geladen...</span>
-    </div>
+    <div class="led-row" id="ledRow"></div>
   </header>
 
-  <!-- Messwerte -->
-  <div class="data-grid" id="dataGrid">
-    <div class="data-card"><div class="label">Gewicht</div><div class="value" id="val-weight">—<span class="unit">kg</span></div></div>
-    <div class="data-card"><div class="label">Temperatur</div><div class="value" id="val-temp">—<span class="unit">°C</span></div></div>
-    <div class="data-card"><div class="label">Luftfeuchte</div><div class="value" id="val-hum">—<span class="unit">%</span></div></div>
-    <div class="data-card"><div class="label">WLAN</div><div class="value" id="val-rssi">—<span class="unit">dBm</span></div></div>
-    <div class="data-card"><div class="label">Signal</div><div class="value" id="val-rssi-pct">—<span class="unit">%</span></div></div>
-    <div class="data-card"><div class="label">Letztes Update</div><div class="value" style="font-size:0.75em" id="val-ts">—</div></div>
+  <!-- Alle Stöcke nebeneinander -->
+  <div class="stocks-grid" id="stocksGrid">
+    <div class="empty-hint" style="grid-column:1/-1;padding:40px 0">Lade Daten...</div>
   </div>
 
   <!-- Steuerung -->
-  <div class="mic-wrap">
+  <div class="controls">
     <button class="load-btn" id="loadBtn" onclick="loadDataAndConnect()">Verbinden &amp; Daten laden</button>
     <button class="mic-btn" id="micBtn" onclick="toggleMic()" disabled title="Sprechen/Pausieren">🎙️</button>
     <div class="mic-label" id="micLabel">Bitte zuerst verbinden</div>
@@ -360,12 +311,10 @@
   <div class="status" id="statusBar"><span class="dot"></span>Nicht verbunden</div>
 
 </div>
-
 <script>
 // =========================
 // KONFIGURATION
 // =========================
-// Proxy-URL (ngrok Tunnel zum Raspberry Pi)
 const PROXY_URL = "https://resinous-darrin-euthermic.ngrok-free.dev";
 
 // =========================
@@ -374,111 +323,165 @@ const PROXY_URL = "https://resinous-darrin-euthermic.ngrok-free.dev";
 let peerConnection = null;
 let dataChannel    = null;
 let localStream    = null;
-let isListening    = false;
-let sensorData     = null;
+let isPaused       = false;
+let allStocksData  = {};
+let historySummary = "";
 
 // =========================
-// DATEN AUS IOBROKER LADEN
+// DATEN LADEN
 // =========================
 async function loadSensorData() {
+  const headers = { "ngrok-skip-browser-warning": "true" };
   try {
-    const [sensorRes, historyRes, statusRes] = await Promise.all([
-      fetch(`${PROXY_URL}/api/sensor`,  { headers: { "ngrok-skip-browser-warning": "true" } }),
-      fetch(`${PROXY_URL}/api/history`, { headers: { "ngrok-skip-browser-warning": "true" } }),
-      fetch(`${PROXY_URL}/api/status`,  { headers: { "ngrok-skip-browser-warning": "true" } })
+    const [stocksRes, historyRes] = await Promise.all([
+      fetch(`${PROXY_URL}/api/allstocks`, { headers }),
+      fetch(`${PROXY_URL}/api/history`,   { headers })
     ]);
-    sensorData = await sensorRes.json();
-    sensorData.timestamp = new Date().toLocaleString("de-DE");
-    const historyData = await historyRes.json();
-    sensorData.historySummary = historyData.summary || "Keine historischen Daten verfügbar.";
-    const statusData = await statusRes.json();
-    updateLed(statusData);
-
-    // UI aktualisieren
-    document.getElementById("val-weight").innerHTML  = sensorData.gewicht_kg + '<span class="unit">kg</span>';
-    document.getElementById("val-temp").innerHTML    = sensorData.temperatur_c + '<span class="unit">°C</span>';
-    document.getElementById("val-hum").innerHTML     = sensorData.luftfeuchte_prozent + '<span class="unit">%</span>';
-    document.getElementById("val-rssi").innerHTML    = sensorData.wlan_signal_dbm + '<span class="unit">dBm</span>';
-    document.getElementById("val-rssi-pct").innerHTML = sensorData.wlan_signal_prozent + '<span class="unit">%</span>';
-    document.getElementById("val-ts").textContent    = sensorData.timestamp;
-
-    document.querySelectorAll(".data-card").forEach(c => c.classList.add("fresh"));
+    allStocksData  = await stocksRes.json();
+    const histData = await historyRes.json();
+    historySummary = histData.summary || "Keine historischen Daten verfügbar.";
+    renderStocks(allStocksData);
+    renderLeds(allStocksData);
     return true;
   } catch(e) {
-    console.warn("Fehler beim Laden:", e);
-    sensorData = {
-      gewicht_kg: "nicht verfügbar", temperatur_c: "nicht verfügbar",
-      luftfeuchte_prozent: "nicht verfügbar", wlan_signal_dbm: "nicht verfügbar",
-      wlan_signal_prozent: "nicht verfügbar", timestamp: new Date().toLocaleString("de-DE"),
-      historySummary: "Keine historischen Daten verfügbar."
-    };
+    console.warn("Ladefehler:", e);
     return false;
   }
 }
 
 // =========================
-// SYSTEM PROMPT MIT ECHTEN DATEN
+// STÖCKE RENDERN
 // =========================
-function buildSystemPrompt() {
-  return `Du bist ein freundlicher Sprachassistent für eine Bienenstockwaage.
-Du sprichst Deutsch und antwortest kurz und präzise.
+function val(v, digits=2) {
+  return (v !== null && v !== undefined) ? Number(v).toFixed(digits) : "—";
+}
 
-Aktuelle Messwerte von Bienenstock stock1:
-- Gewicht: ${sensorData.gewicht_kg} kg
-- Temperatur: ${sensorData.temperatur_c} °C
-- Luftfeuchtigkeit: ${sensorData.luftfeuchte_prozent} %
-- WLAN-Signal: ${sensorData.wlan_signal_dbm} dBm (${sensorData.wlan_signal_prozent} %)
-- Letztes Update: ${sensorData.timestamp}
+function renderStocks(stocks) {
+  const grid = document.getElementById("stocksGrid");
+  grid.innerHTML = "";
 
-${sensorData.historySummary || ""}
+  // Nur Stöcke anzeigen die schon mal Daten hatten ODER online sind
+  const visible = Object.values(stocks).filter(s => s.online || s.timestamp);
 
-Beantworte Fragen zu aktuellen und historischen Messwerten.
-Erkenne Trends und Auffälligkeiten in den Daten.
-Beginne mit einer kurzen Begrüßung und den wichtigsten aktuellen Werten.`;
+  if (visible.length === 0) {
+    grid.innerHTML = '<div class="empty-hint" style="grid-column:1/-1;padding:40px 0">Noch keine Daten verfügbar</div>';
+    return;
+  }
+
+  visible.forEach(s => {
+    const t = s.today || {};
+    const card = document.createElement("div");
+    card.className = "stock-card " + (s.online ? "online" : "offline");
+    card.innerHTML = `
+      <div class="stock-header">
+        <span class="stock-title">🐝 ${s.scale_id}</span>
+        <span class="stock-ts">${s.timestamp || "—"}</span>
+      </div>
+      ${s.online ? `
+        <div class="metric">
+          <div class="metric-label">Gewicht</div>
+          <div class="metric-row">
+            <span class="metric-value">${val(s.gewicht_kg, 3)}</span>
+            <span class="metric-unit">kg</span>
+            <span class="metric-minmax">Min <span>${val(t.gewicht_min,3)}</span> · Max <span>${val(t.gewicht_max,3)}</span> kg</span>
+          </div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Temperatur</div>
+          <div class="metric-row">
+            <span class="metric-value">${val(s.temperatur_c)}</span>
+            <span class="metric-unit">°C</span>
+            <span class="metric-minmax">Min <span>${val(t.temp_min)}</span> · Max <span>${val(t.temp_max)}</span> °C</span>
+          </div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">Luftfeuchte</div>
+          <div class="metric-row">
+            <span class="metric-value">${val(s.luftfeuchte_prozent)}</span>
+            <span class="metric-unit">%</span>
+            <span class="metric-minmax">Min <span>${val(t.feuchte_min)}</span> · Max <span>${val(t.feuchte_max)}</span> %</span>
+          </div>
+        </div>
+        <div class="wlan-row">
+          <span class="wlan-item">WLAN <span>${val(s.wlan_signal_dbm, 0)} dBm</span></span>
+          <span class="wlan-item">Signal <span>${val(s.wlan_signal_prozent, 0)} %</span></span>
+        </div>
+      ` : `<div class="offline-label">⚠ Offline${s.diffMin ? " · vor " + s.diffMin + " Min." : ""}</div>`}
+    `;
+    grid.appendChild(card);
+  });
 }
 
 // =========================
-// WEBRTC VERBINDUNG ZU GPT-4o REALTIME
+// LED ANZEIGE
 // =========================
-async function connectToRealtime() {
-  setStatus("Verbinde mit GPT-4o Realtime...", false);
+function renderLeds(stocks) {
+  const row = document.getElementById("ledRow");
+  row.innerHTML = "";
+  Object.values(stocks).filter(s => s.online || s.timestamp).forEach(s => {
+    const item = document.createElement("div");
+    item.className = "led-item";
+    item.innerHTML = `<span class="led ${s.online ? 'online' : 'offline'}"></span>${s.scale_id}`;
+    row.appendChild(item);
+  });
+}
 
-  // 1) Ephemeral Token holen
-  const tokenUrl = `${PROXY_URL}/api/token`;
-  const tokenRes = await fetch(tokenUrl, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "ngrok-skip-browser-warning": "true"
+// =========================
+// SYSTEM PROMPT – alle Stöcke
+// =========================
+function buildSystemPrompt() {
+  let stockInfo = "";
+  Object.values(allStocksData).forEach(s => {
+    if (!s.online && !s.timestamp) return;
+    stockInfo += `\n${s.scale_id} (${s.online ? "ONLINE" : "OFFLINE"}):\n`;
+    if (s.online) {
+      stockInfo += `  Gewicht: ${s.gewicht_kg} kg (heute Min ${s.today?.gewicht_min} / Max ${s.today?.gewicht_max} kg)\n`;
+      stockInfo += `  Temperatur: ${s.temperatur_c} °C (heute Min ${s.today?.temp_min} / Max ${s.today?.temp_max} °C)\n`;
+      stockInfo += `  Luftfeuchte: ${s.luftfeuchte_prozent} % (heute Min ${s.today?.feuchte_min} / Max ${s.today?.feuchte_max} %)\n`;
+      stockInfo += `  WLAN: ${s.wlan_signal_dbm} dBm (${s.wlan_signal_prozent} %)\n`;
+      stockInfo += `  Letztes Update: ${s.timestamp}\n`;
+    } else {
+      stockInfo += `  Zuletzt gesehen: ${s.timestamp || "unbekannt"}\n`;
     }
   });
 
-  if (!tokenRes.ok) {
-    const err = await tokenRes.text();
-    throw new Error("Token fehlgeschlagen: " + err);
-  }
+  return `Du bist ein freundlicher Sprachassistent für eine Bienenstockwaage mit mehreren Stöcken.
+Du sprichst Deutsch und antwortest kurz und präzise.
 
-  const tokenData = await tokenRes.json();
-  const { ephemeralKey, endpoint, deployment, apiVersion } = tokenData;
-  if (!ephemeralKey) throw new Error("Kein ephemeral key: " + JSON.stringify(tokenData));
+Aktuelle Messwerte aller Bienenstöcke:
+${stockInfo}
+${historySummary}
 
-  // 2) WebRTC PeerConnection
+Beantworte Fragen zu allen Stöcken, vergleiche sie wenn gewünscht.
+Erkenne Auffälligkeiten wie ungewöhnliche Temperatur, Gewichtsverlust (möglicher Schwarm) oder Offline-Stöcke.
+Beginne mit einer kurzen Übersicht der aktiven Stöcke.`;
+}
+
+// =========================
+// WEBRTC
+// =========================
+async function connectToRealtime() {
+  setStatus("Verbinde mit GPT-4o Realtime...", false);
+  const tokenRes = await fetch(`${PROXY_URL}/api/token`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", "ngrok-skip-browser-warning": "true" }
+  });
+  if (!tokenRes.ok) throw new Error("Token fehlgeschlagen: " + await tokenRes.text());
+
+  const { ephemeralKey, deployment } = await tokenRes.json();
+  if (!ephemeralKey) throw new Error("Kein ephemeral key");
+
   peerConnection = new RTCPeerConnection();
-
-  // Audio Output
   const audioEl = document.createElement("audio");
   audioEl.autoplay = true;
   document.body.appendChild(audioEl);
   peerConnection.ontrack = e => { audioEl.srcObject = e.streams[0]; };
 
-  // Mikrofon
   localStream = await navigator.mediaDevices.getUserMedia({ audio: true });
   localStream.getTracks().forEach(t => peerConnection.addTrack(t, localStream));
 
-  // DataChannel für Events
   dataChannel = peerConnection.createDataChannel("oai-events");
   dataChannel.onopen = () => {
-    // System prompt senden
     dataChannel.send(JSON.stringify({
       type: "session.update",
       session: {
@@ -489,43 +492,29 @@ async function connectToRealtime() {
         turn_detection: { type: "server_vad" }
       }
     }));
-    // Begrüßung auslösen
     dataChannel.send(JSON.stringify({ type: "response.create" }));
   };
-
   dataChannel.onmessage = e => handleRealtimeEvent(JSON.parse(e.data));
 
-  // 3) SDP Offer – Mikrofon muss VOR createOffer hinzugefügt sein!
-  const offer = await peerConnection.createOffer({
-    offerToReceiveAudio: true,
-    offerToReceiveVideo: false
-  });
+  const offer = await peerConnection.createOffer({ offerToReceiveAudio: true, offerToReceiveVideo: false });
   await peerConnection.setLocalDescription(offer);
 
-  // Warten bis ICE gathering abgeschlossen
   await new Promise(resolve => {
     if (peerConnection.iceGatheringState === "complete") { resolve(); return; }
     peerConnection.addEventListener("icegatheringstatechange", () => {
       if (peerConnection.iceGatheringState === "complete") resolve();
     });
-    setTimeout(resolve, 3000); // max 3 Sekunden warten
+    setTimeout(resolve, 3000);
   });
 
-  const sdpUrl = `https://eastus2.realtimeapi-preview.ai.azure.com/v1/realtimertc?deployment=${deployment}`;
-  const sdpRes = await fetch(sdpUrl, {
-    method: "POST",
-    headers: {
-      "Authorization": "Bearer " + ephemeralKey,
-      "Content-Type": "application/sdp"
-    },
-    body: peerConnection.localDescription.sdp
-  });
-
+  const sdpRes = await fetch(
+    `https://eastus2.realtimeapi-preview.ai.azure.com/v1/realtimertc?deployment=${deployment}`,
+    { method: "POST", headers: { "Authorization": "Bearer " + ephemeralKey, "Content-Type": "application/sdp" },
+      body: peerConnection.localDescription.sdp }
+  );
   if (!sdpRes.ok) throw new Error("SDP fehlgeschlagen: " + await sdpRes.text());
 
-  const answerSdp = await sdpRes.text();
-  await peerConnection.setRemoteDescription({ type: "answer", sdp: answerSdp });
-
+  await peerConnection.setRemoteDescription({ type: "answer", sdp: await sdpRes.text() });
   setStatus("Verbunden · GPT-4o Realtime aktiv", true);
 }
 
@@ -533,29 +522,12 @@ async function connectToRealtime() {
 // REALTIME EVENTS
 // =========================
 let assistantText = "";
-
 function handleRealtimeEvent(evt) {
-  if (evt.type === "response.audio_transcript.delta") {
-    assistantText += evt.delta || "";
-  }
-
-  if (evt.type === "response.audio_transcript.done") {
-    addMessage("assistant", assistantText);
-    assistantText = "";
-    setMicState("idle");
-  }
-
-  if (evt.type === "input_audio_buffer.speech_started") {
-    setMicState("listening");
-  }
-
-  if (evt.type === "response.audio.delta") {
-    setMicState("speaking");
-  }
-
-  if (evt.type === "conversation.item.input_audio_transcription.completed") {
-    addMessage("user", evt.transcript);
-  }
+  if (evt.type === "response.audio_transcript.delta")  { assistantText += evt.delta || ""; }
+  if (evt.type === "response.audio_transcript.done")   { addMessage("assistant", assistantText); assistantText = ""; setMicState("idle"); }
+  if (evt.type === "input_audio_buffer.speech_started"){ setMicState("listening"); }
+  if (evt.type === "response.audio.delta")             { setMicState("speaking"); }
+  if (evt.type === "conversation.item.input_audio_transcription.completed") { addMessage("user", evt.transcript); }
 }
 
 // =========================
@@ -565,26 +537,11 @@ function addMessage(role, text) {
   const box = document.getElementById("transcript");
   const empty = box.querySelector(".empty-hint");
   if (empty) empty.remove();
-
   const div = document.createElement("div");
   div.className = "msg " + role;
   div.innerHTML = `<span class="role">${role === "user" ? "Du" : "KI"}</span><span class="text">${text}</span>`;
   box.appendChild(div);
   box.scrollTop = box.scrollHeight;
-}
-
-function updateLed(statusData) {
-  const led   = document.getElementById("led");
-  const label = document.getElementById("ledLabel");
-  if (!led) return;
-  if (statusData.online) {
-    led.className = "led online";
-    label.textContent = "stock1 · Online";
-  } else {
-    led.className = "led offline";
-    const min = statusData.diffMin;
-    label.textContent = "stock1 · Offline" + (min ? " · vor " + min + " Min." : "");
-  }
 }
 
 function setStatus(text, connected) {
@@ -597,36 +554,22 @@ function setMicState(state) {
   const btn = document.getElementById("micBtn");
   const lbl = document.getElementById("micLabel");
   btn.className = "mic-btn";
-  if (state === "listening") {
-    btn.classList.add("listening");
-    btn.textContent = "🎙️";
-    lbl.textContent = "Ich höre zu...";
-  } else if (state === "speaking") {
-    btn.classList.add("speaking");
-    btn.textContent = "🔊";
-    lbl.textContent = "KI spricht...";
-  } else if (state === "paused") {
-    btn.classList.add("paused");
-    btn.textContent = "▶️";
-    lbl.textContent = "Pausiert · Tippen zum Fortsetzen";
-  } else {
-    btn.textContent = "🎙️";
-    lbl.textContent = "Aktiv · Tippen zum Pausieren";
-  }
+  if (state === "listening") { btn.classList.add("listening"); btn.textContent = "🎙️"; lbl.textContent = "Ich höre zu..."; }
+  else if (state === "speaking") { btn.classList.add("speaking"); btn.textContent = "🔊"; lbl.textContent = "KI spricht..."; }
+  else if (state === "paused") { btn.classList.add("paused"); btn.textContent = "▶️"; lbl.textContent = "Pausiert · Tippen zum Fortsetzen"; }
+  else { btn.textContent = "🎙️"; lbl.textContent = "Aktiv · Tippen zum Pausieren"; }
 }
 
 // =========================
-// VERBINDEN & DATEN LADEN
+// VERBINDEN
 // =========================
 async function loadDataAndConnect() {
   const btn = document.getElementById("loadBtn");
   btn.disabled = true;
   btn.textContent = "Lädt...";
-
   try {
     await loadSensorData();
     await connectToRealtime();
-
     document.getElementById("micBtn").disabled = false;
     setMicState("idle");
     btn.textContent = "Neu verbinden";
@@ -640,45 +583,26 @@ async function loadDataAndConnect() {
 }
 
 // =========================
-// MIC TOGGLE – Pause / Fortsetzen
+// MIC TOGGLE
 // =========================
-let isPaused = false;
-
 function toggleMic() {
   if (!peerConnection || !localStream) return;
   isPaused = !isPaused;
-
-  localStream.getAudioTracks().forEach(track => {
-    track.enabled = !isPaused;
-  });
-
-  if (isPaused) {
-    setMicState("paused");
-    setStatus("Pausiert · Mikrofon stumm", true);
-  } else {
-    setMicState("idle");
-    setStatus("Verbunden · GPT-4o Realtime aktiv", true);
-  }
+  localStream.getAudioTracks().forEach(t => { t.enabled = !isPaused; });
+  if (isPaused) { setMicState("paused"); setStatus("Pausiert · Mikrofon stumm", true); }
+  else          { setMicState("idle");   setStatus("Verbunden · GPT-4o Realtime aktiv", true); }
 }
 
-// Daten alle 5 Minuten im Hintergrund aktualisieren
-// LED auch ohne Verbindung alle 30 Sekunden aktualisieren
+// =========================
+// AUTO-REFRESH alle 5 Min
+// =========================
 setInterval(async () => {
-  try {
-    const r = await fetch(`${PROXY_URL}/api/status`, { headers: { "ngrok-skip-browser-warning": "true" } });
-    updateLed(await r.json());
-  } catch(e) {}
-}, 30 * 1000);
-
-setInterval(async () => {
-  if (sensorData) {
-    await loadSensorData();
-    if (dataChannel && dataChannel.readyState === "open") {
-      dataChannel.send(JSON.stringify({
-        type: "session.update",
-        session: { instructions: buildSystemPrompt() }
-      }));
-    }
+  await loadSensorData();
+  if (dataChannel && dataChannel.readyState === "open") {
+    dataChannel.send(JSON.stringify({
+      type: "session.update",
+      session: { instructions: buildSystemPrompt() }
+    }));
   }
 }, 5 * 60 * 1000);
 </script>
