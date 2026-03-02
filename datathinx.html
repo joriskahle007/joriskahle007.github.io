@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Azure Document Intelligence Kalkulator | DataThinx</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,300;0,400;0,600;0,700;0,900;1,300&family=Barlow+Condensed:wght@700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:        #0c0c0c;
+      --bg2:       #141414;
+      --bg3:       #1c1c1c;
+      --border:    #2a2a2a;
+      --orange:    #e8521a;
+      --orange2:   #ff6b35;
+      --orange-glow: rgba(232, 82, 26, 0.18);
+      --text:      #f0f0f0;
+      --muted:     #888;
+      --muted2:    #555;
+      --green:     #2ecc71;
+      --radius:    6px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow', sans-serif;
+      font-weight: 400;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── Background texture ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background-image:
+        radial-gradient(ellipse 80% 50% at 50% -10%, rgba(232,82,26,0.08) 0%, transparent 60%),
+        repeating-linear-gradient(0deg, transparent, transparent 39px, rgba(255,255,255,0.02) 39px, rgba(255,255,255,0.02) 40px),
+        repeating-linear-gradient(90deg, transparent, transparent 39px, rgba(255,255,255,0.02) 39px, rgba(255,255,255,0.02) 40px);
+      pointer-events: none;
+    }
+
+    /* ── Layout ── */
+    .wrap { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 24px 60px; }
+
+    /* ── Header / Nav ── */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--border);
+      position: relative; z-index: 1;
+    }
+    .logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .logo-mark {
+      width: 36px; height: 36px;
+      background: var(--orange);
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .logo-mark svg { width: 18px; height: 18px; fill: #fff; }
+    .logo-text { font-family: 'Barlow Condensed', sans-serif; font-weight: 900; font-size: 22px; letter-spacing: 0.04em; color: var(--text); }
+    .logo-text span { color: var(--orange); }
+    .nav-badge {
+      font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--muted); border: 1px solid var(--border);
+      padding: 4px 12px; border-radius: 2px;
+    }
+
+    /* ── Hero ── */
+    .hero { padding: 56px 0 36px; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--orange); margin-bottom: 16px;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 28px; height: 2px; background: var(--orange);
+    }
+    h1 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 900; font-size: clamp(36px, 6vw, 60px);
+      line-height: 0.95; letter-spacing: -0.01em;
+      text-transform: uppercase; margin-bottom: 16px;
+    }
+    h1 em { color: var(--orange); font-style: normal; }
+    .hero-sub { font-size: 15px; color: var(--muted); font-weight: 300; max-width: 520px; line-height: 1.6; }
+
+    /* ── Section label ── */
+    .section-label {
+      font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--muted2); margin-bottom: 10px;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+    }
+    .card-orange {
+      border-color: rgba(232,82,26,0.35);
+      background: linear-gradient(135deg, rgba(232,82,26,0.08) 0%, var(--bg2) 60%);
+    }
+
+    /* ── Grid layouts ── */
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+    @media(max-width:600px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+
+    /* ── Inputs section ── */
+    .input-label {
+      font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 14px;
+    }
+    .value-display {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700; font-size: 40px;
+      color: var(--text); line-height: 1;
+      margin-bottom: 16px;
+    }
+    .value-display span { font-size: 16px; color: var(--orange); margin-left: 4px; }
+
+    /* ── Slider ── */
+    input[type=range] {
+      -webkit-appearance: none; appearance: none;
+      width: 100%; height: 3px;
+      background: var(--border);
+      outline: none; cursor: pointer;
+      border-radius: 2px;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance: none; appearance: none;
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--orange);
+      box-shadow: 0 0 0 3px rgba(232,82,26,0.2);
+      cursor: pointer; transition: transform 0.1s;
+    }
+    input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
+    input[type=range]::-moz-range-thumb {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--orange); border: none; cursor: pointer;
+    }
+    .slider-track { position: relative; margin-bottom: 6px; }
+    .slider-fill {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      height: 3px; background: var(--orange);
+      border-radius: 2px; pointer-events: none; z-index: 0;
+    }
+    .slider-marks {
+      display: flex; justify-content: space-between;
+      margin-top: 8px;
+    }
+    .slider-marks span {
+      font-size: 10px; color: var(--muted2); cursor: pointer;
+      transition: color 0.15s;
+    }
+    .slider-marks span:hover { color: var(--orange); }
+
+    /* ── Model selector ── */
+    .model-grid { display: flex; flex-wrap: wrap; gap: 8px; }
+    .model-btn {
+      padding: 8px 16px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--muted);
+      font-family: 'Barlow', sans-serif;
+      font-size: 13px; font-weight: 400;
+      cursor: pointer; transition: all 0.15s;
+      text-transform: uppercase; letter-spacing: 0.05em;
+    }
+    .model-btn:hover { border-color: var(--orange); color: var(--text); }
+    .model-btn.active {
+      border-color: var(--orange);
+      background: var(--orange-glow);
+      color: var(--orange);
+      font-weight: 600;
+    }
+
+    /* ── Pages counter ── */
+    .pages-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 20px;
+      margin: 16px 0 24px;
+    }
+    .pages-bar .big { font-family: 'Barlow Condensed',sans-serif; font-size: 28px; font-weight: 700; }
+    .pages-bar .label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .pages-bar .free { font-size: 12px; color: var(--green); }
+    .divider-v { width: 1px; height: 36px; background: var(--border); }
+
+    /* ── Result cards ── */
+    .result-card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      position: relative;
+      transition: border-color 0.3s;
+    }
+    .result-card.winner {
+      border-color: var(--orange);
+      background: linear-gradient(135deg, rgba(232,82,26,0.1) 0%, var(--bg2) 70%);
+    }
+    .result-card .badge {
+      position: absolute; top: -11px; right: 20px;
+      background: var(--orange);
+      color: #fff;
+      font-size: 10px; font-weight: 700;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      padding: 3px 12px; border-radius: 2px;
+    }
+    .result-card .rt { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; }
+    .result-card .rs { font-size: 12px; color: var(--muted2); margin-bottom: 14px; }
+    .result-card .price {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 44px; font-weight: 700;
+      color: var(--text); line-height: 1;
+      margin-bottom: 8px;
+      transition: opacity 0.25s;
+    }
+    .result-card.winner .price { color: var(--orange); }
+    .result-card .detail { font-size: 12px; color: var(--muted); }
+
+    /* ── Savings banner ── */
+    .banner {
+      display: flex; align-items: center; gap: 16px;
+      padding: 16px 20px;
+      border-radius: var(--radius);
+      border: 1px solid;
+    }
+    .banner.savings { border-color: rgba(232,82,26,0.4); background: rgba(232,82,26,0.06); }
+    .banner.free    { border-color: rgba(46,204,113,0.4); background: rgba(46,204,113,0.06); }
+    .banner-icon { font-size: 28px; flex-shrink: 0; }
+    .banner-title { font-size: 14px; font-weight: 600; margin-bottom: 3px; }
+    .banner-sub { font-size: 13px; color: var(--muted); line-height: 1.4; }
+
+    /* ── Table ── */
+    .tier-table {
+      width: 100%; border-collapse: collapse;
+      font-size: 13px;
+    }
+    .tier-table th {
+      font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--muted2); font-weight: 400;
+      padding: 10px 14px; text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    .tier-table td {
+      padding: 11px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      color: rgba(255,255,255,0.7);
+    }
+    .tier-table tr:last-child td { border-bottom: none; }
+    .tier-table tr.active td { background: rgba(232,82,26,0.07); color: var(--text); }
+    .tier-table tr.active td:first-child { border-left: 2px solid var(--orange); }
+    .tier-arrow { color: var(--orange); margin-right: 6px; }
+
+    /* ── Divider ── */
+    .hr { height: 1px; background: var(--border); margin: 28px 0; }
+
+    /* ── Footer ── */
+    footer {
+      text-align: center;
+      font-size: 11px; color: var(--muted2);
+      padding: 24px; border-top: 1px solid var(--border);
+      position: relative; z-index: 1;
+    }
+    footer a { color: var(--orange); text-decoration: none; }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up { animation: fadeUp 0.5s ease both; }
+    .fade-up:nth-child(1) { animation-delay: 0.0s; }
+    .fade-up:nth-child(2) { animation-delay: 0.08s; }
+    .fade-up:nth-child(3) { animation-delay: 0.16s; }
+    .fade-up:nth-child(4) { animation-delay: 0.24s; }
+
+    .pulse { animation: pulse 0.35s ease; }
+    @keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+    /* ── No commit notice ── */
+    .no-commit {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 18px;
+      background: var(--bg3);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      font-size: 13px; color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="https://www.datathinx.com" target="_blank">
+    <div class="logo-mark">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    </div>
+    <div class="logo-text">DATA<span>THINX</span></div>
+  </a>
+  <div class="nav-badge">Azure · Document Intelligence</div>
+</nav>
+
+<!-- MAIN -->
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero fade-up">
+    <div class="hero-eyebrow">Preiskalkulator</div>
+    <h1>Azure Document<br/><em>Intelligence</em></h1>
+    <p class="hero-sub">Ermittle die optimale Preisoption für dein monatliches Dokumentenvolumen — Pay-as-you-go vs. Commitment Tier.</p>
+  </div>
+
+  <!-- INPUTS -->
+  <div class="grid2 fade-up" style="margin-bottom:16px;">
+
+    <!-- Dokumente -->
+    <div class="card">
+      <div class="input-label">Dokumente / Monat</div>
+      <div class="value-display" id="val-docs">1.000 <span>Docs</span></div>
+      <div class="slider-track">
+        <div class="slider-fill" id="fill-docs"></div>
+        <input type="range" id="slider-docs" min="1" max="5000000" step="1000" value="1000" oninput="update()" />
+      </div>
+      <div class="slider-marks">
+        <span onclick="setDocs(1)">1</span>
+        <span onclick="setDocs(10000)">10K</span>
+        <span onclick="setDocs(100000)">100K</span>
+        <span onclick="setDocs(1000000)">1M</span>
+        <span onclick="setDocs(5000000)">5M</span>
+      </div>
+    </div>
+
+    <!-- Seiten -->
+    <div class="card">
+      <div class="input-label">Seiten pro Dokument</div>
+      <div class="value-display" id="val-pages">3 <span>Seiten</span></div>
+      <div class="slider-track">
+        <div class="slider-fill" id="fill-pages"></div>
+        <input type="range" id="slider-pages" min="1" max="50" step="1" value="3" oninput="update()" />
+      </div>
+      <div class="slider-marks">
+        <span onclick="setPages(1)">1</span>
+        <span onclick="setPages(5)">5</span>
+        <span onclick="setPages(10)">10</span>
+        <span onclick="setPages(25)">25</span>
+        <span onclick="setPages(50)">50</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODELL -->
+  <div class="card fade-up" style="margin-bottom:16px;">
+    <div class="input-label" style="margin-bottom:14px;">Modell-Typ auswählen</div>
+    <div class="model-grid">
+      <button class="model-btn active" data-model="prebuilt" onclick="setModel(this)">Prebuilt</button>
+      <button class="model-btn" data-model="read" onclick="setModel(this)">Read / OCR</button>
+      <button class="model-btn" data-model="customExtraction" onclick="setModel(this)">Custom Extraction</button>
+      <button class="model-btn" data-model="customClassification" onclick="setModel(this)">Custom Classification</button>
+      <button class="model-btn" data-model="customGenerative" onclick="setModel(this)">Custom Generative</button>
+    </div>
+
+    <!-- Model description panel -->
+    <div id="model-desc" style="
+      margin-top: 18px;
+      padding: 16px 18px;
+      background: var(--bg3);
+      border-left: 3px solid var(--orange);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      display: grid; grid-template-columns: auto 1fr; gap: 12px 16px; align-items: start;
+    ">
+      <div id="model-icon" style="font-size:28px; line-height:1; padding-top:2px;"></div>
+      <div>
+        <div id="model-title" style="font-size:13px; font-weight:600; color:var(--orange); letter-spacing:0.05em; text-transform:uppercase; margin-bottom:5px;"></div>
+        <div id="model-text" style="font-size:13px; color:var(--muted); line-height:1.65; font-weight:300;"></div>
+        <div id="model-examples" style="margin-top:8px; display:flex; flex-wrap:wrap; gap:6px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOTAL PAGES BAR -->
+  <div class="pages-bar fade-up">
+    <div>
+      <div class="label">Gesamtseiten / Monat</div>
+      <div class="big" id="total-pages">3.000</div>
+    </div>
+    <div class="divider-v"></div>
+    <div>
+      <div class="label">Kostenloses Kontingent</div>
+      <div class="big" style="color:var(--green)">500</div>
+    </div>
+    <div class="divider-v"></div>
+    <div>
+      <div class="label">Abrechenbare Seiten</div>
+      <div class="big" id="billable-pages">2.500</div>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="grid2 fade-up" style="margin-bottom:16px;" id="result-grid">
+    <div class="result-card" id="card-payg">
+      <div class="rt">Pay-as-you-go</div>
+      <div class="rs">Keine Vorauszahlung</div>
+      <div class="price" id="price-payg">–</div>
+      <div class="detail" id="detail-payg">–</div>
+    </div>
+    <div class="result-card" id="card-commit">
+      <div class="rt">Commitment Tier</div>
+      <div class="rs" id="commit-subtitle">–</div>
+      <div class="price" id="price-commit">–</div>
+      <div class="detail" id="detail-commit">–</div>
+    </div>
+  </div>
+
+  <!-- BANNER -->
+  <div id="banner-area" class="fade-up"></div>
+
+  <!-- TIER TABLE -->
+  <div id="table-area" class="fade-up" style="margin-top:28px;">
+    <div class="section-label">Alle Commitment-Tiers im Vergleich</div>
+    <div class="card" style="padding:0;overflow:hidden;">
+      <table class="tier-table" id="tier-table">
+        <thead>
+          <tr>
+            <th>Tier (Seiten/Monat)</th>
+            <th>Monatspreis</th>
+            <th>Overage / 1K Seiten</th>
+            <th>Kosten bei deinem Volumen</th>
+          </tr>
+        </thead>
+        <tbody id="tier-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- FOOTER -->
+<footer>
+  Preise basieren auf der offiziellen <a href="https://azure.microsoft.com/en-us/pricing/details/document-intelligence/" target="_blank">Azure-Preisseite</a> (East US · USD) · Alle Angaben ohne Gewähr ·
+  <a href="https://www.datathinx.com" target="_blank">datathinx.com</a>
+</footer>
+
+<script>
+  // ── Pricing data ──────────────────────────────────────────────
+  const FREE = 500;
+
+  const PAYG = {
+    read:               { tiers: [{to:1e6, rate:1.0},{to:Infinity,rate:0.5}] },
+    prebuilt:           { flat: 10.0 },
+    customExtraction:   { flat: 50.0 },
+    customClassification:{ flat: 10.0 },
+    customGenerative:   { flat: 100.0 },
+  };
+
+  const COMMIT = {
+    prebuilt: [
+      { pages:20000,   price:100,   overage:6.0  },
+      { pages:100000,  price:400,   overage:4.8  },
+      { pages:500000,  price:1500,  overage:3.6  },
+    ],
+    read: [
+      { pages:500000,   price:250,   overage:0.6  },
+      { pages:2000000,  price:750,   overage:0.45 },
+      { pages:8000000,  price:2200,  overage:0.33 },
+    ],
+    customExtraction: [
+      { pages:20000,   price:500,   overage:30.0 },
+      { pages:100000,  price:2000,  overage:24.0 },
+      { pages:500000,  price:8000,  overage:18.0 },
+    ],
+    customClassification: [
+      { pages:20000,   price:100,   overage:6.0  },
+      { pages:100000,  price:400,   overage:4.8  },
+      { pages:500000,  price:1500,  overage:3.6  },
+    ],
+  };
+
+  // ── State ─────────────────────────────────────────────────────
+  let docs = 1000, pagesPerDoc = 3, model = 'prebuilt';
+
+  // ── Helpers ───────────────────────────────────────────────────
+  const fmtNum = n => n.toLocaleString('de-DE');
+  const fmtUSD = n => n.toLocaleString('de-DE', {style:'currency', currency:'USD', minimumFractionDigits:2});
+
+  function calcPayG(pages) {
+    const eff = Math.max(0, pages - FREE);
+    if (!eff) return 0;
+    const p = PAYG[model];
+    if (!p) return 0;
+    if (p.flat) return (eff / 1000) * p.flat;
+    let cost = 0, rem = eff;
+    for (const t of p.tiers) {
+      if (rem <= 0) break;
+      const bucket = Math.min(rem, t.to === Infinity ? rem : t.to);
+      cost += (bucket / 1000) * t.rate;
+      rem -= bucket;
+    }
+    return cost;
+  }
+
+  function calcCommit(pages) {
+    const tiers = COMMIT[model];
+    if (!tiers) return null;
+    let best = null;
+    for (const t of tiers) {
+      const overpages = Math.max(0, pages - t.pages);
+      const total = t.price + (overpages / 1000) * t.overage;
+      if (!best || total < best.total) best = { ...t, total };
+    }
+    return best;
+  }
+
+  function allTierCosts(pages) {
+    const tiers = COMMIT[model];
+    if (!tiers) return null;
+    return tiers.map(t => {
+      const overpages = Math.max(0, pages - t.pages);
+      return { ...t, total: t.price + (overpages/1000)*t.overage };
+    });
+  }
+
+  // ── Update UI ─────────────────────────────────────────────────
+  function update() {
+    docs        = parseInt(document.getElementById('slider-docs').value);
+    pagesPerDoc = parseInt(document.getElementById('slider-pages').value);
+
+    const totalPages  = docs * pagesPerDoc;
+    const billable    = Math.max(0, totalPages - FREE);
+    const payg        = calcPayG(totalPages);
+    const commit      = calcCommit(totalPages);
+    const tiers       = allTierCosts(totalPages);
+
+    // slider labels + fill
+    document.getElementById('val-docs').innerHTML  = `${fmtNum(docs)} <span>Docs</span>`;
+    document.getElementById('val-pages').innerHTML = `${pagesPerDoc} <span>Seiten</span>`;
+    updateFill('fill-docs',  'slider-docs',  1, 5000000);
+    updateFill('fill-pages', 'slider-pages', 1, 50);
+
+    // totals bar
+    document.getElementById('total-pages').textContent    = fmtNum(totalPages);
+    document.getElementById('billable-pages').textContent = fmtNum(billable);
+
+    // result cards
+    setCard('payg',   payg,  commit, totalPages);
+    setCard('commit', commit ? commit.total : null, commit, totalPages, commit);
+
+    // banner
+    renderBanner(payg, commit, totalPages);
+
+    // table
+    renderTable(tiers, totalPages);
+  }
+
+  function updateFill(fillId, sliderId, min, max) {
+    const s = document.getElementById(sliderId);
+    const pct = (s.value - min) / (max - min) * 100;
+    document.getElementById(fillId).style.width = pct + '%';
+  }
+
+  function setCard(type, amount, commit, totalPages, commitData) {
+    const card   = document.getElementById('card-' + type);
+    const price  = document.getElementById('price-' + type);
+    const detail = document.getElementById('detail-' + type);
+
+    const isCommit = type === 'commit';
+    const isFree   = totalPages <= FREE;
+
+    // determine winner
+    let paygCost   = calcPayG(totalPages);
+    let commitCost = commit ? commit.total : Infinity;
+    const paygWins   = paygCost <= commitCost;
+    const commitWins = commitCost < paygCost;
+
+    const isWinner = isCommit ? commitWins : paygWins;
+
+    // badge
+    const badge = card.querySelector('.badge');
+    if (badge) badge.remove();
+    card.classList.toggle('winner', isWinner);
+    if (isWinner) {
+      const b = document.createElement('div');
+      b.className = 'badge'; b.textContent = 'Empfohlen';
+      card.prepend(b);
+    }
+
+    // price display
+    price.classList.remove('pulse');
+    void price.offsetWidth;
+    price.classList.add('pulse');
+
+    if (isCommit && !commit) {
+      document.getElementById('commit-subtitle').textContent = 'Kein Commitment-Tier verfügbar';
+      price.textContent = '—';
+      detail.textContent = 'Für diesen Modelltyp gibt es keine Commitment-Tiers.';
+      return;
+    }
+    if (isCommit) {
+      document.getElementById('commit-subtitle').textContent = `${fmtNum(commit.pages)} Seiten / Monat inklusive`;
+    }
+
+    if (isFree && !isCommit) {
+      price.textContent = 'Kostenlos';
+      detail.textContent = '✓ Im Free-Kontingent enthalten (500 Seiten/Monat)';
+    } else {
+      const val = isCommit ? commit.total : amount;
+      price.textContent = val === 0 ? 'Kostenlos' : fmtUSD(val);
+      if (isCommit) {
+        const over = Math.max(0, totalPages - commit.pages);
+        detail.textContent = over > 0
+          ? `Inkl. ${fmtUSD(commit.price)}/Mo + ${fmtNum(over)} Overage-Seiten`
+          : `Overage: ${fmtUSD(commit.overage)} / 1.000 Seiten`;
+      } else {
+        const billable = Math.max(0, totalPages - FREE);
+        detail.textContent = isFree ? '✓ Im Free-Kontingent' : `${fmtNum(billable)} abrechenbare Seiten`;
+      }
+    }
+  }
+
+  function renderBanner(payg, commit, totalPages) {
+    const area = document.getElementById('banner-area');
+    if (totalPages <= FREE) {
+      area.innerHTML = `<div class="banner free">
+        <div class="banner-icon">🎉</div>
+        <div><div class="banner-title" style="color:var(--green)">Kostenlos!</div>
+        <div class="banner-sub">Dein Volumen liegt im kostenlosen Free-Tier (500 Seiten/Monat). Kein Cent.</div></div>
+      </div>`;
+      return;
+    }
+    if (!commit) { area.innerHTML = ''; return; }
+    const savings = Math.abs(payg - commit.total);
+    const cheaper = commit.total < payg ? 'Commitment Tier' : 'Pay-as-you-go';
+    const pct     = (savings / Math.max(payg, 0.01) * 100).toFixed(1);
+    if (savings < 0.5) { area.innerHTML = ''; return; }
+    area.innerHTML = `<div class="banner savings">
+      <div class="banner-icon">📊</div>
+      <div>
+        <div class="banner-title">${cheaper} ist günstiger</div>
+        <div class="banner-sub">Du sparst <strong>${fmtUSD(savings)}</strong> pro Monat (${pct}%) gegenüber der alternativen Option.</div>
+      </div>
+    </div>`;
+  }
+
+  function renderTable(tiers, totalPages) {
+    const tableArea = document.getElementById('table-area');
+    const tbody     = document.getElementById('tier-tbody');
+
+    if (!tiers) {
+      tableArea.style.display = 'none';
+      return;
+    }
+    tableArea.style.display = 'block';
+
+    // find cheapest
+    const minTotal = Math.min(...tiers.map(t => t.total));
+
+    tbody.innerHTML = tiers.map(t => {
+      const isActive = Math.abs(t.total - minTotal) < 0.01;
+      return `<tr class="${isActive ? 'active' : ''}">
+        <td>${isActive ? '<span class="tier-arrow">▶</span>' : ''}${fmtNum(t.pages)}</td>
+        <td>${fmtUSD(t.price)}</td>
+        <td>${fmtUSD(t.overage)}</td>
+        <td><strong>${fmtUSD(t.total)}</strong></td>
+      </tr>`;
+    }).join('');
+  }
+
+  // ── Model descriptions ────────────────────────────────────────
+  const MODEL_INFO = {
+    prebuilt: {
+      icon: '📄',
+      title: 'Prebuilt – Vorgefertigte Modelle',
+      text: 'Azure stellt fertig trainierte Modelle für die häufigsten Dokumenttypen bereit. Du musst nichts trainieren – das Modell erkennt die Felder automatisch. Ideal für standardisierte Dokumente im Unternehmensalltag.',
+      examples: ['Rechnung / Invoice', 'Quittung / Receipt', 'Personalausweis / ID', 'W-2 & 1098 Steuerformulare', 'Krankenversicherungskarte', 'Vertrag / Contract'],
+    },
+    read: {
+      icon: '🔍',
+      title: 'Read / OCR – Reine Texterkennung',
+      text: 'Das Read-Modell extrahiert ausschließlich Text und grundlegende Struktur (Absätze, Zeilen, Wörter) aus Dokumenten und Bildern. Keine Felderkennung, keine Semantik – nur der rohe Textinhalt. Günstiger als alle anderen Modelle und ideal als erste Verarbeitungsstufe.',
+      examples: ['Gescannte PDFs', 'Fotos von Dokumenten', 'Handschriftliche Notizen', 'Tabellen (Struktur)', 'Vorstufe für NLP-Pipelines'],
+    },
+    customExtraction: {
+      icon: '🎯',
+      title: 'Custom Extraction – Maßgeschneiderte Feldextraktion',
+      text: 'Du trainierst ein eigenes Modell auf Basis deiner spezifischen Dokumentenstruktur. Das Modell lernt, welche Felder in deinen Dokumenten relevant sind. Notwendig, wenn Prebuilt-Modelle nicht auf dein Format passen – z.B. bei firmeninternen Formularen, Spezialverträgen oder branchenspezifischen Dokumenten.',
+      examples: ['Interne Bestellformulare', 'Individuelle Vertragsvorlagen', 'Branchenspezifische Formulare', 'Lieferscheine', 'Technische Datenblätter'],
+    },
+    customClassification: {
+      icon: '🗂️',
+      title: 'Custom Classification – Dokumentenklassifizierung',
+      text: 'Dieses Modell lernt, Dokumente in verschiedene Kategorien einzuteilen. Wenn du gemischte Dokumentenstapel hast (z.B. Rechnungen, Verträge und Lieferscheine durcheinander), erkennt das Modell automatisch, welcher Typ vorliegt – und kann bei mehrseitigen Dokumenten sogar Seitengrenzen zwischen verschiedenen Dokumenttypen identifizieren.',
+      examples: ['Posteingang sortieren', 'Gemischte Dokumentenstapel', 'Automatisches Routing', 'Aktensysteme', 'E-Mail-Anhänge klassifizieren'],
+    },
+    customGenerative: {
+      icon: '🤖',
+      title: 'Custom Generative – KI-gestützte Extraktion',
+      text: 'Das leistungsstärkste und teuerste Modell. Es kombiniert klassische Dokumentenanalyse mit generativer KI (GPT-basiert), um auch komplexe, unstrukturierte Dokumente zu verstehen. Es kann Informationen interpretieren, zusammenfassen und ableiten – nicht nur explizit genannte Felder extrahieren. Geeignet für Dokumente mit variabler Struktur oder wenn kontextuelles Verständnis nötig ist.',
+      examples: ['Juristische Verträge', 'Medizinische Berichte', 'Forschungsdokumente', 'Freitext-Anträge', 'Komplexe Finanzberichte'],
+    },
+  };
+
+  function renderModelDesc() {
+    const info = MODEL_INFO[model];
+    if (!info) return;
+    document.getElementById('model-icon').textContent  = info.icon;
+    document.getElementById('model-title').textContent = info.title;
+    document.getElementById('model-text').textContent  = info.text;
+    const ex = document.getElementById('model-examples');
+    ex.innerHTML = info.examples.map(e =>
+      `<span style="font-size:11px;padding:3px 10px;border:1px solid var(--border);border-radius:2px;color:var(--muted2);letter-spacing:0.05em;">${e}</span>`
+    ).join('');
+  }
+
+  // ── Convenience setters ───────────────────────────────────────
+  function setDocs(v)  { document.getElementById('slider-docs').value = v;  update(); }
+  function setPages(v) { document.getElementById('slider-pages').value = v; update(); }
+  function setModel(btn) {
+    document.querySelectorAll('.model-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    model = btn.dataset.model;
+    renderModelDesc();
+    update();
+  }
+
+  // ── Init ──────────────────────────────────────────────────────
+  renderModelDesc();
+  update();
+</script>
+</body>
+</html>
