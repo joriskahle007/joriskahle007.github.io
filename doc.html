@@ -441,23 +441,31 @@ title: "Azure Document Intelligence – Preiskalkulator"
       </div>
 
       <!-- Seiten -->
-      <div class="ck-card ck-card-p ck-card-gold">
-        <div class="ck-label">Seiten pro Dokument</div>
-        <div class="ck-val ck-val-only" id="val-pages">3 <sup>Seiten</sup></div>
-        <div class="ck-slider-wrap">
-          <div class="ck-slider-fill" id="fill-pages"></div>
-          <input type="range" class="ck-range" id="slider-pages"
-            min="1" max="50" step="1" value="3" oninput="ckUpdate()" />
-        </div>
-        <div class="ck-marks">
-          <span onclick="ckSetPages(1)">1</span>
-          <span onclick="ckSetPages(5)">5</span>
-          <span onclick="ckSetPages(10)">10</span>
-          <span onclick="ckSetPages(25)">25</span>
-          <span onclick="ckSetPages(50)">50</span>
-        </div>
-      </div>
-    </div>
+     <div class="ck-card ck-card-p ck-card-gold">
+  <div class="ck-label">Seiten pro Dokument</div>
+  <div class="ck-val-row">
+    <div class="ck-val" id="val-pages">3 <sup>Seiten</sup></div>
+    <input type="number" id="input-pages" class="ck-num-input"
+      min="1" max="500" step="1" value="3"
+      oninput="ckSyncPagesInput()"
+      onkeydown="if(event.key==='Enter') this.blur()"
+      onfocus="this.select()"
+      onblur="ckFinalizePagesInput(this)" />
+  </div>
+  <div class="ck-slider-wrap">
+    <div class="ck-slider-fill" id="fill-pages"></div>
+    <input type="range" class="ck-range" id="slider-pages"
+      min="1" max="500" step="1" value="3"
+      oninput="ckSliderUpdate()" />
+  </div>
+  <div class="ck-marks">
+    <span onclick="ckSetPages(1)">1</span>
+    <span onclick="ckSetPages(25)">25</span>
+    <span onclick="ckSetPages(100)">100</span>
+    <span onclick="ckSetPages(250)">250</span>
+    <span onclick="ckSetPages(500)">500</span>
+  </div>
+</div>
 
     <!-- Stats bar -->
     <div class="ck-stats ck-fu">
@@ -660,7 +668,6 @@ title: "Azure Document Intelligence – Preiskalkulator"
 
   function ckRender() {
     // Core render — uses current docs/ppd state, does not touch sliders
-    ppd = parseInt($('slider-pages').value);
     const tp = docs * ppd, bill = Math.max(0, tp - FREE);
     const payg = calcPayG(tp), commit = calcCommit(tp), tiers = allTiers(tp);
 
@@ -669,7 +676,7 @@ title: "Azure Document Intelligence – Preiskalkulator"
     if (document.activeElement !== $('input-docs')) $('input-docs').value = docs;
 
     ckFill('fill-docs',   'slider-docs',   1, 2000000);
-    ckFill('fill-pages',  'slider-pages',  1, 50);
+    ckFill('fill-pages',  'slider-pages',  1, 500);
 
     $('total-pages').textContent    = fN(tp);
     $('billable-pages').textContent = fN(bill);
@@ -821,6 +828,17 @@ title: "Azure Document Intelligence – Preiskalkulator"
   };
 
   // ── Init ─────────────────────────────────────────────────
+  function ckSyncPagesInput(){
+  const v=parseInt($('input-pages').value);
+  if(isNaN(v)||$('input-pages').value==='') return;
+  ppd=Math.max(1,Math.min(500,v)); ckRender();
+}
+function ckFinalizePagesInput(el){
+  let v=parseInt(el.value); if(isNaN(v)||el.value==='') v=1;
+  ppd=Math.max(1,Math.min(500,v)); el.value=ppd; ckRender();
+}
+window.ckSyncPagesInput=ckSyncPagesInput;
+window.ckFinalizePagesInput=ckFinalizePagesInput;
   ckRenderModel();
   ckUpdate();
 })();
