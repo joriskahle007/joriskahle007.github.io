@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Azure Document Intelligence Kalkulator | DataThinx</title>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --navy:       #1a2a4a;
+      --navy-deep:  #0f1c33;
+      --navy-mid:   #243558;
+      --cyan:       #00b4d8;
+      --cyan-light: #48cae4;
+      --cyan-pale:  #e0f7fc;
+      --white:      #ffffff;
+      --off-white:  #f4f7fb;
+      --light:      #edf2f8;
+      --border:     #d0dcea;
+      --text:       #1a2a4a;
+      --muted:      #6b7fa3;
+      --muted2:     #9aabc4;
+      --green:      #00b894;
+      --green-bg:   #e6f9f5;
+      --radius:     8px;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--off-white);
+      color: var(--text);
+      font-family: 'Open Sans', sans-serif;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      background: var(--navy-deep);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; height: 64px;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 24px rgba(15,28,51,0.35);
+    }
+    .logo { display:flex; align-items:center; gap:12px; text-decoration:none; }
+    .logo-icon {
+      width:38px; height:38px;
+      background: linear-gradient(135deg, var(--cyan), var(--cyan-light));
+      border-radius:7px;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .logo-icon svg { width:22px; height:22px; stroke:white; fill:none; stroke-width:2.2; stroke-linecap:round; stroke-linejoin:round; }
+    .logo-wordmark {
+      font-family:'Montserrat',sans-serif; font-weight:800; font-size:18px;
+      letter-spacing:0.12em; text-transform:uppercase; color:white;
+    }
+    .logo-wordmark span { color:var(--cyan); }
+    .nav-right { display:flex; align-items:center; gap:28px; }
+    .nav-link {
+      font-family:'Montserrat',sans-serif; font-size:11px; font-weight:700;
+      letter-spacing:0.14em; text-transform:uppercase;
+      color:rgba(255,255,255,0.5); text-decoration:none; transition:color .2s;
+    }
+    .nav-link:hover { color:var(--cyan); }
+    .nav-badge {
+      background:rgba(0,180,216,0.15); border:1px solid rgba(0,180,216,0.4);
+      color:var(--cyan); font-family:'Montserrat',sans-serif;
+      font-size:10px; font-weight:700; letter-spacing:0.12em; text-transform:uppercase;
+      padding:5px 13px; border-radius:3px;
+    }
+
+    /* HERO */
+    .hero-band {
+      background: linear-gradient(135deg, var(--navy-deep) 0%, var(--navy) 65%, #1e3a6e 100%);
+      padding: 60px 40px 56px;
+      position: relative; overflow: hidden;
+    }
+    .hero-band::after {
+      content:'';
+      position:absolute; inset:0; pointer-events:none;
+      background:
+        radial-gradient(ellipse 55% 90% at 100% 50%, rgba(0,180,216,0.14) 0%, transparent 60%),
+        repeating-linear-gradient(45deg, transparent, transparent 28px, rgba(255,255,255,0.015) 28px, rgba(255,255,255,0.015) 29px);
+    }
+    .hero-inner { max-width:900px; margin:0 auto; position:relative; z-index:1; }
+    .eyebrow {
+      display:inline-flex; align-items:center; gap:10px;
+      font-family:'Montserrat',sans-serif; font-size:10px; font-weight:700;
+      letter-spacing:0.22em; text-transform:uppercase; color:var(--cyan); margin-bottom:18px;
+    }
+    .eyebrow::before { content:''; width:30px; height:2px; background:var(--cyan); border-radius:1px; }
+    .hero-band h1 {
+      font-family:'Montserrat',sans-serif; font-weight:900;
+      font-size:clamp(34px,5.5vw,58px); line-height:1.04;
+      text-transform:uppercase; color:white; margin-bottom:16px;
+    }
+    .hero-band h1 em { color:var(--cyan); font-style:normal; }
+    .hero-sub { font-size:15px; font-weight:300; color:rgba(255,255,255,0.5); max-width:500px; line-height:1.7; }
+    .hero-deco {
+      position:absolute; right:5%; top:50%; transform:translateY(-50%);
+      font-family:'Montserrat',sans-serif; font-weight:900; font-size:180px;
+      color:rgba(255,255,255,0.04); line-height:1; user-select:none; pointer-events:none;
+      letter-spacing:-0.06em;
+    }
+
+    /* LAYOUT */
+    .main { max-width:900px; margin:0 auto; padding:40px 40px 64px; }
+    @media(max-width:680px){
+      .main { padding:24px 20px 48px; }
+      nav { padding:0 20px; }
+      .hero-band { padding:40px 20px 44px; }
+      .hero-deco { display:none; }
+    }
+
+    /* SECTION HEADER */
+    .sec-head {
+      display:flex; align-items:center; gap:10px; margin-bottom:18px;
+    }
+    .sec-dot { width:8px; height:8px; border-radius:50%; background:var(--cyan); flex-shrink:0; }
+    .sec-label {
+      font-family:'Montserrat',sans-serif; font-size:10px; font-weight:700;
+      letter-spacing:0.2em; text-transform:uppercase; color:var(--muted);
+    }
+    .sec-line { flex:1; height:1px; background:var(--border); }
+    .gap { height:32px; }
+
+    /* CARD */
+    .card {
+      background:var(--white); border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:0 1px 4px rgba(26,42,74,0.06);
+    }
+    .card-p { padding:26px; }
+    .card-top { border-top:3px solid var(--cyan); }
+    .grid2 { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+    @media(max-width:580px){ .grid2 { grid-template-columns:1fr; } }
+
+    /* FIELD LABEL */
+    .flabel {
+      font-family:'Montserrat',sans-serif; font-size:10px; font-weight:700;
+      letter-spacing:0.16em; text-transform:uppercase; color:var(--muted); margin-bottom:8px;
+    }
+    .vbig {
+      font-family:'Montserrat',sans-serif; font-weight:800; font-size:40px;
+      color:var(--navy-deep); line-height:1; margin-bottom:20px;
+    }
+    .vbig sup { font-size:15px; color:var(--cyan); font-weight:700; margin-left:4px; vertical-align:top; padding-top:8px; }
+
+    /* SLIDER */
+    .slider-wrap { position:relative; }
+    .sfill {
+      position:absolute; left:0; top:6px; height:4px;
+      background:linear-gradient(90deg,var(--cyan),var(--cyan-light));
+      border-radius:2px; pointer-events:none; z-index:1;
+    }
+    input[type=range] {
+      -webkit-appearance:none; appearance:none;
+      width:100%; height:4px; background:var(--light);
+      border-radius:2px; outline:none; cursor:pointer; position:relative; z-index:2;
+    }
+    input[type=range]::-webkit-slider-thumb {
+      -webkit-appearance:none;
+      width:20px; height:20px; border-radius:50%;
+      background:white; border:3px solid var(--cyan);
+      box-shadow:0 1px 8px rgba(0,180,216,0.3);
+      cursor:pointer; transition:transform .12s, box-shadow .12s;
+    }
+    input[type=range]::-webkit-slider-thumb:hover {
+      transform:scale(1.2); box-shadow:0 2px 12px rgba(0,180,216,0.5);
+    }
+    input[type=range]::-moz-range-thumb {
+      width:20px; height:20px; border-radius:50%;
+      background:white; border:3px solid var(--cyan); cursor:pointer;
+    }
+    .smarks { display:flex; justify-content:space-between; margin-top:10px; }
+    .smarks span {
+      font-family:'Montserrat',sans-serif; font-size:10px; font-weight:600;
+      color:var(--muted2); cursor:pointer; transition:color .15s;
+    }
+    .smarks span:hover { color:var(--cyan); }
+
+    /* STATS BAR */
+    .stats-bar {
+      background:var(--navy-deep); border-radius:var(--radius);
+      display:grid; grid-template-columns:1fr 1px 1fr 1px 1fr;
+      overflow:hidden; margin:20px 0 32px;
+      box-shadow:0 4px 20px rgba(15,28,51,0.2);
+    }
+    .scell { padding:18px 22px; }
+    .scell .sl {
+      font-family:'Montserrat',sans-serif; font-size:9px; font-weight:700;
+      letter-spacing:0.18em; text-transform:uppercase; color:rgba(255,255,255,0.38); margin-bottom:5px;
+    }
+    .scell .sv {
+      font-family:'Montserrat',sans-serif; font-size:26px; font-weight:800; color:white; line-height:1;
+    }
+    .scell .sv.cyan  { color:var(--cyan); }
+    .scell .sv.green { color:#4ade80; }
+    .ssep { background:rgba(255,255,255,0.07); }
+
+    /* MODEL BUTTONS */
+    .mbgrid { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; }
+    .mbtn {
+      padding:9px 18px;
+      background:var(--off-white); border:1.5px solid var(--border);
+      border-radius:4px; color:var(--muted);
+      font-family:'Montserrat',sans-serif; font-size:11px; font-weight:700;
+      letter-spacing:0.1em; text-transform:uppercase;
+      cursor:pointer; transition:all .15s;
+    }
+    .mbtn:hover { border-color:var(--cyan); color:var(--navy); background:var(--cyan-pale); }
+    .mbtn.active { border-color:var(--cyan); background:var(--cyan); color:white; }
+
+    /* MODEL DESC */
+    .mdesc {
+      background:var(--off-white); border:1px solid var(--border);
+      border-left:4px solid var(--cyan);
+      border-radius:0 var(--radius) var(--radius) 0;
+      padding:18px 20px;
+      display:grid; grid-template-columns:46px 1fr; gap:0 12px; align-items:start;
+    }
+    .micon { font-size:30px; line-height:1; padding-top:3px; }
+    .mtitle {
+      font-family:'Montserrat',sans-serif; font-size:11px; font-weight:700;
+      letter-spacing:0.1em; text-transform:uppercase; color:var(--navy); margin-bottom:7px;
+    }
+    .mbody { font-size:13px; color:var(--muted); line-height:1.7; margin-bottom:10px; }
+    .mtags { display:flex; flex-wrap:wrap; gap:6px; }
+    .mtag {
+      font-family:'Montserrat',sans-serif; font-size:10px; font-weight:600;
+      letter-spacing:0.05em; padding:3px 10px;
+      background:white; border:1px solid var(--border); border-radius:3px; color:var(--muted);
+    }
+
+    /* RESULT CARDS */
+    .rgrid { display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:16px; }
+    @media(max-width:580px){ .rgrid { grid-template-columns:1fr; } }
+    .rcard {
+      background:white; border:2px solid var(--border);
+      border-radius:var(--radius); padding:26px 24px;
+      position:relative; transition:border-color .3s, box-shadow .3s;
+      box-shadow:0 1px 4px rgba(26,42,74,0.05);
+    }
+    .rcard.winner { border-color:var(--cyan); box-shadow:0 4px 22px rgba(0,180,216,0.18); }
+    .rcard .rbadge {
+      position:absolute; top:-13px; left:50%; transform:translateX(-50%);
+      background:var(--cyan); color:white;
+      font-family:'Montserrat',sans-serif; font-size:9px; font-weight:800;
+      letter-spacing:0.18em; text-transform:uppercase;
+      padding:4px 14px; border-radius:20px; white-space:nowrap;
+      box-shadow:0 2px 10px rgba(0,180,216,0.4);
+    }
+    .rcard .rtype {
+      font-family:'Montserrat',sans-serif; font-size:10px; font-weight:700;
+      letter-spacing:0.16em; text-transform:uppercase; color:var(--muted); margin-bottom:3px;
+    }
+    .rcard .rsub { font-size:12px; color:var(--muted2); margin-bottom:16px; }
+    .rcard .rprice {
+      font-family:'Montserrat',sans-serif; font-size:42px; font-weight:800;
+      color:var(--navy-deep); line-height:1; margin-bottom:10px;
+      transition:opacity .25s;
+    }
+    .rcard.winner .rprice { color:var(--navy-deep); }
+    .rcard .rdetail {
+      font-size:12px; color:var(--muted);
+      padding-top:10px; border-top:1px solid var(--light);
+    }
+    .winner-bar {
+      position:absolute; bottom:0; left:0; right:0; height:3px;
+      background:linear-gradient(90deg,var(--cyan),var(--cyan-light));
+      border-radius:0 0 6px 6px;
+    }
+
+    /* BANNER */
+    .banner {
+      padding:16px 20px; border-radius:var(--radius);
+      display:flex; align-items:center; gap:14px; margin-bottom:4px;
+    }
+    .banner.savings { background:#e5f7fc; border:1.5px solid rgba(0,180,216,0.3); }
+    .banner.free    { background:var(--green-bg); border:1.5px solid rgba(0,184,148,0.3); }
+    .bico { font-size:26px; flex-shrink:0; }
+    .btitle {
+      font-family:'Montserrat',sans-serif; font-size:13px; font-weight:700; margin-bottom:2px;
+    }
+    .btitle.cyan  { color:var(--cyan); }
+    .btitle.green { color:var(--green); }
+    .bsub { font-size:13px; color:var(--muted); line-height:1.5; }
+
+    /* TABLE */
+    .ttable { width:100%; border-collapse:collapse; font-size:13px; }
+    .ttable th {
+      font-family:'Montserrat',sans-serif; font-size:9px; font-weight:700;
+      letter-spacing:0.18em; text-transform:uppercase; color:var(--muted2);
+      padding:12px 16px; text-align:left;
+      background:var(--off-white); border-bottom:1px solid var(--border);
+    }
+    .ttable td {
+      padding:12px 16px; border-bottom:1px solid var(--light); color:var(--muted);
+    }
+    .ttable tr:last-child td { border-bottom:none; }
+    .ttable tr.arow td { background:#e5f7fc; color:var(--navy); font-weight:600; }
+    .ttable tr.arow td:first-child { border-left:3px solid var(--cyan); padding-left:13px; }
+    .acaret { color:var(--cyan); margin-right:5px; }
+
+    /* FOOTER */
+    footer {
+      background:var(--navy-deep); text-align:center;
+      padding:22px 40px; font-size:11px; color:rgba(255,255,255,0.3);
+    }
+    footer a { color:var(--cyan); text-decoration:none; }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+    .fu { animation:fadeUp .45s ease both; }
+    .fu:nth-child(1){animation-delay:.00s}
+    .fu:nth-child(2){animation-delay:.07s}
+    .fu:nth-child(3){animation-delay:.14s}
+    .fu:nth-child(4){animation-delay:.21s}
+    .fu:nth-child(5){animation-delay:.28s}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.35}}
+    .blink { animation:blink .28s ease; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="logo" href="https://www.datathinx.com" target="_blank">
+    <div class="logo-icon">
+      <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    </div>
+    <div class="logo-wordmark">DATA<span>THINX</span></div>
+  </a>
+  <div class="nav-right">
+    <a class="nav-link" href="https://www.datathinx.com/products/" target="_blank">Products</a>
+    <a class="nav-link" href="https://www.datathinx.com/about-2/" target="_blank">About</a>
+    <a class="nav-link" href="https://www.datathinx.com/contact/" target="_blank">Contact</a>
+    <div class="nav-badge">Tool</div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero-band">
+  <div class="hero-deco">DOC</div>
+  <div class="hero-inner">
+    <div class="eyebrow">Azure · Document Intelligence</div>
+    <h1>Azure Doc Intel<br/><em>Preis&shy;kalkulator</em></h1>
+    <p class="hero-sub">Ermittle sofort die günstigste Option für dein monatliches Dokumentenvolumen — Pay-as-you-go direkt verglichen mit Commitment Tiers.</p>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <div class="gap"></div>
+
+  <!-- STEP 1 -->
+  <div class="sec-head fu">
+    <div class="sec-dot"></div>
+    <div class="sec-label">Schritt 1 — Volumen definieren</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="grid2 fu">
+    <div class="card card-p card-top">
+      <div class="flabel">Dokumente / Monat</div>
+      <div style="display:flex;align-items:baseline;gap:10px;margin-bottom:20px;">
+        <div class="vbig" style="margin-bottom:0;" id="val-docs">1.000 <sup>Docs</sup></div>
+        <input type="number" id="input-docs" min="1" max="2000000" step="1" value="1000"
+          oninput="syncFromInput()"
+          style="width:110px;padding:6px 10px;border:1.5px solid var(--border);border-radius:5px;
+                 font-family:'Montserrat',sans-serif;font-size:13px;font-weight:600;
+                 color:var(--navy);background:var(--off-white);outline:none;
+                 transition:border-color .15s;"
+          onfocus="this.style.borderColor='var(--cyan)'"
+          onblur="this.style.borderColor='var(--border)'"
+        />
+      </div>
+      <div class="slider-wrap">
+        <div class="sfill" id="fill-docs"></div>
+        <input type="range" id="slider-docs" min="1" max="2000000" step="1000" value="1000" oninput="update()" />
+      </div>
+      <div class="smarks">
+        <span onclick="setDocs(1)">1</span>
+        <span onclick="setDocs(10000)">10K</span>
+        <span onclick="setDocs(100000)">100K</span>
+        <span onclick="setDocs(500000)">500K</span>
+        <span onclick="setDocs(2000000)">2M</span>
+      </div>
+    </div>
+
+    <div class="card card-p card-top">
+      <div class="flabel">Seiten pro Dokument</div>
+      <div class="vbig" id="val-pages">3 <sup>Seiten</sup></div>
+      <div class="slider-wrap">
+        <div class="sfill" id="fill-pages"></div>
+        <input type="range" id="slider-pages" min="1" max="50" step="1" value="3" oninput="update()" />
+      </div>
+      <div class="smarks">
+        <span onclick="setPages(1)">1</span>
+        <span onclick="setPages(5)">5</span>
+        <span onclick="setPages(10)">10</span>
+        <span onclick="setPages(25)">25</span>
+        <span onclick="setPages(50)">50</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATS BAR -->
+  <div class="stats-bar fu">
+    <div class="scell">
+      <div class="sl">Gesamtseiten / Monat</div>
+      <div class="sv" id="total-pages">3.000</div>
+    </div>
+    <div class="ssep"></div>
+    <div class="scell">
+      <div class="sl">Kostenlos (Free-Tier)</div>
+      <div class="sv cyan">500</div>
+    </div>
+    <div class="ssep"></div>
+    <div class="scell">
+      <div class="sl">Abrechenbare Seiten</div>
+      <div class="sv green" id="billable-pages">2.500</div>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="sec-head fu">
+    <div class="sec-dot"></div>
+    <div class="sec-label">Schritt 2 — Modell-Typ wählen</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="card card-p fu" style="margin-bottom:32px;">
+    <div class="mbgrid">
+      <button class="mbtn active" data-model="prebuilt"              onclick="setModel(this)">Prebuilt</button>
+      <button class="mbtn"        data-model="read"                  onclick="setModel(this)">Read / OCR</button>
+      <button class="mbtn"        data-model="customExtraction"      onclick="setModel(this)">Custom Extraction</button>
+      <button class="mbtn"        data-model="customClassification"  onclick="setModel(this)">Custom Classification</button>
+      <button class="mbtn"        data-model="customGenerative"      onclick="setModel(this)">Custom Generative</button>
+    </div>
+    <div class="mdesc" id="model-desc">
+      <div class="micon" id="model-icon"></div>
+      <div>
+        <div class="mtitle" id="model-title"></div>
+        <div class="mbody"  id="model-text"></div>
+        <div class="mtags"  id="model-tags"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- STEP 3 -->
+  <div class="sec-head fu">
+    <div class="sec-dot"></div>
+    <div class="sec-label">Schritt 3 — Ergebnis</div>
+    <div class="sec-line"></div>
+  </div>
+
+  <div class="rgrid fu">
+    <div class="rcard" id="card-payg">
+      <div class="rtype">Pay-as-you-go</div>
+      <div class="rsub">Keine Vorauszahlung · flexibel</div>
+      <div class="rprice" id="price-payg">–</div>
+      <div class="rdetail" id="detail-payg">–</div>
+    </div>
+    <div class="rcard" id="card-commit">
+      <div class="rtype">Commitment Tier</div>
+      <div class="rsub" id="commit-sub">Monatliche Vorauszahlung</div>
+      <div class="rprice" id="price-commit">–</div>
+      <div class="rdetail" id="detail-commit">–</div>
+    </div>
+  </div>
+
+  <div id="banner-area" class="fu"></div>
+
+  <!-- TABLE -->
+  <div id="table-area" style="margin-top:32px;">
+    <div class="sec-head fu">
+      <div class="sec-dot"></div>
+      <div class="sec-label">Alle Commitment-Tiers im Vergleich</div>
+      <div class="sec-line"></div>
+    </div>
+    <div class="card" style="overflow:hidden;">
+      <table class="ttable">
+        <thead>
+          <tr>
+            <th>Tier (Seiten/Monat)</th>
+            <th>Monatspreis</th>
+            <th>Overage / 1K Seiten</th>
+            <th>Kosten bei deinem Volumen</th>
+          </tr>
+        </thead>
+        <tbody id="tier-tbody"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<footer>
+  Preise basieren auf der offiziellen
+  <a href="https://azure.microsoft.com/en-us/pricing/details/document-intelligence/" target="_blank">Azure-Preisseite</a>
+  (East US · USD) · Alle Angaben ohne Gewähr ·
+  <a href="https://www.datathinx.com" target="_blank">datathinx.com</a>
+</footer>
+
+<script>
+  const FREE = 500;
+
+  const PAYG = {
+    read:                 { tiers:[{to:1e6,rate:1.0},{to:Infinity,rate:0.5}] },
+    prebuilt:             { flat:10.0 },
+    customExtraction:     { flat:50.0 },
+    customClassification: { flat:10.0 },
+    customGenerative:     { flat:100.0 },
+  };
+
+  const COMMIT = {
+    prebuilt:             [{pages:20000,price:100,overage:6.0},{pages:100000,price:400,overage:4.8},{pages:500000,price:1500,overage:3.6}],
+    read:                 [{pages:500000,price:250,overage:0.6},{pages:2000000,price:750,overage:0.45},{pages:8000000,price:2200,overage:0.33}],
+    customExtraction:     [{pages:20000,price:500,overage:30.0},{pages:100000,price:2000,overage:24.0},{pages:500000,price:8000,overage:18.0}],
+    customClassification: [{pages:20000,price:100,overage:6.0},{pages:100000,price:400,overage:4.8},{pages:500000,price:1500,overage:3.6}],
+  };
+
+  const MODELS = {
+    prebuilt:{
+      icon:'📄',
+      title:'Prebuilt – Vorgefertigte Modelle',
+      text:'Azure stellt fertig trainierte Modelle für die häufigsten Dokumenttypen bereit. Kein eigenes Training notwendig — das Modell erkennt Felder automatisch anhand eines vordefinierten Schemas. Ideal für standardisierte Geschäftsdokumente.',
+      tags:['Rechnung / Invoice','Quittung / Receipt','Personalausweis / ID','Steuerformulare W-2 & 1098','Krankenversicherungskarte','Vertrag'],
+    },
+    read:{
+      icon:'🔍',
+      title:'Read / OCR – Reine Texterkennung',
+      text:'Extrahiert ausschließlich Text und Grundstruktur aus Dokumenten und Bildern — keine Feldsemantik, keine Klassifizierung. Günstigstes Modell, ideal als erste Verarbeitungsstufe, für reine Digitalisierung oder als Basis für eigene NLP-Pipelines.',
+      tags:['Gescannte PDFs','Fotos von Dokumenten','Handschriftliche Notizen','Tabellenstruktur erkennen','Vorstufe für NLP'],
+    },
+    customExtraction:{
+      icon:'🎯',
+      title:'Custom Extraction – Maßgeschneiderte Feldextraktion',
+      text:'Du trainierst ein eigenes Modell auf Basis deiner spezifischen Dokumente. Notwendig, wenn Prebuilt-Modelle nicht auf dein Format passen — z.B. bei firmeninternen Formularen, Spezialverträgen oder branchenspezifischen Belegen.',
+      tags:['Interne Bestellformulare','Individuelle Vertragsvorlagen','Lieferscheine','Technische Datenblätter','Branchenspezifische Belege'],
+    },
+    customClassification:{
+      icon:'🗂️',
+      title:'Custom Classification – Dokumentenklassifizierung',
+      text:'Lernt, Dokumente in verschiedene Kategorien einzuteilen. Bei gemischten Dokumentenstapeln erkennt das Modell automatisch den jeweiligen Typ — und kann bei mehrseitigen Dokumenten sogar Seitengrenzen zwischen verschiedenen Dokumenttypen identifizieren.',
+      tags:['Posteingang automatisch sortieren','Gemischte Stapel trennen','Automatisches Routing','Aktenverwaltung','E-Mail-Anhänge klassifizieren'],
+    },
+    customGenerative:{
+      icon:'🤖',
+      title:'Custom Generative – KI-gestützte Extraktion',
+      text:'Das leistungsstärkste und teuerste Modell. Kombiniert klassische Dokumentenanalyse mit generativer KI (GPT-basiert) und kann auch komplexe, unstrukturierte Dokumente inhaltlich verstehen, interpretieren und zusammenfassen — nicht nur explizit genannte Felder extrahieren.',
+      tags:['Juristische Verträge','Medizinische Berichte','Forschungsdokumente','Freitext-Anträge','Komplexe Finanzberichte'],
+    },
+  };
+
+  let docs=1000, ppd=3, model='prebuilt';
+
+  const fN = n => n.toLocaleString('de-DE');
+  const fU = n => n.toLocaleString('de-DE',{style:'currency',currency:'USD',minimumFractionDigits:2});
+
+  function calcPayG(pages){
+    const eff=Math.max(0,pages-FREE); if(!eff) return 0;
+    const p=PAYG[model]; if(!p) return 0;
+    if(p.flat) return (eff/1000)*p.flat;
+    let cost=0,rem=eff;
+    for(const t of p.tiers){
+      if(rem<=0) break;
+      const b=t.to===Infinity?rem:Math.min(rem,t.to);
+      cost+=(b/1000)*t.rate; rem-=b;
+    }
+    return cost;
+  }
+
+  function calcCommit(pages){
+    const tiers=COMMIT[model]; if(!tiers) return null;
+    let best=null;
+    for(const t of tiers){
+      const ov=Math.max(0,pages-t.pages);
+      const total=t.price+(ov/1000)*t.overage;
+      if(!best||total<best.total) best={...t,total};
+    }
+    return best;
+  }
+
+  function allTiers(pages){
+    const tiers=COMMIT[model]; if(!tiers) return null;
+    return tiers.map(t=>{
+      const ov=Math.max(0,pages-t.pages);
+      return{...t,total:t.price+(ov/1000)*t.overage};
+    });
+  }
+
+  function update(){
+    docs=parseInt(document.getElementById('slider-docs').value);
+    ppd =parseInt(document.getElementById('slider-pages').value);
+    const tp=docs*ppd, bill=Math.max(0,tp-FREE);
+    const payg=calcPayG(tp), commit=calcCommit(tp), tiers=allTiers(tp);
+
+    document.getElementById('val-docs').innerHTML =`${fN(docs)} <sup>Docs</sup>`;
+    // only sync input field if user isn't currently typing in it
+    if(document.activeElement !== document.getElementById('input-docs')){
+      document.getElementById('input-docs').value = docs;
+    }
+    document.getElementById('val-pages').innerHTML=`${ppd} <sup>Seiten</sup>`;
+    updFill('fill-docs','slider-docs',1,2000000);
+    updFill('fill-pages','slider-pages',1,50);
+    document.getElementById('total-pages').textContent   =fN(tp);
+    document.getElementById('billable-pages').textContent=fN(bill);
+
+    renderCard('payg',  payg,  commit,tp);
+    renderCard('commit',commit?commit.total:null,commit,tp);
+    renderBanner(payg,commit,tp);
+    renderTable(tiers,tp);
+  }
+
+  function updFill(fid,sid,min,max){
+    const s=document.getElementById(sid);
+    const pct=(s.value-min)/(max-min)*100;
+    document.getElementById(fid).style.width=pct+'%';
+  }
+
+  function renderCard(type,amount,commit,tp){
+    const card =document.getElementById('card-'+type);
+    const price=document.getElementById('price-'+type);
+    const det  =document.getElementById('detail-'+type);
+    const isC  =type==='commit';
+    const isFree=tp<=FREE;
+    const paygC =calcPayG(tp);
+    const commC =commit?commit.total:Infinity;
+    const wins  =isC?commC<paygC:paygC<=commC;
+
+    card.querySelector('.rbadge')?.remove();
+    card.querySelector('.winner-bar')?.remove();
+    card.classList.toggle('winner',wins);
+    if(wins){
+      const b=document.createElement('div'); b.className='rbadge'; b.textContent='★ Empfohlen'; card.prepend(b);
+      const bar=document.createElement('div'); bar.className='winner-bar'; card.appendChild(bar);
+    }
+
+    price.classList.remove('blink'); void price.offsetWidth; price.classList.add('blink');
+
+    if(isC&&!commit){
+      document.getElementById('commit-sub').textContent='Kein Tier verfügbar';
+      price.textContent='—';
+      det.textContent='Für dieses Modell gibt es keine Commitment-Tiers.';
+      return;
+    }
+    if(isC) document.getElementById('commit-sub').textContent=`${fN(commit.pages)} Seiten/Monat inklusive`;
+
+    const val=isC?commit.total:amount;
+    if(isFree&&!isC){ price.textContent='Kostenlos'; det.textContent='✓ Im kostenlosen Free-Tier enthalten (500 Seiten/Monat)'; return; }
+    price.textContent=val===0?'Kostenlos':fU(val);
+    if(isC){
+      const ov=Math.max(0,tp-commit.pages);
+      det.textContent=ov>0?`${fU(commit.price)}/Mo Grundpreis + ${fN(ov)} Overage-Seiten`:`Overage-Rate: ${fU(commit.overage)} / 1.000 Seiten`;
+    } else {
+      det.textContent=`${fN(Math.max(0,tp-FREE))} abrechenbare Seiten`;
+    }
+  }
+
+  function renderBanner(payg,commit,tp){
+    const a=document.getElementById('banner-area');
+    if(tp<=FREE){
+      a.innerHTML=`<div class="banner free"><div class="bico">🎉</div><div><div class="btitle green">Vollständig kostenlos!</div><div class="bsub">Dein Volumen liegt im kostenlosen Free-Tier (500 Seiten/Monat). Es entstehen keinerlei Kosten.</div></div></div>`;
+      return;
+    }
+    if(!commit){a.innerHTML='';return;}
+    const sav=Math.abs(payg-commit.total); if(sav<0.5){a.innerHTML='';return;}
+    const cheaper=commit.total<payg?'Commitment Tier':'Pay-as-you-go';
+    const pct=(sav/Math.max(payg,0.01)*100).toFixed(1);
+    a.innerHTML=`<div class="banner savings"><div class="bico">💡</div><div><div class="btitle cyan">${cheaper} ist günstiger</div><div class="bsub">Du sparst <strong>${fU(sav)}</strong> pro Monat (${pct}%) gegenüber der anderen Option.</div></div></div>`;
+  }
+
+  function renderTable(tiers,tp){
+    const area=document.getElementById('table-area');
+    const tbody=document.getElementById('tier-tbody');
+    if(!tiers){area.style.display='none';return;}
+    area.style.display='block';
+    const min=Math.min(...tiers.map(t=>t.total));
+    tbody.innerHTML=tiers.map(t=>{
+      const a=Math.abs(t.total-min)<0.01;
+      return`<tr class="${a?'arow':''}"><td>${a?'<span class="acaret">▶</span>':''}${fN(t.pages)}</td><td>${fU(t.price)}</td><td>${fU(t.overage)}</td><td><strong>${fU(t.total)}</strong></td></tr>`;
+    }).join('');
+  }
+
+  function renderModelDesc(){
+    const m=MODELS[model]; if(!m) return;
+    document.getElementById('model-icon').textContent =m.icon;
+    document.getElementById('model-title').textContent=m.title;
+    document.getElementById('model-text').textContent =m.text;
+    document.getElementById('model-tags').innerHTML   =m.tags.map(t=>`<span class="mtag">${t}</span>`).join('');
+  }
+
+  function syncFromInput(){
+    const inp = document.getElementById('input-docs');
+    let v = parseInt(inp.value);
+    if(isNaN(v) || inp.value === '') return; // wait until user finishes typing
+    v = Math.max(1, Math.min(2000000, v));
+    document.getElementById('slider-docs').value = v;
+    docs = v;
+    const ppd2 = parseInt(document.getElementById('slider-pages').value);
+    const tp = v * ppd2, bill = Math.max(0, tp - FREE);
+    const payg = calcPayG_val(v*ppd2), commit = calcCommit(tp), tiers = allTiers(tp);
+    // update display but DON'T overwrite the input field while user is typing
+    document.getElementById('val-docs').innerHTML = `${fN(v)} <sup>Docs</sup>`;
+    updFill('fill-docs','slider-docs',1,2000000);
+    document.getElementById('val-pages').innerHTML = `${ppd2} <sup>Seiten</sup>`;
+    updFill('fill-pages','slider-pages',1,50);
+    document.getElementById('total-pages').textContent    = fN(tp);
+    document.getElementById('billable-pages').textContent = fN(bill);
+    renderCard('payg',  payg,  commit, tp);
+    renderCard('commit', commit ? commit.total : null, commit, tp);
+    renderBanner(payg, commit, tp);
+    renderTable(tiers, tp);
+  }
+
+  function calcPayG_val(pages){
+    const eff=Math.max(0,pages-FREE); if(!eff) return 0;
+    const p=PAYG[model]; if(!p) return 0;
+    if(p.flat) return (eff/1000)*p.flat;
+    let cost=0,rem=eff;
+    for(const t of p.tiers){
+      if(rem<=0) break;
+      const b=t.to===Infinity?rem:Math.min(rem,t.to);
+      cost+=(b/1000)*t.rate; rem-=b;
+    }
+    return cost;
+  }
+  function setDocs(v) {document.getElementById('slider-docs').value=v; document.getElementById('input-docs').value=v; update();}
+  function setPages(v){document.getElementById('slider-pages').value=v;update();}
+  function setModel(btn){
+    document.querySelectorAll('.mbtn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active'); model=btn.dataset.model;
+    renderModelDesc(); update();
+  }
+
+  renderModelDesc(); update();
+</script>
+</body>
+</html>
