@@ -2,71 +2,48 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>English Grammar Challenge</title>
+<title>Sweja's Englisch Grammar Challenge</title>
 
 <style>
 body{
-font-family:Arial,Helvetica,sans-serif;
+font-family: Arial, Helvetica, sans-serif;
 background:#f2f4f8;
 margin:0;
 padding:40px;
+line-height:1.6;
 }
 
 .container{
-max-width:800px;
+max-width:900px;
 margin:auto;
 background:white;
-padding:30px;
+padding:40px;
 border-radius:12px;
 box-shadow:0 10px 25px rgba(0,0,0,0.1);
 }
 
 h1{
 text-align:center;
+margin-bottom:30px;
 }
 
-.question{
-font-size:22px;
-margin:30px 0;
-text-align:center;
+h2{
+margin-top:35px;
+color:#333;
 }
 
-.buttons{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:10px;
+.example{
+background:#f7f7f7;
+padding:15px;
+border-radius:8px;
+margin:10px 0;
 }
 
-button{
-padding:14px;
-border:none;
-border-radius:10px;
-font-size:16px;
-cursor:pointer;
-background:#4CAF50;
-color:white;
-}
-
-button:hover{
-opacity:0.9;
-}
-
-.feedback{
-margin-top:20px;
-font-size:18px;
-text-align:center;
-}
-
-.score{
-margin-top:20px;
-font-weight:bold;
-text-align:center;
-}
-
-.next{
-margin-top:20px;
-width:100%;
-background:#2196F3;
+.tip{
+background:#e8f4ff;
+padding:15px;
+border-radius:8px;
+margin-top:15px;
 }
 </style>
 </head>
@@ -75,148 +52,143 @@ background:#2196F3;
 
 <div class="container">
 
-<h1>🎮 English Grammar Challenge</h1>
+<h1>🇬🇧 Sweja's Englisch Grammar Challenge</h1>
 
-<div id="question" class="question"></div>
+<p>
+Damit du die Aufgaben im Spiel gut lösen kannst, schauen wir uns kurz zwei wichtige Themen
+aus der englischen Grammatik an.
+</p>
 
-<div id="buttons" class="buttons"></div>
+<h2>1️⃣ Subject Questions vs. Object Questions</h2>
 
-<div id="feedback" class="feedback"></div>
+<p>
+Hier geht es darum, <b>welche Rolle eine Person im Satz hat</b>.
+</p>
 
-<div id="score" class="score">Score: 0</div>
+<h3>Subject Question</h3>
 
-<button class="next" onclick="nextQuestion()">Next Question</button>
+<p>
+Eine <b>Subject Question</b> fragt nach der Person oder Sache,
+<b>die etwas tut</b>.
+</p>
 
+<p>
+Bei diesen Fragen benutzt man normalerweise <b>kein zusätzliches Hilfsverb wie "do" oder "did"</b>.
+</p>
+
+<div class="example">
+<b>Beispiele:</b><br><br>
+
+Who broke the window?<br>
+→ Wer hat das Fenster zerbrochen?<br><br>
+
+Who helped you?<br>
+→ Wer hat dir geholfen?
 </div>
 
-<script>
+<p>
+Hier ist <b>"who"</b> selbst das Subjekt des Satzes.
+</p>
 
-const questions = [
+<h3>Object Question</h3>
 
-{
-q:"Who broke the window?",
-answers:["Subject Question","Object Question"],
-correct:0
-},
+<p>
+Eine <b>Object Question</b> fragt nach der Person oder Sache,
+<b>mit der etwas gemacht wird</b>.
+</p>
 
-{
-q:"Who did you call yesterday?",
-answers:["Subject Question","Object Question"],
-correct:1
-},
+<p>
+Hier braucht man meistens ein Hilfsverb wie <b>do / did / does</b>.
+</p>
 
-{
-q:"Who helped you with homework?",
-answers:["Subject Question","Object Question"],
-correct:0
-},
+<div class="example">
+<b>Beispiele:</b><br><br>
 
-{
-q:"Who did she meet at the park?",
-answers:["Subject Question","Object Question"],
-correct:1
-},
+Who did you call yesterday?<br>
+→ Wen hast du gestern angerufen?<br><br>
 
-{
-q:"I lost my keys yesterday.",
-answers:["Present Perfect","Simple Past"],
-correct:1
-},
+Who did she meet at the park?<br>
+→ Wen hat sie im Park getroffen?
+</div>
 
-{
-q:"I have lost my keys.",
-answers:["Present Perfect","Simple Past"],
-correct:0
-},
+<div class="tip">
+<b>Merkhilfe:</b><br>
+Wer macht etwas? → Subject Question<br>
+Mit wem oder was passiert etwas? → Object Question
+</div>
 
-{
-q:"She visited London in 2022.",
-answers:["Present Perfect","Simple Past"],
-correct:1
-},
+<h2>2️⃣ Present Perfect vs. Simple Past</h2>
 
-{
-q:"She has visited London three times.",
-answers:["Present Perfect","Simple Past"],
-correct:0
-},
+<p>
+Hier geht es darum, <b>wann etwas passiert ist</b>.
+</p>
 
-{
-q:"We finished our homework an hour ago.",
-answers:["Present Perfect","Simple Past"],
-correct:1
-},
+<h3>Simple Past</h3>
 
-{
-q:"We have finished our homework.",
-answers:["Present Perfect","Simple Past"],
-correct:0
-}
+<p>
+Das <b>Simple Past</b> benutzt man, wenn eine Handlung
+<b>in der Vergangenheit abgeschlossen ist</b> und oft ein
+<b>genauer Zeitpunkt genannt wird</b>.
+</p>
 
-];
+<div class="example">
+<b>Beispiele:</b><br><br>
 
-let current = 0;
-let score = 0;
+I lost my keys yesterday.<br>
+→ Ich habe gestern meine Schlüssel verloren.<br><br>
 
-function loadQuestion(){
+She visited London in 2022.<br>
+→ Sie hat London im Jahr 2022 besucht.
+</div>
 
-const q = questions[current];
+<p>
+Typische Signalwörter sind:
+</p>
 
-document.getElementById("question").innerText = q.q;
+<ul>
+<li>yesterday</li>
+<li>last week</li>
+<li>in 2022</li>
+<li>an hour ago</li>
+</ul>
 
-const buttons = document.getElementById("buttons");
-buttons.innerHTML = "";
+<h3>Present Perfect</h3>
 
-q.answers.forEach((a,i)=>{
-const btn = document.createElement("button");
-btn.innerText = a;
-btn.onclick = () => checkAnswer(i);
-buttons.appendChild(btn);
-});
+<p>
+Das <b>Present Perfect</b benutzt man, wenn
+<b>kein genauer Zeitpunkt genannt wird</b> oder wenn etwas
+<b>noch wichtig für die Gegenwart ist</b>.
+</p>
 
-document.getElementById("feedback").innerText = "";
+<div class="example">
+<b>Beispiele:</b><br><br>
 
-}
+I have lost my keys.<br>
+→ Ich habe meine Schlüssel verloren. (Sie sind noch weg.)<br><br>
 
-function checkAnswer(i){
+She has visited London three times.<br>
+→ Sie war schon dreimal in London.
+</div>
 
-const q = questions[current];
+<p>
+Typische Signalwörter sind:
+</p>
 
-if(i === q.correct){
+<ul>
+<li>ever</li>
+<li>never</li>
+<li>already</li>
+<li>yet</li>
+<li>just</li>
+</ul>
 
-score++;
-document.getElementById("feedback").innerText = "✅ Correct!";
+<div class="tip">
+<b>Merkhilfe:</b><br>
+Simple Past → Zeitpunkt bekannt<br>
+Present Perfect → Zeitpunkt nicht wichtig
+</div>
 
-}else{
-
-document.getElementById("feedback").innerText = "❌ Not quite.";
-
-}
-
-document.getElementById("score").innerText = "Score: " + score;
-
-}
-
-function nextQuestion(){
-
-current++;
-
-if(current >= questions.length){
-
-alert("Game finished! Final score: " + score);
-
-current = 0;
-score = 0;
-
-}
-
-loadQuestion();
-
-}
-
-loadQuestion();
-
-</script>
+</div>
 
 </body>
 </html>
