@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>English Grammar Challenge</title>
+
+<style>
+body{
+font-family:Arial,Helvetica,sans-serif;
+background:#f2f4f8;
+margin:0;
+padding:40px;
+}
+
+.container{
+max-width:800px;
+margin:auto;
+background:white;
+padding:30px;
+border-radius:12px;
+box-shadow:0 10px 25px rgba(0,0,0,0.1);
+}
+
+h1{
+text-align:center;
+}
+
+.question{
+font-size:22px;
+margin:30px 0;
+text-align:center;
+}
+
+.buttons{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:10px;
+}
+
+button{
+padding:14px;
+border:none;
+border-radius:10px;
+font-size:16px;
+cursor:pointer;
+background:#4CAF50;
+color:white;
+}
+
+button:hover{
+opacity:0.9;
+}
+
+.feedback{
+margin-top:20px;
+font-size:18px;
+text-align:center;
+}
+
+.score{
+margin-top:20px;
+font-weight:bold;
+text-align:center;
+}
+
+.next{
+margin-top:20px;
+width:100%;
+background:#2196F3;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🎮 English Grammar Challenge</h1>
+
+<div id="question" class="question"></div>
+
+<div id="buttons" class="buttons"></div>
+
+<div id="feedback" class="feedback"></div>
+
+<div id="score" class="score">Score: 0</div>
+
+<button class="next" onclick="nextQuestion()">Next Question</button>
+
+</div>
+
+<script>
+
+const questions = [
+
+{
+q:"Who broke the window?",
+answers:["Subject Question","Object Question"],
+correct:0
+},
+
+{
+q:"Who did you call yesterday?",
+answers:["Subject Question","Object Question"],
+correct:1
+},
+
+{
+q:"Who helped you with homework?",
+answers:["Subject Question","Object Question"],
+correct:0
+},
+
+{
+q:"Who did she meet at the park?",
+answers:["Subject Question","Object Question"],
+correct:1
+},
+
+{
+q:"I lost my keys yesterday.",
+answers:["Present Perfect","Simple Past"],
+correct:1
+},
+
+{
+q:"I have lost my keys.",
+answers:["Present Perfect","Simple Past"],
+correct:0
+},
+
+{
+q:"She visited London in 2022.",
+answers:["Present Perfect","Simple Past"],
+correct:1
+},
+
+{
+q:"She has visited London three times.",
+answers:["Present Perfect","Simple Past"],
+correct:0
+},
+
+{
+q:"We finished our homework an hour ago.",
+answers:["Present Perfect","Simple Past"],
+correct:1
+},
+
+{
+q:"We have finished our homework.",
+answers:["Present Perfect","Simple Past"],
+correct:0
+}
+
+];
+
+let current = 0;
+let score = 0;
+
+function loadQuestion(){
+
+const q = questions[current];
+
+document.getElementById("question").innerText = q.q;
+
+const buttons = document.getElementById("buttons");
+buttons.innerHTML = "";
+
+q.answers.forEach((a,i)=>{
+const btn = document.createElement("button");
+btn.innerText = a;
+btn.onclick = () => checkAnswer(i);
+buttons.appendChild(btn);
+});
+
+document.getElementById("feedback").innerText = "";
+
+}
+
+function checkAnswer(i){
+
+const q = questions[current];
+
+if(i === q.correct){
+
+score++;
+document.getElementById("feedback").innerText = "✅ Correct!";
+
+}else{
+
+document.getElementById("feedback").innerText = "❌ Not quite.";
+
+}
+
+document.getElementById("score").innerText = "Score: " + score;
+
+}
+
+function nextQuestion(){
+
+current++;
+
+if(current >= questions.length){
+
+alert("Game finished! Final score: " + score);
+
+current = 0;
+score = 0;
+
+}
+
+loadQuestion();
+
+}
+
+loadQuestion();
+
+</script>
+
+</body>
+</html>
