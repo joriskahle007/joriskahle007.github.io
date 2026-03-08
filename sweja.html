@@ -3,185 +3,133 @@
 <head>
 <meta charset="UTF-8">
 <title>Sweja's Englisch Grammar Challenge</title>
-
 <style>
 body{
-font-family: Arial, Helvetica, sans-serif;
-background:#f2f4f8;
-margin:0;
-padding:40px;
-line-height:1.6;
+    font-family: Arial, Helvetica, sans-serif;
+    background:#f2f4f8;
+    margin:0;
+    padding:20px;
+    line-height:1.6;
 }
-
 .container{
-max-width:900px;
-margin:auto;
-background:white;
-padding:40px;
-border-radius:12px;
-box-shadow:0 10px 25px rgba(0,0,0,0.1);
+    max-width:900px;
+    margin:auto;
+    background:white;
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
 }
-
-h1{
-text-align:center;
-margin-bottom:30px;
+h1{text-align:center;margin-bottom:30px;}
+h2{margin-top:35px;color:#333;}
+.question{font-size:22px;margin:20px 0;text-align:center;}
+.buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
 }
-
-h2{
-margin-top:35px;
-color:#333;
+button{
+    padding:14px;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
+    cursor:pointer;
+    background:#4CAF50;
+    color:white;
 }
-
+button:hover{opacity:0.9;}
+.feedback{text-align:center;margin-top:20px;font-size:18px;}
+.score{text-align:center;margin-top:10px;font-weight:bold;}
+.next{
+    margin-top:20px;
+    width:100%;
+    background:#2196F3;
+}
 .example{
-background:#f7f7f7;
-padding:15px;
-border-radius:8px;
-margin:10px 0;
+    background:#f7f7f7;
+    padding:15px;
+    border-radius:8px;
+    margin:10px 0;
 }
-
 .tip{
-background:#e8f4ff;
-padding:15px;
-border-radius:8px;
-margin-top:15px;
+    background:#e8f4ff;
+    padding:15px;
+    border-radius:8px;
+    margin-top:15px;
 }
 </style>
 </head>
-
 <body>
 
 <div class="container">
-
 <h1>🇬🇧 Sweja's Englisch Grammar Challenge</h1>
 
-<p>
-Damit du die Aufgaben im Spiel gut lösen kannst, schauen wir uns kurz zwei wichtige Themen
-aus der englischen Grammatik an.
-</p>
+<!-- QUIZ-BEREICH -->
+<h2>📚 Quiz: Teste dein Wissen!</h2>
+<div id="question" class="question"></div>
+<div id="buttons" class="buttons"></div>
+<div id="feedback" class="feedback"></div>
+<div id="score" class="score">Score: 0</div>
+<button class="next" onclick="nextQuestion()">Nächste Frage</button>
 
-<h2>1️⃣ Subject Questions vs. Object Questions</h2>
+<!-- ERKLÄRUNG-BEREICH -->
+<h2>📝 Ausführliche Erklärungen</h2>
 
-<p>
-Hier geht es darum, <b>welche Rolle eine Person im Satz hat</b>.
-</p>
+<h3>1️⃣ Subject Questions vs. Object Questions</h3>
+<p>Hier geht es darum, <b>welche Rolle eine Person im Satz hat</b>.</p>
 
-<h3>Subject Question</h3>
-
-<p>
-Eine <b>Subject Question</b> fragt nach der Person oder Sache,
-<b>die etwas tut</b>.
-</p>
-
-<p>
-Bei diesen Fragen benutzt man normalerweise <b>kein zusätzliches Hilfsverb wie "do" oder "did"</b>.
-</p>
-
+<h4>Subject Question</h4>
+<p>Fragt nach der Person oder Sache, <b>die etwas tut</b>. Meist kein Hilfsverb.</p>
 <div class="example">
-<b>Beispiele:</b><br><br>
-
+<b>Beispiele:</b><br>
 Who broke the window?<br>
 → Wer hat das Fenster zerbrochen?<br><br>
-
 Who helped you?<br>
 → Wer hat dir geholfen?
 </div>
 
-<p>
-Hier ist <b>"who"</b> selbst das Subjekt des Satzes.
-</p>
-
-<h3>Object Question</h3>
-
-<p>
-Eine <b>Object Question</b> fragt nach der Person oder Sache,
-<b>mit der etwas gemacht wird</b>.
-</p>
-
-<p>
-Hier braucht man meistens ein Hilfsverb wie <b>do / did / does</b>.
-</p>
-
+<h4>Object Question</h4>
+<p>Fragt nach der Person oder Sache, <b>mit der etwas passiert</b>. Hilfsverb nötig.</p>
 <div class="example">
-<b>Beispiele:</b><br><br>
-
+<b>Beispiele:</b><br>
 Who did you call yesterday?<br>
 → Wen hast du gestern angerufen?<br><br>
-
 Who did she meet at the park?<br>
 → Wen hat sie im Park getroffen?
 </div>
-
 <div class="tip">
 <b>Merkhilfe:</b><br>
 Wer macht etwas? → Subject Question<br>
 Mit wem oder was passiert etwas? → Object Question
 </div>
 
-<h2>2️⃣ Present Perfect vs. Simple Past</h2>
+<h3>2️⃣ Present Perfect vs. Simple Past</h3>
+<p>Hier geht es darum, <b>wann etwas passiert ist</b>.</p>
 
-<p>
-Hier geht es darum, <b>wann etwas passiert ist</b>.
-</p>
-
-<h3>Simple Past</h3>
-
-<p>
-Das <b>Simple Past</b> benutzt man, wenn eine Handlung
-<b>in der Vergangenheit abgeschlossen ist</b> und oft ein
-<b>genauer Zeitpunkt genannt wird</b>.
-</p>
-
+<h4>Simple Past</h4>
+<p>Handlung <b>in der Vergangenheit abgeschlossen</b> mit bekanntem Zeitpunkt.</p>
 <div class="example">
-<b>Beispiele:</b><br><br>
-
+<b>Beispiele:</b><br>
 I lost my keys yesterday.<br>
 → Ich habe gestern meine Schlüssel verloren.<br><br>
-
 She visited London in 2022.<br>
-→ Sie hat London im Jahr 2022 besucht.
+→ Sie hat London 2022 besucht.
 </div>
-
-<p>
-Typische Signalwörter sind:
-</p>
-
 <ul>
-<li>yesterday</li>
-<li>last week</li>
-<li>in 2022</li>
-<li>an hour ago</li>
+<li>Signalwörter: yesterday, last week, in 2022, an hour ago</li>
 </ul>
 
-<h3>Present Perfect</h3>
-
-<p>
-Das <b>Present Perfect</b benutzt man, wenn
-<b>kein genauer Zeitpunkt genannt wird</b> oder wenn etwas
-<b>noch wichtig für die Gegenwart ist</b>.
-</p>
-
+<h4>Present Perfect</h4>
+<p>Handlung passiert, <b>kein Zeitpunkt genannt</b> oder noch Einfluss auf Gegenwart.</p>
 <div class="example">
-<b>Beispiele:</b><br><br>
-
+<b>Beispiele:</b><br>
 I have lost my keys.<br>
 → Ich habe meine Schlüssel verloren. (Sie sind noch weg.)<br><br>
-
 She has visited London three times.<br>
 → Sie war schon dreimal in London.
 </div>
-
-<p>
-Typische Signalwörter sind:
-</p>
-
 <ul>
-<li>ever</li>
-<li>never</li>
-<li>already</li>
-<li>yet</li>
-<li>just</li>
+<li>Signalwörter: ever, never, already, yet, just</li>
 </ul>
-
 <div class="tip">
 <b>Merkhilfe:</b><br>
 Simple Past → Zeitpunkt bekannt<br>
@@ -189,6 +137,62 @@ Present Perfect → Zeitpunkt nicht wichtig
 </div>
 
 </div>
+
+<script>
+// QUIZ-DATEN
+const questions = [
+{q:"Who broke the window?", answers:["Subject Question","Object Question"], correct:0},
+{q:"Who did you call yesterday?", answers:["Subject Question","Object Question"], correct:1},
+{q:"Who helped you with homework?", answers:["Subject Question","Object Question"], correct:0},
+{q:"Who did she meet at the park?", answers:["Subject Question","Object Question"], correct:1},
+{q:"I lost my keys yesterday.", answers:["Present Perfect","Simple Past"], correct:1},
+{q:"I have lost my keys.", answers:["Present Perfect","Simple Past"], correct:0},
+{q:"She visited London in 2022.", answers:["Present Perfect","Simple Past"], correct:1},
+{q:"She has visited London three times.", answers:["Present Perfect","Simple Past"], correct:0},
+{q:"We finished our homework an hour ago.", answers:["Present Perfect","Simple Past"], correct:1},
+{q:"We have finished our homework.", answers:["Present Perfect","Simple Past"], correct:0}
+];
+
+let current=0;
+let score=0;
+
+function loadQuestion(){
+    const q=questions[current];
+    document.getElementById("question").innerText=q.q;
+    const buttons=document.getElementById("buttons");
+    buttons.innerHTML="";
+    q.answers.forEach((a,i)=>{
+        const btn=document.createElement("button");
+        btn.innerText=a;
+        btn.onclick=()=>checkAnswer(i);
+        buttons.appendChild(btn);
+    });
+    document.getElementById("feedback").innerText="";
+}
+
+function checkAnswer(i){
+    const q=questions[current];
+    if(i===q.correct){
+        score++;
+        document.getElementById("feedback").innerText="✅ Richtig!";
+    }else{
+        document.getElementById("feedback").innerText="❌ Falsch!";
+    }
+    document.getElementById("score").innerText="Score: "+score;
+}
+
+function nextQuestion(){
+    current++;
+    if(current>=questions.length){
+        alert("Spiel beendet! Endpunktzahl: "+score);
+        current=0;
+        score=0;
+    }
+    loadQuestion();
+}
+
+loadQuestion();
+</script>
 
 </body>
 </html>
