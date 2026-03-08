@@ -139,18 +139,68 @@ Present Perfect → Zeitpunkt nicht wichtig
 </div>
 
 <script>
-// QUIZ-DATEN
+// QUIZ-DATEN MIT ERKLÄRUNGEN
 const questions = [
-{q:"Who broke the window?", answers:["Subject Question","Object Question"], correct:0},
-{q:"Who did you call yesterday?", answers:["Subject Question","Object Question"], correct:1},
-{q:"Who helped you with homework?", answers:["Subject Question","Object Question"], correct:0},
-{q:"Who did she meet at the park?", answers:["Subject Question","Object Question"], correct:1},
-{q:"I lost my keys yesterday.", answers:["Present Perfect","Simple Past"], correct:1},
-{q:"I have lost my keys.", answers:["Present Perfect","Simple Past"], correct:0},
-{q:"She visited London in 2022.", answers:["Present Perfect","Simple Past"], correct:1},
-{q:"She has visited London three times.", answers:["Present Perfect","Simple Past"], correct:0},
-{q:"We finished our homework an hour ago.", answers:["Present Perfect","Simple Past"], correct:1},
-{q:"We have finished our homework.", answers:["Present Perfect","Simple Past"], correct:0}
+{
+    q:"Who broke the window?",
+    answers:["Subject Question","Object Question"],
+    correct:0,
+    explanation:"Es ist eine Subject Question, weil 'who' die Person ist, die etwas getan hat (Subjekt)."
+},
+{
+    q:"Who did you call yesterday?",
+    answers:["Subject Question","Object Question"],
+    correct:1,
+    explanation:"Es ist eine Object Question, weil die Handlung von 'you' ausgeführt wird, gefragt wird aber nach dem Objekt (Wen?)."
+},
+{
+    q:"Who helped you with homework?",
+    answers:["Subject Question","Object Question"],
+    correct:0,
+    explanation:"Subject Question: 'who' ist die Person, die geholfen hat (Subjekt)."
+},
+{
+    q:"Who did she meet at the park?",
+    answers:["Subject Question","Object Question"],
+    correct:1,
+    explanation:"Object Question: 'she' ist das Subjekt, gefragt wird nach dem Objekt (Wen?)."
+},
+{
+    q:"I lost my keys yesterday.",
+    answers:["Present Perfect","Simple Past"],
+    correct:1,
+    explanation:"Simple Past, weil ein konkreter Zeitpunkt genannt wird ('yesterday')."
+},
+{
+    q:"I have lost my keys.",
+    answers:["Present Perfect","Simple Past"],
+    correct:0,
+    explanation:"Present Perfect, weil kein Zeitpunkt genannt wird und die Schlüssel noch weg sind."
+},
+{
+    q:"She visited London in 2022.",
+    answers:["Present Perfect","Simple Past"],
+    correct:1,
+    explanation:"Simple Past, konkreter Zeitpunkt ('in 2022')."
+},
+{
+    q:"She has visited London three times.",
+    answers:["Present Perfect","Simple Past"],
+    correct:0,
+    explanation:"Present Perfect, kein Zeitpunkt, spricht über Erfahrung."
+},
+{
+    q:"We finished our homework an hour ago.",
+    answers:["Present Perfect","Simple Past"],
+    correct:1,
+    explanation:"Simple Past, der Zeitpunkt ('an hour ago') ist konkret."
+},
+{
+    q:"We have finished our homework.",
+    answers:["Present Perfect","Simple Past"],
+    correct:0,
+    explanation:"Present Perfect, kein Zeitpunkt angegeben, Einfluss auf Gegenwart."
+}
 ];
 
 let current=0;
@@ -175,8 +225,8 @@ function checkAnswer(i){
     if(i===q.correct){
         score++;
         document.getElementById("feedback").innerText="✅ Richtig!";
-    }else{
-        document.getElementById("feedback").innerText="❌ Falsch!";
+    } else {
+        document.getElementById("feedback").innerText="❌ Falsch! Erklärung: " + q.explanation;
     }
     document.getElementById("score").innerText="Score: "+score;
 }
