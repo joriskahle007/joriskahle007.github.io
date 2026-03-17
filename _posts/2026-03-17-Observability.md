@@ -13,6 +13,8 @@ Stell dir vor, du betreibst eine KI, die Kundenanfragen beantwortet. Anfangs lä
 
 Evaluations sind wie ein **TÜV für deine KI**. Sie prüfen automatisch die Qualität der Antworten und decken mehrere Dimensionen ab. Dabei geht es nicht nur darum, ob eine Antwort richtig oder falsch ist, sondern auch, ob sie **sinnvoll, kohärent und auf verlässlichen Informationen basiert.** Microsoft Foundry liefert bereits fertige Bewertungsmetriken, du kannst aber auch eigene Regeln definieren, die genau auf dein Unternehmen zugeschnitten sind.<br>
 
+Neben standardisierten Metriken für allgemeine Qualität, Retrieval‑Performance oder Sicherheit kannst du auch eigene Evaluationsregeln definieren, die dein Team für wichtig hält, beispielsweise bestimmte inhaltliche Vorgaben oder Business‑SLA‑Regeln. So siehst du nicht erst nach dem Livegang, sondern schon fortlaufend, wie Änderungen an Modellen oder Pipelines sich auf die Qualität auswirken.
+
 **Was Evaluations für dich tun:**
 
 - Prüfen, ob die Antworten inhaltlich korrekt sind
@@ -20,13 +22,17 @@ Evaluations sind wie ein **TÜV für deine KI**. Sie prüfen automatisch die Qua
 - Kontinuierlich messen, wie neue Modelle oder Anpassungen die Qualität beeinflussen
 - Eigene Regeln für spezielle Anforderungen definieren
 
-**Praxisbeispiel:** Du betreibst eine KI im Kundenservice, die täglich hunderte Anfragen beantwortet. Du fügst ein neues Modell hinzu, das schneller antworten soll. Mit Evaluations siehst du sofort, ob die Antworten weiterhin korrekt und verständlich sind und ob die Qualität besser wird oder noch angepasst werden muss.<br><br>
+**Praxisbeispiel:** Du betreibst eine KI im Kundenservice, die täglich hunderte Anfragen beantwortet. Du fügst ein neues Modell hinzu, das schneller antworten soll. Mit Evaluations siehst du sofort, ob die Antworten weiterhin korrekt und verständlich sind und ob die Qualität besser wird oder noch angepasst werden muss.<br>
 
-## Monitoring – alles im Blick behalten
+**Wichtig zu wissen:** Evaluations können in der Entwicklungs‑ und in der Produktionsphase eingesetzt werden, sowohl lokal in Tests als auch integriert in CI/CD‑Pipelines.<br><br>
 
-Während Evaluations die Qualität messen, liefert Monitoring die **Echtzeit-Übersicht über den Betrieb deiner KI.** Stell es dir wie ein Cockpit vor: du siehst auf einen Blick, wie viele Anfragen bearbeitet werden, wie lange die KI für jede Antwort benötigt, wie viele Tokens verbraucht werden und ob irgendwo Fehler auftreten.<br>
+## Monitoring – das Cockpit deiner KI‑Anwendung
 
-Monitoring ermöglicht nicht nur die **Echtzeit-Kontrolle**, sondern auch langfristige Analysen. Du erkennst Trends, findest Engpässe und kannst Vorhersagen treffen, wann ein Modell überarbeitet werden sollte. Alarme informieren dich sofort, sobald etwas nicht stimmt, bevor es die Nutzer bemerken.<br>
+Monitoring ist der Teil der Observability, der dir einen **Live‑Überblick über den Zustand deiner KI liefert**. Es zeigt dir, wie viele Anfragen verarbeitet werden, wie lange sie dauern, wie viele Tokens verbraucht werden, welche Fehler auftreten und wie die Qualitätsmetriken aussehen. Dieses Monitoring wird in Foundry über **Azure Monitor Application Insights** realisiert, dem Observability‑Tool von Azure, das Telemetriedaten sammelt und visualisiert.<br>
+
+**Was ist Azure Monitor Application Insights?**
+
+Azure Monitor Application Insights ist ein Teil von Azure Monitor und dient als moderne Lösung für **Application Performance Monitoring (APM)**. Es sammelt Telemetriedaten wie Anfragen, Fehler, Abhängigkeiten, Metriken oder benutzerdefinierte Ereignisse und macht sie sichtbar in Dashboards, Reports oder Analysen. Durch Integration mit OpenTelemetry können Daten standardisiert gesammelt werden, unabhängig von Programmiersprache oder Framework.<br>
 
 **Monitoring hilft dir konkret:**
 
@@ -35,13 +41,24 @@ Monitoring ermöglicht nicht nur die **Echtzeit-Kontrolle**, sondern auch langfr
 - Ressourcenverbrauch analysieren
 - Trends und Muster über die Zeit beobachten
 
-**Praxisbeispiel:** Eine Marketing-KI erstellt E-Mail-Kampagnen automatisch. Monitoring zeigt, dass bestimmte Kampagnen mehr Ressourcen benötigen oder schlechtere Qualität liefern. Du kannst sofort eingreifen und die Kampagnen optimieren, bevor sie live gehen.<br><br>
+**Praxisbeispiel:** Eine Marketing-KI erstellt E-Mail-Kampagnen automatisch. Monitoring zeigt, dass bestimmte Kampagnen mehr Ressourcen benötigen oder schlechtere Qualität liefern. Du kannst sofort eingreifen und die Kampagnen optimieren, bevor sie live gehen.<br>
+
+**Voraussetzungen für Azure Monitor Application Insights**
+
+Damit du Application Insights fürs Foundry‑Monitoring sinnvoll nutzen kannst, gibt es ein paar Dinge, die du vorbereiten musst. Diese Voraussetzungen sind nicht besonders kompliziert, aber sie sind entscheidend dafür, dass du später Daten korrekt sammeln, analysieren und visualisieren kannst:
+
+**Grundlage**
+- **Azure‑Abonnement**: Du brauchst ein aktives Azure‑Abonnement, damit du Ressourcen wie Application Insights anlegen kannst.
+- **Application Insights‑Ressource**: Lege im Azure‑Portal eine neue Application Insights‑Ressource an. Das ist der Speicherort für alle Telemetriedaten.
+- **Log Analytics Workspace**: Application Insights wird meist an einen Log Analytics Workspace gekoppelt. Dieser Workspace speichert die Telemetriedaten und ermöglicht Abfragen und Analysen.
+
+Ohne Log Analytics kann Application Insights zwar Daten sammeln, aber viele Analyse‑ und Dashboard‑Funktionen gehen verloren bzw. sind stark eingeschränkt.<br><br>
 
 ## Tracing – nachvollziehen, wie die KI denkt
 
-Tracing geht noch einen Schritt weiter: es erlaubt dir, **jeden einzelnen Verarbeitungsschritt einer Anfrage** nachzuvollziehen. Du siehst, welches Modell eingesetzt wurde, welche Daten und Tools abgefragt wurden, wie lange jeder Schritt dauerte und welche Evaluations-Ergebnisse vorliegen.<br>
+Tracing ist der Teil, bei dem du wirklich verstehen kannst, **wie eine KI‑Antwort aufgebaut ist**. Es zeigt dir Schritt für Schritt, wie Eingaben verarbeitet werden, welche Modelle aufgerufen werden, welche Tools oder APIs involviert waren und wie lange einzelne Schritte gedauert haben. Dieses verteilte Tracing basiert auf OpenTelemetry‑Standards und ist direkt in Application Insights integriert, sobald die Instrumentierung erfolgt ist.<br>
 
-Mit Tracing kannst du **Fehler gezielt lokalisieren**. Wenn eine falsche Antwort kommt, musst du nicht rätseln, wo das Problem liegt – du siehst es sofort. Das spart Zeit, reduziert Risiken und macht die KI-Entwicklung effizienter.<br>
+Gerade in komplexen KI‑Agentenszenarien, in denen mehrere Modelle, Tools oder Datenquellen beteiligt sind, hilft dir Tracing enorm dabei, **Ursachen für Performance‑Probleme, Fehler oder Qualitätsabweichungen zu erkennen**, ohne lange manuell zu debuggen.<br>
 
 **Was Tracing dir liefert:**
 
