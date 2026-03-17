@@ -84,6 +84,28 @@ Schon in der Entwicklungsphase lohnt es sich, diese Funktionen einzusetzen. Du t
 
 Mit Evaluations, Monitoring und Tracing hast du ein **komplettes Kontrollzentrum für deine KI**. Du behältst die Kontrolle, erkennst Probleme frühzeitig, verstehst die Entscheidungen deiner KI und kannst sie kontinuierlich verbessern. Für dich bedeutet das: weniger Überraschungen, höhere Qualität, schnelleres Debugging und eine solide Grundlage für Governance und Compliance. Du kannst sicher sein, dass deine KI nicht nur funktioniert, sondern auch zuverlässig, nachvollziehbar und sicher arbeitet.
 
+## Red Teaming im Observability‑Kontext von Microsoft Foundry
+
+Ein zunehmend wichtiger Aspekt der Observability bei KI‑Agenten und LLM‑basierten Systemen ist das **sogenannte „AI Red Teaming“**. Während Evaluations, Monitoring und Tracing dir helfen, wie gut deine KI arbeitet und ob sie korrekt, performant und transparent ist, geht es beim Red Teaming speziell um das Erkennen von Sicherheits‑ und Vertrauensrisiken, bevor sie im Echtbetrieb auftreten<br>
+
+**Was bedeutet „Red Team“ hier konkret?**
+In Microsoft Foundry wird der **AI Red Teaming Agent** als Teil der Observability‑Funktionen bereitgestellt. Dieser Agent simuliert gezielt adversariale bzw. potenziell bösartige Eingaben und Angriffsszenarien gegen deine KI‑Agenten, um Schwachstellen aufzudecken, etwa:
+
+- unbeabsichtigte **Datenleaks** von sensiblen Informationen
+- **Jailbreaks** oder Missbrauch durch Prompt‑Injektionen
+- **Verstöße gegen Richtlinien oder verbotene Aktionen**
+- **Abweichungen in der Aufgabenbefolgung**, wenn das Agentensystem gezielt irritiert wird<br>
+
+Diese Art von Tests zielt nicht auf Performance‑ oder Qualitätsmetriken ab, sondern darauf, wie robust und sicher ein Agent unter realistischen Angriffsversionen arbeitet. Solche Red‑Team‑Tests lassen sich sowohl in **Vorproduktions‑Workflows (z. B. CI/CD‑Pipelines)** als auch regelmäßig im Betrieb einbinden, um neu auftretende Risiken frühzeitig zu erkennen und zu beheben.<br>
+
+In der Observability‑Praxis ergänzt Red Teaming klassische Logs, Metriken und Traces:<br>
+
+- Logs sagen dir „was passiert ist“
+- Traces zeigen „wo es passiert ist“
+- Red Teaming sagt „was passieren könnte, wenn jemand dein System ausnutzt“
+
+So wird Observability nicht nur ein Werkzeug zur Transparenz über das Verhalten deiner KI, sondern auch zu einem aktiven Sicherheits‑ und Vertrauens‑Schild, bevor es zu echten Vorfällen kommt.<br><br>
+
 ## Fazit:
 
 Wenn du dir all das zusammen ansiehst, wird schnell klar: **Evaluations, Monitoring und Tracing sind keine Spielereien, sondern echte Gamechanger für produktive KI**. Sie geben dir die **Sicherheit, Kontrolle und Transparenz**, die moderne KI im Unternehmenskontext braucht. Du kannst neue Modelle testen, die Performance im Betrieb überwachen und jede Anfrage Schritt für Schritt nachvollziehen. Kurz gesagt: Mit diesen Tools machst du aus einer komplexen, manchmal unberechenbaren Technologie ein wirklich **steuerbares und wertvolles Werkzeug**, genau wie ein gut funktionierendes Kontrollzentrum, in dem du jederzeit den Überblick behältst.<br><br>
