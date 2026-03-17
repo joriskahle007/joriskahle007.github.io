@@ -82,7 +82,7 @@ Schon in der Entwicklungsphase lohnt es sich, diese Funktionen einzusetzen. Du t
 
 ## Warum sich der Einsatz lohnt
 
-Mit Evaluations, Monitoring und Tracing hast du ein **komplettes Kontrollzentrum für deine KI**. Du behältst die Kontrolle, erkennst Probleme frühzeitig, verstehst die Entscheidungen deiner KI und kannst sie kontinuierlich verbessern. Für dich bedeutet das: weniger Überraschungen, höhere Qualität, schnelleres Debugging und eine solide Grundlage für Governance und Compliance. Du kannst sicher sein, dass deine KI nicht nur funktioniert, sondern auch zuverlässig, nachvollziehbar und sicher arbeitet.
+Mit Evaluations, Monitoring und Tracing hast du ein **komplettes Kontrollzentrum für deine KI**. Du behältst die Kontrolle, erkennst Probleme frühzeitig, verstehst die Entscheidungen deiner KI und kannst sie kontinuierlich verbessern. Für dich bedeutet das: weniger Überraschungen, höhere Qualität, schnelleres Debugging und eine solide Grundlage für Governance und Compliance. Du kannst sicher sein, dass deine KI nicht nur funktioniert, sondern auch zuverlässig, nachvollziehbar und sicher arbeitet.<br><br>
 
 ## Red Teaming im Observability‑Kontext von Microsoft Foundry
 
