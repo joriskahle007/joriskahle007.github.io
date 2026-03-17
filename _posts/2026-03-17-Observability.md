@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Microsoft Foundry Observability : So behältst du deine KI immer unter Kontrolle
+title: Microsoft Foundry Observability - So behältst du deine KI immer unter Kontrolle
 tags: [CSP, Azure, GPT, Speech, GPT Realtime Modell]
 ---
 
