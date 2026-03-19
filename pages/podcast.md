@@ -20,7 +20,7 @@ Ob Techie oder Entscheider – hier bekommst du praxisnahe Impulse, echte Erfahr
 <h3>🎧 Folge 10 : Fabric und die Sonne</h3>
 <iframe 
   style="border-radius:12px" 
-  src="https://open.spotify.com/episode/1W1kINFtd3xH6VGID1lE0i?si=MQzt8z0MTbePd8BuwDIHCg"
+  src="https://open.spotify.com/embed/episode/1W1kINFtd3xH6VGID1lE0i?si=MQzt8z0MTbePd8BuwDIHCg"
   width="100%" 
   height="152" 
   frameborder="0" 
@@ -33,7 +33,7 @@ Ob Techie oder Entscheider – hier bekommst du praxisnahe Impulse, echte Erfahr
 <h3>🎧 Folge 9 : Recap 2025</h3>
 <iframe 
   style="border-radius:12px" 
-  src="https://open.spotify.com/episode/6QeIZ5QEzokzFfvP9S3H3r?si=qrfPykCsTECKCbc2TDjReg"
+  src="https://open.spotify.com/embed/episode/6QeIZ5QEzokzFfvP9S3H3r?si=qrfPykCsTECKCbc2TDjReg"
   width="100%" 
   height="152" 
   frameborder="0" 
@@ -46,7 +46,7 @@ Ob Techie oder Entscheider – hier bekommst du praxisnahe Impulse, echte Erfahr
 <h3>🎧 Folge 8 : Ignite Insights </h3>
 <iframe 
   style="border-radius:12px" 
-  src="https://open.spotify.com/episode/1dc1gjjTGmFBjAU6z4L3Fu?si=yHu3nCQASNGhQdAiQ-40Sg"
+  src="https://open.spotify.com/embed/episode/1dc1gjjTGmFBjAU6z4L3Fu?si=yHu3nCQASNGhQdAiQ-40Sg"
   width="100%" 
   height="152" 
   frameborder="0" 
