@@ -1,66 +1,27 @@
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=0.5, maximum-scale=5">
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const root = document.documentElement;
 
-    <!-- THEME MODE (UNVERÄNDERT!) -->
-    <script>
-        const darkBtn = "{{ site.data.language.str_dark | default: "Dark" }}";
-        const lightBtn = "{{ site.data.language.str_light | default: "Light" }}";
-        const isAutoTheme = {% if site.color_theme == 'auto' %}true{% else %}false{% endif %};
-        const preferredTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    function setTheme(theme) {
+        root.setAttribute("data-theme", theme);
+        try {
+            sessionStorage.setItem("theme", theme);
+        } catch (e) {}
+    }
 
-        if (isAutoTheme) {
-            document.documentElement.setAttribute(
-                'data-theme',
-                sessionStorage.getItem('theme') ?? preferredTheme
-            );
-        } else {
-            document.documentElement.setAttribute(
-                'data-theme',
-                "{{ site.color_theme | default: 'light' }}"
-            );
-        }
-    </script>
+    // initial fix
+    const stored = sessionStorage.getItem("theme");
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
 
-    <!-- CORE JS -->
-    <script defer src="{{ '/assets/js/main.min.js' | relative_url }}"></script>
+    setTheme(stored || (prefersDark ? "dark" : "light"));
 
-    <!-- CSS -->
-    <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url }}">
+    // FORCE toggle fallback (unabhängig vom Theme)
+    document.addEventListener("click", function (e) {
+        const btn = e.target.closest("[data-toggle-theme]");
+        if (!btn) return;
 
-    <!-- FAVICON -->
-    <link rel="shortcut icon" href="{{ site.favicon | relative_url }}" type="image/x-icon">
-
-    <!-- CANONICAL -->
-    <link rel="canonical" href="{{ page.url | absolute_url }}">
-
-    <!-- SEO PLUGIN -->
-    {% seo %}
-
-    <!-- RSS -->
-    <link rel="alternate" type="application/atom+xml" href="{{ 'feed.xml' | absolute_url }}"/>
-    {% feed_meta %}
-
-    <!-- OPEN GRAPH MINIMAL SAFE -->
-    <meta property="og:image" content="{{ '/' | absolute_url }}{% if page.thumbnail %}{{ page.thumbnail }}{% else %}{{ page.feature-img | default: site.header_feature_image }}{% endif %}">
-
-    {% unless page.layout == post %}
-    <meta property="og:type" content="website" />
-    {% else %}
-    <meta property="og:type" content="article" />
-    {% endunless %}
-
-    <!-- TWITTER SAFE -->
-    <meta name="twitter:title" content="{{ page.title | default: site.title }}">
-
-    <meta name="twitter:description"
-          content="{{ page.content | default: site.header_text | strip_html | strip_newlines | truncate: 160 }}">
-
-    {% if site.data.social.twitter %}
-    <meta name="twitter:creator" content="@{{ site.data.social.twitter }}">
-    {% endif %}
-
-    <meta name="twitter:card"
-          content="{% unless page.thumbnail %}summary{% else %}summary_large_image{% endunless %}">
-
-</head>
+        const current = root.getAttribute("data-theme");
+        setTheme(current === "dark" ? "light" : "dark");
+    });
+});
+</script>
