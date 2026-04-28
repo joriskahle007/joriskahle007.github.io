@@ -382,21 +382,14 @@ title: "Document Intelligence"
 
   // ── Berechnung Pay-as-you-go ──────────────────────────────
   function calcPayG(p) {
-    if (p <= FREE) return 0;
-    var cfg = PAYG[model];
-    if (cfg === null) return null; // N/A
-    if (cfg.flat) return (p / 1000) * cfg.flat;
-    // gestaffelte Preise (Read)
-    var cost = 0, rem = p;
-    for (var i = 0; i < cfg.tiers.length; i++) {
-      if (rem <= 0) break;
-      var t = cfg.tiers[i];
-      var block = t.to === Infinity ? rem : Math.min(rem, t.to);
-      cost += (block / 1000) * t.rate;
-      rem  -= block;
-    }
-    return cost;
+  if (p <= FREE) return 0;
+  // Ab 1M Seiten gilt der günstigere Preis für ALLE Seiten
+  if (model === 'read') {
+    var rate = p >= 1000000 ? 0.521 : 1.303;
+    return (p / 1000) * rate;
   }
+  return (p / 1000) * PAYG[model].flat;
+}
 
   // ── Bestes Commitment Tier ────────────────────────────────
   function calcCommit(p) {
