@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard — MEETRA</title>
+<link rel="stylesheet" href="../css/main.css">
+<link rel="stylesheet" href="../css/dashboard.css">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="scanlines"></div>
+<canvas id="matrix-bg"></canvas>
+
+<!-- NAV -->
+<nav class="nav-main">
+  <a href="../index.html" class="nav-logo">
+    <span class="logo-bracket">[</span><span class="logo-text">MEETRA</span><span class="logo-bracket">]</span>
+    <span class="logo-tag">v1.0 · BETA</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">🔔 <span style="background:var(--magenta);color:#fff;font-size:10px;padding:2px 5px;border-radius:8px;">3</span></a></li>
+    <li><a href="#">💬</a></li>
+    <li><a href="../index.html" class="nav-btn-sec">← Startseite</a></li>
+    <li><a href="login.html" class="nav-btn-pri">Logout</a></li>
+  </ul>
+</nav>
+
+<div class="dash-layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-user">
+      <div class="su-avatar">😎</div>
+      <div class="su-name">Max Mustermann</div>
+      <div class="su-handle">@max_meetra</div>
+      <div class="su-status">
+        <span class="su-dot"></span>
+        ONLINE · EU-Server aktiv
+      </div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section">HAUPTMENÜ</div>
+      <a href="#" class="active"><span class="nav-ico">🏠</span> Feed</a>
+      <a href="profile.html"><span class="nav-ico">👤</span> Profil</a>
+      <a href="calendar.html"><span class="nav-ico">📅</span> Kalender</a>
+      <a href="#"><span class="nav-ico">💬</span> Nachrichten <span class="nav-badge">3</span></a>
+      <a href="#"><span class="nav-ico">👥</span> Freunde</a>
+      <a href="#"><span class="nav-ico">🎯</span> Events</a>
+      <div class="sidebar-section">COMMUNITY</div>
+      <a href="#"><span class="nav-ico">🏘️</span> Gruppen</a>
+      <a href="#"><span class="nav-ico">🔍</span> Entdecken</a>
+      <a href="#"><span class="nav-ico">⭐</span> Interessen-Match</a>
+      <div class="sidebar-section">KI-TOOLS</div>
+      <a href="#"><span class="nav-ico">🤖</span> KI-Assistent</a>
+      <a href="#"><span class="nav-ico">🎙️</span> Sprachassistent</a>
+      <a href="#"><span class="nav-ico">📊</span> Mein Alltag</a>
+    </nav>
+    <div class="sidebar-bottom">
+      <a href="#"><span>⚙️</span> Einstellungen</a>
+      <a href="#"><span>🔒</span> Datenschutz</a>
+      <a href="login.html"><span>🚪</span> Abmelden</a>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="dash-main">
+    <div class="dash-header">
+      <div>
+        <div class="dash-title">Hallo, <span>Max</span> 👋</div>
+        <div style="font-family:var(--font-mono);font-size:11px;color:var(--text-muted);">Mittwoch, 20. Mai 2025 · 14:23 Uhr</div>
+      </div>
+      <div class="dash-actions">
+        <a href="#" class="btn-sm btn-sm-sec">+ GRUPPE</a>
+        <a href="#" class="btn-sm btn-sm-pri">+ EVENT</a>
+      </div>
+    </div>
+
+    <!-- STATS -->
+    <div class="stats-row">
+      <div class="stat-card ani">
+        <div class="sc-label">FREUNDE ONLINE</div>
+        <div class="sc-value">12</div>
+        <div class="sc-change">↑ 4 mehr als gestern</div>
+        <div class="sc-icon">👥</div>
+      </div>
+      <div class="stat-card m ani d1">
+        <div class="sc-label">EVENTS DIESE WOCHE</div>
+        <div class="sc-value">3</div>
+        <div class="sc-change">→ 1 morgen</div>
+        <div class="sc-icon">🎯</div>
+      </div>
+      <div class="stat-card g ani d2">
+        <div class="sc-label">KI-VORSCHLÄGE</div>
+        <div class="sc-value">5</div>
+        <div class="sc-change">↑ 2 neu</div>
+        <div class="sc-icon">🤖</div>
+      </div>
+      <div class="stat-card gn ani d3">
+        <div class="sc-label">DATENSCHUTZ</div>
+        <div class="sc-value">100%</div>
+        <div class="sc-change">✓ DSGVO konform</div>
+        <div class="sc-icon">🔒</div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div class="content-grid">
+      <!-- FEED -->
+      <div>
+        <!-- KI Banner -->
+        <div style="background:linear-gradient(135deg,rgba(0,245,255,.06),rgba(255,0,110,.06));border:1px solid var(--border-bright);border-radius:var(--radius-lg);padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;">
+          <div style="font-size:28px;">🤖</div>
+          <div style="flex:1;">
+            <div style="font-family:var(--font-display);font-size:13px;font-weight:700;margin-bottom:4px;">KI-Tipp des Tages</div>
+            <div style="font-size:13px;color:var(--text-secondary);">Lisa, Sarah und du habt alle Samstag frei. Soll ich einen Kaffee-Termin vorschlagen? ☕</div>
+          </div>
+          <button onclick="alert('Super! KI plant den Termin...')" style="background:var(--cyan);color:var(--bg-void);border:none;font-family:var(--font-display);font-size:10px;font-weight:700;letter-spacing:1px;padding:9px 14px;border-radius:var(--radius);cursor:none;white-space:nowrap;">JA, PLANEN</button>
+        </div>
+
+        <!-- COMPOSE -->
+        <div class="compose-box ani">
+          <div class="compose-row">
+            <div class="compose-avatar">😎</div>
+            <textarea class="compose-input" placeholder="Was beschäftigt dich heute, Max? // Nur deine Freunde sehen das..."></textarea>
+          </div>
+          <div class="compose-actions">
+            <div class="compose-tools">
+              <button class="compose-tool" title="Foto">📷</button>
+              <button class="compose-tool" title="Event">🎯</button>
+              <button class="compose-tool" title="Kalender">📅</button>
+              <button class="compose-tool" title="Standort">📍</button>
+            </div>
+            <button class="compose-submit" onclick="alert('Post erstellt!')">TEILEN ▶</button>
+          </div>
+        </div>
+
+        <!-- FEED ITEMS -->
+        <div class="feed-card ani">
+          <div class="fc-header">
+            <div class="fc-avatar" style="background:linear-gradient(135deg,#082040,#0a3060);">👩</div>
+            <div class="fc-meta">
+              <div class="fc-name">Sarah Müller</div>
+              <div class="fc-time">vor 23 Minuten · Freundin</div>
+            </div>
+            <span class="fc-type">FREUNDIN</span>
+          </div>
+          <div class="fc-content">
+            Gerade vom Schwimmbad zurück 🏊‍♀️ War absolut genial! Wer kommt nächste Woche mit? Unser KI-Assistent hat schon freie Zeitfenster für uns alle gefunden 😄
+          </div>
+          <div class="fc-actions">
+            <button class="fc-btn" onclick="this.style.color='var(--cyan)'">💙 23</button>
+            <button class="fc-btn">💬 7 Antworten</button>
+            <button class="fc-btn">📅 Termin erstellen</button>
+            <button class="fc-btn">↗ Teilen</button>
+          </div>
+        </div>
+
+        <div class="feed-card fc-event ani d1">
+          <div class="fc-header">
+            <div class="fc-avatar" style="background:linear-gradient(135deg,#200820,#40083a);">🤖</div>
+            <div class="fc-meta">
+              <div class="fc-name">Meetra KI-Assistent</div>
+              <div class="fc-time">vor 1 Stunde · Automatisch erkannt</div>
+            </div>
+            <span class="fc-type" style="color:var(--magenta);background:var(--magenta-glow);">KI-VORSCHLAG</span>
+          </div>
+          <div class="fc-content">
+            Ich habe bemerkt, dass du und Tom beide Mittwochabend frei habt. Ihr habt zuletzt vor 3 Wochen etwas zusammen unternommen. Soll ich einen Abend einplanen?
+          </div>
+          <div class="fc-event-banner">
+            <div class="feb-info">
+              <strong>🎮 Gaming-Abend mit Tom</strong>
+              <span>Mi, 22. Mai · 19:00 Uhr · Online</span>
+            </div>
+            <button class="feb-join" onclick="this.textContent='✓ ZUGESAGT';this.style.background='var(--green-neon)';">ZUSAGEN</button>
+          </div>
+          <div class="fc-actions">
+            <button class="fc-btn">✓ Annehmen</button>
+            <button class="fc-btn">✗ Ablehnen</button>
+            <button class="fc-btn">📅 Anderen Termin</button>
+          </div>
+        </div>
+
+        <div class="feed-card ani d2">
+          <div class="fc-header">
+            <div class="fc-avatar" style="background:linear-gradient(135deg,#0a2010,#142a10);">👨</div>
+            <div class="fc-meta">
+              <div class="fc-name">Julian Schneider</div>
+              <div class="fc-time">vor 3 Stunden · Freund</div>
+            </div>
+            <span class="fc-type">FREUND</span>
+          </div>
+          <div class="fc-content">
+            Hat jemand Lust auf einen Spaziergang im Stadtpark dieses Wochenende? Das Wetter soll super werden ☀️ Ich würde meine Kids mitnehmen — je mehr desto lustiger!
+          </div>
+          <div class="fc-actions">
+            <button class="fc-btn" onclick="this.style.color='var(--cyan)'">💙 8</button>
+            <button class="fc-btn">💬 4 Antworten</button>
+            <button class="fc-btn">📅 Mitmachen</button>
+          </div>
+        </div>
+
+        <div class="feed-card ani d3" style="border-color:var(--border-bright);background:linear-gradient(135deg,var(--bg-card),#040e18);">
+          <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px;">
+            <div style="font-size:22px;">🏘️</div>
+            <div>
+              <div style="font-family:var(--font-display);font-size:13px;font-weight:700;">Community-Empfehlung</div>
+              <div style="font-family:var(--font-mono);font-size:10px;color:var(--cyan-dim);">KI: PASST ZU DEINEN INTERESSEN</div>
+            </div>
+          </div>
+          <div style="background:var(--bg-deep);border-radius:var(--radius);padding:14px;margin-bottom:14px;">
+            <div style="font-family:var(--font-display);font-size:15px;font-weight:700;margin-bottom:4px;">🤖 KI & Zukunftstechnologien Dortmund</div>
+            <div style="font-size:13px;color:var(--text-secondary);margin-bottom:10px;">342 Mitglieder · Aktive Community · Nächstes Meetup: 28. Mai</div>
+            <button onclick="this.textContent='✓ BEIGETRETEN'" style="background:transparent;border:1px solid var(--cyan);color:var(--cyan);font-family:var(--font-display);font-size:10px;font-weight:700;letter-spacing:1px;padding:7px 14px;border-radius:var(--radius);cursor:none;transition:all .2s;">GRUPPE BEITRETEN</button>
+          </div>
+          <div class="fc-actions">
+            <button class="fc-btn">👁️ Mehr anzeigen</button>
+            <button class="fc-btn">✗ Nicht interessiert</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT SIDEBAR -->
+      <div>
+        <!-- AI WIDGET -->
+        <div class="widget ai-widget">
+          <div class="widget-title" style="color:var(--cyan)">KI-Assistent</div>
+          <div class="ai-msg" id="aiMsg">
+            Hallo Max! 👋 Ich habe heute 3 Vorschläge für dich: Ein Kaffeetermin mit Sarah (Sa.), ein Gaming-Abend mit Tom (Mi.) und ein Spaziergang mit Julian (So.). Was gefällt dir?
+          </div>
+          <div class="ai-input-row">
+            <input class="ai-input" id="aiInput" placeholder="Frag die KI..." onkeydown="if(event.key==='Enter')sendAI()">
+            <button class="ai-send" onclick="sendAI()">▶</button>
+          </div>
+        </div>
+
+        <!-- FRIENDS -->
+        <div class="widget">
+          <div class="widget-title">Freunde online</div>
+          <div class="friend-row">
+            <div class="fr-avatar fr-online">👩</div>
+            <div class="fr-info"><div class="fr-name">Sarah M.</div><div class="fr-status">Aktiv · vor 2 Min</div></div>
+            <button class="fr-btn" onclick="alert('Nachricht an Sarah...')">MSG</button>
+          </div>
+          <div class="friend-row">
+            <div class="fr-avatar fr-online">👨</div>
+            <div class="fr-info"><div class="fr-name">Tom K.</div><div class="fr-status">Aktiv · vor 5 Min</div></div>
+            <button class="fr-btn">MSG</button>
+          </div>
+          <div class="friend-row">
+            <div class="fr-avatar">👴</div>
+            <div class="fr-info"><div class="fr-name">Julian S.</div><div class="fr-status">Zuletzt: vor 1h</div></div>
+            <button class="fr-btn">MSG</button>
+          </div>
+          <div class="friend-row">
+            <div class="fr-avatar">👧</div>
+            <div class="fr-info"><div class="fr-name">Lisa B.</div><div class="fr-status">Zuletzt: heute</div></div>
+            <button class="fr-btn">MSG</button>
+          </div>
+          <a href="#" style="display:block;text-align:center;font-family:var(--font-mono);font-size:11px;color:var(--cyan-dim);margin-top:14px;text-decoration:none;">Alle 42 Freunde anzeigen →</a>
+        </div>
+
+        <!-- MINI CALENDAR -->
+        <div class="widget">
+          <div class="widget-title">Mai 2025</div>
+          <div class="cal-mini">
+            <div class="cal-header">
+              <span class="cal-month">Mai 2025</span>
+              <div class="cal-nav">
+                <button>‹</button>
+                <button>›</button>
+              </div>
+            </div>
+            <div class="cal-grid">
+              <div class="cal-day-label">Mo</div><div class="cal-day-label">Di</div><div class="cal-day-label">Mi</div>
+              <div class="cal-day-label">Do</div><div class="cal-day-label">Fr</div><div class="cal-day-label">Sa</div><div class="cal-day-label">So</div>
+              <div class="cal-day other-month">28</div><div class="cal-day other-month">29</div><div class="cal-day other-month">30</div>
+              <div class="cal-day other-month">1</div><div class="cal-day">2</div><div class="cal-day">3</div><div class="cal-day">4</div>
+              <div class="cal-day">5</div><div class="cal-day">6</div><div class="cal-day">7</div>
+              <div class="cal-day">8</div><div class="cal-day">9</div><div class="cal-day has-event">10</div><div class="cal-day">11</div>
+              <div class="cal-day">12</div><div class="cal-day">13</div><div class="cal-day">14</div>
+              <div class="cal-day">15</div><div class="cal-day">16</div><div class="cal-day has-event">17</div><div class="cal-day">18</div>
+              <div class="cal-day today">20</div><div class="cal-day has-event">21</div><div class="cal-day has-event">22</div>
+              <div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day has-event">25</div><div class="cal-day">26</div>
+              <div class="cal-day">27</div><div class="cal-day has-event">28</div><div class="cal-day">29</div>
+              <div class="cal-day">30</div><div class="cal-day">31</div><div class="cal-day other-month">1</div>
+            </div>
+          </div>
+          <a href="calendar.html" style="display:block;text-align:center;font-family:var(--font-mono);font-size:11px;color:var(--cyan-dim);margin-top:14px;text-decoration:none;">Vollansicht öffnen →</a>
+        </div>
+
+        <!-- DSGVO STATUS -->
+        <div class="widget" style="border-color:var(--border-bright);">
+          <div class="widget-title" style="color:var(--green-neon)">Datenschutz-Status</div>
+          <div style="font-family:var(--font-mono);font-size:11px;line-height:2;">
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-muted)">Server-Standort</span><span style="color:var(--green-neon)">🇩🇪 Frankfurt</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-muted)">Datenweitergabe</span><span style="color:var(--green-neon)">KEINE</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-muted)">Verschlüsselung</span><span style="color:var(--green-neon)">E2E AKTIV</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-muted)">Werbung</span><span style="color:var(--green-neon)">DEAKTIVIERT</span></div>
+            <div style="display:flex;justify-content:space-between;"><span style="color:var(--text-muted)">DSGVO-Status</span><span style="color:var(--green-neon)">✓ KONFORM</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script src="../js/main.js"></script>
+<script>
+const aiReplies = [
+  "Gerne! Ich plane den Termin und schicke allen eine Einladung 📅",
+  "Super Idee! Samstag 15 Uhr im Café Zentrum? Ich prüfe die Verfügbarkeit deiner Freunde.",
+  "Ich habe 3 freie Zeitfenster gefunden: Sa 14h, So 11h oder Mo 18h. Was passt dir am besten?",
+  "Verstanden! Ich merke mir das und erinnere dich rechtzeitig 🔔",
+  "Ich habe Tom und Sarah benachrichtigt. Sie erhalten jetzt eine KI-Einladung ✉️",
+];
+function sendAI() {
+  const inp = document.getElementById('aiInput');
+  const msg = document.getElementById('aiMsg');
+  if (!inp.value.trim()) return;
+  inp.value = '';
+  msg.textContent = '// verarbeite...';
+  setTimeout(() => {
+    msg.textContent = aiReplies[Math.floor(Math.random() * aiReplies.length)];
+  }, 800);
+}
+</script>
+</body>
+</html>
