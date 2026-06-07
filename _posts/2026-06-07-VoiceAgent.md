@@ -15,7 +15,7 @@ Das klingt im ersten Moment vielleicht übertrieben. Wer jedoch in den letzten J
 
 Genau dieses Gefühl ist bei den neuen Voice Agents in Azure AI Foundry weitgehend verschwunden.<br>
 
-Was Microsoft auf der Build 2026 wirklich verändert hat<br><br>
+<h3>Was Microsoft auf der Build 2026 wirklich verändert hat</h3>
 
 Wer die Ankündigungen oberflächlich betrachtet, könnte denken, es handle sich um eine weitere Verbesserung im Bereich Speech to Text oder Text to Speech.<br>
 
