@@ -487,7 +487,8 @@ title: "Document Intelligence"
     var isNA   = PAYG[model] === null;
 
     // Gewinner bestimmen
-    var paygC = (isNA || payg === null) ? Infinity : (calcPayG(p) || 0);
+    var paygVal = calcPayG(p);
+    var paygC = (isNA || paygVal === null) ? Infinity : (paygVal || 0);
     var commC = commit ? commit.total : Infinity;
     var wins  = isC ? (commC < paygC && !isNA) : (!isNA && (paygC <= commC || !commit));
 
