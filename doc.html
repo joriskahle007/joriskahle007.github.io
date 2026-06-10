@@ -19,7 +19,6 @@ title: "Document Intelligence"
     padding:0 0 64px;min-height:60vh;
   }
   .calc-root h1,.calc-root h2,.calc-root h3{font-family:var(--font-head);}
-  /* Hero */
   .ck-hero{background:linear-gradient(160deg,#0d1117 0%,#161b22 60%,#1a2030 100%);border-bottom:1px solid var(--border);padding:52px 24px 44px;position:relative;overflow:hidden;}
   .ck-hero::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 50% 70% at 80% 50%,rgba(227,179,65,0.07) 0%,transparent 55%),radial-gradient(ellipse 30% 50% at 15% 80%,rgba(63,185,80,0.04) 0%,transparent 50%);}
   .ck-hero-inner{max-width:860px;margin:0 auto;position:relative;z-index:1;}
@@ -28,18 +27,14 @@ title: "Document Intelligence"
   .ck-hero h1{font-size:clamp(26px,4vw,42px);font-weight:800;line-height:1.1;color:var(--text);margin-bottom:12px;letter-spacing:-0.02em;}
   .ck-hero h1 span{color:var(--gold);}
   .ck-hero p{font-size:15px;color:var(--muted);line-height:1.7;max-width:580px;font-weight:400;}
-  /* Layout */
   .ck-body{max-width:860px;margin:0 auto;padding:36px 24px;}
   .ck-sec{display:flex;align-items:center;gap:10px;margin-bottom:20px;}
   .ck-sec-num{width:22px;height:22px;border-radius:50%;background:var(--gold-dim);border:1px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--gold);flex-shrink:0;}
   .ck-sec-label{font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);}
   .ck-sec-line{flex:1;height:1px;background:var(--border);}
   .ck-gap{height:36px;}
-  /* Card */
   .ck-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);}
   .ck-card-p{padding:28px;}
-  .ck-card-gold{border-top:2px solid var(--gold);}
-  /* Volume input card */
   .ck-vol-card{background:var(--bg2);border:1px solid var(--border);border-top:2px solid var(--gold);border-radius:var(--radius);padding:28px;margin-bottom:14px;}
   .ck-label{font-size:10px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px;}
   .ck-val-row{display:flex;align-items:center;gap:14px;margin-bottom:22px;}
@@ -57,7 +52,6 @@ title: "Document Intelligence"
   .ck-marks{display:flex;justify-content:space-between;margin-top:12px;}
   .ck-marks span{font-size:10px;font-weight:600;color:var(--muted2);cursor:pointer;letter-spacing:0.04em;transition:color 0.15s;}
   .ck-marks span:hover{color:var(--gold);}
-  /* Info strip */
   .ck-strip{display:grid;grid-template-columns:1fr 1px 1fr 1px 1fr;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:32px;}
   .ck-strip-cell{padding:14px 20px;}
   .ck-strip-cell .sl{font-size:9px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
@@ -65,24 +59,21 @@ title: "Document Intelligence"
   .ck-strip-cell .sv.gold{color:var(--gold);}
   .ck-strip-cell .sv.green{color:var(--green);}
   .ck-strip-sep{background:var(--border);}
-  /* Model buttons */
   .ck-model-grid{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:18px;}
   .ck-mbtn{padding:7px 15px;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;color:var(--muted);font-family:var(--font-body);font-size:12px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;transition:all 0.15s;}
   .ck-mbtn:hover{border-color:var(--gold);color:var(--text);background:var(--gold-dim);}
   .ck-mbtn.active{border-color:var(--gold);background:var(--gold-dim);color:var(--gold);}
-  /* Collapsible desc */
   .ck-desc-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;padding:10px 14px;background:var(--bg3);border:1px solid var(--border2);border-radius:4px;color:var(--muted);font-family:var(--font-body);font-size:13px;font-weight:500;cursor:pointer;transition:background 0.15s,border-color 0.15s,color 0.15s;text-align:left;}
   .ck-desc-toggle:hover{background:var(--gold-dim);border-color:var(--gold);color:var(--gold);}
   .ck-desc-toggle.open{background:var(--gold-dim);border-color:var(--gold);color:var(--gold);border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom:none;}
   .ck-toggle-arrow{font-size:10px;transition:transform 0.25s;flex-shrink:0;}
   .ck-toggle-arrow.rotated{transform:rotate(180deg);}
-  .ck-mdesc{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--gold);border-top-left-radius:0;border-top-right-radius:0;border-radius:0 4px 4px 0;padding:16px 18px;display:grid;grid-template-columns:40px 1fr;gap:0 12px;align-items:start;}
+  .ck-mdesc{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:0 4px 4px 0;padding:16px 18px;display:grid;grid-template-columns:40px 1fr;gap:0 12px;align-items:start;}
   .ck-micon{font-size:26px;line-height:1;padding-top:2px;}
   .ck-mtitle{font-size:11px;font-weight:600;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-bottom:5px;}
   .ck-mbody{font-size:13px;color:var(--muted);line-height:1.65;margin-bottom:10px;}
   .ck-mtags{display:flex;flex-wrap:wrap;gap:5px;}
   .ck-mtag{font-size:10px;font-weight:600;padding:2px 9px;background:var(--bg4);border:1px solid var(--border);border-radius:3px;color:var(--muted2);letter-spacing:0.04em;}
-  /* Result cards */
   .ck-rgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
   @media(max-width:580px){.ck-rgrid{grid-template-columns:1fr;}}
   .ck-rcard{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:24px 22px;position:relative;transition:border-color 0.25s,box-shadow 0.25s;}
@@ -94,7 +85,6 @@ title: "Document Intelligence"
   .ck-rcard.winner .rprice{color:var(--gold);}
   .ck-rcard .rdetail{font-size:12px;color:var(--muted);padding-top:10px;border-top:1px solid var(--border);}
   .ck-winner-line{position:absolute;bottom:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:0 0 5px 5px;}
-  /* Banner */
   .ck-banner{padding:14px 18px;border-radius:var(--radius);display:flex;align-items:center;gap:14px;}
   .ck-banner.savings{background:var(--gold-dim);border:1px solid rgba(227,179,65,0.3);}
   .ck-banner.free{background:var(--green-dim);border:1px solid rgba(63,185,80,0.3);}
@@ -103,7 +93,6 @@ title: "Document Intelligence"
   .ck-btitle.gold{color:var(--gold);}
   .ck-btitle.green{color:var(--green);}
   .ck-bsub{font-size:13px;color:var(--muted);line-height:1.5;}
-  /* Tier table */
   .ck-table{width:100%;border-collapse:collapse;font-size:13px;}
   .ck-table th{font-size:9px;font-weight:600;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted2);padding:11px 16px;text-align:left;background:var(--bg3);border-bottom:1px solid var(--border);}
   .ck-table td{padding:11px 16px;border-bottom:1px solid var(--border);color:var(--muted);}
@@ -111,11 +100,9 @@ title: "Document Intelligence"
   .ck-table tr.arow td{background:var(--gold-dim);color:var(--text);}
   .ck-table tr.arow td:first-child{border-left:2px solid var(--gold);padding-left:14px;}
   .ck-caret{color:var(--gold);margin-right:5px;font-size:10px;}
-  /* Note */
   .ck-note{margin-top:28px;padding:12px 16px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);font-size:11px;color:var(--muted);line-height:1.6;}
   .ck-note a{color:var(--gold);text-decoration:none;}
   .ck-note a:hover{text-decoration:underline;}
-  /* Animations */
   @keyframes ckFadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
   .ck-fu{animation:ckFadeUp 0.45s ease both;}
   .ck-fu:nth-child(1){animation-delay:0.00s}.ck-fu:nth-child(2){animation-delay:0.07s}.ck-fu:nth-child(3){animation-delay:0.14s}.ck-fu:nth-child(4){animation-delay:0.21s}.ck-fu:nth-child(5){animation-delay:0.28s}
@@ -127,8 +114,6 @@ title: "Document Intelligence"
 
 <div class="calc-root">
 
-  <!-- v1781128655 -->
-  <!-- HERO -->
   <div class="ck-hero">
     <div class="ck-hero-inner">
       <div class="ck-hero-tag">
@@ -136,13 +121,12 @@ title: "Document Intelligence"
         Azure &middot; Document Intelligence
       </div>
       <h1>Preis<span>kalkulator</span></h1>
-      <p>Azure Document Intelligence wird <strong style="color:var(--text)">pro verarbeitete Seite</strong> abgerechnet. Gib dein monatliches Seitenvolumen ein &mdash; der Kalkulator zeigt dir sofort Pay-as-you-go vs. Commitment Tier.</p>
+      <p>Azure Document Intelligence wird <strong style="color:var(--text)">pro 1.000 verarbeitete Seiten</strong> abgerechnet (aufgerundet). Gib dein monatliches Seitenvolumen ein &mdash; der Kalkulator zeigt dir sofort Pay-as-you-go vs. Commitment Tier.</p>
     </div>
   </div>
 
   <div class="ck-body">
 
-    <!-- STEP 1: Seiten -->
     <div class="ck-gap"></div>
     <div class="ck-sec ck-fu">
       <div class="ck-sec-num">1</div>
@@ -177,7 +161,6 @@ title: "Document Intelligence"
       </div>
     </div>
 
-    <!-- Info strip -->
     <div class="ck-strip ck-fu">
       <div class="ck-strip-cell">
         <div class="sl">Seiten / Monat</div>
@@ -185,8 +168,8 @@ title: "Document Intelligence"
       </div>
       <div class="ck-strip-sep"></div>
       <div class="ck-strip-cell">
-        <div class="sl">Abrechenbare Seiten</div>
-        <div class="sv green" id="strip-billable">1.000</div>
+        <div class="sl">Abrechenbare Bl&ouml;cke</div>
+        <div class="sv green" id="strip-billable">1</div>
       </div>
       <div class="ck-strip-sep"></div>
       <div class="ck-strip-cell">
@@ -195,7 +178,6 @@ title: "Document Intelligence"
       </div>
     </div>
 
-    <!-- STEP 2: Modell -->
     <div class="ck-sec ck-fu">
       <div class="ck-sec-num">2</div>
       <div class="ck-sec-label">Modell-Typ w&auml;hlen</div>
@@ -211,7 +193,7 @@ title: "Document Intelligence"
         <button class="ck-mbtn"        data-model="customGenerative"     onclick="ckSetModel(this)">Custom Generative</button>
       </div>
       <button class="ck-desc-toggle" id="ck-desc-toggle" onclick="ckToggleDesc()">
-        <span id="ck-toggle-label">ℹ️ Modell-Beschreibung anzeigen</span>
+        <span id="ck-toggle-label">&#x2139;&#xFE0F; Modell-Beschreibung anzeigen</span>
         <span class="ck-toggle-arrow" id="ck-toggle-arrow">&#9660;</span>
       </button>
       <div class="ck-mdesc" id="ck-mdesc" style="display:none;">
@@ -224,7 +206,6 @@ title: "Document Intelligence"
       </div>
     </div>
 
-    <!-- STEP 3: Ergebnis -->
     <div class="ck-sec ck-fu">
       <div class="ck-sec-num">3</div>
       <div class="ck-sec-label">Ergebnis</div>
@@ -248,7 +229,6 @@ title: "Document Intelligence"
 
     <div id="ck-banner" class="ck-fu"></div>
 
-    <!-- STEP 4: Tier-Tabelle -->
     <div id="ck-table-area" style="margin-top:32px;">
       <div class="ck-sec ck-fu">
         <div class="ck-sec-num">4</div>
@@ -268,11 +248,14 @@ title: "Document Intelligence"
       </div>
     </div>
 
-    <!-- Hinweis -->
     <div class="ck-note ck-fu">
       Preise gem&auml;&szlig; offizieller
       <a href="https://azure.microsoft.com/en-us/pricing/details/document-intelligence/" target="_blank">Azure-Preisseite</a>
-      (S0 &middot; Web/Container &middot; W&auml;hrung: EUR). Azure rechnet <strong>ausschlie&szlig;lich pro 1.000 verarbeiteter Seiten</strong> ab. <strong>Free-Tier:</strong> bis 500 Seiten/Monat kostenlos &mdash; ab 501 Seiten werden <em>alle</em> Seiten berechnet. EUR-Preise werden von Microsoft tagesaktuell per Wechselkurs berechnet &mdash; ma&szlig;geblich ist stets die offizielle Preisseite. Alle Angaben ohne Gew&auml;hr.
+      (S0 &middot; Web/Container &middot; EUR).
+      <strong>Abrechnung:</strong> pro angefangene 1.000 Seiten (aufgerundet).
+      <strong>Free-Tier:</strong> bis 500 Seiten/Monat kostenlos &mdash; ab Seite 501 werden <em>alle</em> Seiten berechnet.
+      <strong>Read/OCR gestaffelt:</strong> 0&ndash;1 Mio. Seiten &euro;1,291/1K &middot; &gt;1 Mio. Seiten &euro;0,517/1K.
+      EUR-Kurse werden von Microsoft tagesaktuell berechnet &mdash; ma&szlig;geblich ist stets die offizielle Preisseite. Alle Angaben ohne Gew&auml;hr.
     </div>
 
   </div>
@@ -282,31 +265,32 @@ title: "Document Intelligence"
 (function(){
   var FREE = 500;
 
-  // ── OFFIZIELLE EUR-PREISE ────────────────────────────────────────────────
-  // Quelle: azure.microsoft.com/en-us/pricing/details/document-intelligence/
-  // Instanz: S0 – Web/Container  |  Letzte Aktualisierung: April 2025
+  // ── PREISE (S0 · Web/Container · EUR) ───────────────────────────────────
+  // PAY-AS-YOU-GO · Abrechnung in vollen 1.000er-Bloecken (Math.ceil)
+  //   Bis 500 Seiten/Monat: kostenlos (Free-Tier)
+  //   Ab 501 Seiten: ALLE Seiten werden berechnet (kein Abzug des Free-Tiers)
   //
-  // PAY-AS-YOU-GO (Abrechnung pro 1.000 Seiten)
-  //   Read:                  €1,303 / 1K (0–1M Seiten)  |  €0,521 / 1K (>1M) – gestaffelt!
-  //   Prebuilt (alle):       €8,681 / 1K
-  //   Custom Classification: €2,605 / 1K
-  //   Custom Extraction:     €26,041 / 1K
-  //   Custom Generative:     N/A (kein veröffentlichter Preis, kein Commitment Tier)
+  //   Read / OCR – gestaffelt:
+  //     Seiten      1 – 1.000.000  →  €1,291 / 1K  (= 1 Block ab Seite 501)
+  //     Seiten  1.000.001 +        →  €0,517 / 1K  (nur der Ueberschuss)
+  //   Prebuilt:             €8,681  / 1K (flat)
+  //   Custom Classification:€2,605  / 1K (flat)
+  //   Custom Extraction:    €26,041 / 1K (flat)
+  //   Custom Generative:    N/A
   //
-  // COMMITMENT TIERS – Azure (nicht Connected Container)
-  //   Custom Extraction:
-  //     20K  Seiten → €468,730 / Mo  |  Overage €23,437 / 1K
-  //     100K Seiten → €2.083,243 / Mo |  Overage €20,833 / 1K
-  //     500K Seiten → €9.114,188 / Mo |  Overage €18,229 / 1K
-  //   Prebuilt:
-  //     20K  Seiten → €164,924 / Mo  |  Overage €8,247 / 1K
-  //     100K Seiten → €781,217 / Mo  |  Overage €7,813 / 1K
-  //     500K Seiten → €3.472,072 / Mo |  Overage €6,945 / 1K
+  // COMMITMENT TIERS
   //   Read:
-  //     500K  Seiten → €325,507 / Mo  |  Overage €0,652 / 1K
-  //     2M    Seiten → €1.041,622 / Mo |  Overage €0,521 / 1K
-  //     8M    Seiten → €3.645,676 / Mo |  Overage €0,461 / 1K
-  //   Custom Classification: gleiche Tiers wie Prebuilt
+  //     500K  → €325,507/Mo  · Overage €0,652/1K
+  //     2M    → €1.041,622/Mo· Overage €0,521/1K
+  //     8M    → €3.645,676/Mo· Overage €0,461/1K
+  //   Prebuilt & Custom Classification:
+  //     20K   → €164,924/Mo  · Overage €8,247/1K
+  //     100K  → €781,217/Mo  · Overage €7,813/1K
+  //     500K  → €3.472,072/Mo· Overage €6,945/1K
+  //   Custom Extraction:
+  //     20K   → €468,730/Mo  · Overage €23,437/1K
+  //     100K  → €2.083,243/Mo· Overage €20,833/1K
+  //     500K  → €9.114,188/Mo· Overage €18,229/1K
   // ────────────────────────────────────────────────────────────────────────
 
   var PAYG = {
@@ -314,62 +298,61 @@ title: "Document Intelligence"
     prebuilt:             { tiered: false, flat: 8.681 },
     customExtraction:     { tiered: false, flat: 26.041 },
     customClassification: { tiered: false, flat: 2.605 },
-    customGenerative:     null  // N/A – kein veröffentlichter EUR-Preis
+    customGenerative:     null
   };
 
   var COMMIT = {
     read: [
-      {pages:  500000, price:   325.507, overage:  0.652},
-      {pages: 2000000, price:  1041.622, overage:  0.521},
-      {pages: 8000000, price:  3645.676, overage:  0.461}
+      { pages:  500000, price:   325.507, overage: 0.652 },
+      { pages: 2000000, price:  1041.622, overage: 0.521 },
+      { pages: 8000000, price:  3645.676, overage: 0.461 }
     ],
     prebuilt: [
-      {pages:  20000, price:   164.924, overage:  8.247},
-      {pages: 100000, price:   781.217, overage:  7.813},
-      {pages: 500000, price:  3472.072, overage:  6.945}
+      { pages:  20000, price:   164.924, overage: 8.247 },
+      { pages: 100000, price:   781.217, overage: 7.813 },
+      { pages: 500000, price:  3472.072, overage: 6.945 }
     ],
     customExtraction: [
-      {pages:  20000, price:   468.730, overage: 23.437},
-      {pages: 100000, price:  2083.243, overage: 20.833},
-      {pages: 500000, price:  9114.188, overage: 18.229}
+      { pages:  20000, price:   468.730, overage: 23.437 },
+      { pages: 100000, price:  2083.243, overage: 20.833 },
+      { pages: 500000, price:  9114.188, overage: 18.229 }
     ],
     customClassification: [
-      {pages:  20000, price:   164.924, overage:  8.247},
-      {pages: 100000, price:   781.217, overage:  7.813},
-      {pages: 500000, price:  3472.072, overage:  6.945}
+      { pages:  20000, price:   164.924, overage: 8.247 },
+      { pages: 100000, price:   781.217, overage: 7.813 },
+      { pages: 500000, price:  3472.072, overage: 6.945 }
     ]
-    // customGenerative: kein Commitment Tier verfügbar
   };
 
   var MODELS = {
     prebuilt: {
-      icon: '📄',
-      title: 'Prebuilt – Vorgefertigte Modelle',
-      text: 'Fertig trainierte Modelle fuer die haeufigsten Dokumenttypen. Kein eigenes Training noetig – das Modell erkennt Felder automatisch. Preis: €8,681 / 1.000 Seiten.',
+      icon: '\uD83D\uDCC4',
+      title: 'Prebuilt \u2013 Vorgefertigte Modelle',
+      text: 'Fertig trainierte Modelle fuer die haeufigsten Dokumenttypen. Kein eigenes Training noetig. Preis: \u20AC8,681 / 1.000 Seiten.',
       tags: ['Rechnung / Invoice','Quittung / Receipt','Personalausweis / ID','Steuerformulare W-2 & 1098','Krankenversicherungskarte','Vertrag']
     },
     read: {
-      icon: '🔍',
-      title: 'Read / OCR – Reine Texterkennung',
-      text: 'Extrahiert Text und Grundstruktur. Keine Feldsemantik. Guenstigstes Modell – ideal fuer reine Digitalisierung. Preis: €1,303 / 1.000 Seiten (0–1 Mio.), danach €0,521 / 1.000 Seiten (gestaffelt).',
+      icon: '\uD83D\uDD0D',
+      title: 'Read / OCR \u2013 Reine Texterkennung',
+      text: 'Extrahiert Text und Grundstruktur. Guenstigstes Modell \u2013 ideal fuer reine Digitalisierung. Preis: \u20AC1,291 / 1.000 Seiten (0\u20131 Mio.), danach \u20AC0,517 / 1.000 Seiten.',
       tags: ['Gescannte PDFs','Fotos von Dokumenten','Handschriftliche Notizen','Tabellenstruktur','Vorstufe fuer NLP-Pipelines']
     },
     customExtraction: {
-      icon: '🎯',
-      title: 'Custom Extraction – Massgeschneiderte Feldextraktion',
-      text: 'Eigenes Modell auf Basis deiner Dokumente. Notwendig fuer firmeninterne Formulare oder branchenspezifische Belege. Preis: €26,041 / 1.000 Seiten.',
+      icon: '\uD83C\uDFAF',
+      title: 'Custom Extraction \u2013 Massgeschneiderte Feldextraktion',
+      text: 'Eigenes Modell auf Basis deiner Dokumente. Fuer firmeninterne Formulare oder branchenspezifische Belege. Preis: \u20AC26,041 / 1.000 Seiten.',
       tags: ['Interne Bestellformulare','Individuelle Vertragsvorlagen','Lieferscheine','Technische Datenblaetter','Branchenspezifische Belege']
     },
     customClassification: {
-      icon: '🗂️',
-      title: 'Custom Classification – Dokumentenklassifizierung',
-      text: 'Klassifiziert Dokumente in verschiedene Kategorien. Erkennt Typ und Grenzen in gemischten Stapeln automatisch. Preis: €2,605 / 1.000 Seiten.',
+      icon: '\uD83D\uDDC2\uFE0F',
+      title: 'Custom Classification \u2013 Dokumentenklassifizierung',
+      text: 'Klassifiziert Dokumente in verschiedene Kategorien. Erkennt Typ und Grenzen in gemischten Stapeln automatisch. Preis: \u20AC2,605 / 1.000 Seiten.',
       tags: ['Posteingang sortieren','Gemischte Stapel trennen','Automatisches Routing','Aktenverwaltung','E-Mail-Anhaenge klassifizieren']
     },
     customGenerative: {
-      icon: '🤖',
-      title: 'Custom Generative – KI-gestuetzte Extraktion',
-      text: 'Leistungsstaerkstes Modell. Kombiniert Dokumentenanalyse mit generativer KI fuer komplexe, unstrukturierte Dokumente. Preis: N/A (kein oeffentlicher EUR-Preis verfuegbar). Kein Commitment Tier verfuegbar.',
+      icon: '\uD83E\uDD16',
+      title: 'Custom Generative \u2013 KI-gestuetzte Extraktion',
+      text: 'Leistungsstaerkstes Modell. Kombiniert Dokumentenanalyse mit generativer KI fuer komplexe, unstrukturierte Dokumente. Preis: N/A (kein oeffentlicher EUR-Preis). Kein Commitment Tier verfuegbar.',
       tags: ['Juristische Vertraege','Medizinische Berichte','Forschungsdokumente','Freitext-Antraege','Komplexe Finanzberichte']
     }
   };
@@ -377,39 +360,31 @@ title: "Document Intelligence"
   var pages = 1000;
   var model = 'read';
 
-  var fN = function(n){ return n.toLocaleString('de-DE'); };
-  var fU = function(n){ return n.toLocaleString('de-DE',{style:'currency',currency:'EUR',minimumFractionDigits:2,maximumFractionDigits:3}); };
-  var $  = function(id){ return document.getElementById(id); };
+  var fN = function(n) { return n.toLocaleString('de-DE'); };
+  var fU = function(n) { return n.toLocaleString('de-DE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 3 }); };
+  var $  = function(id) { return document.getElementById(id); };
 
-  // ── Berechnung Pay-as-you-go ──────────────────────────────
-  // Abrechnung in vollen 1.000er-Bloecken (aufgerundet, Math.ceil).
-  // Free-Tier: bis einschliesslich 500 Seiten/Monat kostenlos.
-  // Ab 501 Seiten werden ALLE Seiten berechnet (nicht nur der Ueberschuss),
-  // aufgerundet auf den naechsten vollen 1.000er-Block.
-  // Beispiel: 501-1.000 Seiten = 1 Block = 1,291 EUR
-  //           1.001-2.000 Seiten = 2 Bloecke = 2,582 EUR
-  // Read gestaffelt: erste 1M Seiten zu 1,291 EUR/1K, darueber 0,517 EUR/1K.
-  function blocksOf1k(n) {
-    return Math.ceil(n / 1000);
-  }
+  // Rundet auf den naechsten vollen 1.000er-Block auf (Abrechnungseinheit)
+  function blocks(n) { return Math.ceil(n / 1000); }
+
+  // Berechnet PAYG-Kosten fuer p Seiten
+  // Read/OCR: gestaffelt – erste 1M zu rate1, darueber zu rate2
+  // Alle anderen Modelle: flat pro 1K-Block
   function calcPayG(p) {
     if (p <= FREE) return 0;
     var cfg = PAYG[model];
-    if (!cfg) return null; // N/A (Custom Generative)
+    if (!cfg) return null;
     if (cfg.tiered) {
       if (p <= cfg.threshold) {
-        return blocksOf1k(p) * cfg.rate1;
-      } else {
-        // threshold ist immer glatt (1.000.000), daher exakt 1000 Bloecke
-        var blocks1 = cfg.threshold / 1000;
-        var blocks2 = blocksOf1k(p - cfg.threshold);
-        return blocks1 * cfg.rate1 + blocks2 * cfg.rate2;
+        return blocks(p) * cfg.rate1;
       }
+      // threshold (1.000.000) ist glatt teilbar durch 1000
+      return (cfg.threshold / 1000) * cfg.rate1 + blocks(p - cfg.threshold) * cfg.rate2;
     }
-    return blocksOf1k(p) * cfg.flat;
+    return blocks(p) * cfg.flat;
   }
 
-  // ── Bestes Commitment Tier ────────────────────────────────
+  // Findet das guenstigste Commitment Tier fuer p Seiten
   function calcCommit(p) {
     var tiers = COMMIT[model];
     if (!tiers) return null;
@@ -424,56 +399,52 @@ title: "Document Intelligence"
     return best;
   }
 
-  // ── Alle Tiers fuer Tabelle ───────────────────────────────
+  // Berechnet alle Tiers fuer die Vergleichstabelle
   function allTiers(p) {
     var tiers = COMMIT[model];
     if (!tiers) return null;
-    return tiers.map(function(t){
+    return tiers.map(function(t) {
       var ov = Math.max(0, p - t.pages);
       return { pages: t.pages, price: t.price, overage: t.overage,
                total: t.price + (ov / 1000) * t.overage };
     });
   }
 
-  // ── Haupt-Render ──────────────────────────────────────────
+  // Hauptrender – wird bei jeder Aenderung aufgerufen
   function ckRender() {
     var payg   = calcPayG(pages);
     var commit = calcCommit(pages);
     var tiers  = allTiers(pages);
+    var isFree = pages <= FREE;
+    var blks   = isFree ? 0 : blocks(pages);
 
-    // Slider & Input sync
     if (document.activeElement !== $('input-pages')) $('input-pages').value = pages;
     $('slider-pages').value = pages;
     $('fill-pages').style.width = ((pages - 1) / (10000000 - 1) * 100) + '%';
-
-    // Grosse Anzeige
     $('val-pages').innerHTML = fN(pages) + ' <sup>Seiten</sup>';
 
-    // Strip
     $('strip-total').textContent    = fN(pages);
-    $('strip-billable').textContent = pages <= FREE ? 'kostenlos' : fN(pages);
-    $('strip-free').textContent     = pages <= FREE ? '✓ kostenlos' : 'kostenpflichtig';
+    $('strip-billable').textContent = isFree ? 'kostenlos' : blks + ' Block' + (blks !== 1 ? 'e' : '');
+    $('strip-free').textContent     = isFree ? '\u2713 kostenlos' : 'kostenpflichtig';
 
-    // Karten
     ckRenderCard('payg',   payg,                        commit, pages);
     ckRenderCard('commit', commit ? commit.total : null, commit, pages);
     ckRenderBanner(payg, commit, pages);
     ckRenderTable(tiers, pages);
   }
 
-  // ── Slider ────────────────────────────────────────────────
   function ckSliderUpdate() {
     pages = parseInt($('slider-pages').value);
     ckRender();
   }
 
-  // ── Text-Input ────────────────────────────────────────────
   function ckSyncInput() {
     var v = parseInt($('input-pages').value);
     if (isNaN(v) || $('input-pages').value === '') return;
     pages = Math.max(1, Math.min(10000000, v));
     ckRender();
   }
+
   function ckFinalizeInput(el) {
     var v = parseInt(el.value);
     if (isNaN(v) || el.value === '') v = 1;
@@ -482,62 +453,62 @@ title: "Document Intelligence"
     ckRender();
   }
 
-  // ── Schnellwahl ───────────────────────────────────────────
   function ckSet(v) { pages = v; ckRender(); }
 
-  // ── Ergebniskarte ─────────────────────────────────────────
   function ckRenderCard(type, amount, commit, p) {
-    var card  = $('rcard-' + type);
-    var price = $('rprice-' + type);
-    var det   = $('rdetail-' + type);
-    var isC   = type === 'commit';
+    var card   = $('rcard-' + type);
+    var price  = $('rprice-' + type);
+    var det    = $('rdetail-' + type);
+    var isC    = type === 'commit';
     var isFree = p <= FREE;
     var isNA   = PAYG[model] === null;
 
-    // Gewinner bestimmen
-    var paygVal = calcPayG(p);
-    var paygC = (isNA || paygVal === null) ? Infinity : (paygVal || 0);
-    var commC = commit ? commit.total : Infinity;
-    var wins  = isC ? (commC < paygC && !isNA) : (!isNA && (paygC <= commC || !commit));
+    // Gewinner-Badge bestimmen
+    var paygVal = isNA ? null : calcPayG(p);
+    var paygC   = (paygVal === null) ? Infinity : (paygVal || 0);
+    var commC   = commit ? commit.total : Infinity;
+    var wins    = isC ? (commC < paygC && !isNA) : (!isNA && (paygC <= commC || !commit));
 
-    var ob = card.querySelector('.ck-badge');      if (ob) ob.parentNode.removeChild(ob);
-    var ol = card.querySelector('.ck-winner-line');if (ol) ol.parentNode.removeChild(ol);
+    var ob = card.querySelector('.ck-badge');
+    var ol = card.querySelector('.ck-winner-line');
+    if (ob) ob.parentNode.removeChild(ob);
+    if (ol) ol.parentNode.removeChild(ol);
     if (wins && !isFree) {
       card.classList.add('winner');
-      var b = document.createElement('div'); b.className = 'ck-badge'; b.textContent = '★ Empfohlen'; card.insertBefore(b, card.firstChild);
-      var l = document.createElement('div'); l.className = 'ck-winner-line'; card.appendChild(l);
+      var b = document.createElement('div');
+      b.className = 'ck-badge'; b.textContent = '\u2605 Empfohlen';
+      card.insertBefore(b, card.firstChild);
+      var l = document.createElement('div');
+      l.className = 'ck-winner-line';
+      card.appendChild(l);
     } else {
       card.classList.remove('winner');
     }
 
     price.classList.remove('ck-blink'); void price.offsetWidth; price.classList.add('ck-blink');
 
-    // Kein Commitment Tier verfuegbar
     if (isC && !commit) {
       $('rcommit-sub').textContent = 'Kein Tier verfuegbar';
-      price.textContent = '—';
+      price.textContent = '\u2014';
       det.textContent   = 'Fuer dieses Modell gibt es keine Commitment-Tiers.';
       return;
     }
-
     if (isC) $('rcommit-sub').textContent = fN(commit.pages) + ' Seiten/Monat inklusive';
 
-    // PAYG N/A (Custom Generative)
     if (!isC && isNA) {
       price.textContent = 'N/A';
       det.textContent   = 'Kein oeffentlicher EUR-Preis fuer dieses Modell veroeffentlicht.';
       return;
     }
 
-    var val = isC ? commit.total : amount;
-
     if (isFree && !isC) {
       price.textContent = 'Kostenlos';
-      det.textContent   = '✓ Innerhalb des kostenlosen Free-Tiers (500 Seiten/Monat)';
+      det.textContent   = '\u2713 Innerhalb des kostenlosen Free-Tiers (bis 500 Seiten/Monat)';
       return;
     }
 
-    price.textContent = (val === 0) ? 'Kostenlos' : fU(val);
+    var val = isC ? commit.total : amount;
+    price.textContent = fU(val);
 
     if (isC) {
       var ov = Math.max(0, p - commit.pages);
@@ -546,15 +517,14 @@ title: "Document Intelligence"
         : 'Overage-Rate: ' + fU(commit.overage) + ' / 1.000 Seiten';
     } else {
       // PAYG Aufschluesselung
-      if (model === 'read' && p > 1000000) {
-        var tier2pages = p - 1000000;
-        var b1 = 1000000 / 1000;
-        var b2 = Math.ceil(tier2pages / 1000);
-        det.textContent = b1 + ' Blöcke × €1,291/1K + ' + b2 + ' Blöcke × €0,517/1K';
+      if (model === 'read' && p > PAYG.read.threshold) {
+        var b1 = PAYG.read.threshold / 1000;
+        var b2 = blocks(p - PAYG.read.threshold);
+        det.textContent = b1 + ' Bl\u00F6cke \u00D7 \u20AC1,291/1K + ' + b2 + ' Bl\u00F6cke \u00D7 \u20AC0,517/1K';
       } else {
-        var blocks = Math.ceil(p / 1000);
-        var rate = model === 'read' ? '1,291' : PAYG[model].flat.toFixed(3).replace('.',',');
-        det.textContent = blocks + ' Blöcke × €' + rate + '/1K';
+        var blkCount = blocks(p);
+        var rateStr  = model === 'read' ? '1,291' : PAYG[model].flat.toFixed(3).replace('.', ',');
+        det.textContent = blkCount + ' Block' + (blkCount !== 1 ? 'e' : '') + ' \u00D7 \u20AC' + rateStr + '/1K';
       }
     }
   }
@@ -562,16 +532,15 @@ title: "Document Intelligence"
   function ckRenderBanner(payg, commit, p) {
     var a = $('ck-banner');
     if (p <= FREE) {
-      a.innerHTML = '<div class="ck-banner free"><div class="ck-bicon">🎉</div><div><div class="ck-btitle green">Vollstaendig kostenlos!</div><div class="ck-bsub">Dein Volumen liegt im kostenlosen Free-Tier (bis 500 Seiten/Monat).</div></div></div>';
+      a.innerHTML = '<div class="ck-banner free"><div class="ck-bicon">\uD83C\uDF89</div><div><div class="ck-btitle green">Vollstaendig kostenlos!</div><div class="ck-bsub">Dein Volumen liegt im kostenlosen Free-Tier (bis 500 Seiten/Monat).</div></div></div>';
       return;
     }
     if (payg === null || !commit) { a.innerHTML = ''; return; }
-    var sav = Math.abs(payg - commit.total);
+    var sav  = Math.abs(payg - commit.total);
     if (sav < 0.50) { a.innerHTML = ''; return; }
     var cheaper = commit.total < payg ? 'Commitment Tier' : 'Pay-as-you-go';
-    var base    = Math.max(payg, commit.total, 0.01);
-    var pct     = (sav / base * 100).toFixed(1);
-    a.innerHTML = '<div class="ck-banner savings"><div class="ck-bicon">💡</div><div><div class="ck-btitle gold">' + cheaper + ' ist guenstiger</div><div class="ck-bsub">Du sparst <strong>' + fU(sav) + '</strong>/Monat (' + pct + '%) gegenueber der anderen Option.</div></div></div>';
+    var pct     = (sav / Math.max(payg, commit.total) * 100).toFixed(1);
+    a.innerHTML = '<div class="ck-banner savings"><div class="ck-bicon">\uD83D\uDCA1</div><div><div class="ck-btitle gold">' + cheaper + ' ist guenstiger</div><div class="ck-bsub">Du sparst <strong>' + fU(sav) + '</strong>/Monat (' + pct + '%) gegenueber der anderen Option.</div></div></div>';
   }
 
   function ckRenderTable(tiers, p) {
@@ -579,20 +548,16 @@ title: "Document Intelligence"
     var tbody = $('ck-tbody');
     if (!tiers) { area.style.display = 'none'; return; }
     area.style.display = 'block';
-    var min = tiers[0].total;
-    for (var i = 1; i < tiers.length; i++) if (tiers[i].total < min) min = tiers[i].total;
-    var html = '';
-    for (var j = 0; j < tiers.length; j++) {
-      var t = tiers[j];
+    var min = tiers.reduce(function(m, t) { return Math.min(m, t.total); }, Infinity);
+    tbody.innerHTML = tiers.map(function(t) {
       var best = Math.abs(t.total - min) < 0.01;
-      html += '<tr class="' + (best ? 'arow' : '') + '">'
-            + '<td>' + (best ? '<span class="ck-caret">&#9658;</span>' : '') + fN(t.pages) + '</td>'
-            + '<td>' + fU(t.price) + '</td>'
-            + '<td>' + fU(t.overage) + '</td>'
-            + '<td><strong>' + fU(t.total) + '</strong></td>'
-            + '</tr>';
-    }
-    tbody.innerHTML = html;
+      return '<tr class="' + (best ? 'arow' : '') + '">'
+           + '<td>' + (best ? '<span class="ck-caret">&#9658;</span>' : '') + fN(t.pages) + '</td>'
+           + '<td>' + fU(t.price) + '</td>'
+           + '<td>' + fU(t.overage) + '</td>'
+           + '<td><strong>' + fU(t.total) + '</strong></td>'
+           + '</tr>';
+    }).join('');
   }
 
   function ckRenderModel() {
@@ -600,40 +565,42 @@ title: "Document Intelligence"
     $('ck-micon').textContent  = m.icon;
     $('ck-mtitle').textContent = m.title;
     $('ck-mbody').textContent  = m.text;
-    var html = '';
-    for (var i = 0; i < m.tags.length; i++) html += '<span class="ck-mtag">' + m.tags[i] + '</span>';
-    $('ck-mtags').innerHTML = html;
+    $('ck-mtags').innerHTML = m.tags.map(function(tag) {
+      return '<span class="ck-mtag">' + tag + '</span>';
+    }).join('');
   }
 
   var descOpen = false;
   function ckToggleDesc() {
     descOpen = !descOpen;
-    var desc  = $('ck-mdesc'), btn = $('ck-desc-toggle');
-    var arrow = $('ck-toggle-arrow'), label = $('ck-toggle-label');
+    var desc  = $('ck-mdesc');
+    var btn   = $('ck-desc-toggle');
+    var arrow = $('ck-toggle-arrow');
+    var label = $('ck-toggle-label');
     if (descOpen) {
-      desc.style.display = 'grid'; btn.classList.add('open'); arrow.classList.add('rotated');
-      label.textContent = 'ℹ️ Modell-Beschreibung ausblenden';
+      desc.style.display = 'grid'; btn.classList.add('open');
+      arrow.classList.add('rotated');
+      label.textContent = '\u2139\uFE0F Modell-Beschreibung ausblenden';
     } else {
-      desc.style.display = 'none'; btn.classList.remove('open'); arrow.classList.remove('rotated');
-      label.textContent = 'ℹ️ Modell-Beschreibung anzeigen';
+      desc.style.display = 'none'; btn.classList.remove('open');
+      arrow.classList.remove('rotated');
+      label.textContent = '\u2139\uFE0F Modell-Beschreibung anzeigen';
     }
   }
 
-  // Globale Funktionen fuer onclick
   window.ckSliderUpdate  = ckSliderUpdate;
   window.ckSyncInput     = ckSyncInput;
   window.ckFinalizeInput = ckFinalizeInput;
   window.ckSet           = ckSet;
   window.ckToggleDesc    = ckToggleDesc;
   window.ckSetModel = function(btn) {
-    document.querySelectorAll('.ck-mbtn').forEach(function(b){ b.classList.remove('active'); });
+    document.querySelectorAll('.ck-mbtn').forEach(function(b) { b.classList.remove('active'); });
     btn.classList.add('active');
     model = btn.dataset.model;
     ckRenderModel();
     ckRender();
   };
 
-  // Init
   ckRenderModel();
   ckRender();
 })();
