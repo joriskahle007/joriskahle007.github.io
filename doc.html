@@ -271,7 +271,7 @@ title: "Document Intelligence"
     <div class="ck-note ck-fu">
       Preise gem&auml;&szlig; offizieller
       <a href="https://azure.microsoft.com/en-us/pricing/details/document-intelligence/" target="_blank">Azure-Preisseite</a>
-      (S0 &middot; Web/Container &middot; W&auml;hrung: EUR). Azure rechnet <strong>ausschlie&szlig;lich pro verarbeiteter Seite</strong> ab. <strong>Free-Tier:</strong> bis 500 Seiten/Monat kostenlos &mdash; ab 501 Seiten werden <em>alle</em> Seiten berechnet. EUR-Preise werden von Microsoft tagesaktuell per Wechselkurs berechnet &mdash; ma&szlig;geblich ist stets die offizielle Preisseite. Alle Angaben ohne Gew&auml;hr.
+      (S0 &middot; Web/Container &middot; W&auml;hrung: EUR). Azure rechnet <strong>ausschlie&szlig;lich pro 1.000 verarbeiteter Seiten</strong> ab. <strong>Free-Tier:</strong> bis 500 Seiten/Monat kostenlos &mdash; ab 501 Seiten werden <em>alle</em> Seiten berechnet. EUR-Preise werden von Microsoft tagesaktuell per Wechselkurs berechnet &mdash; ma&szlig;geblich ist stets die offizielle Preisseite. Alle Angaben ohne Gew&auml;hr.
     </div>
 
   </div>
@@ -285,8 +285,8 @@ title: "Document Intelligence"
   // Quelle: azure.microsoft.com/en-us/pricing/details/document-intelligence/
   // Instanz: S0 – Web/Container  |  Letzte Aktualisierung: April 2025
   //
-  // PAY-AS-YOU-GO
-  //   Read:                  €1,303 / 1K (0–1M Seiten)  |  €0,521 / 1K (>1M)
+  // PAY-AS-YOU-GO (Abrechnung pro 1.000 Seiten)
+  //   Read:                  €1,303 / 1K (0–1M Seiten)  |  €0,521 / 1K (>1M) – gestaffelt!
   //   Prebuilt (alle):       €8,681 / 1K
   //   Custom Classification: €2,605 / 1K
   //   Custom Extraction:     €26,041 / 1K
@@ -309,10 +309,10 @@ title: "Document Intelligence"
   // ────────────────────────────────────────────────────────────────────────
 
   var PAYG = {
-    read:                 { tiers: [{to:1000000, rate:1.303}, {to:Infinity, rate:0.521}] },
-    prebuilt:             { flat: 8.681 },
-    customExtraction:     { flat: 26.041 },
-    customClassification: { flat: 2.605 },
+    read:                 { tiered: true,  rate1: 1.303, rate2: 0.521, threshold: 1000000 },
+    prebuilt:             { tiered: false, flat: 8.681 },
+    customExtraction:     { tiered: false, flat: 26.041 },
+    customClassification: { tiered: false, flat: 2.605 },
     customGenerative:     null  // N/A – kein veröffentlichter EUR-Preis
   };
 
@@ -350,7 +350,7 @@ title: "Document Intelligence"
     read: {
       icon: '🔍',
       title: 'Read / OCR – Reine Texterkennung',
-      text: 'Extrahiert Text und Grundstruktur. Keine Feldsemantik. Guenstigstes Modell – ideal fuer reine Digitalisierung. Preis: €1,303 / 1.000 Seiten (0–1 Mio.), danach €0,521 / 1.000 Seiten.',
+      text: 'Extrahiert Text und Grundstruktur. Keine Feldsemantik. Guenstigstes Modell – ideal fuer reine Digitalisierung. Preis: €1,303 / 1.000 Seiten (0–1 Mio.), danach €0,521 / 1.000 Seiten (gestaffelt).',
       tags: ['Gescannte PDFs','Fotos von Dokumenten','Handschriftliche Notizen','Tabellenstruktur','Vorstufe fuer NLP-Pipelines']
     },
     customExtraction: {
@@ -381,15 +381,25 @@ title: "Document Intelligence"
   var $  = function(id){ return document.getElementById(id); };
 
   // ── Berechnung Pay-as-you-go ──────────────────────────────
+  // Abrechnung erfolgt pro angefangene 1.000 Seiten.
+  // Free-Tier: bis einschließlich 500 Seiten/Monat kostenlos.
+  // Ab 501 Seiten werden ALLE Seiten berechnet (nicht nur der Überschuss).
+  // Read-Modell: gestaffelt – erste 1M Seiten zu €1,303/1K, darüber €0,521/1K.
   function calcPayG(p) {
-  if (p <= FREE) return 0;
-  // Ab 1M Seiten gilt der günstigere Preis für ALLE Seiten
-  if (model === 'read') {
-    var rate = p >= 1000000 ? 0.521 : 1.303;
-    return (p / 1000) * rate;
+    if (p <= FREE) return 0;
+    var cfg = PAYG[model];
+    if (!cfg) return null; // N/A (Custom Generative)
+    if (cfg.tiered) {
+      // Gestaffelte Abrechnung für Read/OCR
+      if (p <= cfg.threshold) {
+        return (p / 1000) * cfg.rate1;
+      } else {
+        return (cfg.threshold / 1000) * cfg.rate1
+             + ((p - cfg.threshold) / 1000) * cfg.rate2;
+      }
+    }
+    return (p / 1000) * cfg.flat;
   }
-  return (p / 1000) * PAYG[model].flat;
-}
 
   // ── Bestes Commitment Tier ────────────────────────────────
   function calcCommit(p) {
@@ -477,7 +487,7 @@ title: "Document Intelligence"
     var isNA   = PAYG[model] === null;
 
     // Gewinner bestimmen
-    var paygC = isNA ? Infinity : (calcPayG(p) || 0);
+    var paygC = (isNA || payg === null) ? Infinity : (calcPayG(p) || 0);
     var commC = commit ? commit.total : Infinity;
     var wins  = isC ? (commC < paygC && !isNA) : (!isNA && (paygC <= commC || !commit));
 
@@ -526,13 +536,13 @@ title: "Document Intelligence"
         ? fU(commit.price) + '/Mo Grundpreis + ' + fN(ov) + ' Overage-Seiten'
         : 'Overage-Rate: ' + fU(commit.overage) + ' / 1.000 Seiten';
     } else {
-      // PAYG: Aufschluesselung bei Read (gestaffelt)
+      // PAYG Aufschluesselung
       if (model === 'read' && p > 1000000) {
-        var tier1 = Math.min(p, 1000000);
-        var tier2 = p - 1000000;
-        det.textContent = fN(tier1) + ' Seiten \u00d7 \u20ac1,303 + ' + fN(tier2) + ' Seiten \u00d7 \u20ac0,521';
+        // Gestaffelt: erste 1M zu €1,303, Rest zu €0,521
+        var tier2pages = p - 1000000;
+        det.textContent = '1.000.000 Seiten \u00d7 \u20ac1,303/1K + ' + fN(tier2pages) + ' Seiten \u00d7 \u20ac0,521/1K';
       } else {
-        det.textContent = fN(p) + ' Seiten werden berechnet';
+        det.textContent = fN(p) + ' Seiten \u00d7 ' + (model === 'read' ? '\u20ac1,303' : '\u20ac' + PAYG[model].flat.toFixed(3).replace('.',',')) + '/1K';
       }
     }
   }
