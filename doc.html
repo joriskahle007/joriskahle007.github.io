@@ -127,6 +127,7 @@ title: "Document Intelligence"
 
 <div class="calc-root">
 
+  <!-- v1781128655 -->
   <!-- HERO -->
   <div class="ck-hero">
     <div class="ck-hero-inner">
@@ -381,24 +382,31 @@ title: "Document Intelligence"
   var $  = function(id){ return document.getElementById(id); };
 
   // ── Berechnung Pay-as-you-go ──────────────────────────────
-  // Abrechnung erfolgt pro angefangene 1.000 Seiten.
-  // Free-Tier: bis einschließlich 500 Seiten/Monat kostenlos.
-  // Ab 501 Seiten werden ALLE Seiten berechnet (nicht nur der Überschuss).
-  // Read-Modell: gestaffelt – erste 1M Seiten zu €1,303/1K, darüber €0,521/1K.
+  // Abrechnung in vollen 1.000er-Bloecken (aufgerundet, Math.ceil).
+  // Free-Tier: bis einschliesslich 500 Seiten/Monat kostenlos.
+  // Ab 501 Seiten werden ALLE Seiten berechnet (nicht nur der Ueberschuss),
+  // aufgerundet auf den naechsten vollen 1.000er-Block.
+  // Beispiel: 501-1.000 Seiten = 1 Block = 1,291 EUR
+  //           1.001-2.000 Seiten = 2 Bloecke = 2,582 EUR
+  // Read gestaffelt: erste 1M Seiten zu 1,291 EUR/1K, darueber 0,517 EUR/1K.
+  function blocksOf1k(n) {
+    return Math.ceil(n / 1000);
+  }
   function calcPayG(p) {
     if (p <= FREE) return 0;
     var cfg = PAYG[model];
     if (!cfg) return null; // N/A (Custom Generative)
     if (cfg.tiered) {
-      // Gestaffelte Abrechnung für Read/OCR
       if (p <= cfg.threshold) {
-        return (p / 1000) * cfg.rate1;
+        return blocksOf1k(p) * cfg.rate1;
       } else {
-        return (cfg.threshold / 1000) * cfg.rate1
-             + ((p - cfg.threshold) / 1000) * cfg.rate2;
+        // threshold ist immer glatt (1.000.000), daher exakt 1000 Bloecke
+        var blocks1 = cfg.threshold / 1000;
+        var blocks2 = blocksOf1k(p - cfg.threshold);
+        return blocks1 * cfg.rate1 + blocks2 * cfg.rate2;
       }
     }
-    return (p / 1000) * cfg.flat;
+    return blocksOf1k(p) * cfg.flat;
   }
 
   // ── Bestes Commitment Tier ────────────────────────────────
@@ -539,11 +547,14 @@ title: "Document Intelligence"
     } else {
       // PAYG Aufschluesselung
       if (model === 'read' && p > 1000000) {
-        // Gestaffelt: erste 1M zu €1,303, Rest zu €0,521
         var tier2pages = p - 1000000;
-        det.textContent = '1.000.000 Seiten \u00d7 \u20ac1,303/1K + ' + fN(tier2pages) + ' Seiten \u00d7 \u20ac0,521/1K';
+        var b1 = 1000000 / 1000;
+        var b2 = Math.ceil(tier2pages / 1000);
+        det.textContent = b1 + ' Blöcke × €1,291/1K + ' + b2 + ' Blöcke × €0,517/1K';
       } else {
-        det.textContent = fN(p) + ' Seiten \u00d7 ' + (model === 'read' ? '\u20ac1,303' : '\u20ac' + PAYG[model].flat.toFixed(3).replace('.',',')) + '/1K';
+        var blocks = Math.ceil(p / 1000);
+        var rate = model === 'read' ? '1,291' : PAYG[model].flat.toFixed(3).replace('.',',');
+        det.textContent = blocks + ' Blöcke × €' + rate + '/1K';
       }
     }
   }
