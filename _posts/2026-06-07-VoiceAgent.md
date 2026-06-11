@@ -13,15 +13,11 @@ Der Grund ist einfach. Nach meinen ersten Tests hatte ich zum ersten Mal nicht m
 
 Das klingt im ersten Moment vielleicht übertrieben. Wer jedoch in den letzten Jahren Sprachassistenten gebaut oder genutzt hat, kennt die typischen Brüche sehr genau. Verzögerungen zwischen Frage und Antwort. Künstlich wirkende Dialoge. Starre Gesprächslogik. Und vor allem das Gefühl, dass jede Interaktion aus klar getrennten technischen Schritten besteht.<br>
 
-Genau dieses Gefühl ist bei den neuen Voice Agents in Azure AI Foundry weitgehend verschwunden.<br>
+Genau dieses Gefühl ist bei den neuen Voice Agents in Azure AI Foundry weitgehend verschwunden.<br><br>
 
 <h3>Was Microsoft auf der Build 2026 wirklich verändert hat</h3>
 
-Wer die Ankündigungen oberflächlich betrachtet, könnte denken, es handle sich um eine weitere Verbesserung im Bereich Speech to Text oder Text to Speech.<br>
-
-Tatsächlich ist der eigentliche Fortschritt deutlich fundamentaler.<br>
-
-Microsoft führt mit Voice Live eine neue Echtzeit Architektur ein, die Sprachinteraktion als durchgängigen Strom behandelt und nicht mehr als Abfolge einzelner Verarbeitungsschritte.<br>
+Wer die Ankündigungen oberflächlich betrachtet, könnte denken, es handle sich um eine weitere Verbesserung im Bereich Speech to Text oder Text to Speech. Tatsächlich ist der eigentliche Fortschritt deutlich fundamentaler. Microsoft führt mit Voice Live eine neue Echtzeit Architektur ein, die Sprachinteraktion als durchgängigen Strom behandelt und nicht mehr als Abfolge einzelner Verarbeitungsschritte.<br>
 
 In klassischen Systemen bestand die Pipeline typischerweise aus:<br>
 
@@ -30,7 +26,7 @@ In klassischen Systemen bestand die Pipeline typischerweise aus:<br>
 <li> Antwortgenerierung</li>
 <li> Text to Speech</li>
 <li> Streaming und Audioausgabe</li>
-<li> Turn Detection und Session Management</li>
+<li> Turn Detection und Session Management</li><br>
 
 Dieses Design funktioniert, erzeugt aber zwangsläufig Latenzen und Brüche im Gesprächsfluss.<br> Mit Voice Live wird diese Architektur erstmals als integrierte Echtzeit Gesprächsschicht umgesetzt. Die einzelnen Komponenten werden nicht mehr lose gekoppelt, sondern als gemeinsame Interaktionsschicht betrieben.<br>
 
@@ -46,7 +42,7 @@ In Kombination mit Voice Live und Azure Speech entsteht dadurch eine neue Art vo
 <li> Voice Live als Streaming und Interaktionsschicht</li>
 <li> Azure Speech für Ein und Ausgabe sowie Sprachmodellierung</li>
 <li> MAI Voices für natürliche, kontextadaptive Sprachsynthese</li>
-<li> Foundry Agent Framework für Tools, Aktionen und Unternehmensintegration</li>
+<li> Foundry Agent Framework für Tools, Aktionen und Unternehmensintegration</li><br>
 
 Die eigentliche Innovation entsteht genau aus diesem Zusammenspiel.<br>
 
@@ -79,7 +75,7 @@ Früher bedeutete ein Voice Projekt:<br>
 <li> separate Speech Pipeline</li>
 <li> zusätzliche Infrastruktur</li>
 <li> komplexe Integration</li>
-<li> lange Entwicklungszyklen</li>
+<li> lange Entwicklungszyklen</li><br>
 
 Heute wird Sprache zu einer Eigenschaft bestehender Agenten. Das verändert die Geschwindigkeit, mit der solche Systeme in Unternehmen entstehen können, fundamental.<br><br>
 
@@ -92,7 +88,7 @@ Besonders auffällig sind Details wie:<br>
 <li> natürliche Pausen</li>
 <li> realistische Betonung</li>
 <li> variierende Sprechgeschwindigkeit</li>
-<li> emotionale Nuancen</li>
+<li> emotionale Nuancen</li><br>
 
 Neben diesen vorgefertigten Stimmen ist jedoch ein weiterer Punkt fast noch faszinierender.<br>
 
@@ -112,7 +108,7 @@ Microsoft positioniert Voice Agents klar als Enterprise Technologie und nicht al
 <li>Virtuelle Verkaufs und Beratungssysteme</li>
 <li>Assistenz in Produktion und Außendienst</li>
 <li>Telefonbasierte KI Agenten</li>
-<li>Coaching und Schulungssysteme</li>
+<li>Coaching und Schulungssysteme</li><br>
 
 Besonders wichtig ist dabei die Verbindung zu Unternehmensdaten, Tools und Workflows.<br>
 Ein Voice Agent ist nicht nur ein Gesprächspartner, sondern ein ausführender Systemteil innerhalb einer größeren Architektur.<br><br>
@@ -129,4 +125,4 @@ Die Microsoft Build 2026 hat viele spannende KI Entwicklungen gezeigt. Die mit A
 
 Nicht wegen einer einzelnen Funktion. Sondern wegen der Kombination aus GPT 4o Realtime Modellen, Voice Live Architektur, Azure Speech, MAI Voices und der Möglichkeit, mit Custom Voice die eigene Stimme als digitale Schnittstelle zu nutzen. Diese Kombination führt erstmals zu einer Sprachinteraktion, die sich nicht mehr wie ein technisches System anfühlt, sondern wie ein echtes Gespräch.<br><br>
 
-Und genau deshalb könnte sich dieser Moment im Rückblick als einer der wichtigsten Schritte in Richtung natürlicher Mensch Maschine Interaktion herausstellen.
+Und genau deshalb könnte sich dieser Moment im Rückblick als einer der wichtigsten Schritte in Richtung natürlicher Mensch Maschine Interaktion herausstellen.<br><br>
