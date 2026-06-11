@@ -368,18 +368,16 @@ title: "Document Intelligence"
   function blocks(n) { return Math.ceil(n / 1000); }
 
   // Berechnet PAYG-Kosten fuer p Seiten
-  // Read/OCR: gestaffelt – erste 1M zu rate1, darueber zu rate2
+  // Read/OCR: Schwellenpreis – unter 1M zu rate1, ab 1M zu rate2 fuer ALLE Seiten
   // Alle anderen Modelle: flat pro 1K-Block
   function calcPayG(p) {
     if (p <= FREE) return 0;
     var cfg = PAYG[model];
     if (!cfg) return null;
     if (cfg.tiered) {
-      if (p <= cfg.threshold) {
-        return blocks(p) * cfg.rate1;
-      }
-      // threshold (1.000.000) ist glatt teilbar durch 1000
-      return (cfg.threshold / 1000) * cfg.rate1 + blocks(p - cfg.threshold) * cfg.rate2;
+      // Ab threshold gilt rate2 fuer ALLE Seiten (kein Mix)
+      var rate = p >= cfg.threshold ? cfg.rate2 : cfg.rate1;
+      return blocks(p) * rate;
     }
     return blocks(p) * cfg.flat;
   }
@@ -517,15 +515,14 @@ title: "Document Intelligence"
         : 'Overage-Rate: ' + fU(commit.overage) + ' / 1.000 Seiten';
     } else {
       // PAYG Aufschluesselung
-      if (model === 'read' && p > PAYG.read.threshold) {
-        var b1 = PAYG.read.threshold / 1000;
-        var b2 = blocks(p - PAYG.read.threshold);
-        det.textContent = b1 + ' Bl\u00F6cke \u00D7 \u20AC1,291/1K + ' + b2 + ' Bl\u00F6cke \u00D7 \u20AC0,517/1K';
+      var blkCount = blocks(p);
+      var rateStr;
+      if (model === 'read') {
+        rateStr = p >= PAYG.read.threshold ? '0,517' : '1,291';
       } else {
-        var blkCount = blocks(p);
-        var rateStr  = model === 'read' ? '1,291' : PAYG[model].flat.toFixed(3).replace('.', ',');
-        det.textContent = blkCount + ' Block' + (blkCount !== 1 ? 'e' : '') + ' \u00D7 \u20AC' + rateStr + '/1K';
+        rateStr = PAYG[model].flat.toFixed(3).replace('.', ',');
       }
+      det.textContent = blkCount + ' Block' + (blkCount !== 1 ? 'e' : '') + ' \u00D7 \u20AC' + rateStr + '/1K';
     }
   }
 
