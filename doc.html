@@ -280,9 +280,9 @@ title: "Document Intelligence"
   //
   // COMMITMENT TIERS
   //   Read:
-  //     500K  → €325,507/Mo  · Overage €0,652/1K
-  //     2M    → €1.041,622/Mo· Overage €0,521/1K
-  //     8M    → €3.645,676/Mo· Overage €0,461/1K
+  //     500K  → €322,540/Mo  · Overage €0,646/1K
+  //     2M    → €1.032,125/Mo· Overage €0,517/1K
+  //     8M    → €3.612,438/Mo· Overage €0,456/1K
   //   Prebuilt & Custom Classification:
   //     20K   → €164,924/Mo  · Overage €8,247/1K
   //     100K  → €781,217/Mo  · Overage €7,813/1K
@@ -303,9 +303,9 @@ title: "Document Intelligence"
 
   var COMMIT = {
     read: [
-      { pages:  500000, price:   325.507, overage: 0.652 },
-      { pages: 2000000, price:  1041.622, overage: 0.521 },
-      { pages: 8000000, price:  3645.676, overage: 0.461 }
+      { pages:  500000, price:   322.540, overage: 0.646 },
+      { pages: 2000000, price:  1032.125, overage: 0.517 },
+      { pages: 8000000, price:  3612.438, overage: 0.456 }
     ],
     prebuilt: [
       { pages:  20000, price:   164.924, overage: 8.247 },
@@ -376,7 +376,10 @@ title: "Document Intelligence"
     if (!cfg) return null;
     if (cfg.tiered) {
       // Ab threshold gilt rate2 fuer ALLE Seiten (kein Mix)
-      var rate = p >= cfg.threshold ? cfg.rate2 : cfg.rate1;
+      // Schwellenpreis: erst ab Seite 1.000.001 gilt rate2 fuer ALLE Bloecke
+      // 1–1.000.000 Seiten   → rate1 (€1,291/1K)
+      // 1.000.001+ Seiten    → rate2 (€0,517/1K) fuer alle Bloecke
+      var rate = p > cfg.threshold ? cfg.rate2 : cfg.rate1;
       return blocks(p) * rate;
     }
     return blocks(p) * cfg.flat;
@@ -390,7 +393,7 @@ title: "Document Intelligence"
     for (var i = 0; i < tiers.length; i++) {
       var t   = tiers[i];
       var ov  = Math.max(0, p - t.pages);
-      var tot = t.price + (ov / 1000) * t.overage;
+      var tot = t.price + Math.ceil(ov / 1000) * t.overage;
       if (!best || tot < best.total)
         best = { pages: t.pages, price: t.price, overage: t.overage, total: tot };
     }
@@ -404,7 +407,7 @@ title: "Document Intelligence"
     return tiers.map(function(t) {
       var ov = Math.max(0, p - t.pages);
       return { pages: t.pages, price: t.price, overage: t.overage,
-               total: t.price + (ov / 1000) * t.overage };
+               total: t.price + Math.ceil(ov / 1000) * t.overage };
     });
   }
 
@@ -518,7 +521,7 @@ title: "Document Intelligence"
       var blkCount = blocks(p);
       var rateStr;
       if (model === 'read') {
-        rateStr = p >= PAYG.read.threshold ? '0,517' : '1,291';
+        rateStr = p > PAYG.read.threshold ? '0,517' : '1,291';
       } else {
         rateStr = PAYG[model].flat.toFixed(3).replace('.', ',');
       }
