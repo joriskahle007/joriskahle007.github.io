@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OX ALPHA</title>
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        background: #000;
+        overflow: hidden;
+        font-family: "Courier New", Courier, monospace;
+        color: #e8d9b8;
+        user-select: none;
+        cursor: default;
+    }
+
+    #wrap {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #000;
+    }
+
+    #game {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        image-rendering: pixelated;
+        background: #000;
+    }
+
+    /* --- Retro-Overlay-Effekte --- */
+    #scanlines {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: repeating-linear-gradient(
+            to bottom,
+            rgba(0,0,0,0) 0px,
+            rgba(0,0,0,0) 2px,
+            rgba(0,0,0,0.18) 3px
+        );
+        mix-blend-mode: multiply;
+        z-index: 3;
+    }
+
+    #vignette {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(
+            ellipse at center,
+            rgba(0,0,0,0) 55%,
+            rgba(0,0,0,0.55) 100%
+        );
+        z-index: 3;
+    }
+
+    #dmg {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(
+            ellipse at center,
+            rgba(255,0,0,0) 40%,
+            rgba(255,0,0,0.45) 100%
+        );
+        opacity: 0;
+        z-index: 4;
+    }
+
+    /* --- HUD --- */
+    #hud {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        z-index: 5;
+        display: none;
+    }
+
+    #health-box {
+        position: absolute;
+        left: 4%;
+        bottom: 6%;
+        min-width: 190px;
+        padding: 10px 14px 12px 14px;
+        background: linear-gradient(160deg, rgba(24,18,10,0.75), rgba(10,7,4,0.55));
+        border: 1px solid rgba(201,154,82,0.28);
+        clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+        box-shadow: 0 0 18px rgba(0,0,0,0.6), inset 0 0 24px rgba(168,110,31,0.08);
+    }
+
+    #hp-label {
+        font-size: 13px;
+        letter-spacing: 3px;
+        color: #c99a52;
+        text-shadow: 0 0 6px rgba(201,154,82,0.7);
+        margin-bottom: 4px;
+    }
+
+    #hp-bar-bg {
+        width: 190px;
+        height: 14px;
+        border: 1px solid rgba(201,154,82,0.55);
+        background: rgba(20,14,4,0.6);
+        box-shadow: 0 0 8px rgba(0,0,0,0.8) inset;
+    }
+
+    #hp-bar-bg.critical {
+        border-color: rgba(255,90,70,0.85);
+        animation: critPulse 0.8s ease-in-out infinite;
+    }
+
+    @keyframes critPulse {
+        0%, 100% { box-shadow: 0 0 6px rgba(255,90,70,0.4) inset; }
+        50%      { box-shadow: 0 0 18px rgba(255,90,70,0.9) inset; }
+    }
+
+    #hp-bar {
+        height: 100%;
+        width: 100%;
+        background: linear-gradient(to right, #7a4a12, #ffb02e);
+        box-shadow: 0 0 10px rgba(255,176,46,0.55);
+        transition: width 0.15s ease-out;
+    }
+
+    #hp-num {
+        font-size: 15px;
+        margin-top: 4px;
+        text-shadow: 0 0 5px rgba(201,154,82,0.7);
+    }
+
+    #ammo-box {
+        position: absolute;
+        right: 4%;
+        bottom: 6%;
+        text-align: right;
+        padding: 10px 14px 12px 18px;
+        background: linear-gradient(200deg, rgba(24,18,10,0.75), rgba(10,7,4,0.55));
+        border: 1px solid rgba(201,154,82,0.28);
+        clip-path: polygon(14px 0, 100% 0, 100% calc(100% - 14px), calc(100% - 14px) 100%, 0 100%, 0 14px);
+        box-shadow: 0 0 18px rgba(0,0,0,0.6), inset 0 0 24px rgba(168,110,31,0.08);
+    }
+
+    #ammo-label {
+        font-size: 13px;
+        letter-spacing: 3px;
+        color: #c99a52;
+        text-shadow: 0 0 6px rgba(201,154,82,0.7);
+    }
+
+    #ammo-num {
+        font-size: 42px;
+        font-weight: bold;
+        color: #fdf0d8;
+        text-shadow: 0 0 12px rgba(255,176,46,0.75);
+        line-height: 1;
+    }
+
+    #ammo-reserve {
+        font-size: 16px;
+        color: #93825f;
+    }
+
+    #ammo-pips {
+        display: flex;
+        gap: 3px;
+        justify-content: flex-end;
+        margin-top: 7px;
+    }
+
+    #ammo-pips span {
+        width: 9px;
+        height: 14px;
+        background: rgba(255,176,46,0.1);
+        border: 1px solid rgba(255,176,46,0.35);
+        transform: skewX(-12deg);
+    }
+
+    #ammo-pips span.on {
+        background: #ffb02e;
+        box-shadow: 0 0 8px rgba(255,176,46,0.8);
+    }
+
+    #reload-hint {
+        font-size: 13px;
+        letter-spacing: 2px;
+        color: #ffcf5e;
+        text-shadow: 0 0 8px rgba(255,207,94,0.8);
+        visibility: hidden;
+    }
+
+    #objective {
+        position: absolute;
+        top: 4%;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 12px;
+        letter-spacing: 3px;
+        color: rgba(201,154,82,0.55);
+        text-shadow: 0 0 6px rgba(201,154,82,0.4);
+    }
+
+    #status-box {
+        position: absolute;
+        top: 4%;
+        right: 4%;
+        text-align: right;
+        padding: 8px 14px 10px 18px;
+        background: linear-gradient(200deg, rgba(24,18,10,0.75), rgba(10,7,4,0.55));
+        border: 1px solid rgba(201,154,82,0.28);
+        clip-path: polygon(14px 0, 100% 0, 100% 100%, 0 100%, 0 14px);
+        box-shadow: 0 0 18px rgba(0,0,0,0.6), inset 0 0 24px rgba(168,110,31,0.08);
+    }
+
+    #score-label {
+        font-size: 11px;
+        letter-spacing: 3px;
+        color: #93825f;
+    }
+
+    #score-num {
+        font-size: 24px;
+        font-weight: bold;
+        color: #ffcf5e;
+        text-shadow: 0 0 10px rgba(255,207,94,0.6);
+        line-height: 1.1;
+    }
+
+    #hostiles-label {
+        font-size: 11px;
+        letter-spacing: 2px;
+        color: #c99a52;
+        margin-top: 3px;
+    }
+
+    #hostiles-num {
+        color: #ff6b5e;
+        font-weight: bold;
+    }
+
+    /* technische Eckklammern */
+    .corner {
+        position: absolute;
+        width: 26px;
+        height: 26px;
+        border: 2px solid rgba(201,154,82,0.35);
+        z-index: 5;
+        pointer-events: none;
+    }
+    .corner.tl { top: 12px; left: 12px; border-right: none; border-bottom: none; }
+    .corner.tr { top: 12px; right: 12px; border-left: none; border-bottom: none; }
+    .corner.bl { bottom: 12px; left: 12px; border-right: none; border-top: none; }
+    .corner.br { bottom: 12px; right: 12px; border-left: none; border-top: none; }
+
+    /* --- Overlays (Menü / Pause / Tod) --- */
+    .overlay {
+        position: absolute;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        background: rgba(10, 8, 5, 0.82);
+        z-index: 10;
+        text-align: center;
+    }
+
+    .overlay.visible {
+        display: flex;
+    }
+
+    .overlay h1 {
+        font-size: 54px;
+        letter-spacing: 14px;
+        margin: 0 0 8px 0;
+        color: #fdf0d8;
+        text-shadow: 0 0 22px rgba(255,176,46,0.8), 0 0 60px rgba(168,110,31,0.5);
+    }
+
+    .overlay h1 .accent {
+        color: #ffb02e;
+    }
+
+    .overlay .subtitle {
+        font-size: 14px;
+        letter-spacing: 6px;
+        color: #93825f;
+        margin-bottom: 30px;
+    }
+
+    .overlay .controls {
+        font-size: 13px;
+        line-height: 2;
+        color: #9ecfc5;
+        margin-bottom: 30px;
+    }
+
+    .overlay .controls b {
+        color: #fdf0d8;
+    }
+
+    .overlay .cta {
+        font-size: 16px;
+        letter-spacing: 4px;
+        color: #ffcf5e;
+        text-shadow: 0 0 12px rgba(255,207,94,0.7);
+        animation: blink 1.2s steps(2, start) infinite;
+    }
+
+    @keyframes blink {
+        to { visibility: hidden; }
+    }
+
+    #dead-title {
+        color: #ff6b5e !important;
+        text-shadow: 0 0 22px rgba(255,107,94,0.8), 0 0 60px rgba(255,60,40,0.5) !important;
+    }
+
+    /* --- 3D-Fadenkreuz --- */
+    #crosshair {
+        position: absolute;
+        left: 50%; top: 50%;
+        width: 20px; height: 20px;
+        transform: translate(-50%, -50%);
+        pointer-events: none;
+        z-index: 5;
+    }
+    #crosshair::before, #crosshair::after {
+        content: '';
+        position: absolute;
+        background: rgba(255,176,46,0.85);
+        box-shadow: 0 0 6px rgba(255,176,46,0.8);
+    }
+    #crosshair::before { left: 50%; top: 0; width: 2px; height: 100%; transform: translateX(-50%); }
+    #crosshair::after  { top: 50%; left: 0; height: 2px; width: 100%; transform: translateY(-50%); }
+
+    #minimap {
+        position: absolute;
+        right: 14px; bottom: 14px;
+        width: 160px; height: 160px;
+        border: 1px solid rgba(255,176,46,0.35);
+        border-radius: 4px;
+        background: rgba(10,8,5,0.72);
+        box-shadow: 0 0 14px rgba(0,0,0,0.6), inset 0 0 18px rgba(40,26,8,0.5);
+        pointer-events: none;
+        z-index: 6;
+        opacity: 0.92;
+    }
+
+    </style>
+
+</head>
+<body>
+<div id="wrap">
+    <canvas id="game" width="480" height="300"></canvas>
+
+    <div id="scanlines"></div>
+    <div id="vignette"></div>
+    <div id="dmg"></div>
+
+    <div id="hud">
+        <div id="objective">SEKTOR 7G S&Auml;UBERN</div>
+        <div id="status-box">
+            <div id="score-label">SCORE</div>
+            <div id="score-num">00000</div>
+            <div id="hostiles-label">FEINDE <span id="hostiles-num">0</span></div>
+        </div>
+        <div class="corner tl"></div>
+        <div class="corner tr"></div>
+        <div class="corner bl"></div>
+        <div class="corner br"></div>
+    <div id="crosshair"></div>
+    <canvas id="minimap" width="160" height="160"></canvas>
+        <div id="health-box">
+            <div id="hp-label">HÜLLE</div>
+            <div id="hp-bar-bg"><div id="hp-bar"></div></div>
+            <div id="hp-num">100</div>
+        </div>
+        <div id="ammo-box">
+            <div id="ammo-label">PLASMA</div>
+            <div id="ammo-num">8</div>
+            <div id="ammo-reserve">&#8734;</div>
+            <div id="ammo-pips"></div>
+            <div id="reload-hint">R &#8211; NACHLADEN</div>
+        </div>
+    </div>
+
+    <div id="menu" class="overlay visible">
+        <h1>PL<span class="accent">ASMA</span></h1>
+        <div class="subtitle">PROTOKOLL SEKTOR 7G &mdash; ERREICHE DEN AUSGANG</div>
+        <div class="controls">
+            <b>W A S D</b> &ndash; Bewegung<br>
+            <b>MAUS</b> &ndash; Umsehen<br>
+            <b>LINKSKLICK</b> &ndash; Feuern<br>
+            <b>R</b> &ndash; Nachladen
+        </div>
+        <div class="cta">KLICKEN ZUM STARTEN</div>
+    </div>
+
+    <div id="pause" class="overlay">
+        <h1>PAUSE</h1>
+        <div class="cta">KLICKEN ZUM FORTSETZEN</div>
+    </div>
+
+    <div id="dead" class="overlay">
+        <h1 id="dead-title">H&UML;LLE VERLOREN</h1>
+        <div class="subtitle">SYSTEMAUSFALL IN SEKTOR 7G</div>
+        <div class="cta">KLICKEN ZUM NEUSTART</div>
+    </div>
+
+    <div id="victory" class="overlay">
+        <h1>SEKTOREN <span class="accent">GESAEUBERT</span></h1>
+        <div class="subtitle">ALLE BEREICHE DURCHQUERT</div>
+        <div class="cta">KLICKEN ZUM NEUSTART</div>
+    </div>
+</div>
+
+<script src="three.min.js"></script>
+<script src="lib/shaders_CopyShader.js"></script>
+<script src="lib/shaders_LuminosityHighPassShader.js"></script>
+<script src="lib/postprocessing_EffectComposer.js"></script>
+<script src="lib/postprocessing_ShaderPass.js"></script>
+<script src="lib/postprocessing_MaskPass.js"></script>
+<script src="lib/postprocessing_RenderPass.js"></script>
+<script src="lib/postprocessing_UnrealBloomPass.js"></script>
+    <script src="sprites/enemies.js?v=3"></script>
+    <script src="lib/GLTFLoader.js"></script>
+    <script src="lib/SkeletonUtils.js"></script>
+    <script src="models.js?v=3"></script>
+    <script src="sfx_data.js?v=2"></script>
+    <script src="enemy_sfx.js?v=2"></script>
+    <script src="game.js?v=63"></script>
+</body>
+</html>
