@@ -1,12 +1,8 @@
 ---
 layout: post
-title: Wenn GPT-5.3 Codex plötzlich aufhört autonom zu arbeiten | meine Erfahrungen mit dem OpenAI Codex Agent in Visual Studio Code
-tags: [AI, Microsoft Foundry, Codex Agent, Visual Code]
+title: Microsoft Foundry Managed Compute # Open-Source-KI, ohne selbst zum GPU-Betreiber zu werden?
+tags: [AI, Microsoft Foundry, Managed Compute, Open Source, Open Weight, Local LLM]
 ---
-
-# Microsoft Foundry Managed Compute – Open-Source-KI, ohne selbst zum GPU-Betreiber zu werden?
-
-**31. August 2026**
 
 Wenn wir heute über künstliche Intelligenz sprechen, dann landen wir sehr schnell bei den großen Namen. GPT, Claude, Gemini, Llama, Mistral, Qwen und inzwischen unzählige weitere Modelle. Für viele Entwickler ist die Sache dabei erstaunlich einfach geworden. Ich brauche eine Anwendung, ich brauche ein Modell, ich hole mir einen API-Key und schon kann ich loslegen.
 
