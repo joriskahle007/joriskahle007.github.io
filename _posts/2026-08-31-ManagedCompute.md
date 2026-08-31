@@ -4,169 +4,241 @@ title: Microsoft Foundry Managed Compute: Open Source KI ohne eigene GPU Infrast
 tags: [AI, Microsoft Foundry, Managed Compute, Open Source, Open Weight, Local LLM]
 ---
 
-Wer sich aktuell mit KI beschäftigt, kommt an Open Source Modellen kaum noch vorbei. Qwen, Llama, Mistral und viele andere Modelle entwickeln sich rasant weiter und sind für immer mehr Anwendungsfälle interessant. Gerade bei speziellen Anforderungen kann ein Open Source Modell plötzlich die bessere Wahl sein als eines der großen, direkt aus der Cloud angebotenen Modelle.
+Wenn wir heute ein KI Modell einsetzen möchten, haben wir inzwischen erstaunlich viele Möglichkeiten. Wir können eine GPU lokal in unserem eigenen Rechner betreiben, wir können eine GPU Maschine in Azure mieten oder wir überlassen Microsoft praktisch die komplette Infrastruktur und greifen einfach über eine API auf ein Modell zu.
 
-Allerdings gibt es dabei ein kleines Problem: Ein Modell herunterzuladen ist relativ einfach. Es produktiv zu betreiben, ist eine ganz andere Geschichte.<br>
+Und genau dazwischen wird es interessant.
 
-Denn sobald wir ein größeres Sprachmodell selbst betreiben möchten, benötigen wir entsprechende Hardware. Und damit sind wir sehr schnell bei leistungsfähigen GPUs wie NVIDIA A100 oder H100 beziehungsweise AMD MI300X. Dazu kommen Treiber, CUDA, Container, Inferenz Runtime, Updates, Monitoring, Security und natürlich die Frage, wie wir das Ganze skalieren.
+Denn mit Microsoft Foundry Managed Compute gibt es inzwischen eine Möglichkeit, Open Source Modelle auf leistungsfähiger GPU Infrastruktur zu betreiben, ohne selbst virtuelle Maschinen, Container, Kubernetes oder die Modell Runtime verwalten zu müssen.
 
-Genau hier setzt Microsoft mit <strong>Managed Compute in Microsoft Foundry</strong> an.<br><br>
+Aber bevor wir uns Managed Compute genauer anschauen, sollten wir einmal einen Schritt zurückgehen.
 
-<h3>Was ist Managed Compute?</h3>
+Denn eigentlich haben wir heute mehrere grundsätzlich unterschiedliche Möglichkeiten, ein KI Modell zu betreiben.<br><br>
 
-Die Idee dahinter ist eigentlich ziemlich einfach: Ich möchte ein Open Source Modell verwenden, möchte mich aber nicht selbst um die komplette GPU Infrastruktur kümmern.
+<h3>Vom eigenen Rechner bis zur Serverless API</h3>
 
-Bei einer klassischen lokalen Installation würde ich mir beispielsweise eine leistungsfähige GPU kaufen, das Modell herunterladen und anschließend die komplette Umgebung selbst aufbauen. In Azure könnte ich stattdessen eine GPU VM mieten und dort genau dasselbe tun.
+Die einfachste Möglichkeit ist gleichzeitig die mit der meisten eigenen Verantwortung: Ich betreibe die KI lokal.
 
-Managed Compute geht einen Schritt weiter.
+Ich kaufe mir beispielsweise eine leistungsfähige NVIDIA GPU, installiere die benötigte Software und lade mein Modell herunter. Damit habe ich maximale Kontrolle. Das Modell läuft auf meiner Hardware, ich kann experimentieren und muss keine Cloud Infrastruktur bezahlen.
 
-Ich sage Foundry im Wesentlichen, welches Modell ich betreiben möchte und welche passende Bereitstellung ich dafür verwenden möchte. Die darunterliegende GPU Infrastruktur wird von Microsoft bereitgestellt und verwaltet.<br>
+Dafür bezahle ich allerdings die Hardware selbst. Dazu kommen Strom, Kühlung, Speicher und natürlich die komplette Administration.
 
-Das ist ein ziemlich wichtiger Unterschied. Ich kaufe beziehungsweise miete nicht einfach eine GPU und muss anschließend alles selbst installieren. Ich bekomme eine verwaltete Umgebung, in der Microsoft unter anderem die benötigte Runtime und die zugrunde liegende Infrastruktur bereitstellt.<br><br>
+Die nächste Stufe wäre eine eigene GPU in Azure. Ich kaufe die Hardware nicht mehr selbst, sondern miete beispielsweise eine GPU VM. Das nimmt mir zwar die Hardwarebeschaffung ab, aber nicht den eigentlichen Betrieb. Ich muss mich weiterhin um Betriebssystem, Container, Runtime, Modell und viele weitere Dinge kümmern.
 
-<h3>Warum ist das überhaupt interessant?</h3>
+Dann kommt Managed Compute.
 
-Weil Open Source und Managed Service damit nicht mehr zwingend Gegensätze sind.
+Hier sagt Microsoft im Grunde: Du bestimmst das Modell und die gewünschte Bereitstellung. Wir kümmern uns um die darunterliegende GPU Infrastruktur.
 
-Bisher musste ich mich im Grunde entscheiden: Entweder ich nehme ein Modell, das mir Microsoft direkt als Managed Service anbietet, oder ich betreibe ein Open Source Modell selbst.
+Und ganz am Ende steht die Serverless API.
 
-Managed Compute versucht, genau diese Lücke zu schließen.
+Hier muss ich mich überhaupt nicht mehr mit der GPU beschäftigen. Wenn das gewünschte Modell Serverless unterstützt, wähle ich es aus, bekomme einen API Endpunkt und bezahle für die Nutzung.
 
-Ich kann beispielsweise ein Modell aus dem Open Source Ökosystem verwenden und bekomme trotzdem einen von Foundry verwalteten Betrieb. Microsoft stellt dafür verschiedene Runtimes und GPU Konfigurationen über sogenannte Deployment Templates bereit.
+Genau diese Abstufung finde ich wichtig, denn dadurch wird auch klar, wo Managed Compute eigentlich seinen Platz hat.<br><br>
 
-Damit muss ich nicht jedes Mal selbst herausfinden, welche GPU und welche Runtime für ein bestimmtes Modell geeignet sind.<br><br>
-
-<h3>Die drei Möglichkeiten im direkten Vergleich</h3>
-
-Für mich wird das Konzept am verständlichsten, wenn man die drei Varianten einmal nebeneinanderstellt:
+<h3>Vier Wege, ein Modell zu betreiben</h3>
 
 <table>
-<tr><th></th><th>Lokale GPU</th><th>Managed Compute</th><th>Foundry Managed Model</th></tr>
-<tr><td>Modellwahl</td><td>Sehr frei</td><td>Sehr frei innerhalb des Katalogs</td><td>Modelle aus Foundry</td></tr>
-<tr><td>GPU selbst wählen</td><td>Ja</td><td>Über Deployment Template</td><td>Nein</td></tr>
-<tr><td>Hardware</td><td>Selbst kaufen</td><td>Azure</td><td>Azure</td></tr>
-<tr><td>Betrieb</td><td>Selbst</td><td>Microsoft Managed</td><td>Microsoft Managed</td></tr>
-<tr><td>Abrechnung</td><td>Investition und Betrieb</td><td>GPU beziehungsweise Beschleunigerzeit</td><td>Tokenverbrauch</td></tr>
-<tr><td>Skalierung</td><td>Selbst</td><td>Managed Instances</td><td>Managed</td></tr>
+<tr><th></th><th>Lokale GPU</th><th>Eigene Azure GPU</th><th>Managed Compute</th><th>Serverless API</th></tr>
+<tr><td>Hardware</td><td>Selbst kaufen</td><td>Azure VM</td><td>Microsoft</td><td>Microsoft</td></tr>
+<tr><td>GPU verwalten</td><td>Selbst</td><td>Selbst</td><td>Microsoft</td><td>Microsoft</td></tr>
+<tr><td>Modellwahl</td><td>Sehr frei</td><td>Sehr frei</td><td>Open Source und ausgewählte Modelle</td><td>Unterstützte Foundry Modelle</td></tr>
+<tr><td>Abrechnung</td><td>Hardware und Betrieb</td><td>GPU Zeit</td><td>GPU beziehungsweise Beschleunigerzeit</td><td>Token oder reservierte Kapazität</td></tr>
+<tr><td>Skalierung</td><td>Selbst</td><td>Selbst</td><td>Managed</td><td>Managed</td></tr>
+<tr><td>Infrastrukturaufwand</td><td>Hoch</td><td>Hoch</td><td>Niedrig</td><td>Sehr niedrig</td></tr>
 </table>
 
-Und genau diese Tabelle zeigt eigentlich schon ziemlich gut, wo Managed Compute seinen Platz findet.
+Und genau hier liegt für mich der entscheidende Punkt:
 
-Wer maximale Kontrolle möchte, nimmt eine eigene GPU Infrastruktur. Wer es maximal einfach möchte und mit den verfügbaren Modellen auskommt, verwendet ein klassisches Foundry Modell.
+<strong>Je weiter wir nach rechts gehen, desto weniger müssen wir uns um die eigentliche Infrastruktur kümmern.</strong>
 
-Managed Compute sitzt dazwischen.<br><br>
+Gleichzeitig nimmt aber auch unsere Kontrolle über die darunterliegende Infrastruktur ab.<br><br>
 
-<h3>Und was kostet das?</h3>
+<h3>Und wo steht Managed Compute?</h3>
 
-Hier wird es interessant und gleichzeitig sollte man genau hinschauen.
+Managed Compute ist damit nicht einfach eine günstigere Variante einer GPU VM.
 
-Ein klassisches Foundry Modell wird in der Regel nach der tatsächlichen Nutzung über Input und Output Tokens abgerechnet. Wenn gerade niemand eine Anfrage stellt, entstehen durch die reine Existenz des Modells nicht automatisch GPU Kosten.
+Es ist vielmehr eine Abstraktionsebene.
 
-Bei Managed Compute ist das anders. Hier bezahle ich für die bereitgestellte Beschleunigerkapazität.
+Microsoft stellt für Managed Compute dedizierte GPU Kapazität bereit und übernimmt die Verwaltung der GPU Topologie, der Runtime, der Container Images und der Sicherheitsupdates.
 
-Nehmen wir deshalb einmal ein bewusst vereinfachtes Beispiel. Angenommen, eine Managed Compute Bereitstellung benötigt eine GPU und diese kostet in unserem Beispiel <strong>2 Euro pro Stunde</strong>. Dann sieht die Rechnung ungefähr so aus:
+Ich muss also nicht mehr selbst entscheiden, welche virtuelle Maschine ich benötige oder wie ich meine GPU Nodes dimensioniere. Stattdessen beschreibe ich meine Anforderungen über das Modell und die passende Deployment Vorlage. Foundry bestimmt daraus die benötigte GPU Konfiguration.
 
-<li>1 GPU × 2 Euro × 24 Stunden = 48 Euro pro Tag</li>
-<li>48 Euro × 30 Tage = 1.440 Euro pro Monat</li>
+Aktuell unterstützt Managed Compute unter anderem NVIDIA A100 mit 80 GB, NVIDIA H100 mit 80 GB und AMD MI300X mit 192 GB.
 
-Und das Entscheidende ist: Diese Kosten entstehen auch dann, wenn mein Modell in dieser Zeit kaum genutzt wird.
+Das Entscheidende dabei ist aber: Ich kaufe beziehungsweise miete nicht einfach eine H100 VM und bekomme dann freie Hand.
 
-Bei zwei GPUs wären es entsprechend bereits rund 2.880 Euro pro Monat. Bei leistungsfähigeren GPUs oder anderen Azure Preisen kann die tatsächliche Rechnung natürlich deutlich höher oder niedriger ausfallen.<br>
+Ich bekomme einen verwalteten KI Dienst.<br><br>
 
-Das Beispiel soll deshalb nicht einen konkreten Azure Preis darstellen, sondern vor allem eines zeigen:
+<h3>Aber brauche ich Managed Compute überhaupt?</h3>
 
-<strong>Managed Compute ist nicht automatisch günstiger als ein klassisches Foundry Modell.</strong>
+Und genau diese Frage finde ich eigentlich viel spannender.
 
-Es ist ein anderes Abrechnungsmodell.<br><br>
+Denn wenn ich beispielsweise Qwen verwenden möchte, muss ich nicht automatisch Managed Compute verwenden.
 
-<h3>Wann lohnt sich Managed Compute?</h3>
+Microsoft bietet im Foundry Katalog auch Open Source und Partnermodelle über die Serverless API an. Dazu gehören unter anderem bestimmte Modelle von Anthropic, Mistral, Cohere und Meta. Welche Modelle konkret Serverless unterstützen, hängt vom jeweiligen Modell ab.
 
-Wenn ich nur gelegentlich einen Chatbot benutze oder ein kleines Projekt betreibe, würde ich vermutlich zunächst ein klassisches Foundry Modell verwenden.
+Das bedeutet:
 
-Ich bezahle für die tatsächliche Nutzung und muss mich überhaupt nicht um GPUs kümmern.
+Wenn mein gewünschtes Qwen Modell über Serverless verfügbar ist und die angebotenen Funktionen für meinen Anwendungsfall ausreichen, muss ich mich überhaupt nicht mit der GPU beschäftigen.
 
-Anders sieht es aus, wenn ich ein bestimmtes Open Source Modell benötige und dieses dauerhaft mit einer höheren Auslastung betreiben möchte.
+Ich nehme das Modell.
 
-Dann kann Managed Compute interessant werden. Ich bekomme dedizierte Rechenkapazität, ohne selbst Server kaufen und betreiben zu müssen.
+Ich rufe die API auf.
 
-Besonders interessant finde ich das für Unternehmen, die Open Source Modelle einsetzen möchten, aber keine eigene GPU Infrastruktur aufbauen wollen.<br><br>
+Microsoft kümmert sich um den Rest.
+
+Und genau das ist der entscheidende Unterschied.<br><br>
+
+<h3>Serverless ist eigentlich das bequemste Modell</h3>
+
+Wenn ich beispielsweise GPT oder ein unterstütztes Anthropic Modell aus Foundry verwende, interessiert mich normalerweise nicht, welche GPU darunter läuft.
+
+Ich bezahle für meine Nutzung und bekomme einen API Endpunkt.
+
+Genau dieses Prinzip kann auch bei anderen unterstützten Modellen funktionieren.
+
+Microsoft bezeichnet die Serverless API aktuell als den bevorzugten Bereitstellungspfad in Foundry. Sie unterstützt unterschiedliche Abrechnungs und Kapazitätsmodelle und bietet unter anderem globale, regionale und Data Zone Optionen.
+
+Das ist für mich die eigentliche Komfortzone der Cloud.
+
+<strong>Ich möchte ein Modell verwenden, aber ich möchte mich nicht mit der Hardware beschäftigen.</strong>
+
+Dann ist Serverless genau das, was ich eigentlich haben möchte.<br><br>
+
+<h3>Warum gibt es dann überhaupt Managed Compute?</h3>
+
+Weil nicht jedes interessante Open Source Modell als Serverless API angeboten wird.
+
+Und genau hier wird Managed Compute interessant.
+
+Microsoft kann beispielsweise Modelle aus der Hugging Face Sammlung über Managed Compute bereitstellen. Dazu gehören unter anderem Qwen Modelle, NVIDIA Nemotron und ausgewählte Modelle von Meta und Mistral.
+
+Ich bekomme damit also Zugriff auf Open Source Modelle, die ich möglicherweise nicht als klassische Serverless API verwenden kann.
+
+Der Unterschied ist allerdings: Statt pro Token bezahle ich bei Managed Compute für die bereitgestellte GPU Kapazität.
+
+Und damit kommen wir zum Thema Kosten.<br><br>
+
+<h3>Was kostet der Unterschied?</h3>
+
+Nehmen wir ein bewusst vereinfachtes Beispiel.
+
+Angenommen, eine Managed Compute Bereitstellung benötigt eine GPU und wir rechnen beispielhaft mit 2 Euro pro Stunde.
+
+Dann entstehen bei einer dauerhaft laufenden Instanz ungefähr:
+
+<li>2 Euro pro Stunde</li>
+<li>48 Euro pro Tag</li>
+<li>1.440 Euro bei 30 Tagen Dauerbetrieb</li>
+
+Bei zwei GPUs wären es bereits rund 2.880 Euro im Monat.
+
+Das ist ausdrücklich nur ein Rechenbeispiel und kein aktueller Azure Preis. Die tatsächlichen Preise hängen von GPU Familie, Region und aktueller Preisgestaltung ab. Microsoft verweist für Managed Compute auf den aktuellen Azure Preisrechner.
+
+Und hier zeigt sich der große Unterschied zur Serverless API.
+
+Bei Serverless bezahle ich grundsätzlich für die Nutzung beziehungsweise für reservierte Kapazität.
+
+Bei Managed Compute bezahle ich für die bereitgestellte GPU Kapazität.
+
+Das bedeutet: Wenn mein Modell nur wenige Anfragen am Tag bekommt, kann Serverless wirtschaftlich deutlich interessanter sein.<br><br>
+
+<h3>Managed Compute kann trotzdem interessant sein</h3>
+
+Wenn ich dagegen ein bestimmtes Open Source Modell dauerhaft und mit hoher Auslastung betreiben möchte, sieht die Rechnung anders aus.
+
+Dann kann eine dedizierte GPU Kapazität sinnvoll sein.
+
+Und ich muss trotzdem keine GPU VM konfigurieren, keinen Kubernetes Cluster betreiben und keine eigene Inferenz Runtime installieren.
+
+Interessant ist außerdem, dass Managed Compute inzwischen auch automatische Skalierung und Scale to Zero unterstützt. Eine Bereitstellung kann bei fehlendem Traffic auf null Instanzen zurückgehen. Damit kann die Abrechnung ebenfalls gestoppt werden, wenn keine Kapazität benötigt wird.
+
+Das macht Managed Compute deutlich interessanter, als es eine einfache Rechnung mit 24 Stunden GPU Betrieb zunächst vermuten lässt.<br><br>
 
 <h3>Und was ist mit einer lokalen GPU?</h3>
 
-Gerade bei diesem Thema wird aktuell sehr viel über lokale KI gesprochen.
+Gerade hier wird die Diskussion aktuell sehr interessant.
 
-Eine eigene GPU hat natürlich einen großen Vorteil: Sie gehört mir.
+Eine lokale GPU kann für Entwickler und Enthusiasten absolut sinnvoll sein.
 
-Ich kann damit machen, was ich möchte. Ich habe keine laufenden Cloud Gebühren für jede Betriebsstunde und kann Modelle beliebig ausprobieren.
+Wenn ich häufig experimentiere, unterschiedliche Modelle teste und die Hardware sowieso besitze, kann eine lokale KI Infrastruktur unglaublich praktisch sein.
 
-Aber auch hier darf man die Rechnung nicht zu einfach machen.
+Ich bezahle dann nicht für jede Anfrage und kann meine Modelle jederzeit ausprobieren.
 
-Eine leistungsfähige GPU kostet zunächst Geld. Dazu kommen Rechner, Speicher, Strom, Kühlung und gegebenenfalls weitere Hardware. Und natürlich muss sich jemand um Updates, Treiber, Software und die gesamte Umgebung kümmern.
+Aber ich habe dafür die Investitionskosten und den kompletten Betrieb selbst.
 
-Für einen Entwickler, der einfach experimentieren möchte, kann eine lokale GPU deshalb sehr attraktiv sein.
+Und genau deshalb würde ich lokale KI nicht pauschal mit Cloud KI vergleichen.
 
-Für ein Unternehmen, das eine Anwendung rund um die Uhr betreiben möchte, kann die Situation dagegen ganz anders aussehen.<br><br>
+Eine lokale GPU ist Infrastruktur.
 
-<h3>Managed Compute ist also kein Ersatz für lokale KI</h3>
+Serverless ist ein Dienst.
 
-Und genau das ist meiner Meinung nach wichtig.
+Managed Compute liegt irgendwo dazwischen.<br><br>
 
-Managed Compute soll nicht die lokale GPU ersetzen. Es soll auch nicht die klassische Azure VM ersetzen.
+<h3>Was würde ich heute auswählen?</h3>
 
-Es ist eine weitere Möglichkeit.
+Wenn ich einfach ein Modell verwenden möchte und es als Serverless API verfügbar ist, würde ich persönlich zunächst genau diesen Weg gehen.
 
-Wenn ich maximale Kontrolle benötige, kann ich meine eigene Infrastruktur betreiben.
+Kein GPU Kauf.
 
-Wenn ich maximale Einfachheit möchte, nehme ich ein klassisches Managed Model aus Foundry.
+Keine GPU VM.
 
-Und wenn ich ein Open Source Modell benötige, aber die GPU Infrastruktur nicht selbst betreiben möchte, wird Managed Compute interessant.<br><br>
+Keine Runtime.
 
-<h3>Was ich daran besonders spannend finde</h3>
+Keine Container.
 
-Für mich ist Managed Compute deshalb weniger wegen der GPU interessant, sondern wegen der Abstraktion.
+Keine Infrastruktur.
 
-Die GPU wird zunehmend zur Nebensache.
+Einfach API aufrufen und nach Nutzung bezahlen.
 
-Ich möchte als Entwickler eigentlich nicht wissen, ob unter meinem Modell eine A100, H100 oder MI300X steckt. Ich möchte wissen, welches Modell ich verwenden kann, welche Performance ich bekomme und was mich der Betrieb kostet.
+Wenn mein gewünschtes Modell nicht als Serverless API verfügbar ist, aber über Managed Compute angeboten wird, würde ich mir Managed Compute anschauen.
 
-Genau diese Entwicklung sehen wir gerade an vielen Stellen in der Cloud.
+Und wenn ich maximale Kontrolle benötige oder sehr spezielle Anforderungen habe, kann eine eigene GPU Infrastruktur sinnvoll sein.
 
-Erst wurden Server abstrahiert. Dann virtuelle Maschinen. Dann Container und Kubernetes.
+Damit ergibt sich für mich eine ziemlich einfache Entscheidungslogik:
 
-Jetzt beginnt die Cloud damit, auch die KI Infrastruktur zu abstrahieren.<br>
+<li><strong>Ich möchte maximale Kontrolle:</strong> lokale GPU oder eigene Azure GPU</li>
+<li><strong>Ich möchte ein bestimmtes Open Source Modell und keine Infrastruktur betreiben:</strong> Managed Compute</li>
+<li><strong>Ich möchte möglichst einfach ein unterstütztes Modell verwenden:</strong> Serverless API</li>
+<li><strong>Ich möchte einfach nur ausprobieren:</strong> Wenn verfügbar, sogar Instant Access in Foundry</li>
 
-Und das könnte gerade bei Open Source KI ein wichtiger Schritt sein.
-
-Denn Open Source bedeutet damit nicht mehr zwangsläufig, dass ich auch selbst zum Betreiber meiner GPU Infrastruktur werden muss.<br><br>
+Denn Microsoft bietet inzwischen für bestimmte unterstützte Modelle sogar einen sogenannten Instant Access an. Dabei muss überhaupt keine Bereitstellung erstellt werden. Das Modell wird einfach anhand seines Namens aufgerufen. Auch diese Funktion befindet sich derzeit noch in der Vorschau. <br><br>
 
 <h3>Mein Fazit</h3>
 
-Managed Compute in Microsoft Foundry finde ich deshalb ausgesprochen interessant.
+Für mich wird durch diese Entwicklung eine Sache immer deutlicher:
 
-Nicht, weil es die günstigste Möglichkeit ist, ein KI Modell zu betreiben. Das wird es in vielen Szenarien vermutlich nicht sein.
+<strong>Die Frage „Welche GPU brauche ich?“ wird für Entwickler zunehmend unwichtiger.</strong>
 
-Und auch nicht, weil dadurch plötzlich jede Open Source KI ohne Einschränkungen betrieben werden kann.
+Wenn ich lokal arbeite, muss ich diese Frage natürlich beantworten.
 
-Interessant ist vielmehr die Kombination aus <strong>Open Source Modell und Managed Infrastructure</strong>.
+Wenn ich eine eigene Azure GPU betreibe, ebenfalls.
 
-Ich kann ein Modell auswählen, das ich tatsächlich einsetzen möchte, bekomme dafür eine passende Deployment Konfiguration und muss mich nicht selbst um GPU Server, Container und die grundlegende Runtime kümmern.
+Bei Managed Compute kümmert sich Microsoft bereits um die konkrete GPU Topologie.
 
-Die entscheidende Frage lautet deshalb für mich nicht:
+Und bei einer Serverless API muss ich mich überhaupt nicht mehr darum kümmern.
 
-<strong>„Ist Managed Compute besser als eine eigene GPU?“</strong>
+Genau deshalb würde ich Managed Compute auch nicht als den großen Ersatz für Serverless betrachten.
 
-Sondern:
+Im Gegenteil.
 
-<strong>„Wie viel Kontrolle brauche ich wirklich und wie viel Infrastruktur möchte ich selbst betreiben?“</strong>
+Serverless ist für mich die bequemste Variante, wenn mein gewünschtes Modell dort verfügbar ist.
 
-Wenn ich maximale Kontrolle und eine hohe Auslastung habe, kann eine eigene GPU sinnvoll sein.
+Managed Compute ist die interessante Zwischenstufe, wenn ich mehr Freiheit bei der Modellwahl benötige, aber trotzdem keine eigene GPU Infrastruktur betreiben möchte.
 
-Wenn ich möglichst wenig Aufwand möchte und mit den verfügbaren Modellen zufrieden bin, ist ein klassisches Foundry Modell wahrscheinlich die bessere Wahl.
+Und lokale beziehungsweise eigene Cloud GPUs bleiben die Variante für diejenigen, die maximale Kontrolle benötigen oder einen Workload haben, bei dem sich die eigene Infrastruktur wirtschaftlich und technisch lohnt.
 
-Und irgendwo genau dazwischen sitzt Managed Compute.
+Damit haben wir eigentlich einen ziemlich schönen Weg:
 
-Ich glaube deshalb, dass wir diese Art von Dienst in Zukunft noch häufiger sehen werden. Denn je mehr leistungsfähige Open Source Modelle auf den Markt kommen, desto weniger möchten Unternehmen zwangsläufig auch deren komplette Infrastruktur selbst betreiben.
+<strong>Lokal → eigene GPU Infrastruktur → Managed Compute → Serverless API</strong>
 
-<strong>Das Modell möchte ich vielleicht selbst auswählen. Die GPU möchte ich aber nicht unbedingt selbst verwalten.</strong>
+Je weiter ich nach rechts gehe, desto weniger muss ich mich um die Hardware kümmern.
 
-Und genau dafür könnte Managed Compute eine ziemlich interessante Lösung sein.
+Und genau das ist meiner Meinung nach eine der spannendsten Entwicklungen rund um Microsoft Foundry.
+
+Wir reden immer weniger darüber, <strong>welche GPU unter dem Modell steckt</strong>.
+
+Wir reden zunehmend darüber, <strong>welches Modell wir verwenden möchten und wie wir es konsumieren wollen</strong>.
+
+Und wenn Microsoft diesen Weg weitergeht, könnte die GPU für viele Entwickler irgendwann tatsächlich zu dem werden, was sie eigentlich sein sollte:
+
+<strong>ein technisches Detail, über das ich mir möglichst wenig Gedanken machen muss.</strong>
