@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Microsoft Foundry Managed Compute: Open Source KI ohne eigene GPU Infrastruktur?
+title: Microsoft Foundry Managed Compute | Open Source KI ohne eigene GPU Infrastruktur?
 tags: [AI, Microsoft Foundry, Managed Compute, Open Source, Open Weight, Local LLM]
 ---
 
