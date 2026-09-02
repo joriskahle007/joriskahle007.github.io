@@ -39,6 +39,9 @@ Microsoft stellt dafür die notwendige GPU Infrastruktur bereit und übernimmt d
 
 Der entscheidende Punkt ist aber nicht unbedingt die GPU selbst. Interessant ist vielmehr, dass wir ein Open Source Modell verwenden können, ohne gleichzeitig zum Betreiber unserer eigenen GPU Infrastruktur werden zu müssen.
 
+<img src="/assets/img/managedcompute.png" alt="Managed Compute - Foundry" /><br><br>
+<br><br>
+
 Wir müssen also nicht selbst eine GPU VM aufsetzen und anschließend herausfinden, welche Runtime, welche Container Konfiguration und welche GPU Kombination für unser Modell geeignet ist. Foundry stellt entsprechende Bereitstellungen und Vorlagen zur Verfügung.<br><br>
 
 <h3>Aber warum nicht einfach Serverless?</h3>
