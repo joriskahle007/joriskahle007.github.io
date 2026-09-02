@@ -37,10 +37,10 @@ Managed Compute ist für mich am einfachsten als Zwischenstufe zwischen einer ei
 
 Microsoft stellt dafür die notwendige GPU Infrastruktur bereit und übernimmt die Verwaltung der zugrunde liegenden Umgebung. Je nach Modell können dabei beispielsweise NVIDIA A100, NVIDIA H100 oder AMD MI300X zum Einsatz kommen.
 
-Der entscheidende Punkt ist aber nicht unbedingt die GPU selbst. Interessant ist vielmehr, dass wir ein Open Source Modell verwenden können, ohne gleichzeitig zum Betreiber unserer eigenen GPU Infrastruktur werden zu müssen.<br>
+Der entscheidende Punkt ist aber nicht unbedingt die GPU selbst. Interessant ist vielmehr, dass wir ein Open Source Modell verwenden können, ohne gleichzeitig zum Betreiber unserer eigenen GPU Infrastruktur werden zu müssen.<br><br>
 
 <img src="/assets/img/managedcompute.png" alt="Managed Compute - Foundry" /><br><br>
-<br><br>
+<br>
 
 Wir müssen also nicht selbst eine GPU VM aufsetzen und anschließend herausfinden, welche Runtime, welche Container Konfiguration und welche GPU Kombination für unser Modell geeignet ist. Foundry stellt entsprechende Bereitstellungen und Vorlagen zur Verfügung.<br><br>
 
@@ -105,10 +105,10 @@ Wenn unsere Anwendung unbedingt rund um die Uhr verfügbar sein muss und innerha
 
 <h3>Was kostet Managed Compute?</h3>
 
-Schauen wir uns dazu ein bewusst vereinfachtes Beispiel an. Angenommen, eine Managed Compute Instanz würde in unserem Beispiel 2 Euro pro Stunde kosten. Bei einem durchgehenden Betrieb wären das 48 Euro am Tag beziehungsweise rund 1.440 Euro bei 30 Tagen.<br>
+Schauen wir uns dazu ein bewusst vereinfachtes Beispiel an. Angenommen, eine Managed Compute Instanz würde in unserem Beispiel 2 Euro pro Stunde kosten. Bei einem durchgehenden Betrieb wären das 48 Euro am Tag beziehungsweise rund 1.440 Euro bei 30 Tagen.<br><br>
 
 <img src="/assets/img/managedcomputeprice.png" alt="Managed Compute - Preise" /><br><br>
-<br><br>
+<br>
 
 Wenn wir die Instanz dagegen nur zwölf Stunden am Tag benötigen, wären es unter denselben angenommenen Bedingungen nur noch etwa 720 Euro im Monat. Wird nachts zusätzlich auf null Instanzen skaliert, kann sich die tatsächlich bezahlte Compute Zeit weiter reduzieren.
 
